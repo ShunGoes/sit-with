@@ -1,10 +1,19 @@
+import { OurMission } from "@/components/about/our-mission";
+import { CoreValues } from "@/components/about/core-values";
+import { TherapeuticApproach } from "@/components/about/therapeutic-approach";
+import { OurStory } from "@/components/about/our-story";
+import { AboutCta } from "@/components/about/about-cta";
+
 export default function AboutPage() {
   return (
-    <div className="container mx-auto px-4 py-20">
-      <h1 className="text-4xl font-bold text-brand-green mb-6">About Us</h1>
-      <p className="text-lg text-gray-700">
-        This is the about page. Welcome to Sit With PD.
-      </p>
+    <div className="flex flex-col">
+      <div className="w-11/12 mx-auto">
+        <OurMission />
+        <CoreValues />
+        <TherapeuticApproach />
+        <OurStory />
+      </div>
+      <AboutCta />
     </div>
   );
 }
