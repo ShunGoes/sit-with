@@ -1,0 +1,94 @@
+import { Heart, ShieldCheck, Users } from "lucide-react";
+import Image from "next/image";
+
+export function OurMission() {
+  const highlights = [
+    {
+      icon:  (
+              <Image
+                src="/icons/emotional-healing.svg"
+                alt="Emotional Healing"
+                width={24}
+                height={24}
+                className="w-6 h-6 object-contain bg-[#EBECEB33]"
+              />
+            ),
+      text: "Safe spaces",
+    },
+    {
+        icon: (
+              <Image
+                src="/icons/authenticity.svg"
+                alt="Community Connection"
+                width={24}
+                height={24}
+                className="w-6 h-6 object-contain bg-[#EBECEB33]"
+              />
+            ),
+      text: "Authenticity",
+    },
+    {
+      icon: (
+              <Image
+                src="/icons/community-connection.svg"
+                alt="Community Connection"
+                width={24}
+                height={24}
+                className="w-6 h-6 object-contain bg-[#EBECEB33]"
+              />
+            ),
+    
+      text: "Supportive Network",
+    },
+  ];
+
+  return (
+    <section className="container mx-auto  py-20 flex flex-col md:flex-row gap-16 items-center max-w-6xl">
+      {/* Left Content */}
+      <div className="flex-1 ">
+        <h2 className="heading-2 mb-6">Our Mission</h2>
+
+        <p className="text-black text-[20px] leading-[140%] mb-6">
+          Sit-With-PD started with a simple belief that though the space of
+          internal growth and healing can be difficult to traverse, no one
+          should traverse it alone. We believe that we are all on a journey
+          towards a more authentic, fully present version of ourselves. Every
+          journey requires time, intentionality, and a supportive community.
+        </p>
+
+        <p className="text-black text-[20px] leading-[140%] mb-10">
+          Our mission is to create spaces for the empowerment and personal
+          development of individuals, navigating life transition, or geographic.
+          This mission seeks to cultivate emotional wellness, true healing,
+          peace, and sustained transformation for all.
+        </p>
+
+        <div className="flex flex-wrap gap-6">
+          {highlights.map((item, index) => (
+            <div key={index} className="flex items-center bg-[#EBECEB33] px-2 py-1 gap-2">
+              <div className="w-8 h-8 rounded-full bg-secondary-green/20 flex items-center justify-center">
+                {item.icon}
+              </div>
+              <span className="text-sm font-medium text-gray-800">
+                {item.text}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Right Image Placeholder */}
+      <div className="flex-1 ">
+        {/* Using the join-us image as a placeholder since it features people connecting */}
+        <div className="w-full min-h-[446px] rounded-[16px] border-[#DEDEDE] overflow-hidden relative border">
+          <Image
+            src="/images/join-us.png"
+            alt="Our Mission"
+            fill
+            className="object-cover"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
