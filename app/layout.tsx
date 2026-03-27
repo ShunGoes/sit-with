@@ -3,7 +3,7 @@ import { Inter, Plus_Jakarta_Sans, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/nav/navbar";
-import { Footer } from "@/components/footer/footer";
+import { ConditionalFooter } from "@/components/footer/conditional-footer";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -34,9 +34,7 @@ export default function RootLayout({
       >
         <Navbar />
         <main className="flex-1">{children}</main>
-        <div className="p-5">
-          <Footer />
-        </div>
+        <ConditionalFooter />
       </body>
     </html>
   );

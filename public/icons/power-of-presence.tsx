@@ -62,11 +62,14 @@ export function PowerOfPresence() {
   ];
 
   return (
-    <section className="container mx-auto  py-24 flex flex-col lg:flex-row items-center justify-between gap-20">
+    <section className="container mx-auto py-10 lg:py-24 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
       {/* Left Content */}
-      <div className="flex-1 max-w-xl">
+      <div className="flex-1  max-w-xl">
+        <div className="flex justify-center lg:text-start">
         <Pill text="The power of presence" />
-        <h2 className="text-[32px] leading-[54px] font-normal text-[#131313] ">
+
+        </div>
+        <h2 className="heading-2 lg:leading-[54px] font-normal text-center ">
           Sit-With-PD harnesses the transformative power of presence-based
           therapy and personal development through authentic connection and
           guided facilitation.
@@ -86,7 +89,7 @@ export function PowerOfPresence() {
             <h3 className="text-xl font-medium text-[#132812] mb-2">
               {card.title}
             </h3>
-            <p className="text-s[16px] text-[#14312D] font-normal leading-[24px] ">
+            <p className="text-base text-[#14312D] font-normal leading-relaxed lg:leading-[24px] ">
               {card.description}
             </p>
           </div>

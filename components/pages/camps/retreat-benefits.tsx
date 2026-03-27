@@ -1,3 +1,4 @@
+import { Pill } from "@/components/ui/pill";
 import { CheckCircle2 } from "lucide-react";
 
 export function RetreatBenefits() {
@@ -9,32 +10,43 @@ export function RetreatBenefits() {
   ];
 
   return (
-    <section className="bg-[#F4F6F7] py-24 w-full">
-      <div className="container mx-auto px-4 md:px-8 flex flex-col items-center text-center">
-        <p className="text-gray-500 uppercase tracking-widest text-xs font-semibold mb-6">
-          WHY JOIN THE CAMP
-        </p>
-        <h2 className="text-[28px] md:text-[36px] font-medium text-gray-900 mb-16 max-w-3xl leading-snug">
+    <section className=" py-24 w-full">
+      <div className="container mx-auto  flex flex-col items-center text-center">
+        <Pill text="Why attend the camp" />
+        <h2 className="text-[32px] font-medium text-[#131313] mb-16 max-w-6xl leading-[48px] w-9/12">
           A presence-based retreat designed to help you pause, reflect, and
           reconnect with yourself in a calm and supportive environment
         </h2>
 
-        <div className="flex flex-col gap-4 w-full max-w-3xl items-center">
-          {benefits.map((benefit, idx) => (
-            <div
-              key={idx}
-              className={`flex items-center gap-4 bg-white rounded-full px-6 md:px-10 py-4 shadow-sm border border-[#EEF2F6] w-full md:w-[80%] lg:w-[70%] transition-transform hover:-translate-y-1 ${
-                idx % 2 === 0 ? "mr-auto md:ml-0" : "ml-auto md:mr-0"
-              }`}
-            >
-              <CheckCircle2 className="w-6 h-6 text-[#1AAB7A]" />
-              <span className="text-gray-800 font-medium text-[16px] md:text-[18px]">
-                {benefit}
-              </span>
-            </div>
-          ))}
+        <div className="flex  justify-center gap-4 w-full bg-[#E9EDF0] py-8 rounded-[24px]  max-w-3xl items-center">
+          <div className="w-10/12 mx-auto flex flex-col gap-5">
+            {benefits.map((benefit, idx) => {
+              return (
+                <div
+                  key={idx}
+                  className="flex items-center justify-between gap-4 bg-white shadow-[0px_4px_24px_rgba(221,228,234,0.5)] rounded-[16px] px-6 md:px-10 py-5 transition-transform hover:-translate-y-1"
+                  style={{ marginLeft: `${idx * 20}px`, width: 'calc(100% - 60px)' }}
+                >
+                  <div className="flex items-center gap-4">
+                    <CheckCircle2 className="w-7 h-7 text-white fill-[#1AAB7A]" />
+                    <span className="text-black font-medium text-[16px] md:text-[18px]">
+                      {benefit}
+                    </span>
+                  </div>
+                  
+                  {/* Decorative faint lines matching the design */}
+                  <div className="hidden md:flex flex-col gap-1.5">
+                    <div className="w-8 h-1.5 bg-[#E9EDF0] rounded-full"></div>
+                    <div className="w-5 h-1.5 bg-[#E9EDF0] rounded-full"></div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
+

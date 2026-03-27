@@ -3,25 +3,27 @@ import { GlimpseGallery } from "@/components/pages/camps/glimpse";
 import { CampParticipation } from "@/components/pages/camps/participation";
 import { Testimonials } from "@/components/pages/homepage/testimonials";
 import { CtaBlock } from "@/components/shared/cta-block";
+import { CampHero } from "@/components/pages/camps/hero";
+import { CampCtaBlock } from "@/components/pages/camps/camp-cta";
 
 export default function CampsPage() {
   return (
     <div className="flex flex-col items-center w-full overflow-x-hidden">
-      <RetreatBenefits />
+      <CampHero />
+      <div className="w-11/12 mx-auto">
+        <RetreatBenefits />
+      </div>
       <GlimpseGallery />
-      <CampParticipation />
+      <div className="w-11/12 mx-auto">
+        <CampParticipation />
+      </div>
 
-      {/* Reusing Testimonials component */}
-      <div className="w-full bg-white">
+      <div className="w-full bg-white ">
         <Testimonials />
       </div>
 
       {/* Shared CTA Block with custom props */}
-      <CtaBlock
-        title="Join the Next Camp Experience"
-        subtext="Secure your spot for our upcoming camp and give yourself the space to grow."
-        firstLink={{ text: "Join Now" }}
-      />
+      <CampCtaBlock />
     </div>
   );
 }

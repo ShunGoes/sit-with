@@ -44,7 +44,7 @@ export function HowWeHelp() {
         {cards.map((card, index) => (
           <div
             key={index}
-            className="flex flex-col rounded-2xl border border-[#DEDEDE] bg-white p-5 hover:shadow-[0px_2px_20px_rgba(0,0,0,0.08)] transition-shadow"
+            className="flex flex-col rounded-2xl border border-[#DEDEDE] bg-white p-4 lg:p-5 hover:shadow-[0px_2px_20px_rgba(0,0,0,0.08)] transition-shadow"
           >
             {/* Image Placeholder */}
             <div className="w-full  h-48 bg-gray-200 rounded-xl mb-6 overflow-hidden relative">
@@ -55,7 +55,7 @@ export function HowWeHelp() {
             <h3 className="text-xl font-medium text-[#2424240 mb-2">
               {card.title}
             </h3>
-            <p className="text-[16px] text-black mb-6 ">
+            <p className="text-[16px] text-black leading-relaxed mb-6 ">
               {card.description}
             </p>  
 

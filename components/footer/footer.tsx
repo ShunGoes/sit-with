@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 
 export function Footer() {
   return (
-    <footer className="bg-footer-bg relative overflow-hidden text-white w-full rounded-tr-[40px] rounded-tl-[40px] mt-20">
+    <footer className="bg-footer-bg relative overflow-hidden text-white w-full rounded-[20px] lg:rounded-[40px] ">
       {/* Pattern Overlay */}
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"

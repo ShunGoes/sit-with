@@ -14,6 +14,7 @@ export default function Home() {
         <PowerOfPresence />
         <OurTeam />
         <Testimonials />
+        <div className="pb-24" />
         <CtaBanner />
       </div>
     </div>

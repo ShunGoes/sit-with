@@ -29,7 +29,7 @@ export function OurTeam() {
   ];
 
   return (
-    <section className="container mx-auto py-24 flex flex-col items-center">
+    <section className="container mx-auto pt-24 lg:py-24 flex flex-col items-center">
       <Pill text="Our Team" />
 
       <h2 className="heading-2 text-center  mb-16 max-w-[900px]">
@@ -45,13 +45,13 @@ export function OurTeam() {
                 [Image]
               </div>
             </div>
-            <p className="text-[16px] font-semibold text-[#181D27] mb-1">
+            <p className="text-base font-semibold text-[#181D27] mb-1">
               {member.name}
             </p>
-            <p className="text-[#649351] text-[18px] font-normal mb-2">
+            <p className="text-[#649351] text-lg font-normal mb-2">
               {member.role}
             </p>
-            <p className="text-[16px] text-[#535862] leading-[24px]">
+            <p className="text-base text-[#535862] leading-relaxed  lg:leading-[1.675rem]">
               {member.description}
             </p>
           </div>

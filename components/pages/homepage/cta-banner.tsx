@@ -4,13 +4,13 @@ import CaretRight from "@/pd-icons/caret-right";
 export function CtaBanner() {
   return (
     <section className="container mx-auto ">
-      <div className="w-full bg-footer-bg rounded-[20px] px-8 md:px-12 py-5 flex flex-col md:flex-row gap-6 overflow-hidden border border-[#2A5A51]">
+      <div className="w-full bg-footer-bg rounded-[10px] lg:rounded-[20px] px-5 md:px-12 py-5 flex flex-col md:flex-row gap-6 overflow-hidden border border-[#2A5A51]">
         {/* Left Content */}
-        <div className="flex-1  flex flex-col justify-center">
+        <div className="flex-1  flex flex-col items-center lg:items-center text-center  justify-center">
           <h2 className="text-[#EBECEB] text-[32px] md:text-[40px] font-medium leading-[50px] mb-4 max-w-md">
             Join a Global Therapeutic Community
           </h2>
-          <p className="text-[#F7FBF6] text-[20px]  mb-5 t">
+          <p className="text-[#F7FBF6] text-xl leading-relaxed  mb-5 t">
             Connect with thousands of individuals committed to presence-based
             healing, emotional growth, and authentic personal development across
             the globe.
