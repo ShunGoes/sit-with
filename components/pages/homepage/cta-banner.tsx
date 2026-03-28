@@ -4,13 +4,13 @@ import CaretRight from "@/pd-icons/caret-right";
 export function CtaBanner() {
   return (
     <section className="container mx-auto ">
-      <div className="w-full bg-footer-bg rounded-[10px] lg:rounded-[20px] px-5 md:px-12 py-5 flex flex-col md:flex-row gap-6 overflow-hidden border border-[#2A5A51]">
+      <div className="w-full bg-footer-bg rounded-[10px] lg:rounded-[20px] px-5 md:px-12 md:py-20 lg:py-5 py-5 flex flex-col lg:flex-row gap-6 overflow-hidden border border-[#2A5A51]">
         {/* Left Content */}
         <div className="flex-1  flex flex-col items-center lg:items-center text-center  justify-center">
-          <h2 className="text-[#EBECEB] text-[32px] md:text-[40px] font-medium leading-[50px] mb-4 max-w-md">
+          <h2 className="text-[#EBECEB] heading-2 mb-4 max-w-md">
             Join a Global Therapeutic Community
           </h2>
-          <p className="text-[#F7FBF6] text-xl leading-relaxed  mb-5 t">
+          <p className="text-[#F7FBF6] text-xl sm:text-base leading-relaxed  mb-5 t">
             Connect with thousands of individuals committed to presence-based
             healing, emotional growth, and authentic personal development across
             the globe.
@@ -27,9 +27,9 @@ export function CtaBanner() {
 
         {/* Right Image */}
         <div className="w-full flex-1">
-          <div className="w-full md:w-[507px] relative min-h-[300px] md:min-h-[446px]">
+          <div className="w-full md:w-[507px]  md:mx-auto relative min-h-[300px] md:min-h-[446px]">
           <div
-            className="absolute inset-0 bg-gray-300 border border-[#DEDEDE] rounded-[16px]"
+            className="absolute  inset-0 bg-gray-300 border border-[#DEDEDE] rounded-[16px]"
             style={{
               backgroundImage: "url('/images/join-us.png')",
               backgroundSize: "cover",

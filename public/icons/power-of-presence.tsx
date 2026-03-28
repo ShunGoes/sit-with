@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { Pill } from "@/components/ui/pill";
+import { motion } from "motion/react";
 
 export function PowerOfPresence() {
   const cards = [
@@ -62,14 +65,14 @@ export function PowerOfPresence() {
   ];
 
   return (
-    <section className="container mx-auto py-10 lg:py-24 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
+    <section className="container mx-auto py-10 lg:py-24 flex flex-col xl:flex-row items-center justify-between gap-10 xl:gap-20">
       {/* Left Content */}
       <div className="flex-1  max-w-xl">
         <div className="flex justify-center lg:text-start">
         <Pill text="The power of presence" />
 
         </div>
-        <h2 className="heading-2 lg:leading-[54px] font-normal text-center ">
+        <h2 className="heading-2 xl:leading-[54px] font-normal text-center ">
           Sit-With-PD harnesses the transformative power of presence-based
           therapy and personal development through authentic connection and
           guided facilitation.
@@ -79,8 +82,12 @@ export function PowerOfPresence() {
       {/* Right Content - Grid */}
       <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 w-full max-w-2xl">
         {cards.map((card, index) => (
-          <div
+          <motion.div
             key={index}
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
             className="flex flex-col rounded-[10px] bg-[#E9EDF0] p-6 lg:p-4.5"
           >
             <div className="w-12.5 h-12.5 rounded-full bg-[#25756A1A] flex items-center justify-center mb-6">
@@ -92,7 +99,7 @@ export function PowerOfPresence() {
             <p className="text-base text-[#14312D] font-normal leading-relaxed lg:leading-[24px] ">
               {card.description}
             </p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

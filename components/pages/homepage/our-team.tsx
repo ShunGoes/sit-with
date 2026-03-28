@@ -1,4 +1,7 @@
+"use client";
+
 import { Pill } from "@/components/ui/pill";
+import { motion } from "motion/react";
 
 export function OurTeam() {
   const team = [
@@ -39,7 +42,14 @@ export function OurTeam() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
         {team.map((member, index) => (
-          <div key={index} className="flex flex-col h-[296px] ">
+          <motion.div
+            key={index}
+            initial={{ scale: 0.8, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="flex flex-col h-[296px] "
+          >
             <div className="w-full aspect-[4/5] bg-gray-200 rounded-xl mb-6 relative overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center text-gray-400">
                 [Image]
@@ -48,13 +58,13 @@ export function OurTeam() {
             <p className="text-base font-semibold text-[#181D27] mb-1">
               {member.name}
             </p>
-            <p className="text-[#649351] text-lg font-normal mb-2">
+            <p className="text-[#649351] text-lg lg:text-base xl:text-lg font-normal mb-2">
               {member.role}
             </p>
-            <p className="text-base text-[#535862] leading-relaxed  lg:leading-[1.675rem]">
+            <p className="text-base text-[#535862] leading-relaxed lg:leading-tight  xl:leading-[1.675rem]">
               {member.description}
             </p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

@@ -1,7 +1,12 @@
+
+
+"use client";
+
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Pill } from "@/components/ui/pill";
 import Image from "next/image";
+import { motion } from "motion/react";
 
 export function HowWeHelp() {
   const cards = [
@@ -35,19 +40,23 @@ export function HowWeHelp() {
 
       {/* Heading */}
       <h2 className=" text-center heading-2 ">
-        Find the support you need without feeling overwhelmed <br /> Take simple
+        Find the support you need without feeling overwhelmed. <br className="sm:hidden md:block" /> Take simple
         steps toward a healthier, more balanced life
       </h2>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mt-10 max-w-6xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-5 xl:gap-8 w-full sm:w-8/12 md:w-full sm:mx-auto mt-10 max-w-6xl">
         {cards.map((card, index) => (
-          <div
+          <motion.div
             key={index}
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
             className="flex flex-col rounded-2xl border border-[#DEDEDE] bg-white p-4 lg:p-5 hover:shadow-[0px_2px_20px_rgba(0,0,0,0.08)] transition-shadow"
           >
             {/* Image Placeholder */}
-            <div className="w-full  h-48 bg-gray-200 rounded-xl mb-6 overflow-hidden relative">
+            <div className="w-full  h-48 lg:h-40 xl:h-48 bg-gray-200 rounded-xl mb-6 overflow-hidden relative">
               <Image src={card.image} alt={card.title} fill className=""/>
             </div>
 
@@ -66,7 +75,7 @@ export function HowWeHelp() {
             >
               learn more <ChevronRight className="w-4 h-4 ml-1" />
             </Link>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
