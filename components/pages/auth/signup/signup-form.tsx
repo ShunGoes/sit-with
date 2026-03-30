@@ -59,7 +59,7 @@ export default function SignupForm() {
         <div className="flex flex-col md:gap-2">
           <div className="flex items-center gap-2 mb-8 justify-center md:justify-start">
             <Image
-              src="/images/logo.png"
+              src="/images/logo.webp"
               alt="sit with PD logo"
               width={30}
               height={30}

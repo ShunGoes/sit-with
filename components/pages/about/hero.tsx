@@ -5,7 +5,7 @@ export function AboutHero() {
   return (
     <section
       style={{
-        backgroundImage: "url('/images/about-bg.png')",
+        backgroundImage: "url('/images/about-bg.webp')",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
       }}

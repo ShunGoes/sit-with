@@ -82,7 +82,7 @@ export function CoreValues() {
 
             <div className="relative w-8 md:w-[228px] h-4 shrink-0 my-4 md:my-0">
               <Image
-                src={"/images/brown-arrow.png"}
+                src={"/images/brown-arrow.webp"}
                 alt="brown arrow"
                 fill
                 className="object-contain"
@@ -108,7 +108,7 @@ export function CoreValues() {
           <div className="flex justify-between w-full">
             <div className="relative w-[319px]  h-[100px] flex justify-center items-center ">
               <Image
-                src={"/images/green-arrow.png"}
+                src={"/images/green-arrow.webp"}
                 alt="green arrow"
                 width={15}
                 height={15}
@@ -117,7 +117,7 @@ export function CoreValues() {
             </div>
             <div className="relative w-[319px]  h-[100px] flex justify-center items-center ">
               <Image
-                src={"/images/green-arrow.png"}
+                src={"/images/green-arrow.webp"}
                 alt="green arrow"
                 width={15}
                 height={15}
@@ -144,7 +144,7 @@ export function CoreValues() {
 
             <div className="relative w-8 md:w-[228px] h-4 shrink-0 my-4 md:my-0">
               <Image
-                src={"/images/brown-arrow.png"}
+                src={"/images/brown-arrow.webp"}
                 alt="brown arrow"
                 fill
                 className="object-contain"

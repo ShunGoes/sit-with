@@ -4,22 +4,22 @@ import Image from "next/image";
 export function GlimpseGallery() {
   const images = [
     {
-      src: "/images/glimpse-1.png", // using placeholder images
+      src: "/images/glimpse-1.webp", // using placeholder images
       title: "Nature Walks",
       subtitle: "Connect with the outdoors",
     },
     {
-      src: "/images/glimpse-2.png",
+      src: "/images/glimpse-2.webp",
       title: "Journaling",
       subtitle: "Time for quiet reflection",
     },
     {
-      src: "/images/glimpse-3.png",
+      src: "/images/glimpse-3.webp",
       title: "Group Sessions",
       subtitle: "Share and grow together",
     },
     {
-      src: "/images/glimpse-4.png",
+      src: "/images/glimpse-4.webp",
       title: "Quiet Meditation",
       subtitle: "Find your inner peace",
     },

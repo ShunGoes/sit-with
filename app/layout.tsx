@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans, Geist } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/nav/navbar";
 import { ConditionalFooter } from "@/components/footer/conditional-footer";
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const inter = Inter({
   variable: "--font-inter",
@@ -13,7 +11,7 @@ const inter = Inter({
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta-sans",
+  variable: "--font-heading",
   subsets: ["latin"],
 });
 
@@ -28,10 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body
-        className={`${inter.variable} ${plusJakartaSans.variable} font-sans antialiased  flex flex-col min-h-screen`}
-      >
+    <html lang="en" className={`${inter.variable} ${plusJakartaSans.variable}`}>
+      <body className="antialiased flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-1">{children}</main>
         <ConditionalFooter />

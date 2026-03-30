@@ -15,21 +15,21 @@ export function HowWeHelp() {
       description:
         "Structured sessions designed to support your wellbeing journey at your own pace.",
       link: "/programs",
-      image: '/images/guided-programs.png'
+      image: '/images/guided-programs.webp'
     },
     {
       title: "Therapeutic Camps",
       description:
       "Take a break from the noise and focus fully on your healing and growth.",
       link: "/camps",
-      image: '/images/therapeutic-camps.png'
+      image: '/images/therapeutic-camps.webp'
     },
     {
       title: "One-on-One Consultation",
       description:
       "Speak with a professional who understands and guides you personally.",
       link: "/consultation",
-      image: '/images/one-on-one.png'
+      image: '/images/one-on-one.webp'
     },
   ];
 

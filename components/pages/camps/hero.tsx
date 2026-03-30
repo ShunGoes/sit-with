@@ -5,7 +5,7 @@ export function CampHero() {
   return (
     <section
       style={{
-        backgroundImage: "url('/images/camp-hero.png')",
+        backgroundImage: "url('/images/camp-hero.webp')",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
       }}

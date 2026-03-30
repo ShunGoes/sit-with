@@ -31,7 +31,7 @@ export function CtaBanner() {
           <div
             className="absolute  inset-0 bg-gray-300 border border-[#DEDEDE] rounded-[16px]"
             style={{
-              backgroundImage: "url('/images/join-us.png')",
+              backgroundImage: "url('/images/join-us.webp')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}

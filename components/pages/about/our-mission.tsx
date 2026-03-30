@@ -82,7 +82,7 @@ export function OurMission() {
         {/* Using the join-us image as a placeholder since it features people connecting */}
         <div className="w-full min-h-[446px] rounded-[16px] border-[#DEDEDE] overflow-hidden relative border">
           <Image
-            src="/images/join-us.png"
+            src="/images/join-us.webp"
             alt="Our Mission"
             fill
             className="object-cover"

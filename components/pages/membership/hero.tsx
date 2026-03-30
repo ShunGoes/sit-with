@@ -4,7 +4,7 @@ export function MembershipHero() {
   return (
     <section
       style={{
-        backgroundImage: "url('/images/membership-bg.png')",
+        backgroundImage: "url('/images/membership-bg.webp')",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
       }}

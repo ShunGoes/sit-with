@@ -11,7 +11,7 @@ export function Footer() {
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{
-          backgroundImage: "url(/images/pattern.png)",
+          backgroundImage: "url(/images/pattern.webp)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

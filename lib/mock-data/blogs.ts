@@ -20,7 +20,7 @@ export const mockBlogs: BlogPost[] = [
       "Understanding your emotions without rushing to fix them can lead to deeper clarity and lasting growth",
     readTime: "5 mins read",
     category: "Reflection",
-    image: "/images/blog-placeholder-1.png", // Will just use a gray div if image not found
+    image: "/images/blog-placeholder-1.webp", // Will just use a gray div if image not found
     content: [
       "In a world that constantly encourages movement, distraction, and quick solutions, sitting still with our emotions can feel unfamiliar, even uncomfortable. We are often taught to fix, suppress, or escape what we feel rather than understand it.",
       "But not every emotion needs to be solved immediately. Sometimes, what we need most is the ability to simply sit with what is present.",
@@ -55,7 +55,7 @@ export const mockBlogs: BlogPost[] = [
       "In a fast-paced world, creating space to pause can improve your mental clarity and overall wellbeing",
     readTime: "5 mins read",
     category: "Wellbeing",
-    image: "/images/blog-placeholder-2.png",
+    image: "/images/blog-placeholder-2.webp",
     content: [
       "Life moves fast. Between work, family, and digital commitments, finding a moment to pause can feel like an impossible luxury. Yet, intentionally slowing down is one of the most powerful things you can do for your mental and physical health.",
       "When we slow down, we give our nervous system a chance to reset. We step out of 'fight or flight' mode and allow our bodies to recover from the stress of constant stimulation.",
@@ -70,7 +70,7 @@ export const mockBlogs: BlogPost[] = [
       "Small, consistent practices can help you become more aware of your thoughts, reactions, and patterns",
     readTime: "5 mins read",
     category: "Personal Growth",
-    image: "/images/blog-placeholder-3.png",
+    image: "/images/blog-placeholder-3.webp",
     content: [
       "Emotional awareness is the foundation of a balanced life. It allows us to understand our triggers, manage our responses, and build deeper connections with others.",
       "Developing this awareness takes practice. It starts with checking in with yourself regularly. Ask yourself simply: 'How am I feeling right now?'",
