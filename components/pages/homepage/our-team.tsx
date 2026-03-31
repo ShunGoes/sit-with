@@ -61,9 +61,9 @@ export function OurTeam() {
             <p className="text-[#649351] text-lg lg:text-base xl:text-lg font-normal mb-2">
               {member.role}
             </p>
-            <p className="text-base text-[#535862] leading-relaxed lg:leading-tight  xl:leading-[1.675rem]">
+            {/* <p className="text-base text-[#535862] leading-relaxed lg:leading-tight  xl:leading-[1.675rem]">
               {member.description}
-            </p>
+            </p> */}
           </motion.div>
         ))}
       </div>

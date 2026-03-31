@@ -88,7 +88,7 @@ export function PowerOfPresence() {
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="flex flex-col rounded-[10px] bg-[#E9EDF0] p-6 lg:p-4.5"
+            className="flex flex-col rounded-[10px] bg-[#CBD4DB66] p-6 lg:p-4.5"
           >
             <div className="w-12.5 h-12.5 rounded-full bg-[#25756A1A] flex items-center justify-center mb-6">
               {card.icon}
