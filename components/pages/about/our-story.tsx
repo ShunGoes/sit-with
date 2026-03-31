@@ -33,7 +33,7 @@ export function OurStory() {
   ];
 
   return (
-    <section className=" py-24 w-full">
+    <section className=" py-10 lg:py-24 w-full">
       <div className="container mx-auto  flex flex-col items-center">
         <h2 className="heading-2 text-center mb-16">Our Story</h2>
 
@@ -41,18 +41,16 @@ export function OurStory() {
           {steps.map((step, idx) => (
             <div
               key={idx}
-              className="bg-[#F2F4F7] border-l-4 border-[#649351] rounded-[10px] p-6 md:px-10 md:py-5 w-10/12 mx-auto "
+              className="bg-[#F2F4F7] border-l-4 border-[#649351] rounded-[10px] p-5 md:px-10 md:py-5 w-11/12 sm:w-10/12 mx-auto "
             >
               <div className="flex flex-col  gap-2 ">
-                <span className="text-[#606060] text-[16px] ">
-                  {step.year}
-                </span>
-                  <h3 className="font-medium text-[#242424] text-[20px]">
-                    {step.title}
-                  </h3>
-                  <p className="text-black text-[16px] leading-[24px]">
-                    {step.description}
-                  </p>
+                <span className="text-[#606060] text-base ">{step.year}</span>
+                <h3 className="font-medium text-[#242424] text-xl">
+                  {step.title}
+                </h3>
+                <p className="text-black text-base leading-relaxed">
+                  {step.description}
+                </p>
               </div>
             </div>
           ))}
