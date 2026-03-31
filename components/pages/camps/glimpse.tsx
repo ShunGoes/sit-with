@@ -26,7 +26,7 @@ export function GlimpseGallery() {
   ];
 
   return (
-    <section className="container mx-auto bg-[#F0F4F0] px-4 md:px-8 py-24 flex flex-col items-center">
+    <section className="container mx-auto bg-[#F0F4F0] px-4 md:px-8 py-10 lg:py-24 flex flex-col items-center">
       <Pill text="Camp Experience" />
       <h2 className="heading-2 text-center mb-16">
         A Glimpse Into the Experience
