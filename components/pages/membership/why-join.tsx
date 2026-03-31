@@ -27,8 +27,8 @@ export function WhyJoin() {
   ];
 
   return (
-    <section className="container mx-auto px-4 md:px-8 py-20 mt-10">
-      <h2 className="heading-2 text-center mb-16">Why Become a Member?</h2>
+    <section className="container mx-auto py-10 lg:py-20 mt-10">
+      <h2 className="heading-2 text-center mb-8 lg:mb-16">Why Become a Member?</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl mx-auto">
         {blocks.map((block, idx) => (
@@ -39,7 +39,7 @@ export function WhyJoin() {
             <h3 className="font-medium text-xl text-[#242424] mb-2">
               {block.title}
             </h3>
-            <p className="text-base text-black leading-[24px]">
+            <p className="text-base text-black leading-6">
               {block.desc}
             </p>
           </div>

@@ -2,13 +2,13 @@ import Image from "next/image";
 
 export function MembershipHero() {
   return (
-    <section>
-      <div className="relative w-full min-h-dvh h-dvh flex items-center justify-center  py-24">
+    <section className="w-full">
+      <div className="relative w-full min-h-[80dvh] xl:min-h-dvh xl:h-dvh flex items-center justify-center  py-24">
         <Image
           src={"/images/membership-bg.webp"}
           alt={"about oage bg image"}
           fill
-          className="object-cover object-[70%_center]"
+          className="object-cover object-[70%_center] md:object-center"
           priority
         />
         {/* <div className="absolute inset-0 bg-black/25" /> */}

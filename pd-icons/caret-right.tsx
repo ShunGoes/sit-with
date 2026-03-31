@@ -24,3 +24,4 @@ const CaretRight = ({ color = "#EBECEB", ...props }) => {
 export default CaretRight;
 
 
+

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import GrayCheckIcon from "@/pd-icons/gray-check";
 import { CheckCircle2 } from "lucide-react";
 
 export function MembershipPricing() {
@@ -52,19 +53,19 @@ export function MembershipPricing() {
       <h2 className="heading-2 text-center mb-4">
         Choose a Plan That Supports Your Growth
       </h2>
-      <p className="text-center text-[#697586] mb-16 max-w-2xl  leading-[24px]">
+      <p className="text-center text-[#697586] mb-6 lg:mb-16 max-w-2xl  leading-6">
         Find the subscription that works best for you. Choose wellbeing,
         encourage growth, move forward today. Cancel anytime without fees.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-11/12 max-w-6xl mx-auto items-stretch">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 xl:gap-8 w-11/12 sm:max-w-[400px] xl:max-w-6xl mx-auto items-stretch">
         {pricingPlans.map((plan, idx) => (
           <div
             key={idx}
-            className={`flex flex-col rounded-[32px] px-8 md:py-[100px] transition-all duration-300 relative ${
+            className={`flex flex-col rounded-[32px] px-8 py-15 md:py-[100px] transition-all duration-300 relative ${
               plan.highlight
-                ? "bg-white border-2 border-[#649351] z-10 md:-mt-4 md:mb-4"
-                : "bg-white border border-[#2C2D47]  mt-2 lg:scale-[0.95]"
+                ? "bg-white border-2 border-[#649351] z-10 xl:-mt-4 xl:mb-4"
+                : "bg-white border border-[#2C2D47]  xl:mt-2 xl:scale-[0.95]"
             }`}
           >
             <div className="text-center mb-8">
@@ -85,10 +86,12 @@ export function MembershipPricing() {
 
             <ul className="space-y-4 mb-10 flex-1">
               {plan.features.map((feature, fIdx) => (
-                <li key={fIdx} className="flex items-start gap-3">
-                  <CheckCircle2
-                    className={`w-5 h-5 shrink-0 mt-0.5 ${plan.highlight ? "text-[#60935D]" : "text-[#A8D675]"}`}
-                  />
+                <li key={fIdx} className="flex items-center gap-3">
+                  <span style={{
+                    background: "rgba(100, 147, 81, 0.2)"
+                  }} className="  w-[17px] h-[17px] rounded-full flex items-center justify-center ">
+                  <GrayCheckIcon color={"#649351"} />
+                  </span>
                   <span className="text-black text-base font-medium ">
                     {feature}
                   </span>

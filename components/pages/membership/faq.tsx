@@ -36,22 +36,22 @@ export function MembershipFaq() {
 
   return (
     <section className="container mx-auto px-4 md:px-8 py-20 flex flex-col items-center">
-      <h2 className="heading-2 text-center mb-16">Membership FAQ</h2>
+      <h2 className="heading-2 text-center mb-8 lg:mb-16">Membership FAQ</h2>
 
       <div className="w-full max-w-3xl flex flex-col gap-4  overflow-hidden bg-white">
         {faqs.map((faq, idx) => {
           const isOpen = openIndex === idx;
-
+ 
           return (
             <div
               key={idx}
               className={`shadow-[2px_2px_4px_#C7CAC61F] border border-[#EAEAEA] rounded-[8px] last:border-0`}
             >
               <button
-                className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
+                className="w-full flex items-center justify-between p-4 lg:p-6 text-left focus:outline-none"
                 onClick={() => setOpenIndex(isOpen ? null : idx)}
               >
-                <span className="font-medium text-xl text-[#131313]">
+                <span className="font-medium text-lg lg:text-xl text-[#131313]">
                   {faq.question}
                 </span>
                 <div className="shrink-0 text-[#071A34] ml-4">
@@ -64,8 +64,8 @@ export function MembershipFaq() {
               </button>
 
               {isOpen && (
-                <div className="px-6 pb-6 pr-12">
-                  <p className="text-black text-xl leading-[30px]">
+                <div className="lg:px-6 px-4 pb-6 pr-12">
+                  <p className="text-black text-base lg:text-xl leading-relaxed lg:leading-[30px]">
                     {faq.answer}
                   </p>
                 </div>

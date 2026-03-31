@@ -1,6 +1,6 @@
 import { Hero } from "@/components/pages/homepage/hero";
 import { HowWeHelp } from "@/components/pages/homepage/how-we-help";
-import { PowerOfPresence } from "@/public/icons/power-of-presence";
+import { PowerOfPresence } from "@/components/pages/homepage/power-of-presence";
 import { OurTeam } from "@/components/pages/homepage/our-team";
 import { Testimonials } from "@/components/pages/homepage/testimonials";
 import { CtaBanner } from "@/components/pages/homepage/cta-banner";
