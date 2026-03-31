@@ -23,7 +23,7 @@ export function Hero() {
       title: "Presence Changes Everything",
       description:
         "Join a global therapeutic network dedicated to presence-based healing, personal development, and emotional transformation.",
-      imageClass: "object-cover ",
+      imageClass: "object-cover object-[75%_center]  md:object-center ",
       titleWidth: "w-full sm:w-[40%] md:w-[40%] lg:w-[50%]"
     },
     {
@@ -34,7 +34,7 @@ export function Hero() {
       title: "Grow at Your Own Pace",
       description:
         "Take your time with structured guidance designed to support you gently through reflection, clarity, and personal growth.",
-      imageClass: "object-cover",
+      imageClass: "object-cover object-[75%_center] md:object-center",
       titleWidth: "w-full sm:w-[70%] md:w-[45%] lg:w-[60%]"
     },
     {
@@ -45,7 +45,7 @@ export function Hero() {
       title: "Build Awareness, One Step at a Time",
       description:
         "Develop simple, practical habits that help you better understand your thoughts, emotions, and daily responses.",
-      imageClass: "object-cover ",
+      imageClass: "object-cover  object-[75%_center] md:object-center",
       titleWidth: "w-full sm:w-[80%] md:w-[60%] lg:w-[70%]"
     },
   ]

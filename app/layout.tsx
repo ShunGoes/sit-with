@@ -4,7 +4,6 @@ import "./globals.css";
 import { Navbar } from "@/components/nav/navbar";
 import { ConditionalFooter } from "@/components/footer/conditional-footer";
 
-
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
