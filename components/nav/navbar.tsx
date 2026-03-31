@@ -51,9 +51,14 @@ export function Navbar() {
       <div className="container mx-auto px-4 md:px-8 h-20 flex items-center max-w-6xl justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-        <div className="w-[31px] h-[31px] relative ">
-          <Image src="/images/logo.webp" alt="Sit With PD Logo" fill className="object-cover" />
-        </div>
+          <div className="w-[31px] h-[31px] relative ">
+            <Image
+              src="/images/logo.webp"
+              alt="Sit With PD Logo"
+              fill
+              className="object-cover"
+            />
+          </div>
           <h4 className="text-sm font-semibold text-[#A8D675] tracking-tight">
             Sit With PD
           </h4>
@@ -177,20 +182,17 @@ export function Navbar() {
             {/* Close Button */}
             <div className="flex items-center justify-between mb-10">
               <Link href="/" className="flex items-center gap-2">
-                <div className="text-brand-green flex items-center justify-center">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-5h2v5h-2zm1-7.5c-.83 0-1.5-.67-1.5-1.5S11.17 6 12 6s1.5.67 1.5 1.5S12.83 9 12 9z" />
-                  </svg>
+                <div className="w-[31px] h-[31px] relative ">
+                  <Image
+                    src="/images/logo.webp"
+                    alt="Sit With PD Logo"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                <span className="text-brand-green font-medium text-lg tracking-tight">
+                <h4 className="text-sm font-semibold text-[#A8D675] tracking-tight">
                   Sit With PD
-                </span>
+                </h4>
               </Link>
               <button
                 onClick={() => setIsOpen(false)}
@@ -200,7 +202,6 @@ export function Navbar() {
                 <X size={24} />
               </button>
             </div>
-
 
             {/* Navigation Links */}
             <motion.div

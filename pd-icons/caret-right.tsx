@@ -1,6 +1,6 @@
 import React from "react";
 
-const CaretRight = ({color = "#EBECEB" , ...props}) => {
+const CaretRight = ({ color = "#EBECEB", ...props }) => {
   return (
     <svg
       width="7"
@@ -22,3 +22,5 @@ const CaretRight = ({color = "#EBECEB" , ...props}) => {
 };
 
 export default CaretRight;
+
+

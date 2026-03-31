@@ -3,163 +3,164 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
+import { useForm } from "react-hook-form";
+import MailIcon from "@/pd-icons/mail-icon";
+import PhoneIcon from "@/pd-icons/phone-icon";
+import LocationIcon from "@/pd-icons/location-icon";
 
 export function Footer() {
+  const form = useForm({
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  const onSubmit = (data: { email: string }) => {
+    console.log(data);
+  };
   return (
-    <footer className="bg-footer-bg relative overflow-hidden text-white w-full rounded-[20px] lg:rounded-[40px] ">
+    <footer className="bg-footer-bg relative overflow-hidden text-white w-full rounded-[20px] py-15 lg:rounded-[40px] ">
       {/* Pattern Overlay */}
       <div
-        className="absolute inset-0 opacity-10 pointer-events-none"
+        className="absolute inset-0 opacity-10 hidden md:block border-4 border-red-500 pointer-events-none"
         style={{
-          backgroundImage: "url(/images/pattern.webp)",
+          backgroundImage: "url(/images/pattern.png)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       />
 
-      <div className="container mx-auto px-4 md:px-8 pt-16 pb-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+      <div className="container mx-auto w-11/12 max-w-7xl relative z-10">
+        <div className="grid grid-cols-1  lg:grid-cols-3 gap-12 lg:gap-8 mb-15 lg:mb-30">
           {/* Brand Info */}
-          <div className="flex flex-col gap-4 lg:pr-8">
-            <Link href="/" className="flex items-center gap-2 mb-2">
-              <div className="text-brand-green flex items-center justify-center">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-5h2v5h-2zm1-7.5c-.83 0-1.5-.67-1.5-1.5S11.17 6 12 6s1.5.67 1.5 1.5S12.83 9 12 9z" />
-                </svg>
+          <div className="flex flex-col gap-4 ">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="w-[31px] h-[31px] relative ">
+                <Image
+                  src="/images/logo.webp"
+                  alt="Sit With PD Logo"
+                  fill
+                  className="object-cover"
+                />
               </div>
-              <span className="text-brand-green font-medium text-xl tracking-tight">
+              <h4 className="text-sm font-semibold text-[#A8D675] tracking-tight">
                 Sit With PD
-              </span>
+              </h4>
             </Link>
-            <p className="text-gray-300 text-sm leading-relaxed max-w-xs">
+            <p className="text-[#F8FFF5] text-sm leading-relaxed max-w-xs">
               Helping you pause, reflect, and grow.
             </p>
           </div>
 
-          {/* Programs Links */}
-          <div className="flex flex-col gap-4">
-            <h3 className="text-brand-green font-medium text-base mb-2">
-              Programs
-            </h3>
-            <Link
-              href="/programs"
-              className="text-gray-300 hover:text-white text-sm transition-colors"
-            >
-              Programs
-            </Link>
-            <Link
-              href="/membership"
-              className="text-gray-300 hover:text-white text-sm transition-colors"
-            >
-              Membership
-            </Link>
-            <Link
-              href="/camps"
-              className="text-gray-300 hover:text-white text-sm transition-colors"
-            >
-              Camps
-            </Link>
-            <Link
-              href="/consultation"
-              className="text-gray-300 hover:text-white text-sm transition-colors"
-            >
-              Consultation
-            </Link>
-            <Link
-              href="/blog"
-              className="text-gray-300 hover:text-white text-sm transition-colors"
-            >
-              Blog
-            </Link>
-          </div>
+          <div className="flex flex-col md:flex-row gap-5 md:gap-15 lg:justify-center ">
+            {/* Programs Links */}
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#6FB851] font-medium text-base  leading-[145%]">
+                Programs
+              </h3>
+              <Link
+                href="/programs"
+                className="text-[#F8FFF5] hover:underline  text-sm transition-all"
+              >
+                Programs
+              </Link>
+              <Link
+                href="/membership"
+                className="text-[#F8FFF5] hover:underline  text-sm transition-all"
+              >
+                Membership
+              </Link>
+              <Link
+                href="/camps"
+                className="text-[#F8FFF5] hover:underline  text-sm transition-all"
+              >
+                Camps
+              </Link>
+              <Link
+                href="/consultation"
+                className="text-[#F8FFF5] hover:underline  text-sm transition-all"
+              >
+                Consultation
+              </Link>
+              <Link
+                href="/blog"
+                className="text-[#F8FFF5] hover:underline  text-sm transition-all"
+              >
+                Blog
+              </Link>
+            </div>
 
-          {/* Company Links */}
-          <div className="flex flex-col gap-4">
-            <h3 className="text-brand-green font-medium text-base mb-2">
-              Company
-            </h3>
-            <Link
-              href="/about"
-              className="text-gray-300 hover:text-white text-sm transition-colors"
-            >
-              About us
-            </Link>
-            <Link
-              href="/contact"
-              className="text-gray-300 hover:text-white text-sm transition-colors"
-            >
-              Contact
-            </Link>
-            <Link
-              href="/privacy-policy"
-              className="text-gray-300 hover:text-white text-sm transition-colors"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms"
-              className="text-gray-300 hover:text-white text-sm transition-colors"
-            >
-              Terms of services
-            </Link>
+            {/* Company Links */}
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#6FB851] font-medium text-base  leading-[145%]">
+                Company
+              </h3>
+              <Link
+                href="/about"
+                className="text-[#F8FFF5] hover:underline  text-sm transition-all"
+              >
+                About us
+              </Link>
+              <Link
+                href="/contact"
+                className="text-[#F8FFF5] hover:underline  text-sm transition-all"
+              >
+                Contact
+              </Link>
+              <Link
+                href="/privacy-policy"
+                className="text-[#F8FFF5] hover:underline  text-sm transition-all"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/terms"
+                className="text-[#F8FFF5] hover:underline  text-sm transition-all"
+              >
+                Terms of services
+              </Link>
+            </div>
           </div>
 
           {/* Newsletter */}
           <div className="flex flex-col gap-4">
-            <h3 className="text-brand-green font-medium text-base mb-2">
+            <h3 className="text-[#6FB851] font-medium text-base  leading-[145%]">
               Newsletter
             </h3>
-            <p className="text-gray-300 text-xs leading-relaxed mb-2">
+            <p className="text-[#F8FFF5] text-sm leading-relaxed mb-2">
               Subscribe for updates on new programs and community insights.
             </p>
-            <form
-              className="flex flex-col gap-3"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <Input
-                type="email"
-                placeholder="Email address"
-                className="bg-white text-gray-900 border-none placeholder:text-gray-400 h-10 rounded-md"
-              />
-              <Button
-                type="submit"
-                className="bg-[#6B9057] hover:bg-[#587948] text-white h-10 rounded-md"
-              >
-                Subscribe
-              </Button>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="flex flex-col gap-2 sm:flex-row sm:gap-1 max-w-[500px]">
+                <Input
+                  type="email"
+                  {...form.register("email")}
+                  placeholder="Email address"
+                  className="bg-white text-gray-900 border-none placeholder:text-gray-400 h-10 w-full sm:w-[70%] rounded-md"
+                />
+                <Button
+                  type="submit"
+                  variant={"regular"}
+                  className="  w-full sm:w-[30%] "
+                >
+                  Subscribe
+                </Button>
+              </div>
             </form>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-6 pt-8 border-t border-white/10">
+        <div className="flex flex-col md:flex-row justify-between lg:items-center mb-10 gap-8 pt-8 ">
           <div className="flex items-center gap-3">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-gray-400"
-            >
-              <rect width="20" height="16" x="2" y="4" rx="2" />
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-            </svg>
-            <div className="flex flex-col">
-              <span className="text-xs text-gray-400">Email</span>
+            <MailIcon />
+            <div className="flex flex-col team-sm text-[#C7CAC6]">
+              <span className=" ">Email</span>
               <a
                 href="mailto:hello@sitwithpd.com"
-                className="text-sm text-gray-300 underline underline-offset-4 hover:text-white transition-colors"
+                className=" underline underline-offset-4 hover:text-white transition-colors"
               >
                 hello@sitwithpd.com
               </a>
@@ -167,51 +168,34 @@ export function Footer() {
           </div>
 
           <div className="flex items-center gap-3">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-gray-400"
-            >
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-            </svg>
-            <div className="flex flex-col">
-              <span className="text-xs text-gray-400">Phone</span>
-              <span className="text-sm text-gray-300 underline underline-offset-4">
+            <PhoneIcon />
+            <div className="flex flex-col team-sm text-[#C7CAC6]">
+              <span className=" ">Phone</span>
+              <a
+                href="tel:+1 234 567-890"
+                className=" underline underline-offset-4 hover:text-white transition-colors"
+              >
                 +1 (234) 567-890
-              </span>
+              </a>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-gray-400"
-            >
-              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-              <circle cx="12" cy="10" r="3" />
-            </svg>
-            <div className="flex flex-col">
-              <span className="text-xs text-gray-400">Location</span>
-              <span className="text-sm text-gray-300">Global Network</span>
+            <LocationIcon />
+            <div className="flex flex-col team-sm text-[#C7CAC6]">
+              <span className=" ">Location</span>
+              <a
+                href="mailto:hello@sitwithpd.com"
+                className=" underline underline-offset-4 hover:text-white transition-colors"
+              >
+                Global Network
+              </a>
             </div>
           </div>
         </div>
 
         <div className="text-center mt-12">
-          <p className="text-gray-400 text-xs">
+          <p className="text-[#F2F8EC] text-sm">
             © 2026 Sit-with-PD. All rights reserved.
           </p>
         </div>
