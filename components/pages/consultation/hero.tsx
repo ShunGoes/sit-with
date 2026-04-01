@@ -22,12 +22,7 @@ export function Hero() {
             >
               One-on-One Professional Consultation
             </h1>
-            <p className="lg:text-[1.25rem] text-xl text-[#F7FBF6] lg:text-center md:text-start lg:w-full sm:w-10/12 md:w-9/12 ">
-              Speak with a professional who understands and guides you
-              personally. Work directly with our certified professionals who
-              bring deep expertise in presence-based therapy, emotional healing,
-              and personal transformation.
-            </p>
+           
           </div>
           <div className="py-5 bg-[#A8D67599] w-full text-center rounded-[10px] ">
             <p className="text-[#0C240A] text-sm">Start your journey today</p>
