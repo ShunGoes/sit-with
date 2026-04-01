@@ -1,3 +1,4 @@
+"use client"
 import { Pill } from "@/components/ui/pill";
 import { motion } from "motion/react";
 
