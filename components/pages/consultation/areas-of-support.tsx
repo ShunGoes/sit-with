@@ -1,4 +1,5 @@
 import { Pill } from "@/components/ui/pill";
+import { motion } from "motion/react";
 
 const areas = [
   {
@@ -259,6 +260,25 @@ const areas = [
 ];
 
 export function AreasOfSupport() {
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.05,
+      },
+    },
+  } as const;
+
+  const cardVariants = {
+    hidden: { opacity: 0, x: -24 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.4, ease: "easeOut" },
+    },
+  } as const;
+
   return (
     <section className="py-10 lg:py-24">
       <div className="container mx-auto  flex flex-col items-center text-center">
@@ -268,10 +288,17 @@ export function AreasOfSupport() {
           needs
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.25 }}
+        >
           {areas.map((area, index) => (
-            <div
+            <motion.div
               key={index}
+              variants={cardVariants}
               className="flex flex-col text-left p-8 rounded-[10px] border-[0.87px] border-[#F3F4F6]  bg-white"
             >
               <div
@@ -285,9 +312,9 @@ export function AreasOfSupport() {
               <p className="text-[#4A5565] text-base leading-[1.425rem]">
                 {area.description}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

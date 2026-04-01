@@ -28,6 +28,16 @@ export function OurTeam() {
     },
   ];
 
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.05,
+      },
+    },
+  } as const;
+
   const cardVariants = {
     hidden: { opacity: 0, y: 24, scale: 0.98 },
     visible: {
@@ -47,15 +57,17 @@ export function OurTeam() {
         and walk the journey with you.
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-5xl">
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-5xl"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
         {team.map((member, index) => (
           <motion.div
             key={index}
             variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.45, ease: "easeOut", delay: index * 0.08 }}
             className="flex flex-col shadow-[0px_4px_4px_#00000014]"
           >
             <div className="w-full h-75 mb-6 relative overflow-hidden bg-transparent">
@@ -79,7 +91,7 @@ export function OurTeam() {
             </p> */}
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

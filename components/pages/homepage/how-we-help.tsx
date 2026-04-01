@@ -33,6 +33,16 @@ export function HowWeHelp() {
     },
   ];
 
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.05,
+      },
+    },
+  } as const;
+
   const cardVariants = {
     hidden: { opacity: 0, y: 24, scale: 0.98 },
     visible: {
@@ -55,15 +65,17 @@ export function HowWeHelp() {
       </h2>
 
       {/* Grid */}
-      <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-5 xl:gap-8 w-full sm:w-8/12 md:w-full sm:mx-auto mt-10 max-w-6xl">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-5 xl:gap-8 w-full sm:w-8/12 md:w-full sm:mx-auto mt-10 max-w-6xl"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
         {cards.map((card, index) => (
           <motion.div
             key={index}
             variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.4, ease: "easeOut", delay: index * 0.07 }}
             className="flex flex-col rounded-2xl border border-[#DEDEDE] bg-white p-4 lg:p-5 hover:shadow-[0px_2px_20px_rgba(0,0,0,0.08)] transition-shadow"
           >
             {/* Image Placeholder */}
