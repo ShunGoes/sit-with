@@ -6,7 +6,7 @@ import Image from "next/image";
 export function Hero() {
   return (
     <section className="w-full">
-      <div className="relative w-full min-h-dvh  flex items-center justify-center  py-24">
+      <div className="relative w-full min-h-svh lg:min-h-dvh flex items-center justify-center  py-24">
         <Image
           src={"/images/camp-hero.webp"}
           alt={"Camp page background image"}

@@ -3,7 +3,7 @@ import Image from "next/image";
 export function MembershipHero() {
   return (
     <section className="w-full">
-      <div className="relative w-full min-h-[80dvh] xl:min-h-dvh xl:h-dvh flex items-center justify-center  py-24">
+      <div className="relative w-full min-h-[80svh] lg:min-h-[80dvh] xl:min-h-dvh xl:h-dvh flex items-center justify-center  py-24">
         <Image
           src={"/images/membership-bg.webp"}
           alt={"about oage bg image"}

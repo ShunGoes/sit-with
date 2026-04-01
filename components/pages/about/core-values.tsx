@@ -58,7 +58,7 @@ export function CoreValues() {
   ];
 
   return (
-    <section className="bg-[#E9EDF0] py-24 w-full">
+    <section className="bg-[#E9EDF0] py-10 lg:py-24 w-full">
       <div className="container mx-auto px-4 md:px-8 flex flex-col items-center">
         <h2 className="heading-2 text-center mb-16">Our Core Values</h2>
 

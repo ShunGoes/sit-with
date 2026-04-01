@@ -70,12 +70,12 @@ export function OurTeam() {
             variants={cardVariants}
             className="flex flex-col shadow-[0px_4px_4px_#00000014]"
           >
-            <div className="w-full h-75 mb-6 relative overflow-hidden bg-transparent">
+            <div className="w-full aspect-4/5 mb-6 relative overflow-hidden bg-transparent">
               <Image
                 src={member.image}
                 alt={member.name}
                 fill
-                className="object-cover object-center"
+                className="object-cover object-top sm:object-center"
               />
             </div>
             <div className="space-y-1 px-2">

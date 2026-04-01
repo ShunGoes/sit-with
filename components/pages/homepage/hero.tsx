@@ -64,7 +64,7 @@ export function Hero() {
 
           return (
             <SwiperSlide key={slide.id}>
-              <div className="relative w-full min-h-dvh h-dvh flex items-center justify-center  py-24">
+              <div className="relative w-full min-h-svh h-svh lg:min-h-dvh lg:h-dvh flex items-center justify-center  py-24">
                 <Image
                   src={src}
                   alt={slide.alt}
