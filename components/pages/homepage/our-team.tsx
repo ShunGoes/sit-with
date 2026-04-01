@@ -2,34 +2,41 @@
 
 import { Pill } from "@/components/ui/pill";
 import { motion } from "motion/react";
+import Image from "next/image";
 
 export function OurTeam() {
   const team = [
     {
-      name: "Mr Sam.",
+      name: "Oluwatosin SAM-ABEREOLA(PD)..",
       role: "Founder & CEO",
-      description:
-        "Ac dignissim nunc quam turpis varius nulla. Id etiam consectetur tellus ac.",
+      image: "/images/team-1.png"
     },
     {
-      name: "Mr Sam",
-      role: "Engineering Manager",
-      description:
-        "Ac dignissim nunc quam turpis varius nulla. Id etiam consectetur tellus ac.",
+      name: "Oluwafunmike SAM-ABEREOLA",
+      role: "Co-Founder/CFO",
+      image: "/images/team-2.png"
     },
     {
-      name: "Mr Sam",
-      role: "Product Manager",
-      description:
-        "Ac dignissim nunc quam turpis varius nulla. Id etiam consectetur tellus ac.",
+      name: "Temitope BAMIDELE.",
+      role: "Public Relation/CTO",
+      image: "/images/team-3.png"
     },
     {
-      name: "Mr Sam",
-      role: "Frontend Developer",
-      description:
-        "Ac dignissim nunc quam turpis varius nulla. Id etiam consectetur tellus ac.",
+      name: "Clementina B. ADETOYE",
+      role: "Camp Director/COO",
+      image: "/images/team-4.png"
     },
   ];
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 24, scale: 0.98 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.45, ease: "easeOut" },
+    },
+  } as const;
 
   return (
     <section className="container mx-auto pt-24 lg:py-24 flex flex-col items-center">
@@ -40,27 +47,33 @@ export function OurTeam() {
         and walk the journey with you.
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-5xl">
         {team.map((member, index) => (
           <motion.div
             key={index}
-            initial={{ scale: 0.8, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="flex flex-col h-[296px] "
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.45, ease: "easeOut", delay: index * 0.08 }}
+            className="flex flex-col shadow-[0px_4px_4px_#00000014]"
           >
-            <div className="w-full aspect-[4/5] bg-gray-200 rounded-xl mb-6 relative overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                [Image]
-              </div>
+            <div className="w-full h-75 mb-6 relative overflow-hidden bg-transparent">
+              <Image
+                src={member.image}
+                alt={member.name}
+                fill
+                className="object-cover object-center"
+              />
             </div>
-            <p className="text-base font-semibold text-[#181D27] mb-1">
+            <div className="space-y-1 px-2">
+              <p className="text-base font-semibold text-[#181D27] ">
               {member.name}
             </p>
             <p className="text-[#649351] text-lg lg:text-base xl:text-lg font-normal mb-2">
               {member.role}
             </p>
+            </div>
             {/* <p className="text-base text-[#535862] leading-relaxed lg:leading-tight  xl:leading-[1.675rem]">
               {member.description}
             </p> */}

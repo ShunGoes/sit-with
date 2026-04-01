@@ -7,13 +7,15 @@ import { BookingForm } from "@/components/pages/consultation/booking-form";
 
 export default function ConsultationPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center bg-[#F9F7F5] w-full">
+    <main className="flex min-h-screen flex-col items-center  w-full">
       <Hero />
-      <AreasOfSupport />
+      <div className="w-11/12 mx-auto">
+        <AreasOfSupport />
       <ProcessCards />
-      
+      </div>
+
       {/* Testimonials section */}
-      <div className="w-full pb-24">
+      <div className="w-full ">
         <Testimonials />
       </div>
 

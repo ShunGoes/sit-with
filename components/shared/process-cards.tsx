@@ -25,10 +25,10 @@ const processSteps = [
 
 export function ProcessCards() {
   return (
-    <section className="py-24 bg-white flex flex-col items-center">
-      <div className="container mx-auto px-4 md:px-8 text-center flex flex-col items-center">
+    <section className="py-10 lg:py-24 bg-white flex flex-col items-center">
+      <div className="container mx-auto text-center flex flex-col items-center">
         <Pill text="How It Works" className="mb-4" />
-        <h2 className="heading-2 mb-16 max-w-2xl">
+        <h2 className="heading-2 mb-8 lg:mb-16 max-w-2xl">
           A simple, straightforward process designed for your comfort
         </h2>
 
@@ -36,13 +36,13 @@ export function ProcessCards() {
           {processSteps.map((item, index) => (
             <div 
               key={index} 
-              className="bg-[#3A5D35] flex flex-col rounded-[16px] p-8 min-h-[300px]"
+              className="bg-[#314C14] flex flex-col rounded-[16px] px-5 py-6 lg:p-8 min-[250px] lg:min-h-75"
             >
-              <div className="w-10 h-10 rounded-full bg-[#A3D979] flex items-center justify-center text-[#2E4A2A] font-medium text-lg mb-12">
+              <div className="w-10.5 h-10.5 rounded-full bg-secondary-green flex items-center justify-center text-[#30430E] font-medium text-lg mb-6">
                 {item.step}
               </div>
-              <h3 className="text-white font-medium text-xl mb-4">{item.title}</h3>
-              <p className="text-[#EBECEB] text-base leading-relaxed opacity-90">{item.description}</p>
+              <h3 className="text-[#FBFFF6] font-emibold text-lg mb-2">{item.title}</h3>
+              <p className="text-[#FBFFF6] text-base leading-[1.425rem]">{item.description}</p>
             </div>
           ))}
         </div>

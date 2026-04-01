@@ -68,11 +68,11 @@ export function PowerOfPresence() {
     <section className="container mx-auto py-10 lg:py-24 flex flex-col xl:flex-row items-center justify-between gap-10 xl:gap-20">
       {/* Left Content */}
       <div className="flex-1  max-w-xl">
-        <div className="flex justify-center lg:text-start">
+        <div className="flex justify-center lg:text-start xl:justify-start">
         <Pill text="The power of presence" />
 
         </div>
-        <h2 className="heading-2 xl:leading-[54px] font-normal text-center ">
+        <h2 className="heading-2 xl:leading-13.5 font-normal text-center xl:text-start ">
           Sit-With-PD harnesses the transformative power of presence-based
           therapy and personal development through authentic connection and
           guided facilitation.

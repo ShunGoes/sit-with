@@ -15,23 +15,33 @@ export function HowWeHelp() {
       description:
         "Structured sessions designed to support your wellbeing journey at your own pace.",
       link: "/programs",
-      image: '/images/guided-programs.webp'
+      image: '/images/help-1.png'
     },
     {
       title: "Therapeutic Camps",
       description:
       "Take a break from the noise and focus fully on your healing and growth.",
       link: "/camps",
-      image: '/images/therapeutic-camps.webp'
+      image: '/images/help-2.png'
     },
     {
       title: "One-on-One Consultation",
       description:
       "Speak with a professional who understands and guides you personally.",
       link: "/consultation",
-      image: '/images/one-on-one.webp'
+      image: '/images/help-3.png'
     },
   ];
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 24, scale: 0.98 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.4, ease: "easeOut" },
+    },
+  } as const;
 
   return (
     <section className="container mx-auto   pt-15 pb-20 flex flex-col items-center">
@@ -45,14 +55,15 @@ export function HowWeHelp() {
       </h2>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-5 xl:gap-8 w-full sm:w-8/12 md:w-full sm:mx-auto mt-10 max-w-6xl">
+      <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-5 xl:gap-8 w-full sm:w-8/12 md:w-full sm:mx-auto mt-10 max-w-6xl">
         {cards.map((card, index) => (
           <motion.div
             key={index}
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.4, ease: "easeOut", delay: index * 0.07 }}
             className="flex flex-col rounded-2xl border border-[#DEDEDE] bg-white p-4 lg:p-5 hover:shadow-[0px_2px_20px_rgba(0,0,0,0.08)] transition-shadow"
           >
             {/* Image Placeholder */}
@@ -61,7 +72,7 @@ export function HowWeHelp() {
             </div>
 
             {/* Content */}
-            <h3 className="text-xl font-medium text-[#2424240 mb-2">
+            <h3 className="text-xl font-medium text-[#242424] mb-2">
               {card.title}
             </h3>
             <p className="text-[16px] text-black leading-relaxed mb-6 ">
@@ -77,7 +88,7 @@ export function HowWeHelp() {
             </Link>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -8,6 +8,13 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Full Name is required"),
@@ -39,12 +46,12 @@ export function BookingForm() {
   };
 
   return (
-    <section className="py-24 bg-white flex flex-col items-center">
-      <div className="container mx-auto px-4 md:px-8 max-w-3xl border border-[#EAECF0] rounded-[16px] p-8 md:p-12 shadow-[0px_4px_6px_-2px_rgba(16,24,40,0.03),0px_12px_16px_-4px_rgba(16,24,40,0.08)]">
+    <section className="py-10 lg:py-24 w-full bg-white flex flex-col items-center">
+      <div className="container mx-auto  max-w-4xl border border-[#0000001A] bg-[#FBFFF9] rounded-[8px] p-6 md:p-13 shadow-[2px_2px_4px_#0000001F]">
         <div className="flex flex-col items-center text-center mb-10">
           <h2 className="heading-2 mb-2">Book Your Consultation</h2>
           <p className="text-[#697586] text-base max-w-lg">
-            Take a brave step towards healing. Let's find out how we can best support you on your wellness journey.
+            Fill out the form below and we'll connect you with the right professional for your needs.
           </p>
         </div>
 
@@ -55,6 +62,7 @@ export function BookingForm() {
               name="fullName"
               label="Full Name*"
               placeholder="Please Provide"
+              className="bg-white"
             />
             <FormFieldComp
               control={control}
@@ -62,6 +70,7 @@ export function BookingForm() {
               type="email"
               label="Email Address*"
               placeholder="YourEmail@gmail.com"
+              className="bg-white"
             />
           </div>
 
@@ -72,6 +81,7 @@ export function BookingForm() {
               type="text"
               label="Phone Number*"
               placeholder="+2340 0000 0000"
+              className="bg-white"
             />
             <Controller
               control={control}
@@ -82,16 +92,22 @@ export function BookingForm() {
                     <FieldLabel className="text-[#344054] text-[14px] mb-2" htmlFor="consultationType">
                       Consultation Type *
                     </FieldLabel>
-                    <select
-                      id="consultationType"
-                      {...field}
-                      className="border-[0.75px] border-[#EAECF0] bg-[#F2F4F7] rounded-[5px] w-full text-[12px] font-medium text-[#344054] focus-visible:border-none focus-visible:ring-0 px-3 py-4 h-11"
+                    <Select
+                      value={field.value}
+                      onValueChange={field.onChange}
                     >
-                      <option value="" disabled hidden>Select an option</option>
-                      <option value="individual">Individual</option>
-                      <option value="couples">Couples</option>
-                      <option value="group">Group</option>
-                    </select>
+                      <SelectTrigger className="bg-white" id="consultationType">
+                        <SelectValue placeholder="Select a Topic" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem className="text-sm text-[#101928" value="emotional-healing">Emotional healing</SelectItem>
+                        <SelectItem className="text-sm text-[#101928" value="personal-development">Personal development</SelectItem>
+                        <SelectItem className="text-sm text-[#101928" value="relationship-guidance">Relationship guidance</SelectItem>
+                        <SelectItem className="text-sm text-[#101928" value="life-transition">Life transition</SelectItem>
+                        <SelectItem className="text-sm text-[#101928" value="general-wellness">General wellness </SelectItem>
+                        <SelectItem className="text-sm text-[#101928" value="others">Others</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
