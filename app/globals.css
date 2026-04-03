@@ -153,40 +153,56 @@ h6 {
 
 }
 
-/* Trnansition styles  */
-html[data-direction="forward"] ::view-transition-new(root) {
-  animation: slide-in 0.35s ease forwards
+/* Transition styles  */
+::view-transition-group(root) {
+  animation-duration: 0.35s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-html[data-direction="forward"]::view-transition-old(root) {
-  animation: slide-out 0.35s ease forwards
+::view-transition-old(root),
+::view-transition-new(root) {
+  /* Prevent default browser crossfade for pure sliding */
+  mix-blend-mode: normal;
+}
+
+/* FORWARD: New page slides over from right, old page pushes back slightly */
+html[data-direction="forward"] ::view-transition-old(root) {
+  animation: push-out 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+html[data-direction="forward"] ::view-transition-new(root) {
+  animation: slide-in-from-right 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  z-index: 10;
+}
+
+/* BACK: Old page slides away to right, new page restores from left */
+html[data-direction="back"] ::view-transition-old(root) {
+  animation: slide-out-to-right 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  z-index: 10;
 }
 
 html[data-direction="back"] ::view-transition-new(root) {
-  animation: slide-in 0.35s ease forwards
+  animation: pop-in-from-left 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-html[data-direction="back"]::view-transition-old(root) {
-  animation: slide-out 0.35s ease forwards
+@keyframes slide-in-from-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
 }
 
-
-@keyframes slide-in {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
+@keyframes slide-out-to-right {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
 }
 
-@keyframes slide-out {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
-  }
+@keyframes push-out {
+  from { transform: translateX(0); filter: brightness(1); }
+  to { transform: translateX(-30%); filter: brightness(0.8); }
+}
+
+@keyframes pop-in-from-left {
+  from { transform: translateX(-30%); filter: brightness(0.8); }
+  to { transform: translateX(0); filter: brightness(1); }
 }
 
 /* CSS Styles  */
