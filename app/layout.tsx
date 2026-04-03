@@ -5,6 +5,7 @@ import { Navbar } from "@/components/nav/navbar";
 import { ConditionalFooter } from "@/components/footer/conditional-footer";
 import { ViewTransition } from "react";
 import { ViewTransitionTracker } from "@/components/providers/view-transition-tracker";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,12 +30,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${plusJakartaSans.variable}`}>
       <body className="antialiased flex flex-col min-h-screen">
-        <ViewTransitionTracker />
-        <Navbar />
-        <ViewTransition>
-          <main className="flex-1">{children}</main>
-        </ViewTransition>
-        <ConditionalFooter />
+        <TooltipProvider>
+          <ViewTransitionTracker />
+          <ViewTransition>{children}</ViewTransition>
+        </TooltipProvider>
       </body>
     </html>
   );

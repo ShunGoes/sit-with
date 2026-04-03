@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import { Pill } from "@/components/ui/pill";
-import useMobile from "@/hooks/use-mobile";
+import useMobile from "@/hooks/use-mobile-breakpoint";
 import { CheckCircle2 } from "lucide-react";
 
 export function RetreatBenefits() {
@@ -12,7 +12,7 @@ export function RetreatBenefits() {
     "Gain clarity and emotional balance",
   ];
 
-  const {isMobile} = useMobile()
+  const { isMobile } = useMobile();
 
   return (
     <section className="py-10 lg:py-24 w-full">
@@ -30,7 +30,14 @@ export function RetreatBenefits() {
                 <div
                   key={idx}
                   className="flex items-center justify-between gap-4 bg-white shadow-[0px_4px_24px_rgba(221,228,234,0.5)] rounded-[16px] p-4  md:px-10 py-5 transition-transform hover:-translate-y-1"
-                  style={isMobile ? {} : { marginLeft: `${idx * 20}px`, width: 'calc(100% - 60px)' }}
+                  style={
+                    isMobile
+                      ? {}
+                      : {
+                          marginLeft: `${idx * 20}px`,
+                          width: "calc(100% - 60px)",
+                        }
+                  }
                 >
                   <div className="flex items-center gap-2 md:gap-4">
                     <CheckCircle2 className="w-7 h-7 text-white fill-[#1AAB7A]" />
@@ -38,7 +45,7 @@ export function RetreatBenefits() {
                       {benefit}
                     </span>
                   </div>
-                  
+
                   {/* Decorative faint lines matching the design */}
                   <div className="hidden md:flex flex-col gap-1.5">
                     <div className="w-8 h-1.5 bg-[#E9EDF0] rounded-full"></div>
@@ -53,5 +60,3 @@ export function RetreatBenefits() {
     </section>
   );
 }
-
-
