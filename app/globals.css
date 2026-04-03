@@ -153,6 +153,41 @@ h6 {
 
 }
 
+/* Trnansition styles  */
+html[data-direction="forward"] ::view-transition-new(root) {
+  animation: slide-in 0.35s ease forwards
+}
+
+html[data-direction="forward"]::view-transition-old(root) {
+  animation: slide-out 0.35s ease forwards
+}
+
+html[data-direction="back"] ::view-transition-new(root) {
+  animation: slide-in 0.35s ease forwards
+}
+
+html[data-direction="back"]::view-transition-old(root) {
+  animation: slide-out 0.35s ease forwards
+}
+
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
 
 /* CSS Styles  */
 .scrollbar-hide {
