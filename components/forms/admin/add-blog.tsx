@@ -25,6 +25,11 @@ export default function AdminBlogEditor() {
     },
   });
 
+  const onSubmit = (data: AddBlogFormValues) => {
+    console.log("Add blog submitted:", data);
+    // TODO: wire up API call (e.g. POST /api/blogs)
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -62,7 +67,11 @@ export default function AdminBlogEditor() {
 
       {/* Form context wraps both children so context is never lost on toggle */}
       <FormProvider {...form}>
-        {mode === "write" ? <BlogForm /> : <BlogPreview />}
+        {mode === "write" ? (
+          <BlogForm onSubmit={onSubmit} />
+        ) : (
+          <BlogPreview />
+        )}
       </FormProvider>
     </div>
   );

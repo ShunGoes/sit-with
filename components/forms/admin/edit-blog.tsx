@@ -94,7 +94,7 @@ export default function EditBlogEditor({ blog }: EditBlogEditorProps) {
 
       <FormProvider {...form}>
         {mode === "write" ? (
-          <BlogForm onSubmit={form.handleSubmit(onSubmit)} submitLabel="Save Changes" />
+          <BlogForm onSubmit={onSubmit} submitLabel="Save Changes" />
         ) : (
           <BlogPreview />
         )}
