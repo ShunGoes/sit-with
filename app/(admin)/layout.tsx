@@ -9,6 +9,13 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+});
 
 export default function ProtectedLayout({
   children,
@@ -39,7 +46,7 @@ export default function ProtectedLayout({
             </Breadcrumb>
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+        <div className={`flex flex-1 flex-col gap-4 p-4 pt-0 ${poppins.className}`}>
           {children}
         </div>
       </SidebarInset>

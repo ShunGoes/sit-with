@@ -1,104 +1,61 @@
 "use client";
 
-import { motion } from "motion/react";
 import { Pill } from "@/components/ui/pill";
-import Image from "next/image";
-import { ChevronRight } from "lucide-react";
-import Link from "next/link";
+import { motion } from "motion/react";
 
 export function ProgramOverview() {
-  const programs = [
+  const cards = [
     {
-      title: "Presence Foundations",
-      description:
-        "Our entry-level program focused on developing basic awareness and emotional regulation techniques for daily life.",
-      image: "/images/help-1.png",
-      link: "#",
+      title: "Core Programs",
+      value: "4"
     },
     {
-      title: "Emotional Intelligence",
-      description:
-        "Deepen your understanding of your emotional landscape and build resilience through guided sessions and practical exercises.",
-      image: "/images/help-2.png",
-      link: "#",
+      title: "Per Program",
+      value: "3-5"
     },
     {
-      title: "Mindful Leadership",
-      description:
-        "Learn to lead with presence, empathy, and clarity. This program is designed for professionals and teams seeking growth.",
-      image: "/images/help-3.png",
-      link: "#",
+      title: "Self Spaced",
+      value: "100%"
+    },
+    {
+      title: " Participants Guided",
+      value: "3,400+"
     },
   ];
 
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  } as const;
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  } as const;
-
   return (
-    <section className="py-20 lg:py-30 flex flex-col items-center">
-      <Pill text="Our Guided Programs" />
-      
-      <h2 className="text-center heading-2 mb-12 lg:mb-18 max-w-200">
-        Explore our structured journeys designed to help you reconnect with yourself and your emotions.
-      </h2>
+    <section className="container mx-auto py-10 lg:py-24 flex flex-col xl:flex-row items-center justify-between gap-10 xl:gap-20 max-w-6xl">
+      {/* Left Content */}
+      <div className="flex-1  max-w-xl">
+        <div className="flex justify-center lg:text-start xl:justify-start">
+        <Pill text="What We Offer" />
 
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-      >
-        {programs.map((program, index) => (
+        </div>
+        <h2 className="heading-2 xl:leading-13.5 font-normal text-center xl:text-start ">
+          Each program is thoughtfully structured to help you understand yourself better, build emotional awareness, and grow with clarity at your own pace. No overwhelm  just steady, guided progress.
+
+        </h2>
+      </div>
+
+      {/* Right Content - Grid */}
+      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 w-full max-w-2xl">
+        {cards.map((card, index) => (
           <motion.div
             key={index}
-            variants={cardVariants}
-            className="flex flex-col bg-white rounded-[1.25rem] border border-[#EEEEEE] overflow-hidden hover:shadow-xl transition-shadow duration-300"
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="flex flex-col gap-1 rounded-[10px] border border-[#A8D675] bg-white p-6  "
           >
-            <div className="relative h-60 w-full bg-muted">
-              <Image
-                src={program.image}
-                alt={program.title}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="p-8 flex flex-col flex-1">
-              <h3 className="text-[1.25rem] font-medium text-[#242424] mb-3">
-                {program.title}
-              </h3>
-              <p className="text-[1rem] text-[#4F4F4F] leading-relaxed mb-6 flex-1">
-                {program.description}
-              </p>
-              <Link
-                href={program.link}
-                className="inline-flex items-center text-brand-green font-semibold text-[0.875rem] group"
-              >
-                Learn More
-                <ChevronRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
+          <h2 className="font-semibold text-4xl text-[#242424]">{card.value}</h2>
+            <h3 className="text-xl  text-[#606060]">
+              {card.title}
+            </h3>
+           
           </motion.div>
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 }

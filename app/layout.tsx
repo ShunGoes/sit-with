@@ -6,6 +6,7 @@ import { ConditionalFooter } from "@/components/footer/conditional-footer";
 import { ViewTransition } from "react";
 import { ViewTransitionTracker } from "@/components/providers/view-transition-tracker";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ModalProvider } from "@/components/providers/modal-provider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body className="antialiased flex flex-col min-h-screen">
         <TooltipProvider>
           <ViewTransitionTracker />
+          <ModalProvider />
           <ViewTransition>{children}</ViewTransition>
         </TooltipProvider>
       </body>

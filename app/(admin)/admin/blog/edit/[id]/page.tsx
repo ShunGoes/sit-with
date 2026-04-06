@@ -1,17 +1,19 @@
-import EditBlogEditor from '@/components/forms/admin/edit-blog'
-import React from 'react'
+import EditBlogEditor from "@/components/forms/admin/blog/edit-blog";
+import React from "react";
 
 export default function AdminEditBlogPage() {
   return (
     <div>
-        <EditBlogEditor blog={{
-          id: '',
-          title: '',
-          author: '',
-          excerpt: '',
-          coverImage: '',
-          content: '',
-        }} />
+      <EditBlogEditor
+        blog={{
+          id: "",
+          title: "",
+          author: "",
+          excerpt: "",
+          coverImage: "",
+          content: "",
+        }}
+      />
     </div>
-  )
+  );
 }

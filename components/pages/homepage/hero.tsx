@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+
 import useMobile from "@/hooks/use-mobile-breakpoint";
 
 export function Hero() {
@@ -76,7 +77,7 @@ export function Hero() {
                 <div className="relative h-full w-[90%] mx-auto  flex flex-col gap-6 justify-center items-start max-w-7xl">
                   <div className="space-y-4  ">
                     <h1
-                      className={`text-[#F9FDF9] font-semibold text-[3.125rem] lg:text-[4rem] xl:text-[5rem] leading-[1.05] ${slide.titleWidth} `}
+                      className={`text-[#F9FDF9] font-semibold text-[3.125rem] lg:text-[4rem] xl:text-[5rem] leading-[100%] ${slide.titleWidth} `}
                     >
                       {slide.title}
                     </h1>
@@ -99,12 +100,16 @@ export function Hero() {
 
       {/* make pagination dots white */}
       <style jsx global>{`
-        .swiper-pagination-bullet {
-          background: rgba(255, 255, 255, 0.6) !important;
+         .swiper-pagination-bullet {
+          background: rgba(255, 255, 255, 0.4) !important;
           opacity: 1 !important;
+          width: 0.75rem !important;
+          height: 0.75rem !important;
         }
         .swiper-pagination-bullet-active {
           background: #ffffff !important;
+          width: 2rem !important;
+          border-radius: 1rem !important;
         }
       `}</style>
     </section>

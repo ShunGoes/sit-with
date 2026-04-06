@@ -71,7 +71,7 @@ export function ProgramHero() {
                 <div className="relative h-full w-[90%] mx-auto flex flex-col gap-6 justify-center items-center max-w-7xl">
                   <div className="space-y-4 text-center flex flex-col items-center">
                     <h1
-                      className={`text-[#F9FDF9] font-medium text-[3.125rem] lg:text-[4rem] xl:text-[5rem] leading-[1.1] max-w-4xl`}
+                      className={`text-[#F9FDF9] font-medium text-[3.125rem] lg:text-[4rem] xl:text-[5rem] leading-[100%] max-w-4xl`}
                     >
                       {slide.title}
                     </h1>
@@ -79,12 +79,12 @@ export function ProgramHero() {
                       {slide.description}
                     </p>
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-4 mt-5 justify-center">
-                    <Button variant="regular" size="lg" className="rounded-[0.5rem] text-[1rem]">
-                      Get Started <CaretRight className="ml-2" />
+                  <div className="flex flex-col sm:flex-row gap-4  justify-center">
+                    <Button variant="regular" className="">
+                      Browse Programs <CaretRight className="ml-2" />
                     </Button>
-                    <Button variant="outline" size="lg" className="rounded-[0.5rem] text-[1rem] border-[#F7FBF6] text-[#F7FBF6] hover:bg-white hover:text-black">
-                      Learn More
+                    <Button variant="outline"  >
+                      Book Consultation
                     </Button>
                   </div>
                 </div>

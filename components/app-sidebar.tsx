@@ -14,27 +14,44 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BookOpen, CalendarClock, FileText, LayoutDashboard, Settings, Users } from "lucide-react";
 
 // This is sample data.
 const data = {
   versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
   navMain: [
     {
+      title: "Dashboard",
+      url: "/admin/",
+      icon: <LayoutDashboard />
+    },
+     {
+      title: "Programs",
+      url: "/admin/program",
+      icon: <BookOpen />
+    },
+     {
+      title: "Consultation",
+      url: "/admin/consultation",
+      icon: <CalendarClock />
+    },
+     {
+      title: "Participants",
+      url: "/admin/participants",
+      icon: <Users />
+    },
+    {
       title: "Blog",
       url: "/admin/blog",
+      icon: <FileText />
     },
+   
     {
-      title: "Build Your Application",
-      url: "#",
+      title: "Settings",
+      url: "/admin/settings",
+      icon: <Settings />
     },
-    {
-      title: "API Reference",
-      url: "#",
-    },
-    {
-      title: "Architecture",
-      url: "#",
-    },
+  
   ],
 };
 
@@ -63,8 +80,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   tooltip={item.title}
                   asChild
                   isActive={isActive}
+                  
                 >
+                  <div className="flex gap-2 items-center">
+
+                  {item.icon}
                   <Link href={item.url}>{item.title}</Link>
+                  </div>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             );
