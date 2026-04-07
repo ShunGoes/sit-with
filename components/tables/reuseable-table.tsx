@@ -24,10 +24,10 @@ const ReuseableTable = <T,>({ tableData, columns }: TableDateProps<T>) => {
   return (
     <div className=" overflow-x-auto custom-scrollbar">
       <table
-        className="w-full space-y-10 rounded-lg  overflow-hidden "
+        className="w-full space-y-10   overflow-hidden "
         style={{ minWidth: "700px" }}
       >
-        <thead className="w-full  [&>tr>th]:px-4   h-[50px] ">
+        <thead className="w-full  [&>tr>th]:px-5   h-[50px] ">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
@@ -36,7 +36,7 @@ const ReuseableTable = <T,>({ tableData, columns }: TableDateProps<T>) => {
                     width: header.getSize(),
                   }}
                   key={header.id}
-                  className={`text-[#5A5775] uppercase text-left text-[0.75rem] font-bold  `}
+                  className={`text-footer-bg dark:text-[#FFFFFF] border-r border-[#EAECF0] dark:border-gray-700 last:border-r-0 font-normal text-left text-xs   `}
                 >
                   {flexRender(
                     header.column.columnDef.header,
@@ -48,7 +48,7 @@ const ReuseableTable = <T,>({ tableData, columns }: TableDateProps<T>) => {
           ))}
         </thead>
 
-        <tbody className="[&>tr>td]:px-4 mt-5">
+        <tbody className="[&>tr>td]:px-5  mt-5">
           {table.getRowModel().rows.map((row) => (
             <tr className=" " key={row.id}>
               {row.getVisibleCells().map((cell) => (
@@ -56,7 +56,7 @@ const ReuseableTable = <T,>({ tableData, columns }: TableDateProps<T>) => {
                   style={{
                     width: cell.column.getSize(),
                   }}
-                  className={`text-[#374151]  h-[77px] font-normal leading-6 text-[1rem] `}
+                  className={`text-primary-text border-t border-[#EAECF0] dark:border-gray-700 dark:text-[#A1A1A1]  py-2 font-normal text-xs `}
                   key={cell.id}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}

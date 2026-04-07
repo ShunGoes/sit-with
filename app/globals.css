@@ -15,6 +15,8 @@
   --color-primary-text: var(--primary-text-color);
   --color-seconday-text: var(--secondary-text-color);
 
+  --color-dash-secondary-bg: var(--dash-secondary-bg);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -106,6 +108,8 @@ h6 {
   --primary-regular-button: #60935D;
   --primary-text-color: #344054;
   --secondary-text-color: ##475467;
+
+  --dash-secondary-bg: #fff;
 }
 
 .dark {
@@ -140,6 +144,10 @@ h6 {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  --dash-secondary-bg: #262626;
+
+  --primary-text-color: #A1A1A1;
 }
 
 @layer base {

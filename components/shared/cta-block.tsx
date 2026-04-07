@@ -21,7 +21,7 @@ export function CtaBlock({
   secondLink,
 }: CtaBlockProps) {
   return (
-    <section className="bg-[#1F4842] py-24 w-full text-center mt-12">
+    <section className="bg-footer-bg py-24 w-full text-center mt-12">
       <div className="container mx-auto px-4 md:px-8 flex flex-col gap-4 w-full lg:w-[42%]  items-center">
         <h2 className="heading-2 text-[#EBECEB] ">{title}</h2>
         <p className="text-[#F7FBF6] text-[16px]  leading-[140%]  max-w-2xl ">

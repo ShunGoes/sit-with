@@ -24,36 +24,33 @@ import { Trash2 } from "lucide-react";
 import { EllipsisVertical } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
-
 let typeVariant;
 
-function variantAssigner(type: "Leaders" | "Professionals" | "Students"){
+function variantAssigner(type: "Leaders" | "Professionals" | "Students") {
   switch (type) {
     case "Leaders":
-      return typeVariant = "warning";
+      return (typeVariant = "warning");
     case "Professionals":
-      return typeVariant = "hibiscus"
+      return (typeVariant = "hibiscus");
     case "Students":
-      return typeVariant = "success"
+      return (typeVariant = "success");
     default:
-      return typeVariant = "default"
-     
+      return (typeVariant = "default");
   }
-
 }
-const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
+const ConsultationColumn = (): ColumnDef<ConsultationColumn>[] => [
   {
-    accessorKey: "name",
-    header: "Program Name",
+    accessorKey: "participant",
+    header: "Participants",
     cell: ({ row }) => (
       <div className="flex gap-3 items-center">
         <div>
-          <h6 className=" text-xs  ">
-            {row.original?.name
-            ? `${row.original.name.slice(0, 18)}${
-                row.original.name.length > 18 ? "..." : ""
-              }`
-            : "-"}
+          <h6 className=" text-xs text-primary-text ">
+            {row.original?.participant
+              ? `${row.original.participant.slice(0, 18)}${
+                  row.original.participant.length > 18 ? "..." : ""
+                }`
+              : "-"}
           </h6>
         </div>
       </div>
@@ -61,34 +58,36 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
     size: 300,
   },
   {
-    accessorKey: "type",
-    header: "Type",
-    cell: ({ row }) => <Badge variant={variantAssigner(row.original.type)}>{row.original.type}</Badge>,
+    accessorKey: "program",
+    header: "Program",
+    cell: ({ row }) => (
+      <p contextMenu="text-xs text-primary-text">{row.original.program}</p>
+    ),
     size: 300,
   },
   {
-    accessorKey: "enroled",
-    header: "Enrolled",
+    accessorKey: "date",
+    header: "Date",
     cell: ({ row }) => (
-      <h6 contextMenu="text-xs ">
-        {row.original.enrolled}
-      </h6>
-    ),
-  },
-  {
-    accessorKey: "price",
-    header: "Price",
-    cell: ({ row }) => (
-      <h6 contextMenu="text-xs ">
-        {formatCurrency(row.original.price, "NGN")}
-      </h6>
+      <p contextMenu="text-xs text-primary-text">
+        {new Date(row.original.date).toLocaleDateString("en-Us", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        })}
+      </p>
     ),
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
-      <Badge variant={row.original.status === "Active" ? "success" : "secondary"}>{row.original.status}</Badge>
+      <Badge
+        variant={row.original.status === "completed" ? "success" : "warning"}
+      >
+        {row.original.status.charAt(0).toUpperCase() +
+          row.original.status.slice(1)}
+      </Badge>
     ),
   },
   {
@@ -110,7 +109,7 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
                 </button>
               </TooltipTrigger>
               <TooltipContent>
-                <p className="text-white">Edit Program details</p>
+                <p className="text-white">Edit Consulttation details</p>
               </TooltipContent>
             </Tooltip>
 
@@ -134,7 +133,7 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
                   type="button"
                   className="cursor-pointer outline-none border-none bg-transparent"
                 >
-                  <Trash2 color="#344054" size={15}/>
+                  <Trash2 color="#344054" size={15} />
                 </button>
               </TooltipTrigger>
               <TooltipContent>
@@ -169,4 +168,4 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
   },
 ];
 
-export default ProgramsColumn;
+export default ConsultationColumn;

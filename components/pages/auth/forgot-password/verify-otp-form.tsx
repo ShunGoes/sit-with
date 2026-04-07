@@ -67,7 +67,7 @@ export function VerifyOtpForm({
                 )}
                 <InputOTPSlot
                   index={index}
-                  className="w-[45px] h-[50px] sm:w-[50px] sm:h-[55px] md:w-[60px] md:h-[65px] text-[29px] md:text-[40px] rounded-[8px] border border-[#EAECF0] bg-white text-[#1F4842] shadow-[0px_1px_2px_0px_#1018280D]"
+                  className="w-[45px] h-[50px] sm:w-[50px] sm:h-[55px] md:w-[60px] md:h-[65px] text-[29px] md:text-[40px] rounded-[8px] border border-[#EAECF0] bg-white text-footer-bg shadow-[0px_1px_2px_0px_#1018280D]"
                 />
               </React.Fragment>
             ))}

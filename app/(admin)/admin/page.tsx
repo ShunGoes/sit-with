@@ -1,14 +1,43 @@
+"use client";
 
+import DashboardHeaderText from "@/components/dashboard/dashboard-header";
+import { StatsCards } from "@/components/admin/dashboard/stats-cards";
+import { QuickActions } from "@/components/admin/dashboard/quick-actions";
+import { RecentActivities } from "@/components/admin/dashboard/recent-activities";
+import FilterSelectComp from "@/components/filter";
+import { useState } from "react";
 
 export default function Page() {
+  const [filteredItem, setFilteredItem] = useState("");
+
+  const STATUS_OPTIONS = [
+    { label: "Ascending", value: "ascending" },
+    { label: "Descending", value: "descending" },
+  ];
+
   return (
-    <>
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
+    <div className="flex flex-col gap-10 w-full pb-8">
+      <DashboardHeaderText
+        header="Dashboard"
+        subtext="Overview of programmes, participants, and activity"
+      />
+
+      <StatsCards />
+
+      <QuickActions />
+
+      <div className="flex justify-end w-full">
+        <div className="w-full sm:w-[220px]">
+          <FilterSelectComp
+            placeholder="Filter by status"
+            options={STATUS_OPTIONS}
+            value={filteredItem}
+            onValueChange={setFilteredItem}
+          />
+        </div>
       </div>
-      <div className="min-h-screen flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-    </>
-  )
+
+      <RecentActivities />
+    </div>
+  );
 }

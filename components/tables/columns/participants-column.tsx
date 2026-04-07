@@ -12,8 +12,6 @@ import GreenEditIcon from "@/pd-icons/green-edit";
 import { Eye } from "lucide-react";
 
 import { ColumnDef } from "@tanstack/react-table";
-import Image from "next/image";
-import Link from "next/link";
 
 import {
   Tooltip,
@@ -22,73 +20,52 @@ import {
 } from "@/components/ui/tooltip";
 import { Trash2 } from "lucide-react";
 import { EllipsisVertical } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
 
-
-let typeVariant;
-
-function variantAssigner(type: "Leaders" | "Professionals" | "Students"){
-  switch (type) {
-    case "Leaders":
-      return typeVariant = "warning";
-    case "Professionals":
-      return typeVariant = "hibiscus"
-    case "Students":
-      return typeVariant = "success"
-    default:
-      return typeVariant = "default"
-     
-  }
-
-}
-const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
+const ParticipantsColumn = (): ColumnDef<ParticipantColumn>[] => [
   {
-    accessorKey: "name",
-    header: "Program Name",
+    accessorKey: "participant",
+    header: "Participant",
     cell: ({ row }) => (
       <div className="flex gap-3 items-center">
         <div>
-          <h6 className=" text-xs  ">
-            {row.original?.name
-            ? `${row.original.name.slice(0, 18)}${
-                row.original.name.length > 18 ? "..." : ""
-              }`
-            : "-"}
+          <h6 className=" text-xs text-primary-text dark:text-[#A1A1A1]">
+            {row.original?.participant
+              ? `${row.original.participant.slice(0, 18)}${
+                  row.original.participant.length > 18 ? "..." : ""
+                }`
+              : "-"}
           </h6>
         </div>
       </div>
     ),
-    size: 300,
+    size: 250,
   },
   {
-    accessorKey: "type",
-    header: "Type",
-    cell: ({ row }) => <Badge variant={variantAssigner(row.original.type)}>{row.original.type}</Badge>,
-    size: 300,
-  },
-  {
-    accessorKey: "enroled",
-    header: "Enrolled",
+    accessorKey: "program",
+    header: "Program",
     cell: ({ row }) => (
-      <h6 contextMenu="text-xs ">
-        {row.original.enrolled}
-      </h6>
+      <p className="text-xs text-primary-text dark:text-[#A1A1A1]">{row.original.program}</p>
     ),
+    size: 300,
   },
   {
-    accessorKey: "price",
-    header: "Price",
+    accessorKey: "dateJoined",
+    header: "Date Joined",
     cell: ({ row }) => (
-      <h6 contextMenu="text-xs ">
-        {formatCurrency(row.original.price, "NGN")}
-      </h6>
+      <p className="text-xs text-primary-text dark:text-[#A1A1A1]">
+        {row.original.dateJoined}
+      </p>
     ),
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
-      <Badge variant={row.original.status === "Active" ? "success" : "secondary"}>{row.original.status}</Badge>
+      <Badge
+        variant={row.original.status === "Active" ? "success" : "secondary"}
+      >
+        {row.original.status}
+      </Badge>
     ),
   },
   {
@@ -110,7 +87,7 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
                 </button>
               </TooltipTrigger>
               <TooltipContent>
-                <p className="text-white">Edit Program details</p>
+                <p className="text-white">Edit Participant details</p>
               </TooltipContent>
             </Tooltip>
 
@@ -134,7 +111,7 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
                   type="button"
                   className="cursor-pointer outline-none border-none bg-transparent"
                 >
-                  <Trash2 color="#344054" size={15}/>
+                  <Trash2 color="#344054" size={15} />
                 </button>
               </TooltipTrigger>
               <TooltipContent>
@@ -169,4 +146,4 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
   },
 ];
 
-export default ProgramsColumn;
+export default ParticipantsColumn;

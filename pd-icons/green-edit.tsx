@@ -1,5 +1,5 @@
 const GreenEditIcon = ({
-  color = "#4CA48B",
+  color = "#05603A",
   ...props
 }: React.SVGProps<SVGSVGElement>) => {
   return (
