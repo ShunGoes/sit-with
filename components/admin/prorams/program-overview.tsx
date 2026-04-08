@@ -1,7 +1,7 @@
 "use client";
 
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
-import { addNewProgram } from "@/components/modal-helper";
+import addNewProgram from "@/components/modal-helper";
 import SeacrchAndFilter from "@/components/seach-and-filter";
 import ProgramsColumn from "@/components/tables/columns/programs-column";
 import ReuseableTable from "@/components/tables/reuseable-table";
@@ -18,7 +18,7 @@ const CHURCH_OPTIONS = [
 ];
 export default function ProgramOverview() {
   const [filteredItem, setFilteredItem] = useState("");
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
 
   return (
     <div className="space-y-15">
@@ -32,7 +32,7 @@ export default function ProgramOverview() {
           className="font-normal"
           onClick={addNewProgram}
         >
-          <Plus /> <span className="hidden sm:block">New Program </span> 
+          <Plus /> <span className="hidden sm:block">New Program </span>
         </Button>
       </div>
 

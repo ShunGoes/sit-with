@@ -23,21 +23,20 @@ export default function Page() {
       />
 
       <StatsCards />
-
       <QuickActions />
-
-      <div className="flex justify-end w-full">
-        <div className="w-full sm:w-[220px]">
-          <FilterSelectComp
-            placeholder="Filter by status"
-            options={STATUS_OPTIONS}
-            value={filteredItem}
-            onValueChange={setFilteredItem}
-          />
+      <section className="space-y-2">
+        <div className="flex justify-end w-full">
+          <div className="w-auto ">
+            <FilterSelectComp
+              placeholder="Filter by status"
+              options={STATUS_OPTIONS}
+              value={filteredItem}
+              onValueChange={setFilteredItem}
+            />
+          </div>
         </div>
-      </div>
-
-      <RecentActivities />
+        <RecentActivities />
+      </section>
     </div>
   );
 }

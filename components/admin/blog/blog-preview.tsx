@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useWatch } from "react-hook-form";
 import { AddBlogFormValues } from "@/lib/schemas/add-blog-schema";
 import Image from "next/image";
@@ -7,14 +8,20 @@ import Image from "next/image";
 export default function BlogPreview() {
   const values = useWatch<AddBlogFormValues>();
   const { title, author, excerpt, coverImage, content } = values as AddBlogFormValues;
+  const [coverSrc, setCoverSrc] = useState<string | null>(null);
 
-  // Resolve cover image src — could be a File (object URL) or a URL string
-  const coverSrc =
-    coverImage instanceof File
-      ? URL.createObjectURL(coverImage)
-      : typeof coverImage === "string" && coverImage.length > 0
-        ? coverImage
-        : null;
+  // Resolve cover image src safely without memory leaks
+  useEffect(() => {
+    if (coverImage instanceof File) {
+      const objectUrl = URL.createObjectURL(coverImage);
+      setCoverSrc(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    } else if (typeof coverImage === "string" && coverImage.length > 0) {
+      setCoverSrc(coverImage);
+    } else {
+      setCoverSrc(null);
+    }
+  }, [coverImage]);
 
   return (
     <article className="max-w-3xl mx-auto space-y-8 py-6">

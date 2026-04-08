@@ -1,7 +1,7 @@
 "use client";
 
 import { useDropzone } from "react-dropzone";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { X, ImageIcon, UploadCloud } from "lucide-react";
 
 interface ImageUploadProps {
@@ -23,26 +23,32 @@ export default function ImageUpload({
 }: ImageUploadProps) {
   const [error, setError] = useState<string | null>(null);
 
-  // Generate preview URL for File objects
-  const previewUrl = useMemo(() => {
-    if (!value) return null;
-    if (typeof value === "string") return value;
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  // Safely manage object URLs to avoid memory leaks and React Strict Mode bugs
+  useEffect(() => {
+    if (!value) {
+      setPreviewUrl(null);
+      return;
+    }
+
+    if (typeof value === "string") {
+      setPreviewUrl(value);
+      return;
+    }
+
     try {
-      return URL.createObjectURL(value);
+      const objectUrl = URL.createObjectURL(value);
+      setPreviewUrl(objectUrl);
+
+      return () => {
+        URL.revokeObjectURL(objectUrl);
+      };
     } catch (e) {
       console.error("Failed to create object URL", e);
-      return null;
+      setPreviewUrl(null);
     }
   }, [value]);
-
-  // Clean up object URLs to avoid memory leaks
-  useEffect(() => {
-    return () => {
-      if (previewUrl && previewUrl.startsWith("blob:")) {
-        URL.revokeObjectURL(previewUrl);
-      }
-    };
-  }, [previewUrl]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {

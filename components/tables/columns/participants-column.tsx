@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
-import GreenEditIcon from "@/pd-icons/green-edit";
+import { FilePenLine } from "lucide-react";
 import { Eye } from "lucide-react";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -83,7 +83,7 @@ const ParticipantsColumn = (): ColumnDef<ParticipantColumn>[] => [
                   type="button"
                   className="cursor-pointer outline-none border-none bg-transparent"
                 >
-                  <GreenEditIcon />
+                  <FilePenLine size={15} />
                 </button>
               </TooltipTrigger>
               <TooltipContent>
@@ -132,7 +132,7 @@ const ParticipantsColumn = (): ColumnDef<ParticipantColumn>[] => [
             </DropdownMenuItem>
             <DropdownMenuItem className="py-3 px-4">
               {" "}
-              <GreenEditIcon color="#344054" /> Edit
+              <FilePenLine size={15} color="#344054" /> Edit
             </DropdownMenuItem>
             <DropdownMenuItem className="py-3 px-4">
               <Trash2 color="#344054" size={15} /> Delete

@@ -56,7 +56,7 @@ export const Modal = () => {
 
             {/* Children Content */}
             {!modal.options?.isMutation && (
-              <div className="absolute top-6 right-6">
+              <div className="absolute top-6 right-6 md:hover:bg-muted rounded-full md:h-10 md:w-10 transition-all flex items-center justify-center cursor-pointer md:hover:shadow-lg ">
                 <X onClick={() => closeModal(modal.id)} />
               </div>
             )}
