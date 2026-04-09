@@ -2,12 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormFieldComp from "@/components/formfield";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useRegister } from "@/lib/api/hooks/auth/auth.hooks";
 
 const signupSchema = z
   .object({
@@ -24,6 +26,7 @@ const signupSchema = z
 type SignupFormValues = z.infer<typeof signupSchema>;
 
 export default function SignupForm() {
+  const router = useRouter();
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -34,8 +37,24 @@ export default function SignupForm() {
     },
   });
 
+  const { mutate, isPending } = useRegister();
+
   const onSubmit = (data: SignupFormValues) => {
-    console.log(data);
+    const firstName = data.fullName.split(" ")[0];
+    const lastName = data.fullName.split(" ").slice(1).join(" ");
+
+    const values = {
+      firstName,
+      lastName,
+      email: data.email,
+      password: data.password,
+    };
+
+    mutate(values, {
+      onSuccess: () => {
+        router.push("/signup-success");
+      },
+    });
   };
 
   return (
@@ -84,6 +103,7 @@ export default function SignupForm() {
           className="space-y-4 px-5 py-10 md:py-0 md:px-0 bg-[#FEFFFBCC] border border-[#FFFFFF5C] rounded-[5px] md:rounded-none md:border-none "
         >
           <div className="flex flex-col gap-5">
+            <div>
             <FormFieldComp
               control={form.control}
               name="fullName"
@@ -91,6 +111,8 @@ export default function SignupForm() {
               placeholder="Funke Moore"
               type="text"
             />
+            <p className="text-xs text-primary-text italic mt-1">Firstname Lastname</p>
+            </div>
             <FormFieldComp
               control={form.control}
               name="email"

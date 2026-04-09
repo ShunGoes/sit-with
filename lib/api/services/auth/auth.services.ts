@@ -21,12 +21,27 @@ export interface GenericMessageResponse {
   message: string;
 }
 
+export const register = async (data: {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}) => {
+  try {
+    const res = await api.post("/auth/register", data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    
+    throw new Error(getApiError(error));
+  }
+};
+
 export const login = async (data: { email: string; password: string }) => {
   try {
     const res = await api.post("/auth/login", data);
     return res.data;
   } catch (error) {
-    console.log(error);
     throw new Error(getApiError(error));
   }
 };
@@ -41,7 +56,9 @@ export const getCurrentUser = async () => {
   }
 };
 
-export const verifyEmail = async (token: string): Promise<VerifyEmailResponse> => {
+export const verifyEmail = async (
+  token: string
+): Promise<VerifyEmailResponse> => {
   if (!token) {
     throw new Error("Verification token is required.");
   }
@@ -55,7 +72,9 @@ export const verifyEmail = async (token: string): Promise<VerifyEmailResponse> =
   }
 };
 
-export const resendVerification = async (data: { email: string }): Promise<GenericMessageResponse> => {
+export const resendVerification = async (data: {
+  email: string;
+}): Promise<GenericMessageResponse> => {
   if (!data.email) {
     throw new Error("Email is required to resend verification.");
   }

@@ -44,13 +44,25 @@ export const formatCurrency = (amount: number, currency = "NGN") => {
 
 // catch api errors and display them nicely
 export const getApiError = (error: any) => {
-  if (error.response?.data?.message) {
-    return error.response.data.message;
+  const response = error?.response;
+
+  if (response?.data?.message) {
+    return response.data.message;
   }
-  if (error.response?.data?.error) {
-    return error.response.data.error;
+
+  if (response?.data?.error) {
+    return response.data.error;
   }
-  return error.message === "[object Object]"
+
+  if (response?.status >= 500) {
+    return "Something went wrong on our end. Please try again later.";
+  }
+
+  if (error?.request && !response) {
+    return "Unable to reach the server. Please check your internet connection and try again.";
+  }
+
+  return error?.message === "[object Object]"
     ? "An unexpected error occurred"
-    : error.message;
+    : error?.message || "An unexpected error occurred";
 };

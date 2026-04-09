@@ -1,3 +1,5 @@
+"use client";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   login,
@@ -6,12 +8,31 @@ import {
   resendVerification,
   forgotPassword,
   resetPassword,
+  register,
 } from "../../services/auth/auth.services";
 import { showErrorToast, showSuccessToast } from "@/lib/toast-helpers";
 import { useAuthStore } from "@/store/use-auth-store";
 import { useEffect } from "react";
 
+// helps user log in 
+export const useRegister = () => {
+  const queryClient = useQueryClient();
+  const setUser = useAuthStore((state) => state.setUser);
 
+  return useMutation({
+    mutationFn: register,
+    onSuccess: (data: any) => {
+      showSuccessToast(data.message);
+      console.log(data)
+      // Since verification happens during signup, users logging in should already be verified
+      // setUser(data.data.user, "email", data.data.user.isEmailVerified);
+      // queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
+    },
+    onError: (error: any) => {
+      showErrorToast(error.message);
+    },
+  });
+};
 // helps user log in 
 export const useSignin = () => {
   const queryClient = useQueryClient();
@@ -30,6 +51,7 @@ export const useSignin = () => {
     },
   });
 };
+
 
 export const useVerifyEmail = () => {
   const queryClient = useQueryClient();
