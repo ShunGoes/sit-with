@@ -33,6 +33,7 @@ export const useRegister = () => {
     },
   });
 };
+
 // helps user log in 
 export const useSignin = () => {
   const queryClient = useQueryClient();
@@ -53,6 +54,7 @@ export const useSignin = () => {
 };
 
 
+// verify emaail with tokens sent to the user's inbox 
 export const useVerifyEmail = () => {
   const queryClient = useQueryClient();
   const setUser = useAuthStore((state) => state.setUser);
@@ -73,6 +75,8 @@ export const useVerifyEmail = () => {
   });
 };
 
+
+// resend verification email if previous one became invalid or expired 
 export const useResendVerification = () => {
   return useMutation({
     mutationFn: resendVerification,
@@ -85,6 +89,7 @@ export const useResendVerification = () => {
   });
 };
 
+// takes the users email to generate an otp that would be sent to the uer's inbox 
 export const useForgotPassword = () => {
   return useMutation({
     mutationFn: forgotPassword,

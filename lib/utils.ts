@@ -5,6 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// convert digits to readable financial amounts with comma sperated 
 export const formatAmount = (value: string) => {
   // Remove all non-digit characters except decimal point
   let cleaned = value.replace(/[^\d.]/g, "");
@@ -65,4 +66,21 @@ export const getApiError = (error: any) => {
   return error?.message === "[object Object]"
     ? "An unexpected error occurred"
     : error?.message || "An unexpected error occurred";
+};
+
+// prepare objects to be used as url params strings
+export const buildQueryString = (params: Record<string, string>) => {
+  const queryParams = new URLSearchParams();
+
+  Object.keys(params).forEach((key) => {
+    if (
+      params[key] !== undefined &&
+      params[key] !== null &&
+      params[key] !== ""
+    ) {
+      queryParams.append(key, params[key]);
+    }
+  });
+
+  return queryParams.toString();
 };

@@ -9,16 +9,25 @@ import { EmailForm } from "./email-form";
 import { VerifyOtpForm } from "./verify-otp-form";
 import { NewPasswordForm } from "./new-password-form";
 import { PasswordSuccess } from "./password-success";
+import { useForgotPassword } from "@/lib/api/hooks/auth/auth.hooks";
 
 export default function ForgotPasswordFlow() {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
 
+  const {mutate, isPending} = useForgotPassword()
+
   const handleEmailNext = (submittedEmail: string) => {
     setEmail(submittedEmail);
     console.log("Email submitted:", submittedEmail);
-    setStep(2);
+
+    mutate({email: submittedEmail}, {
+      onSuccess: () => {
+        setStep(2);
+      }
+    })
+    
   };
 
   const handleOtpVerify = () => {

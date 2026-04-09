@@ -2,11 +2,13 @@
 
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import addNewProgram from "@/components/modal-helper";
+import QueryStateHandler from "@/components/query-state-handler";
 import SeacrchAndFilter from "@/components/seach-and-filter";
 import ProgramsColumn from "@/components/tables/columns/programs-column";
 import ReuseableTable from "@/components/tables/reuseable-table";
 import { Button } from "@/components/ui/button";
 import { PROGRAMS_TABLE } from "@/data/table-data";
+import { useGetAllAdminPrograms } from "@/lib/api/hooks/programs/programs.hooks";
 import { Plus, Search } from "lucide-react";
 import { useState } from "react";
 
@@ -19,6 +21,13 @@ const CHURCH_OPTIONS = [
 export default function ProgramOverview() {
   const [filteredItem, setFilteredItem] = useState("");
   const [search, setSearch] = useState("");
+
+  const params = {
+    search,
+    type: filteredItem,
+  };
+  const { data, isLoading, isError, isFetching } =
+    useGetAllAdminPrograms(params);
 
   return (
     <div className="space-y-15">
@@ -50,10 +59,22 @@ export default function ProgramOverview() {
 
         {/* table  */}
         <div className="bg-dash-secondary-bg rounded-[16px]  pb-1">
-          <ReuseableTable
-            columns={ProgramsColumn()}
-            tableData={PROGRAMS_TABLE}
-          />
+          <QueryStateHandler
+            data={data}
+            isLoading={isLoading}
+            isError={isError}
+            loadingMessage="Loading Programs"
+            fetchingMessage="Fetching Latest Programs"
+            errorMessage="Error loading programs. Please try again"
+            emptyMessage="No Programs at this time"
+            isFetching={isFetching}
+            imageUrl=" "
+          >
+            <ReuseableTable
+              columns={ProgramsColumn()}
+              tableData={PROGRAMS_TABLE}
+            />
+          </QueryStateHandler>
         </div>
       </div>
     </div>

@@ -7,13 +7,22 @@ import {
   deleteProgram,
   CreateProgramPayload,
   UpdateProgramPayload,
+  get_all_admin_programs,
 } from "../../services/programs/programs.services";
 import { showSuccessToast, showErrorToast } from "@/lib/toast-helpers";
 
 export const useGetPrograms = () => {
   return useQuery({
-    queryKey: ["programs"],
+    queryKey: ["programs", "all"],
     queryFn: getPrograms,
+    retry: false,
+  });
+};
+
+export const useGetAllAdminPrograms = (param = {}) => {
+  return useQuery({
+    queryKey: ["programs", "admin", "all"],
+    queryFn: () => get_all_admin_programs(param),
     retry: false,
   });
 };
@@ -27,6 +36,7 @@ export const useGetProgram = (programId: string) => {
   });
 };
 
+// create new program 
 export const useCreateProgram = () => {
   const queryClient = useQueryClient();
 
@@ -34,7 +44,7 @@ export const useCreateProgram = () => {
     mutationFn: createProgram,
     onSuccess: (data) => {
       showSuccessToast(data.message);
-      queryClient.invalidateQueries({ queryKey: ["programs"] });
+      queryClient.invalidateQueries({ queryKey: ["programs", "all"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -50,7 +60,7 @@ export const useUpdateProgram = () => {
       updateProgram(id, payload),
     onSuccess: (data) => {
       showSuccessToast(data.message);
-      queryClient.invalidateQueries({ queryKey: ["programs"] });
+      queryClient.invalidateQueries({ queryKey: ["programs", "all"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);

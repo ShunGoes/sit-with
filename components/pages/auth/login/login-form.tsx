@@ -31,35 +31,36 @@ export default function LoginForm() {
 
   const { mutate, isPending } = useSignin();
   const router = useRouter();
-  const openModal = useModalStore(state => state.openModal)
-  const closeModal = useModalStore(state => state.closeModal)
+  const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
 
   const onSubmit = (data: LoginFormValues) => {
     const values = { email: data.email, password: data.password };
 
-    console.log((values))
-
     mutate(values, {
       onSuccess: (data) => {
-        closeModal("loading")
-        console.log(data)
+        closeModal("loading");
+        console.log(data);
         if (data.data.user.role === "ADMIN") {
           router.replace("/admin");
         } else {
           router.replace("/user");
         }
       },
-    }); 
+      onError: () => {
+        closeModal("loadinf");
+      },
+    });
   };
 
   useEffect(() => {
     if (isPending) {
       openModal(
         "loading",
-        <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-[200px]">
+        <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
           <Spinner size={40} />
         </div>,
-        {isMutation: true},
+        { isMutation: true },
       );
     }
   }, [isPending]);

@@ -97,7 +97,7 @@ export default function VerificationFailedPage({ searchParams }: VerificationFai
         <h1 className="text-2xl font-semibold text-slate-900">{title}</h1>
         <p className="mt-4 text-sm leading-6 text-slate-600">{description}</p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-4">
+        {/* <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-4">
           <div className="text-left">
             <Label htmlFor="email" className="text-sm font-medium text-slate-700">
               Email Address
@@ -123,7 +123,9 @@ export default function VerificationFailedPage({ searchParams }: VerificationFai
               ? "Sending..."
               : "Send Verification Email"}
           </Button>
-        </form>
+        </form> */}
+
+        
 
         <div className="mt-6">
           <Button asChild variant="outline">

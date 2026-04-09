@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Spinner } from "@/components/spinner";
 import { useVerifyEmail } from "@/lib/api/hooks/auth/auth.hooks";
+import { showErrorToast, showSuccessToast } from "@/lib/toast-helpers";
 
 export default function VerifyEmailClient() {
   const router = useRouter();
@@ -18,8 +19,9 @@ export default function VerifyEmailClient() {
     }
 
     verifyEmailMutation.mutate(token, {
-      onSuccess: (data: any) => {
+      onSuccess: (data) => {
         const userRole = data?.user?.role;
+        showSuccessToast(data.message)
 
         if (userRole === "ADMIN") {
           router.replace("/admin");
@@ -28,8 +30,9 @@ export default function VerifyEmailClient() {
 
         router.replace("/user");
       },
-      onError: (error: any) => {
+      onError: (error) => {
         const message = String(error?.message ?? "Verification failed.").toLowerCase();
+        showErrorToast(message)
 
         if (message.includes("already verified") || message.includes("already been verified")) {
           router.replace("/login");
