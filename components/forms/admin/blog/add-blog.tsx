@@ -3,10 +3,7 @@
 import { useState, ViewTransition } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  addBlogSchema,
-  AddBlogFormValues,
-} from "@/lib/schemas/add-blog-schema";
+import { addBlogSchema, AddBlogFormValues } from "@/schemas/add-blog-schema";
 import BlogForm from "@/components/admin/blog/blog-form";
 import BlogPreview from "@/components/admin/blog/blog-preview";
 import { Button } from "@/components/ui/button";
@@ -39,7 +36,9 @@ export default function AdminBlogEditor() {
       <div className="flex items-center justify-between  border-b border-border pb-4">
         <div className="flex  justify-between w-10/12 sm:w-11/12">
           <div className="">
-            <h1 className="text-2xl text-primary-text font-bold">{mode === "write" ? "New Post" : "Preview Post"}</h1>
+            <h1 className="text-2xl text-primary-text font-bold">
+              {mode === "write" ? "New Post" : "Preview Post"}
+            </h1>
 
             <p className="text-sm text-secondary-text mt-1">
               Write and publish a new blog post
@@ -54,7 +53,6 @@ export default function AdminBlogEditor() {
               className="gap-1.5"
             >
               <PenLine size={14} />
-              
             </Button>
             <Button
               type="button"
@@ -64,7 +62,6 @@ export default function AdminBlogEditor() {
               className="gap-1.5"
             >
               <Eye size={14} />
-              
             </Button>
           </div>
         </div>

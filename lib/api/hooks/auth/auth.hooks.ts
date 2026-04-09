@@ -1,0 +1,111 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  login,
+  getCurrentUser,
+  verifyEmail,
+  resendVerification,
+  forgotPassword,
+  resetPassword,
+} from "../../services/auth/auth.services";
+import { showErrorToast, showSuccessToast } from "@/lib/toast-helpers";
+import { useAuthStore } from "@/store/use-auth-store";
+import { useEffect } from "react";
+
+
+// helps user log in 
+export const useSignin = () => {
+  const queryClient = useQueryClient();
+  const setUser = useAuthStore((state) => state.setUser);
+
+  return useMutation({
+    mutationFn: login,
+    onSuccess: (data: any) => {
+      showSuccessToast(data.message);
+      // Since verification happens during signup, users logging in should already be verified
+      setUser(data.data.user, "email", data.data.user.isEmailVerified);
+      queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
+    },
+    onError: (error: any) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+
+export const useVerifyEmail = () => {
+  const queryClient = useQueryClient();
+  const setUser = useAuthStore((state) => state.setUser);
+
+  return useMutation({
+    mutationFn: verifyEmail,
+    onSuccess: (data: any) => {
+      showSuccessToast(data.message);
+      // Update user state with verified status
+      if (data.user) {
+        setUser(data.data.user, "email", data.data.user.isEmailVerified);
+      }
+      queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
+    },
+    onError: (error: any) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+
+export const useResendVerification = () => {
+  return useMutation({
+    mutationFn: resendVerification,
+    onSuccess: (data) => {
+      showSuccessToast(data.message);
+    },
+    onError: (error) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+
+export const useForgotPassword = () => {
+  return useMutation({
+    mutationFn: forgotPassword,
+    onSuccess: (data) => {
+      showSuccessToast(data.message);
+    },
+    onError: (error) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+
+export const useResetPassword = () => {
+  return useMutation({
+    mutationFn: resetPassword,
+    onSuccess: (data) => {
+      showSuccessToast(data.message);
+    },
+    onError: (error) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+
+
+// get the currently logged in user and set it in the auth store. This is used to persist the user session across page reloads and to check the user's authentication status when the app loads. If the user is not authenticated, we clear the user from the auth store.
+export const useGetCurrentUser = () => {
+  const setUser = useAuthStore((state) => state.setUser);
+  const clearUser = useAuthStore((state) => state.clearUser);
+
+  const query = useQuery({
+    queryKey: ["auth", "user"],
+    queryFn: getCurrentUser,
+    retry: false, 
+  });
+
+  useEffect(() => {
+    if (query.isSuccess && query.data?.data) {
+      setUser(query.data?.data, "email", query.data?.data?.isEmailVerified);
+    } else if (query.isError) {
+      clearUser();
+    }
+  }, [query.isSuccess, query.isError, query.data, setUser, clearUser]);
+
+  return query;
+};

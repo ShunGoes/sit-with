@@ -7,6 +7,8 @@ import { ViewTransition } from "react";
 import { ViewTransitionTracker } from "@/components/providers/view-transition-tracker";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ModalProvider } from "@/components/providers/modal-provider";
+import QueryProvider from "@/components/providers/query-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -31,11 +33,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${plusJakartaSans.variable}`}>
       <body className="antialiased flex flex-col min-h-screen">
+        <QueryProvider>
         <TooltipProvider>
           <ViewTransitionTracker />
           <ModalProvider />
           <ViewTransition>{children}</ViewTransition>
+          <Toaster position="top-center"/>
         </TooltipProvider>
+        </QueryProvider>
       </body>
     </html>
   );

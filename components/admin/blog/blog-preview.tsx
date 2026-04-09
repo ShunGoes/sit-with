@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { useWatch } from "react-hook-form";
-import { AddBlogFormValues } from "@/lib/schemas/add-blog-schema";
+import { AddBlogFormValues } from "@/schemas/add-blog-schema";
 import Image from "next/image";
 
 export default function BlogPreview() {
   const values = useWatch<AddBlogFormValues>();
-  const { title, author, excerpt, coverImage, content } = values as AddBlogFormValues;
+  const { title, author, excerpt, coverImage, content } =
+    values as AddBlogFormValues;
   const [coverSrc, setCoverSrc] = useState<string | null>(null);
 
   // Resolve cover image src safely without memory leaks
@@ -27,7 +28,9 @@ export default function BlogPreview() {
     <article className="max-w-3xl mx-auto space-y-8 py-6">
       <header className="space-y-4">
         <h1 className="text-3xl font-bold leading-tight text-foreground">
-          {title || <span className="text-muted-foreground">Untitled Post</span>}
+          {title || (
+            <span className="text-muted-foreground">Untitled Post</span>
+          )}
         </h1>
 
         {author && (
@@ -57,7 +60,11 @@ export default function BlogPreview() {
 
       <div
         className="prose prose-sm max-w-none"
-        dangerouslySetInnerHTML={{ __html: content || "<p class='text-muted-foreground'>Nothing written yet…</p>" }}
+        dangerouslySetInnerHTML={{
+          __html:
+            content ||
+            "<p class='text-muted-foreground'>Nothing written yet…</p>",
+        }}
       />
     </article>
   );

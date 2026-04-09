@@ -1,3 +1,5 @@
+"use client"
+
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
@@ -11,12 +13,26 @@ import {
 } from "@/components/ui/breadcrumb";
 import { ModeToggle } from "@/components/mode-toggle";
 import { ThemeProvider } from "@/components/theme-provider";
+import { useGetCurrentUser } from "@/lib/api/hooks/auth/auth.hooks";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 
 export default function ProtectedLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { data, isLoading, isError } = useGetCurrentUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isError) router.replace("/login");
+  }, [isError, router]);
+
+  if (isLoading) return <DashboardSkeleton />;
+  if (isError) return null;
+
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       <SidebarProvider>

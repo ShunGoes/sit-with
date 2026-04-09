@@ -8,6 +8,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FormFieldComp from "@/components/formfield";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useSignin } from "@/lib/api/hooks/auth/auth.hooks";
+import { useRouter } from "next/navigation";
+import { Spinner } from "@/components/spinner";
+import { useModalStore } from "@/components/store/use-modal-store";
+import { useEffect } from "react";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -16,15 +21,48 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
+// admin@wellbeing.com
+// Admin@1234
 export default function LoginForm() {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
 
+  const { mutate, isPending } = useSignin();
+  const router = useRouter();
+  const openModal = useModalStore(state => state.openModal)
+  const closeModal = useModalStore(state => state.closeModal)
+
   const onSubmit = (data: LoginFormValues) => {
-    console.log(data);
+    const values = { email: data.email, password: data.password };
+
+    console.log((values))
+
+    mutate(values, {
+      onSuccess: (data) => {
+        closeModal("loading")
+        console.log(data)
+        if (data.data.user.role === "ADMIN") {
+          router.replace("/admin");
+        } else {
+          router.replace("/user");
+        }
+      },
+    }); 
   };
+
+  useEffect(() => {
+    if (isPending) {
+      openModal(
+        "loading",
+        <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-[200px]">
+          <Spinner size={40} />
+        </div>,
+        {isMutation: true},
+      );
+    }
+  }, [isPending]);
 
   return (
     <Card className=" w-[80%]  mx-auto md:w-full md:border border-[#FFFFFF5C] bg-transparent md:bg-[#FEFFFBCC] shadow-none   md:rounded-[10px] overflow-hidden flex flex-col md:flex-row xl:gap-20 lg:p-5 ">

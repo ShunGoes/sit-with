@@ -3,10 +3,7 @@
 import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  editBlogSchema,
-  EditBlogFormValues,
-} from "@/lib/schemas/edit-blog-schema";
+import { editBlogSchema, EditBlogFormValues } from "@/schemas/edit-blog-schema";
 import BlogForm from "@/components/admin/blog/blog-form";
 import BlogPreview from "@/components/admin/blog/blog-preview";
 import { Button } from "@/components/ui/button";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormContext, Controller, SubmitHandler } from "react-hook-form";
-import { AddBlogFormValues } from "@/lib/schemas/add-blog-schema";
+import { AddBlogFormValues } from "@/schemas/add-blog-schema";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";

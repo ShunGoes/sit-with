@@ -1,5 +1,11 @@
+"use client"
+
 import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import {
   Breadcrumb,
@@ -12,6 +18,11 @@ import {
 import { Poppins } from "next/font/google";
 import { ModeToggle } from "@/components/mode-toggle";
 import { ThemeProvider } from "@/components/theme-provider";
+import { useGetCurrentUser } from "@/lib/api/hooks/auth/auth.hooks";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { DashboardSkeleton } from "@/components/dashboard-skeleton";
+import { useAuthStore } from "@/store/use-auth-store";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -24,8 +35,31 @@ export default function ProtectedLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { data, isLoading, isError } = useGetCurrentUser();
+  const router = useRouter();
+  const user = useAuthStore((state) => state.user);
+
+  console.log("Current user in ProtectedLayout:", user, data);
+
+  useEffect(() => {
+    if (isError) {
+      router.replace("/login");
+    } else if (data?.user && data.user.role !== "ADMIN") {
+      router.replace("/user");
+    }
+  }, [isError, data, router]);
+
+  
+  if (isLoading) return <DashboardSkeleton />;
+  if (isError || data.data.role !== "ADMIN") return null;
+
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
@@ -52,7 +86,9 @@ export default function ProtectedLayout({
               <ModeToggle />
             </div>
           </header>
-          <div className={`flex flex-1 flex-col bg-[#F7F7F7] dark:bg-[#0A0A0A] gap-4 p-4 mt-10 md:mt-0 lg:p-10  ${poppins.className}`}>
+          <div
+            className={`flex flex-1 flex-col bg-[#F7F7F7] dark:bg-[#0A0A0A] gap-4 p-4 mt-10 md:mt-0 lg:p-10  ${poppins.className}`}
+          >
             {children}
           </div>
         </SidebarInset>

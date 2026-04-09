@@ -41,3 +41,16 @@ export const formatCurrency = (amount: number, currency = "NGN") => {
   }).format(amount);
   return formattedTotal;
 };
+
+// catch api errors and display them nicely
+export const getApiError = (error: any) => {
+  if (error.response?.data?.message) {
+    return error.response.data.message;
+  }
+  if (error.response?.data?.error) {
+    return error.response.data.error;
+  }
+  return error.message === "[object Object]"
+    ? "An unexpected error occurred"
+    : error.message;
+};
