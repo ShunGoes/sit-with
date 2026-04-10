@@ -5,6 +5,7 @@ export const PROGRAMS_TABLE: ProgramColumn[] = [
     status: "Active",
     price: 15000,
     enrolled: "15",
+    id: ""
   },
   {
     name: "Chris Allordiah",
@@ -12,6 +13,7 @@ export const PROGRAMS_TABLE: ProgramColumn[] = [
     status: "Inactive",
     price: 20030,
     enrolled: "15",
+    id: ""
   },
 ];
 

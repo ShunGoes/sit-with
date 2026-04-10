@@ -11,8 +11,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import { useGetPrograms } from "@/lib/api/hooks/programs/programs.hooks";
+import QueryStateHandler from "@/components/query-state-handler";
 
 export default function ProgramGrowth() {
+  const { data, isLoading, isError, isFetching } = useGetPrograms();
+
   const cards = [
     {
       title: "Transition  for Undergraduates",
@@ -103,71 +107,84 @@ export default function ProgramGrowth() {
       </div>
 
       {/* Grid */}
-      <Swiper
-        modules={[Autoplay, Pagination]}
-        loop={true}
-        slidesPerView={1}
-        spaceBetween={24}
-        breakpoints={{
+      <QueryStateHandler
+        data={data}
+        isLoading={isLoading}
+        isError={isError}
+        loadingMessage="Loading Programs"
+        fetchingMessage="Fetching Latest Programs"
+        errorMessage="Error loading programs. Please try again"
+        emptyMessage="No Programs at this time"
+        isFetching={isFetching}
+      >
+        <Swiper
+          modules={[Autoplay, Pagination]}
+          loop={true}
+          slidesPerView={1}
+          spaceBetween={24}
+          breakpoints={{
             640: {
-                slidesPerView: 1
+              slidesPerView: 1,
             },
             768: {
-                slidesPerView: 2
+              slidesPerView: 2,
             },
             1024: {
-                slidesPerView: 3
+              slidesPerView: 3,
             },
-        }}
-        autoplay={{ delay: 5000, disableOnInteraction: true }}
-        pagination={{ clickable: true }}
-        className="w-full programs"
-      >
-        {cards.map((card, index) => (
-          <SwiperSlide key={`${card.title}_${index}`} className="h-full border border-black">
-            {" "}
-            <div
-              key={index}
-              className="flex flex-col  h-full bg-[#F2F2F1] p-4 transition-shadow"
+          }}
+          autoplay={{ delay: 5000, disableOnInteraction: true }}
+          pagination={{ clickable: true }}
+          className="w-full programs"
+        >
+          {cards.map((card, index) => (
+            <SwiperSlide
+              key={`${card.title}_${index}`}
+              className="h-full border border-black"
             >
-              {/* Image Placeholder */}
-              <div className="w-full  aspect-3/2 0  mb-6 overflow-hidden relative">
-                <Image
-                  src={card.image}
-                  alt={card.title}
-                  fill
-                  className="object-cover"
-                />
-                <p
-                  className={`absolute top-2 left-2 text-white text-sm font-medim rounded-full py-[2px] px-4  flex justify-center items-center ${card.labelBgColor}`}
-                >
-                  {card.label}
+              {" "}
+              <div
+                key={index}
+                className="flex flex-col  h-full bg-[#F2F2F1] p-4 transition-shadow"
+              >
+                {/* Image Placeholder */}
+                <div className="w-full  aspect-3/2 0  mb-6 overflow-hidden relative">
+                  <Image
+                    src={card.image}
+                    alt={card.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <p
+                    className={`absolute top-2 left-2 text-white text-sm font-medim rounded-full py-[2px] px-4  flex justify-center items-center ${card.labelBgColor}`}
+                  >
+                    {card.label}
+                  </p>
+                </div>
+
+                {/* Content */}
+                <h3 className="text-xl font-semibold text-[#627B3A] mb-2">
+                  {card.title}
+                </h3>
+                <p className="text-base text-[#263016] leading- mb-6 ">
+                  {card.description}
                 </p>
+
+                {/* Link */}
+                <Link href={card.link} className="w-full mt-auto">
+                  <Button
+                    variant={"outline"}
+                    className="border border-[#B1B4B1] text-regular text-[#072608] text-base w-full"
+                  >
+                    View Program
+                  </Button>
+                </Link>
               </div>
-
-              {/* Content */}
-              <h3 className="text-xl font-semibold text-[#627B3A] mb-2">
-                {card.title}
-              </h3>
-              <p className="text-base text-[#263016] leading- mb-6 ">
-                {card.description}
-              </p>
-
-              {/* Link */}
-              <Link href={card.link} className="w-full mt-auto">
-                <Button
-                  variant={"outline"}
-                  className="border border-[#B1B4B1] text-regular text-[#072608] text-base w-full"
-                >
-                  View Program
-                </Button>
-              </Link>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-        {/* make pagination dots white */}
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </QueryStateHandler>
+      {/* make pagination dots white */}
       {/* <style jsx global>{`
          programs .swiper-pagination-bullet {
           background: black !important;

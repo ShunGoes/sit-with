@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
-import { useCreateProgram } from "@/lib/api/hooks/programs/programs.hooks";
+import {
+  useCreateProgram,
+  useGetProgramById,
+  useUpdateProgram,
+} from "@/lib/api/hooks/programs/programs.hooks";
 import { ProgramFormSchema, ProgramSchema } from "@/schemas/programs-schema";
 import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
@@ -12,7 +16,7 @@ const DEFAULT_VALUES = {
   // price: ""
 };
 
-export default function AddProgramForm() {
+export default function EditProgramForm({ id }: { id: string }) {
   const form = useForm<ProgramFormSchema>({
     defaultValues: DEFAULT_VALUES,
     resolver: zodResolver(ProgramSchema),
@@ -22,23 +26,32 @@ export default function AddProgramForm() {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
 
-  const { mutate, isPending } = useCreateProgram();
+  const { mutate, isPending } = useUpdateProgram();
+  const { data: program, isLoading, isError } = useGetProgramById(id);
 
-  const onSubmit: SubmitHandler<ProgramFormSchema> = (data) => {
+  const onSubmit = (data: ProgramFormSchema) => {
     const parsedData = {
       ...data,
       price: parseFloat(data.price.replace(/,/g, "")) || 0,
     };
 
-    mutate(parsedData, {
-      onSuccess: () => {
-        closeModal("loading");
+    mutate(
+      { id: "", payload: parsedData },
+      {
+        onSuccess: () => {
+          closeModal("loading");
+        },
+        onError: () => {
+          closeModal("loading");
+        },
       },
-      onError: () => {
-        closeModal("loading");
-      },
-    });
+    );
   };
+
+  useEffect(() => {
+    if (program) {
+    }
+  });
 
   useEffect(() => {
     if (isPending) {
@@ -55,7 +68,7 @@ export default function AddProgramForm() {
   return (
     <FormProvider {...form}>
       {" "}
-      <ProgramForm onSubmit={onSubmit} header="Create New Program"/>
+      <ProgramForm onSubmit={onSubmit} header="Edit Program" />
     </FormProvider>
   );
 }

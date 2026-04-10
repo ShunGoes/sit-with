@@ -1,15 +1,15 @@
 "use client";
 
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
-import addNewProgram from "@/components/modal-helper";
+import { addNewProgram, editProgram } from "@/components/modal-helper";
 import QueryStateHandler from "@/components/query-state-handler";
 import SeacrchAndFilter from "@/components/seach-and-filter";
 import ProgramsColumn from "@/components/tables/columns/programs-column";
 import ReuseableTable from "@/components/tables/reuseable-table";
 import { Button } from "@/components/ui/button";
 import { PROGRAMS_TABLE } from "@/data/table-data";
-import { useGetAllAdminPrograms } from "@/lib/api/hooks/programs/programs.hooks";
-import { Plus, Search } from "lucide-react";
+import { useDeleteProgram, useGetAllAdminPrograms } from "@/lib/api/hooks/programs/programs.hooks";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 
 const CHURCH_OPTIONS = [
@@ -28,6 +28,14 @@ export default function ProgramOverview() {
   };
   const { data, isLoading, isError, isFetching } =
     useGetAllAdminPrograms(params);
+
+  const {mutate, isPending} = useDeleteProgram()
+
+  const handleDeleteProgram = (id: string) => {
+    mutate(id)
+  }
+
+  
 
   return (
     <div className="space-y-15">
@@ -68,10 +76,10 @@ export default function ProgramOverview() {
             errorMessage="Error loading programs. Please try again"
             emptyMessage="No Programs at this time"
             isFetching={isFetching}
-            imageUrl=" "
+            
           >
             <ReuseableTable
-              columns={ProgramsColumn()}
+              columns={ProgramsColumn(handleDeleteProgram, editProgram)}
               tableData={PROGRAMS_TABLE}
             />
           </QueryStateHandler>

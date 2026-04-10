@@ -55,25 +55,33 @@ export const useSignin = () => {
 
 
 // verify emaail with tokens sent to the user's inbox 
-export const useVerifyEmail = () => {
-  const queryClient = useQueryClient();
-  const setUser = useAuthStore((state) => state.setUser);
+// export const useVerifyEmail = () => {
+//   const queryClient = useQueryClient();
+//   const setUser = useAuthStore((state) => state.setUser);
 
-  return useMutation({
-    mutationFn: verifyEmail,
-    onSuccess: (data: any) => {
-      showSuccessToast(data.message);
-      // Update user state with verified status
-      if (data.user) {
-        setUser(data.data.user, "email", data.data.user.isEmailVerified);
-      }
-      queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
-    },
-    onError: (error: any) => {
-      showErrorToast(error.message);
-    },
-  });
-};
+//    const query = useQuery({
+//     queryKey: ["auth", "user"],
+//     queryFn: verifyEmail,
+//     retry: false, 
+//   });
+
+//   return useQuery({
+
+//     queryFn: verifyEmail,
+//     onSuccess: (data: any) => {
+//       showSuccessToast(data.message);
+//       console.log(data)
+//       // Update user state with verified status
+//       // if (data.user) {
+//       //   setUser(data.data.user, "email", data.data.user.isEmailVerified);
+//       // }
+//       queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
+//     },
+//     onError: (error: any) => {
+//       showErrorToast(error.message);
+//     },
+//   });
+// };
 
 
 // resend verification email if previous one became invalid or expired 

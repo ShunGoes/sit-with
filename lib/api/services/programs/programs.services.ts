@@ -34,7 +34,7 @@ export interface ProgramResponse {
   message: string;
 }
 
-export const getPrograms = async () => {
+export const get_programs = async () => {
   try {
     const res = await api.get("/programs");
     return res.data;
@@ -45,8 +45,8 @@ export const getPrograms = async () => {
 };
 
 export const get_all_admin_programs = async (param = {}) => {
-  const queryString = buildQueryString(param)
-  const url = queryString ? `?${queryString}` : ""
+  const queryString = buildQueryString(param);
+  const url = queryString ? `?${queryString}` : "";
   try {
     const res = await api.get(`/programs/admin/all${url}`);
     return res.data;
@@ -55,7 +55,7 @@ export const get_all_admin_programs = async (param = {}) => {
   }
 };
 
-export const getProgram = async (id: string) => {
+export const get_program_by_ID = async (id: string) => {
   if (!id) {
     throw new Error("Program ID is required.");
   }
@@ -96,9 +96,7 @@ export const updateProgram = async (
   }
 };
 
-export const deleteProgram = async (
-  id: string
-): Promise<{ message: string }> => {
+export const delete_program = async (id: string) => {
   if (!id) {
     throw new Error("Program ID is required for deletion.");
   }
@@ -107,7 +105,6 @@ export const deleteProgram = async (
     const res = await api.delete(`/programs/${id}`);
     return res.data;
   } catch (error) {
-    console.log(error);
     throw new Error(getApiError(error));
   }
 };

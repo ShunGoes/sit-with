@@ -1,9 +1,18 @@
+
+declare module '*.css' {
+  const content: { [className: string]: string };
+  export default content;
+}
+
+declare module 'swiper/css*';
+
 interface ProgramColumn {
     name: string,
     type: "Leaders" | "Professionals" | "Students",
     enrolled: string,
     price: number,
     status: "Active" | "Inactive",
+    id: string
 }
 
 interface ConsultationColumn{

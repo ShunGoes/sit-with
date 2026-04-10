@@ -5,7 +5,6 @@ import {
   createConsultation,
   updateConsultation,
   deleteConsultation,
-  CreateConsultationPayload,
   UpdateConsultationPayload,
 } from "../../services/consultations/consultations.services";
 import { showSuccessToast, showErrorToast } from "@/lib/toast-helpers";

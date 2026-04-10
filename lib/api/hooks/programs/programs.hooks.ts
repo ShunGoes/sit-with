@@ -1,11 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  getPrograms,
-  getProgram,
+  get_programs,
+  get_program_by_ID,
   createProgram,
   updateProgram,
-  deleteProgram,
-  CreateProgramPayload,
+  delete_program,
   UpdateProgramPayload,
   get_all_admin_programs,
 } from "../../services/programs/programs.services";
@@ -14,23 +13,23 @@ import { showSuccessToast, showErrorToast } from "@/lib/toast-helpers";
 export const useGetPrograms = () => {
   return useQuery({
     queryKey: ["programs", "all"],
-    queryFn: getPrograms,
+    queryFn: get_programs,
     retry: false,
   });
 };
 
 export const useGetAllAdminPrograms = (param = {}) => {
   return useQuery({
-    queryKey: ["programs", "admin", "all"],
+    queryKey: ["programs", "admin", param],
     queryFn: () => get_all_admin_programs(param),
     retry: false,
   });
 };
 
-export const useGetProgram = (programId: string) => {
+export const useGetProgramById = (programId: string) => {
   return useQuery({
     queryKey: ["programs", programId],
-    queryFn: () => getProgram(programId),
+    queryFn: () => get_program_by_ID(programId),
     enabled: Boolean(programId),
     retry: false,
   });
@@ -44,7 +43,7 @@ export const useCreateProgram = () => {
     mutationFn: createProgram,
     onSuccess: (data) => {
       showSuccessToast(data.message);
-      queryClient.invalidateQueries({ queryKey: ["programs", "all"] });
+      queryClient.invalidateQueries({ queryKey: ["programs"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -60,7 +59,7 @@ export const useUpdateProgram = () => {
       updateProgram(id, payload),
     onSuccess: (data) => {
       showSuccessToast(data.message);
-      queryClient.invalidateQueries({ queryKey: ["programs", "all"] });
+      queryClient.invalidateQueries({ queryKey: ["programs"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -72,7 +71,7 @@ export const useDeleteProgram = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: deleteProgram,
+    mutationFn: delete_program,
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["programs"] });

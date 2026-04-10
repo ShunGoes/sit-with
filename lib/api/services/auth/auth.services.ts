@@ -32,7 +32,7 @@ export const register = async (data: {
     return res.data;
   } catch (error) {
     console.log(error);
-    
+
     throw new Error(getApiError(error));
   }
 };
@@ -56,15 +56,13 @@ export const getCurrentUser = async () => {
   }
 };
 
-export const verifyEmail = async (
-  token: string
-): Promise<VerifyEmailResponse> => {
+export const verifyEmail = async (token: string) => {
   if (!token) {
     throw new Error("Verification token is required.");
   }
 
   try {
-    const res = await api.post("/auth/verify-email", { token });
+    const res = await api.get("/auth/verify-email", { params: token });
     return res.data;
   } catch (error) {
     console.log(error);

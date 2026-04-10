@@ -24,24 +24,24 @@ import { Trash2 } from "lucide-react";
 import { EllipsisVertical } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
-
 let typeVariant;
 
-function variantAssigner(type: "Leaders" | "Professionals" | "Students"){
+function variantAssigner(type: "Leaders" | "Professionals" | "Students") {
   switch (type) {
     case "Leaders":
-      return typeVariant = "warning";
+      return (typeVariant = "warning");
     case "Professionals":
-      return typeVariant = "hibiscus"
+      return (typeVariant = "hibiscus");
     case "Students":
-      return typeVariant = "success"
+      return (typeVariant = "success");
     default:
-      return typeVariant = "default"
-     
+      return (typeVariant = "default");
   }
-
 }
-const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
+const ProgramsColumn = (
+  handleDeleteProgram: (id: string) => void,
+  editProgram: (id: string) => void
+): ColumnDef<ProgramColumn>[] => [
   {
     accessorKey: "name",
     header: "Program Name",
@@ -50,10 +50,10 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
         <div>
           <h6 className=" text-xs  ">
             {row.original?.name
-            ? `${row.original.name.slice(0, 18)}${
-                row.original.name.length > 18 ? "..." : ""
-              }`
-            : "-"}
+              ? `${row.original.name.slice(0, 18)}${
+                  row.original.name.length > 18 ? "..." : ""
+                }`
+              : "-"}
           </h6>
         </div>
       </div>
@@ -63,17 +63,17 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
   {
     accessorKey: "type",
     header: "Type",
-    cell: ({ row }) => <Badge variant={variantAssigner(row.original.type)}>{row.original.type}</Badge>,
+    cell: ({ row }) => (
+      <Badge variant={variantAssigner(row.original.type)}>
+        {row.original.type}
+      </Badge>
+    ),
     size: 300,
   },
   {
     accessorKey: "enroled",
     header: "Enrolled",
-    cell: ({ row }) => (
-      <h6 contextMenu="text-xs ">
-        {row.original.enrolled}
-      </h6>
-    ),
+    cell: ({ row }) => <h6 contextMenu="text-xs ">{row.original.enrolled}</h6>,
   },
   {
     accessorKey: "price",
@@ -88,13 +88,17 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
-      <Badge variant={row.original.status === "Active" ? "success" : "secondary"}>{row.original.status}</Badge>
+      <Badge
+        variant={row.original.status === "Active" ? "success" : "secondary"}
+      >
+        {row.original.status}
+      </Badge>
     ),
   },
   {
     id: "actions",
     header: "Action",
-    cell: () => {
+    cell: ({ row }) => {
       const isMobile = useIsMobile();
 
       if (!isMobile) {
@@ -104,6 +108,7 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
               <TooltipTrigger asChild>
                 <button
                   type="button"
+                  onClick={() => editProgram(row.original.id)}
                   className="cursor-pointer outline-none border-none bg-transparent"
                 >
                   <FilePenLine size={15} />
@@ -120,7 +125,7 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
                   type="button"
                   className="cursor-pointer outline-none border-none bg-transparent"
                 >
-                  <Eye color="#344054" size={15}/>
+                  <Eye color="#344054" size={15} />
                 </button>
               </TooltipTrigger>
               <TooltipContent>
@@ -132,9 +137,10 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
               <TooltipTrigger asChild>
                 <button
                   type="button"
+                  onClick={() => handleDeleteProgram(row.original.id)}
                   className="cursor-pointer outline-none border-none bg-transparent"
                 >
-                  <Trash2 color="#344054" size={15}/>
+                  <Trash2 color="#344054" size={15} />
                 </button>
               </TooltipTrigger>
               <TooltipContent>
@@ -151,14 +157,19 @@ const ProgramsColumn = (): ColumnDef<ProgramColumn>[] => [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem className="py-3 px-4">
-              <Eye color="#344054" size={15}/> View
+              <Eye color="#344054" size={15} /> View
             </DropdownMenuItem>
             <DropdownMenuItem className="py-3 px-4">
               {" "}
-              <FilePenLine size={15} color="#344054" /> Edit
+              <FilePenLine size={15} color="#344054" onClick={() => editProgram(row.original.id)}/> Edit
             </DropdownMenuItem>
             <DropdownMenuItem className="py-3 px-4">
-              <Trash2 color="#344054" size={15} /> Delete
+              <Trash2
+                color="#344054"
+                size={15}
+                onClick={() => handleDeleteProgram(row.original.id)}
+              />{" "}
+              Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
