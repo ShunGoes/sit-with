@@ -6,6 +6,7 @@ import { Spinner } from "@/components/spinner";
 import { showErrorToast, showSuccessToast } from "@/lib/toast-helpers";
 import { useQuery } from "@tanstack/react-query";
 import { verifyEmail } from "@/lib/api/services/auth/auth.services";
+import { useAuthStore } from "@/store/use-auth-store";
 
 export default function VerifyEmailPage() {
   const router = useRouter();
@@ -17,6 +18,12 @@ export default function VerifyEmailPage() {
     retry: false,
     enabled: !!token,
   });
+  const setUserEmailVerified = useAuthStore(
+    (state) => state.setUserEmailVerified,
+  );
+  const user = useAuthStore((state) => state.user);
+  const role = user?.role;
+
   const hasCalledRef = useRef(false);
 
   useEffect(() => {
@@ -25,7 +32,7 @@ export default function VerifyEmailPage() {
       return;
     }
 
-    if (hasCalledRef.current) {
+    if (hasCalledRef.current || (!isSuccess && !isError)) {
       return;
     }
 
@@ -34,29 +41,54 @@ export default function VerifyEmailPage() {
     if (isSuccess && data) {
       console.log(data);
       showSuccessToast(data.message);
+      setUserEmailVerified(true);
+
+      // Wait for 2 seconds to allow the user to read the success message
+      setTimeout(() => {
+        if (role === "ADMIN") {
+          router.replace("/admin");
+        } else if (role === "USER") {
+          router.replace("/user");
+        } else {
+          // No role in store yet (e.g. user landed on link without being logged in)
+          router.replace("/login");
+        }
+      }, 2000);
     }
 
     if (isError) {
-      const message = String(
-        error?.message ?? "Verification failed.",
-      ).toLowerCase();
-      showErrorToast(message);
+      const rawMessage = error?.message ?? "Verification failed.";
+      const lowerMessage = String(rawMessage).toLowerCase();
 
       console.log("error from verifying email", error);
 
-      // if (message.includes("already verified") || message.includes("already been verified")) {
-      //   router.replace("/login");
-      //   return;
-      // }
+      if (
+        lowerMessage.includes("already verified") ||
+        lowerMessage.includes("already been verified")
+      ) {
+        showSuccessToast(rawMessage);
+        setUserEmailVerified(true);
 
-      // if (message.includes("expired")) {
-      //   router.replace("/verification-failed?reason=expired");
-      //   return;
-      // }
+        setTimeout(() => {
+          router.replace("/login");
+        }, 2000);
+        return;
+      }
 
-      // router.replace("/verification-failed?reason=invalid");
+      showErrorToast(rawMessage);
+
+      if (lowerMessage.includes("expired")) {
+        setTimeout(() => {
+          router.replace("/verification-failed?reason=expired");
+        }, 2000);
+        return;
+      }
+
+      setTimeout(() => {
+        router.replace("/verification-failed?reason=invalid");
+      }, 2000);
     }
-  }, [router, token, hasCalledRef, isSuccess, data, isError, error]);
+  }, [router, token, isSuccess, data, isError, error, setUserEmailVerified]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 py-10">

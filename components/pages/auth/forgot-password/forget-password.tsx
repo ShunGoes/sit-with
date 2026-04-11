@@ -1,40 +1,37 @@
 "use client";
 
-import React, { useState } from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 // Child Form Components
 import { EmailForm } from "./email-form";
-import { VerifyOtpForm } from "./verify-otp-form";
-import { NewPasswordForm } from "./new-password-form";
-import { PasswordSuccess } from "./password-success";
 import { useForgotPassword } from "@/lib/api/hooks/auth/auth.hooks";
+import { useModalStore } from "@/components/store/use-modal-store";
+import { Spinner } from "@/components/spinner";
 
 export default function ForgotPasswordFlow() {
-  const [step, setStep] = useState(1);
-  const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
+  const router = useRouter();
+  const { mutate, isPending } = useForgotPassword();
 
-  const {mutate, isPending} = useForgotPassword()
+  const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
 
   const handleEmailNext = (submittedEmail: string) => {
-    setEmail(submittedEmail);
-    console.log("Email submitted:", submittedEmail);
-
-    mutate({email: submittedEmail}, {
-      onSuccess: () => {
-        setStep(2);
-      }
-    })
-    
-  };
-
-  const handleOtpVerify = () => {
-    if (otp.length === 6) {
-      console.log("OTP verified:", otp);
-      setStep(3);
-    }
+    mutate(
+      { email: submittedEmail },
+      {
+        onSuccess: () => {
+          closeModal("loading");
+          // Navigate to a "check your email" page so the user knows what to do next
+          router.replace("/signup-success");
+        },
+        onError: () => {
+          closeModal("loading");
+        },
+      },
+    );
   };
 
   const variants = {
@@ -43,67 +40,29 @@ export default function ForgotPasswordFlow() {
     exit: { x: -50, opacity: 0 },
   };
 
+  useEffect(() => {
+    if (isPending) {
+      openModal(
+        "loading",
+        <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+          <Spinner size={40} />
+        </div>,
+        { isMutation: true },
+      );
+    }
+  }, [isPending]);
+
   return (
     <Card className="max-w-[500px] w-[90%] md:w-full lg:w-[90%]  mx-auto bg-[#FEFFFBCC] border-4 border-[#FFFFFF5C] rounded-[10px] shadow-[0px_8px_8px_-4px_rgba(10,13,18,0.03),0px_20px_24px_-4px_rgba(10,13,18,0.08)] overflow-hidden p-6 sm:p-8 lg:px-5 lg:py-7 flex flex-col justify-center relative min-h-[300px]">
-      <AnimatePresence mode="wait">
-        {step === 1 && (
-          <motion.div
-            key="step1"
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.3 }}
-          >
-            <EmailForm onNext={handleEmailNext} />
-          </motion.div>
-        )}
-
-        {step === 2 && (
-          <motion.div
-            key="step2"
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.3 }}
-          >
-            <VerifyOtpForm
-              email={email}
-              otp={otp}
-              setOtp={setOtp}
-              onBack={() => setStep(1)}
-              onVerify={handleOtpVerify}
-            />
-          </motion.div>
-        )}
-
-        {step === 3 && (
-          <motion.div
-            key="step3"
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.3 }}
-          >
-            <NewPasswordForm onNext={() => setStep(4)} />
-          </motion.div>
-        )}
-
-        {step === 4 && (
-          <motion.div
-            key="step4"
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.3 }}
-          >
-            <PasswordSuccess />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <motion.div
+        key="step1"
+        variants={variants}
+        initial="initial"
+        animate="animate"
+        transition={{ duration: 0.3 }}
+      >
+        <EmailForm onNext={handleEmailNext} />
+      </motion.div>
     </Card>
   );
 }

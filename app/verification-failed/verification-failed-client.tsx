@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { useResendVerification } from "@/lib/api/hooks/auth/auth.hooks";
 import FormFieldComp from "@/components/formfield";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface VerificationFailedClientProps {
   reason?: string;
@@ -48,13 +49,20 @@ export default function VerificationFailedClient({ reason }: VerificationFailedC
   const { title, description } = getFailureContent(reason);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { mutate, isPending } = useResendVerification();
+  const router = useRouter()
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
   });
 
   const onSubmit = (data: FormValues) => {
-    mutate(data);
+    mutate(data, {
+      onSuccess: (data) => {
+        if(data.message.includes("Email is already verified.")){
+          router.replace("/login")
+        }
+      }
+    });
     setIsSubmitted(true);
   };
 

@@ -62,7 +62,7 @@ export const verifyEmail = async (token: string) => {
   }
 
   try {
-    const res = await api.get("/auth/verify-email", { params: token });
+    const res = await api.get(`/auth/verify-email?token=${token}`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -87,8 +87,8 @@ export const resendVerification = async (data: {
 };
 
 export const forgotPassword = async (
-  data: ForgotPasswordPayload
-): Promise<GenericMessageResponse> => {
+  data: {email: string}
+) => {
   try {
     const res = await api.post("/auth/forgot-password", data);
     return res.data;
@@ -99,8 +99,8 @@ export const forgotPassword = async (
 };
 
 export const resetPassword = async (
-  data: ResetPasswordPayload
-): Promise<GenericMessageResponse> => {
+  data: {password: string, token: string}
+) => {
   try {
     const res = await api.post("/auth/reset-password", data);
     return res.data;

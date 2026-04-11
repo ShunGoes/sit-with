@@ -6,23 +6,22 @@ export interface AuthUser {
   lastName: string;
   email: string;
   role: string;
+  isEmailVerified: boolean;
 }
 
 interface AuthState {
   user: AuthUser | null;
   isAuthenticated: boolean;
   authMethod: "google" | "email" | null;
-  isEmailVerified: boolean;
 }
 
 interface AuthActions {
   setUser: (
     user: AuthUser,
-    authMethod: "google" | "email",
-    isEmailVerified: boolean
+    authMethod: "google" | "email"
   ) => void;
   clearUser: () => void;
-  setEmailVerified: (verified: boolean) => void;
+  setUserEmailVerified: (verified: boolean) => void;
 }
 
 type AuthStore = AuthState & AuthActions;
@@ -31,21 +30,25 @@ const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
   authMethod: null,
-  isEmailVerified: false,
 };
 
 export const useAuthStore = create<AuthStore>((set) => ({
   ...initialState,
 
-  setUser: (user, authMethod, isEmailVerified) =>
+  setUser: (user, authMethod) =>
     set({
-      user,
+      user: {
+        ...user,
+        isEmailVerified: authMethod === "google" ? true : user.isEmailVerified,
+      },
       isAuthenticated: true,
       authMethod,
-      isEmailVerified: authMethod === "google" ? true : isEmailVerified,
     }),
 
   clearUser: () => set(initialState),
 
-  setEmailVerified: (verified) => set({ isEmailVerified: verified }),
+  setUserEmailVerified: (verified) =>
+    set((state) => ({
+      user: state.user ? { ...state.user, isEmailVerified: verified } : null,
+    })),
 }));

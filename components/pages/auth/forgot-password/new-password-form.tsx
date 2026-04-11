@@ -5,8 +5,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import FormFieldComp from "@/components/formfield";
-import { Lock } from "lucide-react";
-import { form } from "framer-motion/client";
+import { useResetPassword } from "@/lib/api/hooks/auth/auth.hooks";
+import { useEffect } from "react";
+import { useModalStore } from "@/components/store/use-modal-store";
+import { Spinner } from "@/components/spinner";
 
 const passwordSchema = z
   .object({
@@ -21,18 +23,47 @@ const passwordSchema = z
 type PasswordFormValues = z.infer<typeof passwordSchema>;
 
 interface NewPasswordFormProps {
-  onNext: () => void;
+  token: string;
+  onSuccess: () => void;
+  onError?: () => void;
 }
 
-export function NewPasswordForm({ onNext }: NewPasswordFormProps) {
+export function NewPasswordForm({ token, onSuccess, onError }: NewPasswordFormProps) {
+  const { mutate, isPending } = useResetPassword();
+  const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
+
   const passwordForm = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: { password: "", confirmPassword: "" },
   });
 
+  useEffect(() => {
+    if (isPending) {
+      openModal(
+        "loading",
+        <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+          <Spinner size={40} />
+        </div>,
+        { isMutation: true },
+      );
+    }
+  }, [isPending]);
+
   const onPasswordSubmit = (data: PasswordFormValues) => {
-    console.log("Password changed:", data);
-    onNext();
+    mutate(
+      { password: data.password, token },
+      {
+        onSuccess: () => {
+          closeModal("loading");
+          onSuccess();
+        },
+        onError: () => {
+          closeModal("loading");
+          onError?.();
+        },
+      },
+    );
   };
 
   return (
@@ -62,12 +93,12 @@ export function NewPasswordForm({ onNext }: NewPasswordFormProps) {
             fill="#FBBC04"
           />
           <path
-            d="M6 17.25C6.82843 17.25 7.5 16.5784 7.5 15.75C7.5 14.9216 6.82843 14.25 6 14.25C5.17157 14.25 4.5 14.9216 4.5 15.75C4.5 16.5784 5.17157 17.25 6 17.25Z"
+            d="M6 17.25C6.82843 17.25 7.5 16.5784 7.5 15.75C7.5 14.9216 6.82843 14.25 6 14.25C5.17157 14.25 4.5 14.9216 4.5 15.75C4.5 16.5784 6 17.25 6 17.25Z"
             fill="#FBBC04"
           />
         </svg>
       </div>
-      <h1 className="text-[24px]  lg:text-[48px] text-brand-green mb-1 lg:mb-2 text-center">
+      <h1 className="text-[24px] lg:text-[48px] text-brand-green mb-1 lg:mb-2 text-center">
         New Password
       </h1>
       <p className="text-[#535862] text-[14px] lg:w-[95%] mx-auto text-center mb-8">
@@ -94,8 +125,8 @@ export function NewPasswordForm({ onNext }: NewPasswordFormProps) {
         />
         <Button
           type="submit"
-          disabled={passwordForm.formState.isSubmitting || !passwordForm.formState.isValid}
-          className="w-full  mt-6 "
+          disabled={isPending || !passwordForm.formState.isValid}
+          className="w-full mt-6"
         >
           Reset Password
         </Button>

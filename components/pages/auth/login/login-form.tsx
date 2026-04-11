@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FormFieldComp from "@/components/formfield";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useSignin } from "@/lib/api/hooks/auth/auth.hooks";
+import { useSignin, useResendVerification } from "@/lib/api/hooks/auth/auth.hooks";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
@@ -30,6 +30,7 @@ export default function LoginForm() {
   });
 
   const { mutate, isPending } = useSignin();
+  const { mutate: resendVerification } = useResendVerification();
   const router = useRouter();
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
@@ -38,17 +39,29 @@ export default function LoginForm() {
     const values = { email: data.email, password: data.password };
 
     mutate(values, {
-      onSuccess: (data) => {
-        closeModal("loading");
-        console.log(data);
-        if (data.data.user.role === "ADMIN") {
-          router.replace("/admin");
+      onSuccess: (resData) => {
+        if (resData.data?.user?.isEmailVerified) {
+          closeModal("loading");
+          if (resData.data.user.role === "ADMIN") {
+            router.replace("/admin");
+          } else {
+            router.replace("/user");
+          }
         } else {
-          router.replace("/user");
+          // If unverified, resend verification email using the user's email
+          resendVerification({ email: resData.data.user.email }, {
+            onSuccess: () => {
+              closeModal("loading");
+              router.replace("/signup-success");
+            },
+            onError: () => {
+              closeModal("loading");
+            }
+          });
         }
       },
       onError: () => {
-        closeModal("loadinf");
+        closeModal("loading");
       },
     });
   };
@@ -129,7 +142,7 @@ export default function LoginForm() {
               />
               <div className="flex justify-end mt-2">
                 <Link
-                  href="/auth/forgot-password"
+                  href="/forgot-password"
                   className="text-[12px] text-[#FDA428] font-medium hover:underline transition-colors"
                 >
                   Forgot password?
@@ -190,7 +203,7 @@ export default function LoginForm() {
             <p className="text-[12px] text-[#475467]">
               Don't have an account?{" "}
               <Link
-                href="/auth/signup"
+                href="/signup"
                 className="text-[#A8D675] hover:text-[#8cb054] font-medium transition-colors"
               >
                 Sign up

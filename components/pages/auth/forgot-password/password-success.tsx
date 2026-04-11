@@ -3,7 +3,6 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Lock } from "lucide-react";
 
 export function PasswordSuccess() {
   return (
@@ -45,7 +44,7 @@ export function PasswordSuccess() {
         Your password has been successfully updated.
       </p>
 
-      <Link href="/auth/login" className="w-full">
+      <Link href="/login" className="w-full">
         <Button
           type="button"
           className="w-full mt-6"

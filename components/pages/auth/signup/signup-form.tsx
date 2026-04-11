@@ -10,6 +10,9 @@ import FormFieldComp from "@/components/formfield";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useRegister } from "@/lib/api/hooks/auth/auth.hooks";
+import { useEffect } from "react";
+import { Spinner } from "@/components/spinner";
+import { useModalStore } from "@/components/store/use-modal-store";
 
 const signupSchema = z
   .object({
@@ -37,6 +40,9 @@ export default function SignupForm() {
     },
   });
 
+  const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
+
   const { mutate, isPending } = useRegister();
 
   const onSubmit = (data: SignupFormValues) => {
@@ -52,10 +58,26 @@ export default function SignupForm() {
 
     mutate(values, {
       onSuccess: () => {
+        closeModal("loading");
         router.push("/signup-success");
+      },
+      onError: () => {
+        closeModal("loading");
       },
     });
   };
+
+  useEffect(() => {
+    if (isPending) {
+      openModal(
+        "loading",
+        <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+          <Spinner size={40} />
+        </div>,
+        { isMutation: true },
+      );
+    }
+  }, [isPending]);
 
   return (
     <Card className=" w-[80%]  mx-auto md:w-full md:border border-[#FFFFFF5C] bg-transparent md:bg-[#FEFFFBCC] shadow-none   md:rounded-[10px] overflow-hidden flex flex-col md:flex-row xl:gap-20 lg:p-5 ">
@@ -90,10 +112,10 @@ export default function SignupForm() {
 
           <div>
             <h1 className="text-[24px] font-medium md:font-bold text-brand-green mb-1 text-left">
-              Welcome Back
+              Create Account
             </h1>
-            <p className="text-[#475467] text-[14px] md:text-[12px]  text-left">
-              Take a moment, breathe, and continue your journey
+            <p className="text-[#475467] text-[14px] md:text-[12px] text-left">
+              Join us — it only takes a minute.
             </p>
           </div>
         </div>
@@ -104,14 +126,16 @@ export default function SignupForm() {
         >
           <div className="flex flex-col gap-5">
             <div>
-            <FormFieldComp
-              control={form.control}
-              name="fullName"
-              label="Full Name"
-              placeholder="Funke Moore"
-              type="text"
-            />
-            <p className="text-xs text-primary-text italic mt-1">Firstname Lastname</p>
+              <FormFieldComp
+                control={form.control}
+                name="fullName"
+                label="Full Name"
+                placeholder="Funke Moore"
+                type="text"
+              />
+              <p className="text-xs text-primary-text italic mt-1">
+                Firstname Lastname
+              </p>
             </div>
             <FormFieldComp
               control={form.control}
