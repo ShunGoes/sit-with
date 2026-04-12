@@ -3,6 +3,7 @@
 import { useDropzone } from "react-dropzone";
 import { useState, useEffect } from "react";
 import { X, ImageIcon, UploadCloud } from "lucide-react";
+import Image from "next/image";
 
 interface ImageUploadProps {
   value?: File | string | null;
@@ -27,27 +28,22 @@ export default function ImageUpload({
 
   // Safely manage object URLs to avoid memory leaks and React Strict Mode bugs
   useEffect(() => {
-    if (!value) {
-      setPreviewUrl(null);
-      return;
-    }
+    let objectUrl: string | null = null;
 
-    if (typeof value === "string") {
-      setPreviewUrl(value);
-      return;
-    }
-
-    try {
-      const objectUrl = URL.createObjectURL(value);
+    if (value && value instanceof File) {
+      objectUrl = URL.createObjectURL(value);
       setPreviewUrl(objectUrl);
-
-      return () => {
-        URL.revokeObjectURL(objectUrl);
-      };
-    } catch (e) {
-      console.error("Failed to create object URL", e);
+    } else if (typeof value === "string") {
+      setPreviewUrl(value);
+    } else {
       setPreviewUrl(null);
     }
+
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
   }, [value]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -93,11 +89,15 @@ export default function ImageUpload({
         // Preview State
         <div className="relative group rounded-xl border border-gray-200 bg-gray-50 overflow-hidden shadow-sm aspect-video sm:aspect-2/1 w-full max-w-2xl mx-auto flex items-center justify-center">
           {previewUrl ? (
-            <img
-              src={previewUrl}
-              alt="Preview"
-              className="object-contain w-full h-full"
-            />
+            <div className="relative w-full h-full">
+              <Image
+                src={previewUrl}
+                alt="Preview"
+                fill
+                className="object-contain"
+                unoptimized={previewUrl.startsWith("blob:")}
+              />
+            </div>
           ) : (
             <div className="flex flex-col items-center gap-2 text-gray-400">
               <ImageIcon size={48} strokeWidth={1} />

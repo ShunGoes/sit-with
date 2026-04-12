@@ -1,4 +1,4 @@
-import { Plus, FileText, Calendar, CalendarCheck, CalendarCheck2 } from "lucide-react";
+import { Plus, FileText, CalendarCheck2 } from "lucide-react";
 
 export function QuickActions() {
   const actions = [

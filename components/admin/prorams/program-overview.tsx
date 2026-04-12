@@ -29,7 +29,7 @@ export default function ProgramOverview() {
   const { data, isLoading, isError, isFetching } =
     useGetAllAdminPrograms(params);
 
-  const {mutate, isPending} = useDeleteProgram()
+  const { mutate } = useDeleteProgram();
 
   const handleDeleteProgram = (id: string) => {
     mutate(id)

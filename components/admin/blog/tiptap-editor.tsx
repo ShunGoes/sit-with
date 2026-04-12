@@ -24,7 +24,6 @@ import {
   Strikethrough,
   Underline,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Toggle } from "@/components/ui/toggle";
 
 interface TiptapEditorProps {
@@ -139,7 +138,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
     if (currentHTML !== value) {
       editor.commands.setContent(value || "");
     }
-  }, [value]);
+  }, [value, editor]);
 
   return (
     <div className="border border-input rounded-lg overflow-hidden">

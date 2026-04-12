@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export function RecentActivities() {
   const activities = [

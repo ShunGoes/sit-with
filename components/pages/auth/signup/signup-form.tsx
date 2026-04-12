@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -83,7 +82,7 @@ export default function SignupForm() {
         { isMutation: true },
       );
     }
-  }, [isPending, googleSignInPending]);
+  }, [isPending, googleSignInPending, openModal]);
 
   return (
     <Card className=" w-[80%]  mx-auto md:w-full md:border border-[#FFFFFF5C] bg-transparent md:bg-[#FEFFFBCC] shadow-none   md:rounded-[10px] overflow-hidden flex flex-col md:flex-row xl:gap-20 lg:p-5 ">

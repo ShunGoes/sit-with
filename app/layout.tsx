@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/nav/navbar";
-import { ConditionalFooter } from "@/components/footer/conditional-footer";
 import { ViewTransition } from "react";
 import { ViewTransitionTracker } from "@/components/providers/view-transition-tracker";
 import { TooltipProvider } from "@/components/ui/tooltip";

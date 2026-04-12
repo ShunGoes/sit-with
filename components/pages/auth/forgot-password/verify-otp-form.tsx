@@ -7,7 +7,6 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { ShieldAlert } from "lucide-react";
 
 interface VerifyOtpFormProps {
   email: string;
@@ -76,7 +75,7 @@ export function VerifyOtpForm({
       </div>
 
       <p className="text-center text-[13px] text-[#667085] mb-8">
-        Didn't receive a code?{" "}
+        Didn&apos;t receive a code?{" "}
         <button type="button" className="text-brand-orange  hover:underline">
           click to resend
         </button>

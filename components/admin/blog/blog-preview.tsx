@@ -7,22 +7,25 @@ import Image from "next/image";
 
 export default function BlogPreview() {
   const values = useWatch<AddBlogFormValues>();
+  const [fileSrc, setFileSrc] = useState<string | null>(null);
   const { title, author, excerpt, coverImage, content } =
     values as AddBlogFormValues;
-  const [coverSrc, setCoverSrc] = useState<string | null>(null);
 
   // Resolve cover image src safely without memory leaks
   useEffect(() => {
     if (coverImage instanceof File) {
       const objectUrl = URL.createObjectURL(coverImage);
-      setCoverSrc(objectUrl);
+      setFileSrc(objectUrl);
       return () => URL.revokeObjectURL(objectUrl);
-    } else if (typeof coverImage === "string" && coverImage.length > 0) {
-      setCoverSrc(coverImage);
     } else {
-      setCoverSrc(null);
+      setFileSrc(null);
     }
   }, [coverImage]);
+
+  const coverSrc =
+    typeof coverImage === "string" && coverImage.length > 0
+      ? coverImage
+      : fileSrc;
 
   return (
     <article className="max-w-3xl mx-auto space-y-8 py-6">

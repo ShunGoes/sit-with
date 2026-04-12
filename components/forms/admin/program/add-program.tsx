@@ -50,7 +50,7 @@ export default function AddProgramForm() {
         { isMutation: true },
       );
     }
-  }, [isPending]);
+  }, [isPending, openModal]);
 
   return (
     <FormProvider {...form}>

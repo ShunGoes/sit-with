@@ -48,7 +48,7 @@ export function NewPasswordForm({ token, onSuccess, onError }: NewPasswordFormPr
         { isMutation: true },
       );
     }
-  }, [isPending]);
+  }, [isPending, openModal]);
 
   const onPasswordSubmit = (data: PasswordFormValues) => {
     mutate(

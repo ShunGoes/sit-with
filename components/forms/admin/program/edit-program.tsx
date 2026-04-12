@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 import {
-  useCreateProgram,
   useGetProgramById,
   useUpdateProgram,
 } from "@/lib/api/hooks/programs/programs.hooks";
@@ -12,9 +11,7 @@ import { useModalStore } from "@/components/store/use-modal-store";
 import ProgramForm from "./program-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const DEFAULT_VALUES = {
-  // price: ""
-};
+const DEFAULT_VALUES = {};
 
 export default function EditProgramForm({ id }: { id: string }) {
   const form = useForm<ProgramFormSchema>({
@@ -27,7 +24,7 @@ export default function EditProgramForm({ id }: { id: string }) {
   const closeModal = useModalStore((state) => state.closeModal);
 
   const { mutate, isPending } = useUpdateProgram();
-  const { data: program, isLoading, isError } = useGetProgramById(id);
+  const { data: program } = useGetProgramById(id);
 
   const onSubmit = (data: ProgramFormSchema) => {
     const parsedData = {
@@ -36,7 +33,7 @@ export default function EditProgramForm({ id }: { id: string }) {
     };
 
     mutate(
-      { id: "", payload: parsedData },
+      { id, payload: parsedData },
       {
         onSuccess: () => {
           closeModal("loading");
@@ -50,8 +47,9 @@ export default function EditProgramForm({ id }: { id: string }) {
 
   useEffect(() => {
     if (program) {
+      form.reset(program);
     }
-  });
+  }, [program, form]);
 
   useEffect(() => {
     if (isPending) {
@@ -63,7 +61,7 @@ export default function EditProgramForm({ id }: { id: string }) {
         { isMutation: true },
       );
     }
-  }, [isPending]);
+  }, [isPending, openModal]);
 
   return (
     <FormProvider {...form}>

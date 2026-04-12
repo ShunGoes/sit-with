@@ -87,7 +87,7 @@ export default function LoginForm() {
         { isMutation: true },
       );
     }
-  }, [isPending, googleSignInPending]);
+  }, [isPending, googleSignInPending, openModal]);
 
   return (
     <Card className=" w-[80%]  mx-auto md:w-full md:border border-[#FFFFFF5C] bg-transparent md:bg-[#FEFFFBCC] shadow-none   md:rounded-[10px] overflow-hidden flex flex-col md:flex-row xl:gap-20 lg:p-5 ">
@@ -210,7 +210,7 @@ export default function LoginForm() {
 
           <div className="relative my-6 text-center font-medium hidden md:block">
             <p className="text-[12px] text-[#475467]">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link
                 href="/signup"
                 className="text-[#A8D675] hover:text-[#8cb054] font-medium transition-colors"

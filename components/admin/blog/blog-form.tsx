@@ -3,8 +3,6 @@
 import { useFormContext, Controller, SubmitHandler } from "react-hook-form";
 import { AddBlogFormValues } from "@/schemas/add-blog-schema";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import ImageUpload from "@/components/image-upload";
 import TiptapEditor from "./tiptap-editor";
@@ -12,7 +10,7 @@ import FormFieldComp from "@/components/formfield";
 import { useModalStore } from "@/components/store/use-modal-store";
 
 interface BlogFormProps {
-  onSubmit: SubmitHandler<any>;
+  onSubmit: SubmitHandler<AddBlogFormValues>;
   submitLabel?: string;
 }
 
@@ -23,8 +21,7 @@ export default function BlogForm({
   const {
     control,
     handleSubmit,
-    formState: { errors },
-  } = useFormContext<any>();
+  } = useFormContext<AddBlogFormValues>();
 
   const closeModal = useModalStore((state) => state.closeModal);
 

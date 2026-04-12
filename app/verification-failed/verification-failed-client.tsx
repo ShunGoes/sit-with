@@ -5,11 +5,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useResendVerification } from "@/lib/api/hooks/auth/auth.hooks";
 import FormFieldComp from "@/components/formfield";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface VerificationFailedClientProps {
@@ -72,7 +69,7 @@ export default function VerificationFailedClient({ reason }: VerificationFailedC
         <div className="w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm">
           <h1 className="text-2xl font-semibold text-slate-900">Check your email</h1>
           <p className="mt-4 text-sm leading-6 text-slate-600">
-            We've sent a new verification link to your email address. Please check your inbox and click the link to verify your account.
+            We&apos;ve sent a new verification link to your email address. Please check your inbox and click the link to verify your account.
           </p>
           <div className="mt-8">
             <Button onClick={() => setIsSubmitted(false)} variant="outline" className="mr-4">

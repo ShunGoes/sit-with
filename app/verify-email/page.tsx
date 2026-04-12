@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Spinner } from "@/components/spinner";
@@ -8,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { verifyEmail } from "@/lib/api/services/auth/auth.services";
 import { useAuthStore } from "@/store/use-auth-store";
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token") ?? "";
@@ -85,7 +86,7 @@ export default function VerifyEmailPage() {
         router.replace("/verification-failed?reason=invalid");
       }, 2000);
     }
-  }, [router, token, isSuccess, data, isError, error, setUserEmailVerified]);
+  }, [router, token, isSuccess, data, isError, error, setUserEmailVerified, role]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 py-10">
@@ -102,5 +103,19 @@ export default function VerifyEmailPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-slate-50">
+          <Spinner size={40} />
+        </div>
+      }
+    >
+      <VerifyEmailContent />
+    </Suspense>
   );
 }
