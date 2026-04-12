@@ -116,10 +116,16 @@ export function Footer() {
                 Privacy Policy
               </Link>
               <Link
+                href="/refund-policy"
+                className="text-[#F8FFF5] hover:underline  text-sm transition-all"
+              >
+                Refund Policy
+              </Link>
+              <Link
                 href="/terms"
                 className="text-[#F8FFF5] hover:underline  text-sm transition-all"
               >
-                Terms of services
+                Terms of Services
               </Link>
             </div>
           </div>
@@ -172,10 +178,16 @@ export function Footer() {
             <div className="flex flex-col team-sm text-[#C7CAC6]">
               <span className=" ">Phone</span>
               <a
-                href="tel:+1 234 567-890"
+                href="tel:+16475330472"
                 className=" underline underline-offset-4 hover:text-white transition-colors"
               >
-                +1 (234) 567-890
+                +1 (647) 533-0472
+              </a>
+              <a
+                href="tel:+2348120241629"
+                className=" underline underline-offset-4 hover:text-white transition-colors"
+              >
+                +234 812 024 1629
               </a>
             </div>
           </div>
@@ -183,13 +195,17 @@ export function Footer() {
           <div className="flex items-center gap-3">
             <LocationIcon />
             <div className="flex flex-col team-sm text-[#C7CAC6]">
-              <span className=" ">Location</span>
-              <a
-                href="mailto:hello@sitwithpd.com"
-                className=" underline underline-offset-4 hover:text-white transition-colors"
-              >
-                Global Network
-              </a>
+              <span className=" ">Address</span>
+              <div className="flex flex-col gap-1 text-sm">
+                <span>Bsc Kelsey Pradia-Lawson,</span>
+                <span>Tornada Tropical Line,</span>
+                <span>31 Indian Dr. Lawson,</span>
+                <span>A. John Lagos</span>
+                <span className="mt-1">Abbot Locally option:</span>
+                <span>Oly Zone Tropical Center,</span>
+                <span>Eternity Stand Lagosi</span>
+                <span>Nigeria</span>
+              </div>
             </div>
           </div>
         </div>

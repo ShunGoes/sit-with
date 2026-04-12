@@ -39,7 +39,6 @@ export default function VerifyEmailPage() {
     hasCalledRef.current = true;
 
     if (isSuccess && data) {
-      console.log(data);
       showSuccessToast(data.message);
       setUserEmailVerified(true);
 
@@ -59,8 +58,6 @@ export default function VerifyEmailPage() {
     if (isError) {
       const rawMessage = error?.message ?? "Verification failed.";
       const lowerMessage = String(rawMessage).toLowerCase();
-
-      console.log("error from verifying email", error);
 
       if (
         lowerMessage.includes("already verified") ||

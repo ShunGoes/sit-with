@@ -9,15 +9,18 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import QueryProvider from "@/components/providers/query-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { GoogleOAuthProvider } from "@react-oauth/google";  
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  preload: false,
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-heading",
   subsets: ["latin"],
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -33,6 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${plusJakartaSans.variable}`}>
       <body className="antialiased flex flex-col min-h-screen">
+        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
         <QueryProvider>
         <TooltipProvider>
           <ViewTransitionTracker />
@@ -41,6 +45,7 @@ export default function RootLayout({
           <Toaster position="top-center"/>
         </TooltipProvider>
         </QueryProvider>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );

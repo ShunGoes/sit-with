@@ -9,6 +9,7 @@ import {
   forgotPassword,
   resetPassword,
   register,
+  googleLogin,
 } from "../../services/auth/auth.services";
 import { showErrorToast, showSuccessToast } from "@/lib/toast-helpers";
 import { useAuthStore } from "@/store/use-auth-store";
@@ -110,6 +111,23 @@ export const useResetPassword = () => {
     mutationFn: resetPassword,
     onSuccess: (data) => {
       showSuccessToast(data.message);
+    },
+    onError: (error) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+
+export const useGoogleLogin = () => {
+  const queryClient = useQueryClient();
+  const setUser = useAuthStore((state) => state.setUser);
+  
+  return useMutation({
+    mutationFn: googleLogin,
+    onSuccess: (data) => {
+      showSuccessToast(data.message);
+      setUser(data.data.user, "email");
+      queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
     },
     onError: (error) => {
       showErrorToast(error.message);
