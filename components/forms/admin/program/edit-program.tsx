@@ -47,7 +47,16 @@ export default function EditProgramForm({ id }: { id: string }) {
 
   useEffect(() => {
     if (program) {
-      form.reset(program);
+      // Map API response (Program) to Form Schema (ProgramFormSchema)
+      const mappedData: ProgramFormSchema = {
+        title: program.data.programName,
+        description: program.data.description,
+        price: program.data.amount,
+        programType: program.data.programType as any,
+        duration: program.data.programDuration,
+        thumbnail: (program.data as any).thumbnail || "",
+      };
+      form.reset(mappedData);
     }
   }, [program, form]);
 

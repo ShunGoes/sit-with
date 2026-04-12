@@ -22,8 +22,7 @@ function VerifyEmailContent() {
   const setUserEmailVerified = useAuthStore(
     (state) => state.setUserEmailVerified,
   );
-  const user = useAuthStore((state) => state.user);
-  const role = user?.role;
+  const setUser = useAuthStore((state) => state.setUser);
 
   const hasCalledRef = useRef(false);
 
@@ -42,9 +41,12 @@ function VerifyEmailContent() {
     if (isSuccess && data) {
       showSuccessToast(data.message);
       setUserEmailVerified(true);
+      setUser(data.data.user, "email");
 
       // Wait for 2 seconds to allow the user to read the success message
       setTimeout(() => {
+        const role = data?.data?.user.role
+        
         if (role === "ADMIN") {
           router.replace("/admin");
         } else if (role === "USER") {
@@ -86,7 +88,7 @@ function VerifyEmailContent() {
         router.replace("/verification-failed?reason=invalid");
       }, 2000);
     }
-  }, [router, token, isSuccess, data, isError, error, setUserEmailVerified, role]);
+  }, [router, token, isSuccess, data, isError, error, setUserEmailVerified, setUser]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 py-10">

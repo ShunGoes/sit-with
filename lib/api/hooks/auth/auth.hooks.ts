@@ -51,34 +51,7 @@ export const useSignin = () => {
   });
 };
 
-// verify emaail with tokens sent to the user's inbox
-// export const useVerifyEmail = () => {
-//   const queryClient = useQueryClient();
-//   const setUser = useAuthStore((state) => state.setUser);
 
-//    const query = useQuery({
-//     queryKey: ["auth", "user"],
-//     queryFn: verifyEmail,
-//     retry: false,
-//   });
-
-//   return useQuery({
-
-//     queryFn: verifyEmail,
-//     onSuccess: (data: any) => {
-//       showSuccessToast(data.message);
-//       console.log(data)
-//       // Update user state with verified status
-//       // if (data.user) {
-//       //   setUser(data.data.user, "email", data.data.user.isEmailVerified);
-//       // }
-//       queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
-//     },
-//     onError: (error: any) => {
-//       showErrorToast(error.message);
-//     },
-//   });
-// };
 
 // resend verification email if previous one became invalid or expired
 export const useResendVerification = () => {
@@ -126,7 +99,7 @@ export const useGoogleLogin = () => {
     mutationFn: googleLogin,
     onSuccess: (data) => {
       showSuccessToast(data.message);
-      setUser(data.data.user, "email");
+      setUser(data.data.user, "google");
       queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
     },
     onError: (error) => {

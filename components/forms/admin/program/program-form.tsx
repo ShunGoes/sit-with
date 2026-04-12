@@ -1,5 +1,5 @@
 import FormFieldComp from "@/components/formfield";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext, SubmitHandler } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import {
   Select,
@@ -33,10 +33,10 @@ export default function ProgramForm({
   onSubmit,
   header,
 }: {
-  onSubmit: (data: any) => void; // come back to this later
+  onSubmit: SubmitHandler<ProgramFormSchema>;
   header: string;
 }) {
-  const form = useFormContext();
+  const form = useFormContext<ProgramFormSchema>();
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7 mt-7">
       <header className="">{header}</header>

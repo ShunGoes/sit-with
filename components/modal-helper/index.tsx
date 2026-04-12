@@ -11,7 +11,7 @@ export  function addNewProgram() {
   openModal("add-new-program", <AddProgramForm />);
 }
 export  function editProgram(id: string) {
-  openModal("add-new-program", <EditProgramForm id={"123"}/>);
+  openModal("add-new-program", <EditProgramForm id={id}/>);
 }
 
 

@@ -5,7 +5,7 @@ import { ProgramFormSchema } from "@/schemas/programs-schema";
 export interface Program {
   id: string;
   programName: string;
-  progrmType: string;
+  programType: string;
   programDuration: string;
   description: string;
   amount: string;
