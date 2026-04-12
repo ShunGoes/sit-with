@@ -13,6 +13,7 @@ export const ProgramSchema = z.object({
   ]),
   programType: z.enum(["students", "professionals", "leaders"]),
   duration: z.string("Enter a duration"),
+  date: z.string()
 });
 
 export type ProgramFormSchema = z.infer<typeof ProgramSchema>;

@@ -14,7 +14,8 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, CalendarClock, FileText, LayoutDashboard, Settings, Users } from "lucide-react";
+import { BookOpen, CalendarClock, FileText, LayoutDashboard, LogOut, Settings, Users } from "lucide-react";
+import { useAuthStore } from "@/store/use-auth-store";
 
 // This is sample data.
 const data = {
@@ -80,17 +81,33 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   tooltip={item.title}
                   asChild
                   isActive={isActive}
-                  
                 >
                   <div className="flex gap-2 items-center">
-
-                  {item.icon}
-                  <Link href={item.url}>{item.title}</Link>
+                    {item.icon}
+                    <Link href={item.url}>{item.title}</Link>
                   </div>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             );
           })}
+          
+          {/* Logout Button */}
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              tooltip="Logout"
+              onClick={() => {
+                const clearUser = useAuthStore.getState().clearUser;
+                clearUser();
+                window.location.href = "/login";
+              }}
+              className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
+            >
+              <div className="flex gap-2 items-center">
+                <LogOut size={18} />
+                <span>Logout</span>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         </SidebarMenu>
       </SidebarContent>
       <SidebarRail />

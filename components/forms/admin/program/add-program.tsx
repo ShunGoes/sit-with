@@ -7,6 +7,7 @@ import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
 import ProgramForm from "./program-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 
 const DEFAULT_VALUES = {
   // price: ""
@@ -53,9 +54,15 @@ export default function AddProgramForm() {
   }, [isPending, openModal]);
 
   return (
-    <FormProvider {...form}>
-      {" "}
-      <ProgramForm onSubmit={onSubmit} header="Create New Program"/>
-    </FormProvider>
+    <div className="space-y-12">
+      <DashboardHeaderText
+        header="Create New Program "
+        subtext="Set up a new learning program for your platform"
+      />
+      <FormProvider {...form}>
+        {" "}
+        <ProgramForm onSubmit={onSubmit} />
+      </FormProvider>
+    </div>
   );
 }

@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -10,10 +12,13 @@ import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
 import ProgramForm from "./program-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import DashboardHeaderText from "@/components/dashboard/dashboard-header";
+import { usePathname } from "next/navigation";
 
 const DEFAULT_VALUES = {};
 
-export default function EditProgramForm({ id }: { id: string }) {
+ function EditProgramForm({id}: {id: string}) {
+
   const form = useForm<ProgramFormSchema>({
     defaultValues: DEFAULT_VALUES,
     resolver: zodResolver(ProgramSchema),
@@ -55,6 +60,7 @@ export default function EditProgramForm({ id }: { id: string }) {
         programType: program.data.programType as any,
         duration: program.data.programDuration,
         thumbnail: (program.data as any).thumbnail || "",
+        date: program.data.date
       };
       form.reset(mappedData);
     }
@@ -73,9 +79,22 @@ export default function EditProgramForm({ id }: { id: string }) {
   }, [isPending, openModal]);
 
   return (
+     <div className="space-y-12">
+          <DashboardHeaderText
+            header="Edit Program "
+            subtext="Edit existing program for your platform"
+          />
     <FormProvider {...form}>
       {" "}
-      <ProgramForm onSubmit={onSubmit} header="Edit Program" />
+      <ProgramForm onSubmit={onSubmit} />
     </FormProvider>
+    </div>
   );
+}
+
+export default function EditProgramFormClient ({id}: {id: string}){
+  return (
+    <EditProgramForm id={id}/>
+  )
+
 }

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export interface AuthUser {
   id: string;
@@ -16,10 +17,7 @@ interface AuthState {
 }
 
 interface AuthActions {
-  setUser: (
-    user: AuthUser,
-    authMethod: "google" | "email"
-  ) => void;
+  setUser: (user: AuthUser, authMethod: "google" | "email") => void;
   clearUser: () => void;
   setUserEmailVerified: (verified: boolean) => void;
 }
@@ -32,23 +30,32 @@ const initialState: AuthState = {
   authMethod: null,
 };
 
-export const useAuthStore = create<AuthStore>((set) => ({
-  ...initialState,
+export const useAuthStore = create<AuthStore>()(
+  persist(
+    (set) => ({
+      ...initialState,
 
-  setUser: (user, authMethod) =>
-    set({
-      user: {
-        ...user,
-        isEmailVerified: authMethod === "google" ? true : user.isEmailVerified,
-      },
-      isAuthenticated: true,
-      authMethod,
+      setUser: (user, authMethod) =>
+        set({
+          user: {
+            ...user,
+            isEmailVerified:
+              authMethod === "google" ? true : user.isEmailVerified,
+          },
+          isAuthenticated: true,
+          authMethod,
+        }),
+
+      clearUser: () => set(initialState),
+
+      setUserEmailVerified: (verified) =>
+        set((state) => ({
+          user: state.user ? { ...state.user, isEmailVerified: verified } : null,
+        })),
     }),
-
-  clearUser: () => set(initialState),
-
-  setUserEmailVerified: (verified) =>
-    set((state) => ({
-      user: state.user ? { ...state.user, isEmailVerified: verified } : null,
-    })),
-}));
+    {
+      name: "sit-with-auth",
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);

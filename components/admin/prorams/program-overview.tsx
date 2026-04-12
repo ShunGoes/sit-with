@@ -8,8 +8,12 @@ import ProgramsColumn from "@/components/tables/columns/programs-column";
 import ReuseableTable from "@/components/tables/reuseable-table";
 import { Button } from "@/components/ui/button";
 import { PROGRAMS_TABLE } from "@/data/table-data";
-import { useDeleteProgram, useGetAllAdminPrograms } from "@/lib/api/hooks/programs/programs.hooks";
+import {
+  useDeleteProgram,
+  useGetAllAdminPrograms,
+} from "@/lib/api/hooks/programs/programs.hooks";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 const CHURCH_OPTIONS = [
@@ -32,10 +36,8 @@ export default function ProgramOverview() {
   const { mutate } = useDeleteProgram();
 
   const handleDeleteProgram = (id: string) => {
-    mutate(id)
-  }
-
-  
+    mutate(id);
+  };
 
   return (
     <div className="space-y-15">
@@ -44,13 +46,11 @@ export default function ProgramOverview() {
           header="Programs "
           subtext="Manage all learning programs on the platform"
         />
-        <Button
-          variant={"regular"}
-          className="font-normal"
-          onClick={addNewProgram}
-        >
-          <Plus /> <span className="hidden sm:block">New Program </span>
-        </Button>
+        <Link href={"/admin/program/add"}>
+          <Button variant={"regular"} className="font-normal">
+            <Plus /> <span className="hidden sm:block">New Program </span>
+          </Button>
+        </Link>
       </div>
 
       <div className="space-y-4">
@@ -76,7 +76,6 @@ export default function ProgramOverview() {
             errorMessage="Error loading programs. Please try again"
             emptyMessage="No Programs at this time"
             isFetching={isFetching}
-            
           >
             <ReuseableTable
               columns={ProgramsColumn(handleDeleteProgram, editProgram)}
