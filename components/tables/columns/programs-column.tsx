@@ -38,6 +38,98 @@ function variantAssigner(type: "Leaders" | "Professionals" | "Students") {
       return (typeVariant = "default");
   }
 }
+
+const ActionCell = ({
+  row,
+  editProgram,
+  handleDeleteProgram,
+}: {
+  row: any;
+  editProgram: (id: string) => void;
+  handleDeleteProgram: (id: string) => void;
+}) => {
+  const isMobile = useIsMobile();
+
+  if (!isMobile) {
+    return (
+      <div className="flex gap-2 items-center">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              type="button"
+              onClick={() => editProgram(row.original.id)}
+              className="cursor-pointer outline-none border-none bg-transparent"
+            >
+              <FilePenLine size={15} />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p className="text-white">Edit Program details</p>
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              type="button"
+              className="cursor-pointer outline-none border-none bg-transparent"
+            >
+              <Eye color="#344054" size={15} />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p className="text-white">View more</p>
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              type="button"
+              onClick={() => handleDeleteProgram(row.original.id)}
+              className="cursor-pointer outline-none border-none bg-transparent"
+            >
+              <Trash2 color="#344054" size={15} />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p className="text-white">Delete</p>
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    );
+  }
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="cursor-pointer transition-all rounded-full duration-300 w-10 h-10 hover:bg-[#EBEBEB] flex justify-center  items-center">
+        <EllipsisVertical />{" "}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem className="py-3 px-4">
+          <Eye color="#344054" size={15} /> View
+        </DropdownMenuItem>
+        <DropdownMenuItem className="py-3 px-4">
+          {" "}
+          <FilePenLine
+            size={15}
+            color="#344054"
+            onClick={() => editProgram(row.original.id)}
+          />{" "}
+          Edit
+        </DropdownMenuItem>
+        <DropdownMenuItem className="py-3 px-4">
+          <Trash2
+            color="#344054"
+            size={15}
+            onClick={() => handleDeleteProgram(row.original.id)}
+          />{" "}
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
 const ProgramsColumn = (
   handleDeleteProgram: (id: string) => void,
   editProgram: (id: string) => void
@@ -98,84 +190,13 @@ const ProgramsColumn = (
   {
     id: "actions",
     header: "Action",
-    cell: ({ row }) => {
-      const isMobile = useIsMobile();
-
-      if (!isMobile) {
-        return (
-          <div className="flex gap-2 items-center">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  onClick={() => editProgram(row.original.id)}
-                  className="cursor-pointer outline-none border-none bg-transparent"
-                >
-                  <FilePenLine size={15} />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-white">Edit Program details</p>
-              </TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  className="cursor-pointer outline-none border-none bg-transparent"
-                >
-                  <Eye color="#344054" size={15} />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-white">View more</p>
-              </TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  onClick={() => handleDeleteProgram(row.original.id)}
-                  className="cursor-pointer outline-none border-none bg-transparent"
-                >
-                  <Trash2 color="#344054" size={15} />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-white">Delete</p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        );
-      }
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger className="cursor-pointer transition-all rounded-full duration-300 w-10 h-10 hover:bg-[#EBEBEB] flex justify-center  items-center">
-            <EllipsisVertical />{" "}
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem className="py-3 px-4">
-              <Eye color="#344054" size={15} /> View
-            </DropdownMenuItem>
-            <DropdownMenuItem className="py-3 px-4">
-              {" "}
-              <FilePenLine size={15} color="#344054" onClick={() => editProgram(row.original.id)}/> Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem className="py-3 px-4">
-              <Trash2
-                color="#344054"
-                size={15}
-                onClick={() => handleDeleteProgram(row.original.id)}
-              />{" "}
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-
+    cell: ({ row }) => (
+      <ActionCell
+        row={row}
+        editProgram={editProgram}
+        handleDeleteProgram={handleDeleteProgram}
+      />
+    ),
     size: 50,
   },
 ];

@@ -1,0 +1,61 @@
+﻿
+> sit-with@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+node.exe : 
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], Remo 
+   teException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./components/tables/columns/programs-column.tsx:101:7
+Parsing ecmascript source code failed
+[0m [90m  99 |[39m     id[33m:[39m 
+[32m"actions"[39m[33m,[39m
+ [90m 100 |[39m     header[33m:[39m 
+[32m"Action"[39m[33m,[39m
+[31m[1m>[22m[39m[90m 101 |[39m [36mconst[39m 
+[33mActionCell[39m [33m=[39m ({
+ [90m     |[39m       [31m[1m^[22m[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 102 |[39m   row[33m,[39m
+ [90m 103 |[39m   editProgram[33m,[39m
+ [90m 104 |[39m   handleDeleteProgram[33m,[39m[0m
+
+Unexpected token `ident`. Expected ... , *,  (, [, :, , ?, =, 
+an identifier, public, protected, private, readonly, <.
+
+Import traces:
+  Client Component Browser:
+    ./components/tables/columns/programs-column.tsx [Client 
+Component Browser]
+    ./components/admin/prorams/program-overview.tsx [Client 
+Component Browser]
+    ./components/admin/prorams/program-overview.tsx [Server 
+Component]
+    ./app/(admin)/admin/program/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/tables/columns/programs-column.tsx [Client 
+Component SSR]
+    ./components/admin/prorams/program-overview.tsx [Client 
+Component SSR]
+    ./components/admin/prorams/program-overview.tsx [Server 
+Component]
+    ./app/(admin)/admin/program/page.tsx [Server Component]
+
+
+    at <unknown> 
+(./components/tables/columns/programs-column.tsx:101:7)
