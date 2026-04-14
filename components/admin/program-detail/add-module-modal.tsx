@@ -10,11 +10,20 @@
 
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useModalStore } from "@/components/store/use-modal-store";
 import FormFieldComp from "@/components/formfield";
+import { Input } from "@/components/ui/input";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   addModuleSchema,
   type AddModuleFormData,
@@ -65,38 +74,84 @@ export default function AddModuleModal({ onAddModule }: AddModuleModalProps) {
       </h2>
 
       {/* Module Title */}
-      <FormFieldComp
+      <Controller
         name="moduleTitle"
         control={form.control}
-        label="Module Title *"
-        placeholder="e.g., Introduction to Leadership Styles"
-        className="bg-white"
+        render={({ field, fieldState }) => (
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[#344054] text-sm">Module Title *</label>
+            <Input
+              {...field}
+              placeholder="e.g., Introduction to Leadership Styles"
+              className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+            />
+            {fieldState.invalid && (
+              <span className="text-sm text-destructive">{fieldState.error?.message}</span>
+            )}
+          </div>
+        )}
       />
 
       {/* Description */}
-      <FormFieldComp
+      <Controller
         name="description"
         control={form.control}
-        label="Description"
-        placeholder="What will participants learn?"
-        className="bg-white"
+        render={({ field, fieldState }) => (
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[#344054] text-sm">Description</label>
+            <textarea
+              {...field}
+              placeholder="What will participants learn?"
+              className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
+            />
+            {fieldState.invalid && (
+              <span className="text-sm text-destructive">{fieldState.error?.message}</span>
+            )}
+          </div>
+        )}
       />
 
       {/* Type & Duration — side by side */}
       <div className="grid grid-cols-2 gap-4">
-        <FormFieldComp
-          name="type"
+        <Controller
           control={form.control}
-          label="Type *"
-          placeholder="e.g., Reading"
-          className="bg-white"
+          name="type"
+          render={({ field, fieldState }) => (
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[#344054] text-sm">Type *</label>
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-sm font-medium text-[#344054] py-4 h-11 focus:ring-0 focus:ring-offset-0 focus-visible:ring-0">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Reading">Reading</SelectItem>
+                  <SelectItem value="Assignment">Assignment</SelectItem>
+                  <SelectItem value="Quiz">Quiz</SelectItem>
+                  <SelectItem value="Video">Video</SelectItem>
+                </SelectContent>
+              </Select>
+              {fieldState.invalid && (
+                <span className="text-sm text-destructive">{fieldState.error?.message}</span>
+              )}
+            </div>
+          )}
         />
-        <FormFieldComp
+        <Controller
           name="duration"
           control={form.control}
-          label="Duration *"
-          placeholder="e.g., 45 min"
-          className="bg-white"
+          render={({ field, fieldState }) => (
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[#344054] text-sm">Duration *</label>
+              <Input
+                {...field}
+                placeholder="e.g., 45 min"
+                className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+              />
+              {fieldState.invalid && (
+                <span className="text-sm text-destructive">{fieldState.error?.message}</span>
+              )}
+            </div>
+          )}
         />
       </div>
 
@@ -112,24 +167,44 @@ export default function AddModuleModal({ onAddModule }: AddModuleModalProps) {
           </p>
         </div>
 
-        <FormFieldComp
+        <Controller
           name="contentLink"
           control={form.control}
-          label="Content URL (YouTube, Vimeo, Google Drive, etc.)"
-          placeholder="https://www.youtube.com/watch?v=..."
-          className="bg-white"
+          render={({ field, fieldState }) => (
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[#344054] text-sm">Content URL (YouTube, Vimeo, Google Drive, etc.)</label>
+              <Input
+                {...field}
+                placeholder="https://www.youtube.com/watch?v=..."
+                className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+              />
+              {fieldState.invalid && (
+                <span className="text-sm text-destructive">{fieldState.error?.message}</span>
+              )}
+            </div>
+          )}
         />
 
         <div className="flex items-center justify-center">
           <span className="text-xs text-[#667185]">OR</span>
         </div>
 
-        <FormFieldComp
+        <Controller
           name="embedCode"
           control={form.control}
-          label="Embed Code (iframe or HTML embed code)"
-          placeholder='<iframe src="..." width="100%" height="400"></iframe>'
-          className="bg-white"
+          render={({ field, fieldState }) => (
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[#344054] text-sm">Embed Code (iframe or HTML embed code)</label>
+              <textarea
+                {...field}
+                placeholder='<iframe src="..." width="100%" height="400"></iframe>'
+                className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
+              />
+              {fieldState.invalid && (
+                <span className="text-sm text-destructive">{fieldState.error?.message}</span>
+              )}
+            </div>
+          )}
         />
       </div>
 

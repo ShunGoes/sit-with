@@ -38,6 +38,7 @@ export default function ProgramDetailClient({
 
   // ---------- Draft week handlers ----------
 
+  // passed to modal to add the form entries to draft state 
   const handleAddWeek = (week: DraftWeek) => {
     setDraftWeeks((prev) => [...prev, week]);
   };

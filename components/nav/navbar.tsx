@@ -116,7 +116,7 @@ export function Navbar() {
             asChild
             className="bg-brand-green hover:bg-[#324414] text-white rounded-md px-6"
           >
-            <Link href="/signup">Join Now</Link>
+            <Link href="/signup">Sign up</Link>
           </Button>
         </div>
 
@@ -233,8 +233,8 @@ export function Navbar() {
             >
               <Button
                 asChild
-                variant={"regular"}
-                className="w-full  mb-3"
+                variant={"outline"}
+                className="w-full bg-white text-regular-button mb-3"
               >
                 <Link href="/login" onClick={() => setIsOpen(false)}>
                   Login
@@ -242,11 +242,11 @@ export function Navbar() {
               </Button>
               <Button
                 asChild
-                variant="outline"
+                variant="regular"
                 className="w-full "
               >
                 <Link href="/signup" onClick={() => setIsOpen(false)}>
-                  Join Now
+                 Sign up
                 </Link>
               </Button>
             </motion.div>

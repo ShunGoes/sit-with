@@ -56,7 +56,7 @@ export default function AddProgramForm() {
   }, [isPending, openModal]);
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-6">
       <DashboardHeaderText
         header="Create New Program "
         subtext="Set up a new learning program for your platform"

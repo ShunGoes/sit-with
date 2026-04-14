@@ -18,7 +18,7 @@ export default function MembershipPage() {
         title="Ready to Begin Your  Membership Journey?"
         subtext="Choose your plan today and join thousands of members committed to presence-based healing and personal transformation."
         firstLink={{ text: "Join Now" }}
-        secondLink={{ text: "Book consultation" }}
+        secondLink={{ text: "Book consultation", href: "/consultation" }}
       />
     </div>
   );

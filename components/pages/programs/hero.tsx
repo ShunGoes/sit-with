@@ -10,6 +10,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import useMobile from "@/hooks/use-mobile-breakpoint";
+import Link from "next/link";
 
 export function ProgramHero() {
   const { isMobile } = useMobile();
@@ -80,12 +81,20 @@ export function ProgramHero() {
                     </p>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-4  justify-center">
-                    <Button variant="regular" className="">
+                    <Button
+                      variant="regular"
+                      className=""
+                      onClick={() =>
+                        document
+                          .getElementById("program-growth")
+                          ?.scrollIntoView({ behavior: "smooth" })
+                      }
+                    >
                       Browse Programs <CaretRight className="ml-2" />
                     </Button>
-                    <Button variant="outline"  >
-                      Book Consultation
-                    </Button>
+                    <Link href="/consultation">
+                      <Button variant="outline">Book Consultation</Button>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 import { useAuthStore } from "@/store/use-auth-store";
+import { Bell } from "lucide-react";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -39,6 +40,10 @@ export default function ProtectedLayout({
   const { data, isLoading, isError } = useGetCurrentUser();
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
+
+  const firstName = user?.firstName ?? ""
+  const lastName = user?.lastName ?? ""
+  const userInitials = firstName.charAt(0) + lastName.charAt(0);
 
   // console.log("Current user in ProtectedLayout:", user, data);
 
@@ -71,21 +76,22 @@ export default function ProtectedLayout({
                 orientation="vertical"
                 className="mr-2 data-[orientation=vertical]:h-4"
               />
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator className="hidden md:block" />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Overview</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
+             
             </div>
-            <div>
-              <ModeToggle />
-            </div>
+            <div className=" w-full flex items-center justify-end gap-3">
+              <div className="w-11.5 h-11.5 bg-[#F5F7FA] dark:bg-dash-secondary-bg rounded-full relative flex items-center justify-center">
+                <Bell color="#737791"/>
+              </div>
+             <div className="flex items-center gap-2">
+               <p className="w-11.5 h-11.5 bg-[#F5F7FA] dark:bg-dash-secondary-bg text-secondary-text font-medium  rounded-full relative flex items-center justify-center">
+               {userInitials}
+              </p>
+              <p className="text-base text-regular-button font-medium ">Admin</p>
+             </div>
+              {/* <div className="w-11.5 h-11.5 bg-[#F5F7FA] rounded-full relative flex items-center justify-center"> */}
+                <ModeToggle />
+              </div>
+            {/* </div> */}
           </header>
           <div
             className={`flex flex-1 flex-col bg-[#F7F7F7] dark:bg-[#0A0A0A] gap-4 p-4 mt-10 md:mt-0 lg:p-10  ${poppins.className}`}

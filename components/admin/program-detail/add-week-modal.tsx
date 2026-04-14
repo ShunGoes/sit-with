@@ -12,7 +12,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -79,29 +79,49 @@ export default function AddWeekModal({ onAddWeek }: AddWeekModalProps) {
 
   return (
     <div className="space-y-5">
-      <h2 className="text-primary-text font-semibold text-lg">Add New Week</h2>
+      <h2 className="modal-header">Add New Week</h2>
 
-      {/* Week Title — uses FormFieldComp with modal-scoped control */}
-      <FormFieldComp
+      {/* Week Title — manually configured inside Controller matching other modal styles */}
+      <Controller
         name="weekTitle"
         control={form.control}
-        label="Week Title *"
-        placeholder="e.g., Introduction to Leadership"
-        className="bg-white"
+        render={({ field, fieldState }) => (
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[#344054] text-sm">Week Title *</label>
+            <Input
+              {...field}
+              placeholder="e.g., Introduction to Leadership"
+              className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+            />
+            {fieldState.invalid && (
+              <span className="text-sm text-destructive">{fieldState.error?.message}</span>
+            )}
+          </div>
+        )}
       />
 
       {/* Description */}
-      <FormFieldComp
+      <Controller
         name="description"
         control={form.control}
-        label="Description"
-        placeholder="Brief description of what this week covers..."
-        className="bg-white"
+        render={({ field, fieldState }) => (
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[#344054] text-sm">Description</label>
+            <textarea
+              {...field}
+              placeholder="Brief description of what this week covers..."
+              className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[8px] w-full text-sm font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
+            />
+            {fieldState.invalid && (
+              <span className="text-sm text-destructive">{fieldState.error?.message}</span>
+            )}
+          </div>
+        )}
       />
 
       {/* Learning Objectives — tag-input */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-[#344054] text-[14px]">
+        <label className="text-[#344054] text-sm">
           Learning Objectives
         </label>
 
@@ -129,18 +149,18 @@ export default function AddWeekModal({ onAddWeek }: AddWeekModalProps) {
           </ul>
         )}
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center mt-2 gap-2">
           <Input
             value={objectiveInput}
             onChange={(e) => setObjectiveInput(e.target.value)}
             onKeyDown={handleObjectiveKeyDown}
             placeholder="Add a learning objective..."
-            className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] flex-1 text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+            className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] flex-1 text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
           />
           <Button
             type="button"
             variant="outline"
-            size="sm"
+            className="border border-regular-button text-regular-button font-medium"
             onClick={handleAddObjective}
           >
             Add

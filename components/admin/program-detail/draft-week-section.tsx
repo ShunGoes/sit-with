@@ -16,6 +16,8 @@ import type { DraftWeek, DraftModule } from "@/schemas/program-detail-schemas";
 import DraftWeekCard from "./draft-week-card";
 import ModulesPanel from "./modules-panel";
 import AddModuleModal from "./add-module-modal";
+import { useEffect } from "react";
+import { Spinner } from "@/components/spinner";
 
 interface DraftWeekSectionProps {
   programId: string;
@@ -35,6 +37,7 @@ export default function DraftWeekSection({
   onPublishSuccess,
 }: DraftWeekSectionProps) {
   const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
   const { mutate, isPending } = usePublishWeek(programId);
 
   const handlePublish = () => {
@@ -49,6 +52,10 @@ export default function DraftWeekSection({
     mutate(payload, {
       onSuccess: () => {
         onPublishSuccess(week.id);
+        closeModal("loading");
+      },
+      onError: () => {
+        closeModal("loading");
       },
     });
   };
@@ -61,6 +68,18 @@ export default function DraftWeekSection({
       />
     );
   };
+
+  useEffect(() => {
+    if (isPending) {
+      openModal(
+        "loading",
+        <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+          <Spinner size={40} />
+        </div>,
+        { isMutation: true },
+      );
+    }
+  }, [isPending, openModal]);
 
   return (
     <div className="space-y-4">
