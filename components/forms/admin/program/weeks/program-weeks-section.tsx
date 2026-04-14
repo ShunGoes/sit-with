@@ -52,13 +52,13 @@ export default function ProgramWeeksSection() {
 
   return (
     <>
-      <div className="bg-white p-5 rounded-[12px]">
+      <div className="bg-dash-secondary-bg p-5 rounded-[12px]">
         {/* Section header */}
-        <div className="flex items-start justify-between mb-4">
+        <div className="flex items-start justify-between gap-4 mb-6 md:mb-4">
           <div>
-            <h3 className="text-primary-text font-semibold text-base">
+            <header className="text-primary-text font-semibold text-base ">
               Program Weeks
-            </h3>
+            </header>
             <p className="text-xs text-[#667185]">
               Add and manage weekly content that appears on the user dashboard
             </p>
@@ -66,7 +66,7 @@ export default function ProgramWeeksSection() {
           <Button
             type="button"
             variant="regular"
-            size="sm"
+            className="h-10 text-sm"
             onClick={handleOpenAddWeek}
           >
             <Plus className="h-4 w-4" />
@@ -76,9 +76,9 @@ export default function ProgramWeeksSection() {
 
         {/* Week list or empty state */}
         {fields.length === 0 ? (
-          <div className="flex flex-col items-center justify-center border border-dashed border-[#EAECF0] rounded-[10px] py-12 text-center">
-            <Calendar className="h-10 w-10 text-[#D0D5DD] mb-3" />
-            <p className="text-sm text-[#667185]">
+          <div className="flex flex-col items-center justify-center border-2 border-dashed border-[#D0D5DD] rounded-[12px] py-12 text-center">
+            <Calendar className="h-10 w-10 text-[#667085] mb-3" />
+            <p className="text-sm text-[#667085]">
               No weeks added yet. Click &quot;Add Week&quot; to start building
               your program.
             </p>

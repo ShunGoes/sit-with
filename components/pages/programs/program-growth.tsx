@@ -95,7 +95,7 @@ export default function ProgramGrowth() {
   } as const;
 
   return (
-    <section className="container mx-auto py-10 lg:py-24 flex flex-col  items-center justify-between gap-10 ">
+    <section id="program-growth" className="container mx-auto py-10 lg:py-24 flex flex-col  items-center justify-between gap-10 ">
       {/* Left Content */}
       <div className="flex-1  max-w-xl">
         <div className="flex justify-center ">

@@ -21,8 +21,8 @@ export default function AboutPage() {
       <CtaBlock
         title="Ready to Begin Your Journey?"
         subtext="Choose from our comprehensive programs, explore membership benefits, or book a consultation with a facilitator today."
-        firstLink={{ text: "Explore programs" }}
-        secondLink={{ text: "Book Consultation" }}
+        firstLink={{ text: "Explore programs" ,href:"/programs" }}
+        secondLink={{ text: "Book Consultation", href:"/consultation" }}
       />
     </div>
   );

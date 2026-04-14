@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import CaretRight from "@/pd-icons/caret-right";
+import Link from "next/link";
 
 export interface CtaBlockProps {
   title: string;
@@ -30,12 +31,20 @@ export function CtaBlock({
 
         <div className="flex gap-4 items-center justify-center mt-3">
           {firstLink && (
-            <Button variant={"regular"} className="rounded-[8px]">
-              {firstLink.text} <CaretRight />{" "}
-            </Button>
+            <Link href={firstLink.href ?? ""}>
+              <Button variant={"regular"} className="rounded-[8px]">
+                {firstLink.text} <CaretRight />{" "}
+              </Button>
+            </Link>
           )}
 
-          {secondLink && <Button variant={"outline"} className="rounded-[8px]">{secondLink.text}</Button>}
+          {secondLink && (
+            <Link href={secondLink.href ?? ""}>
+              <Button variant={"outline"} className="rounded-[8px]">
+                {secondLink.text}
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </section>

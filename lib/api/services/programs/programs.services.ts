@@ -18,7 +18,7 @@ export interface CreateProgramPayload {
   title: string;
   description: string;
   thumbnail: string | File;
-  programType: "students" | "professionals" | "leaders";
+  programType: "student" | "professional" | "leader";
   duration: string;
 }
 

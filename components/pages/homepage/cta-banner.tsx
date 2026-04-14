@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import CaretRight from "@/pd-icons/caret-right";
+import Link from "next/link";
 
 export function CtaBanner() {
   return (
@@ -16,27 +17,29 @@ export function CtaBanner() {
             the globe.
           </p>
           <div>
-            <Button
-              variant="regular"
-              className="bg-[#60935D] hover:bg-[#4E7D4C] text-white border-none h-11 px-6 text-sm font-medium gap-2"
-            >
-              Explore membership <CaretRight />
-            </Button>
+            <Link href={"/membership"}>
+              <Button
+                variant="regular"
+                className="bg-[#60935D] hover:bg-[#4E7D4C] text-white border-none h-11 px-6 text-sm font-medium gap-2"
+              >
+                Explore membership <CaretRight />
+              </Button>
+            </Link>
           </div>
         </div>
 
         {/* Right Image */}
         <div className="w-full flex-1">
           <div className="w-full md:w-[507px]  md:mx-auto relative min-h-[300px] md:min-h-[446px]">
-          <div
-            className="absolute  inset-0 bg-gray-300 border border-[#DEDEDE] rounded-[16px]"
-            style={{
-              backgroundImage: "url('/images/join-us.webp')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          />
-        </div>
+            <div
+              className="absolute  inset-0 bg-gray-300 border border-[#DEDEDE] rounded-[16px]"
+              style={{
+                backgroundImage: "url('/images/join-us.webp')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+          </div>
         </div>
       </div>
     </section>

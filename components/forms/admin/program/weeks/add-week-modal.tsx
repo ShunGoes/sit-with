@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useModalStore } from "@/components/store/use-modal-store";
 import { Check, X } from "lucide-react";
 import type { WeekFormData } from "@/schemas/programs-schema";
+import FormFieldComp from "@/components/formfield";
 
 interface AddWeekModalProps {
   onAddWeek: (week: WeekFormData) => void;
@@ -62,11 +63,12 @@ export default function AddWeekModal({ onAddWeek }: AddWeekModalProps) {
 
   return (
     <div className="space-y-5">
-      <h2 className="text-primary-text font-semibold text-lg">Add New Week</h2>
+      <h2 className="modal-header">Add New Week</h2>
 
       {/* Week Title */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-[#344054] text-[14px]">Week Title *</label>
+        {/* <FormFieldComp name="" control={} /> */}
+        <label className="text-[#344054] text-sm">Week Title *</label>
         <Input
           value={weekTitle}
           onChange={(e) => {
@@ -74,7 +76,7 @@ export default function AddWeekModal({ onAddWeek }: AddWeekModalProps) {
             if (titleError) setTitleError("");
           }}
           placeholder="e.g., Introduction to Leadership"
-          className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+          className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
         />
         {titleError && (
           <span className="text-sm text-destructive">{titleError}</span>
@@ -83,39 +85,21 @@ export default function AddWeekModal({ onAddWeek }: AddWeekModalProps) {
 
       {/* Description */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-[#344054] text-[14px]">Description</label>
+        <label className="text-[#344054] text-sm">Description</label>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Brief description of what this week covers..."
-          className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] py-3 min-h-20 outline-none px-3 resize-none"
+          className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[8px] w-full text-sm font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
         />
       </div>
 
       {/* Learning Objectives — tag-input pattern */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-[#344054] text-[14px]">
+        <label className="text-[#344054] text-sm">
           Learning Objectives
         </label>
-        <div className="flex items-center gap-2">
-          <Input
-            value={objectiveInput}
-            onChange={(e) => setObjectiveInput(e.target.value)}
-            onKeyDown={handleObjectiveKeyDown}
-            placeholder="Add a learning objective..."
-            className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] flex-1 text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] py-4 h-11 focus-visible:border-none focus-visible:ring-0"
-          />
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={handleAddObjective}
-          >
-            Add
-          </Button>
-        </div>
-
-        {/* Rendered objective list */}
+         {/* Rendered objective list */}
         {objectives.length > 0 && (
           <ul className="mt-2 space-y-1.5">
             {objectives.map((obj, index) => (
@@ -138,6 +122,25 @@ export default function AddWeekModal({ onAddWeek }: AddWeekModalProps) {
             ))}
           </ul>
         )}
+        <div className="flex items-center mt-2 gap-2">
+          <Input
+            value={objectiveInput}
+            onChange={(e) => setObjectiveInput(e.target.value)}
+            onKeyDown={handleObjectiveKeyDown}
+            placeholder="Add a learning objective..."
+            className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] flex-1 text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+          />
+          <Button
+            type="button"
+            variant="outline"
+            className="border border-regular-button text-regular-button font-medium"
+            onClick={handleAddObjective}
+          >
+            Add
+          </Button>
+        </div>
+
+       
       </div>
 
       {/* Action buttons */}

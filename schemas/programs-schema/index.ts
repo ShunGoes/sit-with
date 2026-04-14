@@ -27,7 +27,7 @@ export const ProgramSchema = z.object({
     z.string().min(1, "thumbnail is required"),
     z.instanceof(File, { message: "Thumbnail is required" }),
   ]),
-  programType: z.enum(["students", "professionals", "leaders"]),
+  programType: z.enum(["student", "professional", "leader"]),
   duration: z.string().min(1, "Enter a duration"),
   hoursPerWeek: z.string().min(1, "Enter hours per week"),
   date: z.string().min(1, "Date is required"),

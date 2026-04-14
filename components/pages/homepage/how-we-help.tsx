@@ -21,14 +21,14 @@ export function HowWeHelp() {
       title: "Therapeutic Camps",
       description:
       "Take a break from the noise and focus fully on your healing and growth.",
-      link: "/camps",
+      link: "/programs",
       image: '/images/help-2.png'
     },
     {
       title: "One-on-One Consultation",
       description:
       "Speak with a professional who understands and guides you personally.",
-      link: "/consultation",
+      link: "/programs",
       image: '/images/help-3.png'
     },
   ];
