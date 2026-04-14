@@ -7,6 +7,8 @@ import {
   delete_program,
   UpdateProgramPayload,
   get_all_admin_programs,
+  publish_week,
+  PublishWeekPayload,
 } from "../../services/programs/programs.services";
 import { showSuccessToast, showErrorToast } from "@/lib/toast-helpers";
 
@@ -81,3 +83,22 @@ export const useDeleteProgram = () => {
     },
   });
 };
+
+// Publish a draft week (with its modules) to a program
+export const usePublishWeek = (programId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: PublishWeekPayload) =>
+      publish_week(programId, payload),
+    onSuccess: (data) => {
+      showSuccessToast(data.message || "Week published successfully");
+      // Invalidate the specific program so the weeks list refreshes
+      queryClient.invalidateQueries({ queryKey: ["programs", programId] });
+    },
+    onError: (error: any) => {
+      showErrorToast(error.message || "Failed to publish week");
+    },
+  });
+};
+

@@ -107,7 +107,7 @@ export function Navbar() {
         {/* Auth Buttons */}
         <div className="hidden lg:flex items-center gap-4">
           <Link
-            href="/auth/login"
+            href="/login"
             className="text-white text-sm font-medium hover:text-green-50 transition-colors"
           >
             Login
@@ -116,7 +116,7 @@ export function Navbar() {
             asChild
             className="bg-brand-green hover:bg-[#324414] text-white rounded-md px-6"
           >
-            <Link href="/auth/signup">Join Now</Link>
+            <Link href="/signup">Join Now</Link>
           </Button>
         </div>
 
@@ -233,18 +233,19 @@ export function Navbar() {
             >
               <Button
                 asChild
-                className="w-full bg-brand-green hover:bg-[#324414] text-white rounded-md py-3 mb-3"
+                variant={"regular"}
+                className="w-full  mb-3"
               >
-                <Link href="/auth/login" onClick={() => setIsOpen(false)}>
+                <Link href="/login" onClick={() => setIsOpen(false)}>
                   Login
                 </Link>
               </Button>
               <Button
                 asChild
                 variant="outline"
-                className="w-full border border-brand-green text-brand-green hover:bg-brand-green hover:text-white rounded-md py-3"
+                className="w-full "
               >
-                <Link href="/auth/signup" onClick={() => setIsOpen(false)}>
+                <Link href="/signup" onClick={() => setIsOpen(false)}>
                   Join Now
                 </Link>
               </Button>

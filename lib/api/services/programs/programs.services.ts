@@ -108,3 +108,38 @@ export const delete_program = async (id: string) => {
     throw new Error(getApiError(error));
   }
 };
+
+// ---------- Week publishing ----------
+
+export interface PublishWeekModule {
+  moduleTitle: string;
+  description?: string;
+  type: string;
+  duration: string;
+  contentLink: string;
+  embedCode?: string;
+}
+
+export interface PublishWeekPayload {
+  weekTitle: string;
+  description?: string;
+  learningObjectives: string[];
+  modules: PublishWeekModule[];
+}
+
+// TODO: replace with real endpoint
+export const publish_week = async (
+  programId: string,
+  payload: PublishWeekPayload
+) => {
+  if (!programId) {
+    throw new Error("Program ID is required to publish a week.");
+  }
+
+  try {
+    const res = await api.post(`/programs/${programId}/weeks`, payload);
+    return res.data;
+  } catch (error) {
+    throw new Error(getApiError(error));
+  }
+};
