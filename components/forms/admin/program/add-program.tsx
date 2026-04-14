@@ -10,7 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 
 const DEFAULT_VALUES = {
-  // price: ""
+  weeks: [] as any[],
+  learningObjectives: [] as { text: string }[],
 };
 
 export default function AddProgramForm() {
@@ -29,6 +30,7 @@ export default function AddProgramForm() {
     const parsedData = {
       ...data,
       price: parseFloat(data.price.replace(/,/g, "")) || 0,
+      learningObjectives: data.learningObjectives?.map((obj) => obj.text) || [],
     };
 
     mutate(parsedData, {

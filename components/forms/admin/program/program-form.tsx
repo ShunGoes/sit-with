@@ -13,19 +13,21 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ImageUpload from "@/components/image-upload";
 import { ProgramFormSchema } from "@/schemas/programs-schema";
+import ProgramWeeksSection from "./weeks/program-weeks-section";
+import LearningObjectivesField from "./learning-objectives-field";
 
 const PROGRAM_TYPE = [
   {
-    label: "Students",
-    value: "students",
+    label: "Student",
+    value: "student",
   },
   {
-    label: "Couples",
-    value: "professionals",
+    label: "Professional",
+    value: "professional",
   },
   {
-    label: "Singles",
-    value: "leaders",
+    label: "Leadership",
+    value: "leader",
   },
 ];
 
@@ -81,41 +83,7 @@ export default function ProgramForm({
               </Field>
             )}
           />
-          <Controller
-            control={form.control}
-            name="programType"
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid} className="flex-1">
-                <div className="flex flex-col">
-                  <FieldLabel
-                    className="text-[#344054] text-[14px] mb-2"
-                    htmlFor="type"
-                  >
-                    Format *
-                  </FieldLabel>
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger className="bg-white" id="type">
-                      <SelectValue placeholder="Select program type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {PROGRAM_TYPE.map((type, index) => (
-                        <SelectItem
-                          key={`${type.label}_${index}`}
-                          className="text-sm text-[#101928"
-                          value={type.value}
-                        >
-                          {type.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
+
           <FormFieldComp
             name="duration"
             control={form.control}
@@ -124,7 +92,7 @@ export default function ProgramForm({
             className="bg-white"
           />
           <FormFieldComp
-            name="duration"
+            name="hoursPerWeek"
             control={form.control}
             label="Hours per week *"
             placeholder="4"
@@ -190,16 +158,10 @@ export default function ProgramForm({
         />
       </div>
       <div className="bg-white p-5 rounded-[12px]">
-        <header className="text-primary-text font-semibold text-base mb-1">
+        <header className="text-primary-text font-semibold text-base mb-3">
           Learning Objectives
         </header>
-        <FormFieldComp
-          name="title"
-          control={form.control}
-          label=" "
-          placeholder="Add learning objectives"
-          className="bg-white"
-        />
+        <LearningObjectivesField />
       </div>
       <div className="bg-white p-5  rounded-[12px]">
         <header className="text-primary-text font-semibold text-base mb-2">
@@ -207,14 +169,14 @@ export default function ProgramForm({
         </header>
         <div className="flex items-center gap-6">
           <FormFieldComp
-            name="title"
+            name="facilitatorName"
             control={form.control}
             label="Facilitator Name * "
             placeholder="Dr. John Doe"
             className="bg-white"
           />
           <FormFieldComp
-            name="title"
+            name="facilitatorEmail"
             control={form.control}
             label="Facilitator Email * "
             placeholder="facilitator@sitwithpd.com"
@@ -222,6 +184,7 @@ export default function ProgramForm({
           />
         </div>
       </div>
+      <ProgramWeeksSection />
       <div className="bg-white p-5  rounded-[12px]">
         <Controller
           control={form.control}

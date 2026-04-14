@@ -35,6 +35,7 @@ const DEFAULT_VALUES = {};
     const parsedData = {
       ...data,
       price: parseFloat(data.price.replace(/,/g, "")) || 0,
+      learningObjectives: data.learningObjectives?.map((obj) => obj.text) || [],
     };
 
     mutate(
@@ -59,8 +60,13 @@ const DEFAULT_VALUES = {};
         price: program.data.amount,
         programType: program.data.programType as any,
         duration: program.data.programDuration,
+        hoursPerWeek: (program.data as any).hoursPerWeek || "",
         thumbnail: (program.data as any).thumbnail || "",
-        date: program.data.date
+        date: program.data.date,
+        facilitatorName: (program.data as any).facilitatorName || "",
+        facilitatorEmail: (program.data as any).facilitatorEmail || "",
+        weeks: (program.data as any).weeks || [],
+        learningObjectives: ((program.data as any).learningObjectives || []).map((text: string) => ({ text })),
       };
       form.reset(mappedData);
     }
