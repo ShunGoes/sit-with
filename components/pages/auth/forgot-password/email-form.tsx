@@ -48,7 +48,7 @@ export function EmailForm({ onNext }: EmailFormProps) {
           />
         </svg>
       </div>
-      <h2 className="text-[24px] lg:text-[48px] text-brand-green mb-1 lg:mb-2 text-center">
+      <h2 className="text-[24px] font-medium md:font-bold text-brand-green mb-1 text-center">
         Forgot password?
       </h2>
       <p className="text-[#535862] text-[14px] lg:w-[65%] mx-auto text-center mb-8">
