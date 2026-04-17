@@ -7,12 +7,11 @@ declare module '*.css' {
 declare module 'swiper/css*';
 
 interface ProgramColumn {
-    name: string,
-    type: "Leaders" | "Professionals" | "Students",
-    enrolled: string,
-    price: number,
-    status: "Active" | "Inactive",
-    id: string
+    id: string;
+    title: string;
+    category: string;
+    price: number;
+    isPublished: boolean;
 }
 
 interface ConsultationColumn{

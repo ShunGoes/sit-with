@@ -2,7 +2,6 @@
 
 import { Pill } from "@/components/ui/pill";
 import Image from "next/image";
-import { motion } from "motion/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -13,89 +12,51 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useGetPrograms } from "@/lib/api/hooks/programs/programs.hooks";
 import QueryStateHandler from "@/components/query-state-handler";
+import { Badge } from "@/components/ui/badge";
 
 export default function ProgramGrowth() {
-  const { data, isLoading, isError, isFetching } = useGetPrograms();
+  const { data: programs, isLoading, isError, isFetching } = useGetPrograms();
 
-  const cards = [
-    {
-      title: "Transition  for Undergraduates",
-      label: "For Students",
-      labelBgColor: "bg-regular-button",
-      description:
-        "A presence-based programme supporting students navigating identity, pressure, and life transitions with clarity and emotional stability",
-      link: "/programs",
-      image: "/images/help-1.png",
-    },
-    {
-      title: "Transition  for Undergraduates",
-      label: "For Students",
-      labelBgColor: "bg-regular-button",
-      description:
-        "A presence-based programme supporting students navigating identity, pressure, and life transitions with clarity and emotional stability",
-      link: "/programs",
-      image: "/images/help-1.png",
-    },
-    {
-      title: "Transition  for Undergraduates",
-      label: "For Students",
-      labelBgColor: "bg-regular-button",
-      description:
-        "A presence-based programme supporting students navigating identity, pressure, and life transitions with clarity and emotional stability",
-      link: "/programs",
-      image: "/images/help-1.png",
-    },
-    {
-      title: "Transition  for Undergraduates",
-      label: "For Students",
-      labelBgColor: "bg-regular-button",
-      description:
-        "A presence-based programme supporting students navigating identity, pressure, and life transitions with clarity and emotional stability",
-      link: "/programs",
-      image: "/images/help-1.png",
-    },
-    {
-      title: "Marketplace Talents Programme",
-      label: "For Professionals",
-      labelBgColor: "bg-[#FA9874]",
-      description:
-        "A structured programme offering guided support, emotional awareness, and clarity in navigating work and personal growth",
-      link: "/camps",
-      image: "/images/help-2.png",
-    },
-    {
-      title: "Global Stewardship Fellowship",
-      label: "For Leaders",
-      labelBgColor: "bg-[#3D89DF]",
-      description:
-        "A structured programme offering guided support, emotional awareness, and clarity in leadership and responsibility",
-      link: "/consultation",
-      image: "/images/help-3.png",
-    },
-  ];
+  let typeVariant;
 
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.05,
-      },
-    },
-  } as const;
+  function variantAssigner(type: "LEADERS" | "PROFESSIONALS" | "STUDENTS") {
+    switch (type) {
+      case "LEADERS":
+        return (typeVariant = "warning");
+      case "PROFESSIONALS":
+        return (typeVariant = "hibiscus");
+      case "STUDENTS":
+        return (typeVariant = "success");
+      default:
+        return (typeVariant = "default");
+    }
+  }
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 24, scale: 0.98 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.4, ease: "easeOut" },
-    },
-  } as const;
+  // const containerVariants = {
+  //   hidden: {},
+  //   visible: {
+  //     transition: {
+  //       staggerChildren: 0.12,
+  //       delayChildren: 0.05,
+  //     },
+  //   },
+  // } as const;
+
+  // const cardVariants = {
+  //   hidden: { opacity: 0, y: 24, scale: 0.98 },
+  //   visible: {
+  //     opacity: 1,
+  //     y: 0,
+  //     scale: 1,
+  //     transition: { duration: 0.4, ease: "easeOut" },
+  //   },
+  // } as const;
 
   return (
-    <section id="program-growth" className="container mx-auto py-10 lg:py-24 flex flex-col  items-center justify-between gap-10 ">
+    <section
+      id="program-growth"
+      className="container mx-auto py-10 lg:py-24 flex flex-col  items-center justify-between gap-10 "
+    >
       {/* Left Content */}
       <div className="flex-1  max-w-xl">
         <div className="flex justify-center ">
@@ -108,7 +69,7 @@ export default function ProgramGrowth() {
 
       {/* Grid */}
       <QueryStateHandler
-        data={data}
+        data={programs?.data}
         isLoading={isLoading}
         isError={isError}
         loadingMessage="Loading Programs"
@@ -137,51 +98,59 @@ export default function ProgramGrowth() {
           pagination={{ clickable: true }}
           className="w-full programs"
         >
-          {cards.map((card, index) => (
-            <SwiperSlide
-              key={`${card.title}_${index}`}
-              className="h-full border border-black"
-            >
-              {" "}
-              <div
-                key={index}
-                className="flex flex-col  h-full bg-[#F2F2F1] p-4 transition-shadow"
-              >
-                {/* Image Placeholder */}
-                <div className="w-full  aspect-3/2 0  mb-6 overflow-hidden relative">
-                  <Image
-                    src={card.image}
-                    alt={card.title}
-                    fill
-                    className="object-cover"
-                  />
-                  <p
-                    className={`absolute top-2 left-2 text-white text-sm font-medim rounded-full py-[2px] px-4  flex justify-center items-center ${card.labelBgColor}`}
-                  >
-                    {card.label}
-                  </p>
-                </div>
+          {programs?.data?.map(
+            (program: Record<string, any>, index: number) => {
+              const { title, description, thumbnail, id, category } =
+                program || {};
 
-                {/* Content */}
-                <h3 className="text-xl font-semibold text-[#627B3A] mb-2">
-                  {card.title}
-                </h3>
-                <p className="text-base text-[#263016] leading- mb-6 ">
-                  {card.description}
-                </p>
+              return (
+                <SwiperSlide
+                  key={id || index}
+                  className="h-full border border-black"
+                >
+                  {" "}
+                  <div className="flex flex-col  h-full bg-[#F2F2F1] p-4 transition-shadow">
+                    {/* Image Placeholder */}
+                    <div className="w-full object-top lg:object-center lg:aspect-3/3 aspect-3/2 mb-6 overflow-hidden relative">
+                      <Image
+                        src={thumbnail ?? "/images/glimpse-2.png"}
+                        alt={title || "Program"}
+                        fill
+                        className="object-cover"
+                      />
 
-                {/* Link */}
-                <Link href={card.link} className="w-full mt-auto">
-                  <Button
-                    variant={"outline"}
-                    className="border border-[#B1B4B1] text-regular text-[#072608] text-base w-full"
-                  >
-                    View Program
-                  </Button>
-                </Link>
-              </div>
-            </SwiperSlide>
-          ))}
+                      {category && (
+                        <Badge
+                          variant={variantAssigner(category)}
+                          className="absolute top-2 left-2 "
+                        >
+                          {category}
+                        </Badge>
+                      )}
+                    </div>
+
+                    {/* Content */}
+                    <h3 className="text-xl font-semibold text-[#627B3A] mb-2">
+                      {title}
+                    </h3>
+                    <p className="text-base text-[#263016] leading- mb-6 ">
+                      {description}
+                    </p>
+
+                    {/* Link */}
+                    <Link href={program?.link ?? ""} className="w-full mt-auto">
+                      <Button
+                        variant={"outline"}
+                        className="border border-[#B1B4B1] text-regular text-[#072608] text-base w-full"
+                      >
+                        View Program
+                      </Button>
+                    </Link>
+                  </div>
+                </SwiperSlide>
+              );
+            },
+          )}
         </Swiper>
       </QueryStateHandler>
       {/* make pagination dots white */}

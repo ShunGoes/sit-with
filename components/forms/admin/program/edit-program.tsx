@@ -32,14 +32,51 @@ const DEFAULT_VALUES = {};
   const { data: program } = useGetProgramById(id);
 
   const onSubmit = (data: ProgramFormSchema) => {
-    const parsedData = {
-      ...data,
-      price: parseFloat(data.price.replace(/,/g, "")) || 0,
-      learningObjectives: data.learningObjectives?.map((obj) => obj.text) || [],
-    };
+    const formData = new FormData();
+    
+    formData.append("title", data.title);
+    if (data.description) formData.append("description", data.description);
+    formData.append("price", (parseFloat(data.price.replace(/,/g, "")) || 0).toString());
+    formData.append("hoursPerWeek", data.hoursPerWeek);
+    if (data.date) formData.append("startDate", data.date);
+    formData.append("category", data.programType);
+    if (data.facilitatorName) formData.append("facilitatorName", data.facilitatorName);
+    if (data.facilitatorEmail) formData.append("facilitatorEmail", data.facilitatorEmail);
+    if (data.duration) formData.append("duration", data.duration);
+
+    if (data.learningObjectives && data.learningObjectives.length > 0) {
+      const learningOutcomes = data.learningObjectives.map((obj) => obj.text);
+      formData.append("learningOutcomes", JSON.stringify(learningOutcomes));
+    } else {
+      formData.append("learningOutcomes", JSON.stringify([]));
+    }
+
+    if (data.weeks && data.weeks.length > 0) {
+      const formattedWeeks = data.weeks.map(week => ({
+        ...week,
+        modules: week.modules.map(mod => ({
+          title: mod.moduleTitle,
+          description: mod.description,
+          type: mod.type,
+          duration: mod.duration,
+          contentUrl: mod.contentLink,
+          embedCode: mod.embedCode
+        }))
+      }));
+      formData.append("weeks", JSON.stringify(formattedWeeks));
+    } else {
+      formData.append("weeks", JSON.stringify([]));
+    }
+
+    if (data.thumbnail && typeof data.thumbnail !== "string") {
+      formData.append("thumbnail", data.thumbnail);
+    } else if (data.thumbnail && typeof data.thumbnail === "string") {
+      // Don't append if it's just the URL of the existing thumbnail
+      // Or append it if the backend needs it, wait let's just append the string or omit. Let's omit if string to not upload url as file.
+    }
 
     mutate(
-      { id, payload: parsedData },
+      { id, payload: formData },
       {
         onSuccess: () => {
           closeModal("loading");

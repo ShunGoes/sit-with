@@ -21,7 +21,9 @@ import { useGetProgramById } from "@/lib/api/hooks/programs/programs.hooks";
 import { useModalStore } from "@/components/store/use-modal-store";
 import AddWeekModal from "@/components/admin/program-detail/add-week-modal";
 import DraftWeekSection from "@/components/admin/program-detail/draft-week-section";
+import ExistingWeekSection from "@/components/admin/program-detail/existing-week-section";
 import type { DraftWeek, DraftModule } from "@/schemas/program-detail-schemas";
+import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 
 interface ProgramDetailClientProps {
   programId: string;
@@ -33,12 +35,13 @@ export default function ProgramDetailClient({
   const { data: program, isLoading } = useGetProgramById(programId);
   const openModal = useModalStore((state) => state.openModal);
 
+console.log(program)
   // Page-level draft state — weeks built locally before publishing
   const [draftWeeks, setDraftWeeks] = useState<DraftWeek[]>([]);
 
   // ---------- Draft week handlers ----------
 
-  // passed to modal to add the form entries to draft state 
+  // passed to modal to add the form entries to draft state
   const handleAddWeek = (week: DraftWeek) => {
     setDraftWeeks((prev) => [...prev, week]);
   };
@@ -46,8 +49,8 @@ export default function ProgramDetailClient({
   const handleAddModule = (weekId: string, module: DraftModule) => {
     setDraftWeeks((prev) =>
       prev.map((w) =>
-        w.id === weekId ? { ...w, modules: [...w.modules, module] } : w
-      )
+        w.id === weekId ? { ...w, modules: [...w.modules, module] } : w,
+      ),
     );
   };
 
@@ -56,8 +59,8 @@ export default function ProgramDetailClient({
       prev.map((w) =>
         w.id === weekId
           ? { ...w, modules: w.modules.filter((_, i) => i !== moduleIndex) }
-          : w
-      )
+          : w,
+      ),
     );
   };
 
@@ -67,10 +70,7 @@ export default function ProgramDetailClient({
   };
 
   const handleOpenAddWeek = () => {
-    openModal(
-      "add-week",
-      <AddWeekModal onAddWeek={handleAddWeek} />
-    );
+    openModal("add-week", <AddWeekModal onAddWeek={handleAddWeek} />);
   };
 
   // ---------- Derived values ----------
@@ -93,29 +93,15 @@ export default function ProgramDetailClient({
     <div className="space-y-6">
       {/* Back link + header */}
       <div>
-        <Link
-          href="/admin/program"
-          className="flex items-center gap-1 text-sm text-blue-600 hover:underline mb-2"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          Back to Programs
-        </Link>
-
         <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-[#101928]">
-              {program?.data?.programName || "Program Details"}
-            </h1>
-            <p className="text-sm text-[#667185]">
-              Manage weekly content and modules
-            </p>
-          </div>
+          <DashboardHeaderText
+            header={program?.data?.title || "Program Details"}
+            subtext="Manage weekly content and modules"
+            backLink="/admin/program"
+            backLinkText="Back to Programs"
+          />
 
-          <Button
-            type="button"
-            variant="regular"
-            onClick={handleOpenAddWeek}
-          >
+          <Button type="button" variant="regular" onClick={handleOpenAddWeek}>
             <Plus className="h-4 w-4" />
             Add Week
           </Button>
@@ -135,34 +121,14 @@ export default function ProgramDetailClient({
             </p>
           </div>
         ) : (
-          <div className="divide-y divide-[#EAECF0]">
+          <div className="flex flex-col">
             {existingWeeks.map((week: any, index: number) => (
-              <div
+              <ExistingWeekSection
                 key={week.id || index}
-                className="flex items-start justify-between py-4 first:pt-0 last:pb-0"
-              >
-                <div className="flex flex-col gap-0.5">
-                  <p className="text-sm font-semibold text-[#101928]">
-                    Week {index + 1}
-                  </p>
-                  <p className="text-sm text-[#667185]">
-                    {week.weekTitle || week.title || "Untitled"}
-                  </p>
-                  <p className="text-xs text-[#667185]">
-                    {week.modules?.length || 0} module
-                    {(week.modules?.length || 0) !== 1 ? "s" : ""}
-                  </p>
-                </div>
-                <span
-                  className={`text-xs font-medium px-2.5 py-1 rounded-full ${
-                    week.status === "Draft"
-                      ? "text-[#667185] bg-[#F2F4F7]"
-                      : "text-green-700 bg-green-50"
-                  }`}
-                >
-                  {week.status || "Published"}
-                </span>
-              </div>
+                programId={programId}
+                week={week}
+                index={index}
+              />
             ))}
           </div>
         )}

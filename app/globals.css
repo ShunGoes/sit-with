@@ -160,14 +160,17 @@ h6 {
   html {
     font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   }
-  .heading-2 {
+
+}
+
+@layer components {
+    .heading-2 {
     @apply font-medium text-[1.625rem] sm:text-[1.5rem] lg:text-[1.8rem] xl:text-[2rem] leading-snug lg:leading-[2.375rem] text-[#131313];
   }
 
   .modal-header {
     @apply text-primary-text font-semibold text-lg;
   }
-
 }
 
 /* Transition styles  */

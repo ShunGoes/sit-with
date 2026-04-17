@@ -4,6 +4,8 @@ import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import { addNewProgram, editProgram } from "@/components/modal-helper";
 import QueryStateHandler from "@/components/query-state-handler";
 import SeacrchAndFilter from "@/components/seach-and-filter";
+import { Spinner } from "@/components/spinner";
+import { useModalStore } from "@/components/store/use-modal-store";
 import ProgramsColumn from "@/components/tables/columns/programs-column";
 import ReuseableTable from "@/components/tables/reuseable-table";
 import { Button } from "@/components/ui/button";
@@ -14,7 +16,7 @@ import {
 } from "@/lib/api/hooks/programs/programs.hooks";
 import { Plus } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const CHURCH_OPTIONS = [
   {
@@ -26,18 +28,40 @@ export default function ProgramOverview() {
   const [filteredItem, setFilteredItem] = useState("");
   const [search, setSearch] = useState("");
 
+  const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
+
   const params = {
     search,
     type: filteredItem,
   };
-  const { data, isLoading, isError, isFetching } =
+  const { data: programData, isLoading, isError, isFetching } =
     useGetAllAdminPrograms(params);
 
-  const { mutate } = useDeleteProgram();
+  const { mutate, isPending } = useDeleteProgram();
 
   const handleDeleteProgram = (id: string) => {
-    mutate(id);
+    mutate(id, {
+      onSuccess: () => {
+        closeModal("loading");
+      },
+      onError: () => {
+        closeModal("loading");
+      },
+    });
   };
+
+   useEffect(() => {
+      if (isPending) {
+        openModal(
+          "loading",
+          <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+            <Spinner size={40} />
+          </div>,
+          { isMutation: true },
+        );
+      }
+    }, [isPending, openModal]);
 
   return (
     <div className="space-y-15">
@@ -68,7 +92,7 @@ export default function ProgramOverview() {
         {/* table  */}
         <div className="bg-dash-secondary-bg rounded-[16px]  pb-1">
           <QueryStateHandler
-            data={data}
+            data={programData?.data}
             isLoading={isLoading}
             isError={isError}
             loadingMessage="Loading Programs"
@@ -79,7 +103,7 @@ export default function ProgramOverview() {
           >
             <ReuseableTable
               columns={ProgramsColumn(handleDeleteProgram, editProgram)}
-              tableData={PROGRAMS_TABLE}
+              tableData={programData?.data}
             />
           </QueryStateHandler>
         </div>

@@ -117,10 +117,10 @@ export default function AddModuleModal({ onAddModule }: AddModuleModalProps) {
               <SelectValue placeholder="Select type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="Reading">Reading</SelectItem>
-              <SelectItem value="Assignment">Assignment</SelectItem>
-              <SelectItem value="Quiz">Quiz</SelectItem>
-              <SelectItem value="Video">Video</SelectItem>
+              <SelectItem value="READING">Reading</SelectItem>
+              <SelectItem value="ASSIGNMENT">Assignment</SelectItem>
+              <SelectItem value="QUIZ">Quiz</SelectItem>
+              <SelectItem value="VIDEO">Video</SelectItem>
             </SelectContent>
           </Select>
           {errors.type && (
