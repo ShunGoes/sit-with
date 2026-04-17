@@ -183,6 +183,7 @@ export default function SignupForm() {
                 <span className="px-3 bg-[#FEFFFBCC]">Or</span>
               </div>
             </div>
+            <div className="flex justify-center w-full">
             <GoogleLogin
               onSuccess={(credentialResponse) => {
                 const idToken = credentialResponse.credential;
@@ -211,6 +212,8 @@ export default function SignupForm() {
                 showErrorToast("Google login failed");
               }}
             />
+
+            </div>
           </div>
         </form>
         </div>
