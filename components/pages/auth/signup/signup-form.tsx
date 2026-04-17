@@ -85,10 +85,10 @@ export default function SignupForm() {
   }, [isPending, googleSignInPending, openModal]);
 
   return (
-    <Card className=" w-[80%]  mx-auto md:w-full md:border border-[#FFFFFF5C] bg-transparent md:bg-[#FEFFFBCC] shadow-none   md:rounded-[10px] overflow-hidden flex flex-col md:flex-row xl:gap-20 lg:p-5 ">
+    <Card className="flex flex-col  lg:w-full lg:flex-row lg:items-stretch justify-center mx-auto w-full bg-transparent md:bg-[#FEFFFB] shadow-none md:shadow-sm md:rounded-[16px] overflow-hidden lg:p-6 lg:h-[min(635px,90vh)] lg:gap-8">
       {/* Left side Image (Hidden on mobile) */}
-      <div className="hidden lg:block md:w-1/2 relative  ">
-        <div className="relative w-full h-full rounded-2xl overflow-hidden bg-gray-100">
+      <div className="hidden lg:block lg:w-1/2 relative h-full">
+        <div className="relative w-full h-full rounded-[12px] overflow-hidden bg-gray-100">
           <Image
             src="/images/signup-bg.webp"
             alt="Login background"
@@ -100,7 +100,8 @@ export default function SignupForm() {
       </div>
 
       {/* Right side Form */}
-      <div className="w-full lg:w-1/2 md:p-5 sm:p-8 lg:p-12 flex flex-col gap-8 md:gap-8 justify-center ">
+      <div className="w-full lg:w-1/2 overflow-y-auto scrollbar-hide">
+        <div className="min-h-full flex flex-col justify-center gap-8 md:gap-8 lg:px-10 lg:py-4">
         {/* Logo */}
         <div className="flex flex-col md:gap-2">
           <div className="flex items-center gap-2 mb-8 justify-center md:justify-start">
@@ -120,7 +121,7 @@ export default function SignupForm() {
               Create Account
             </h1>
             <p className="text-[#475467] text-[14px] md:text-[12px] text-left">
-              Join us — it only takes a minute.
+              Join us, it only takes a minute.
             </p>
           </div>
         </div>
@@ -138,9 +139,9 @@ export default function SignupForm() {
                 placeholder="Funke Moore"
                 type="text"
               />
-              <p className="text-xs text-primary-text italic mt-1">
+              {/* <p className="text-xs text-primary-text italic mt-1">
                 Firstname Lastname
-              </p>
+              </p> */}
             </div>
             <FormFieldComp
               control={form.control}
@@ -212,6 +213,7 @@ export default function SignupForm() {
             />
           </div>
         </form>
+        </div>
       </div>
     </Card>
   );

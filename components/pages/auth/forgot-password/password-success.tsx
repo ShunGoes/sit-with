@@ -37,7 +37,7 @@ export function PasswordSuccess() {
           />
         </svg>
       </div>
-      <h1 className="text-[24px] lg:text-[48px] text-brand-green mb-1 lg:mb-2 text-center">
+      <h1 className="text-[24px] font-medium md:font-bold text-brand-green mb-1 text-center">
         Password Changed
       </h1>
       <p className="text-[#535862] text-[14px] lg:w-[95%] mx-auto text-center mb-8">
@@ -47,6 +47,7 @@ export function PasswordSuccess() {
       <Link href="/login" className="w-full">
         <Button
           type="button"
+          variant={"regular"}
           className="w-full mt-6"
         >
           Back to Login

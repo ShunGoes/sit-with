@@ -27,18 +27,23 @@ import {
 
 interface AddWeekModalProps {
   onAddWeek: (week: DraftWeek) => void;
+  initialData?: any; // To support editing existing weeks
+  title?: string;
 }
 
-export default function AddWeekModal({ onAddWeek }: AddWeekModalProps) {
+export default function AddWeekModal({ onAddWeek, initialData, title = "Add New Week" }: AddWeekModalProps) {
   const closeModal = useModalStore((state) => state.closeModal);
 
   const form = useForm<AddWeekFormData>({
     resolver: zodResolver(addWeekSchema),
-    defaultValues: { weekTitle: "", description: "" },
+    defaultValues: { 
+      weekTitle: initialData?.title || initialData?.weekTitle || "", 
+      description: initialData?.description || "" 
+    },
   });
 
   // Learning objectives managed in local state (tag-input pattern)
-  const [objectives, setObjectives] = useState<string[]>([]);
+  const [objectives, setObjectives] = useState<string[]>(initialData?.learningObjectives || []);
   const [objectiveInput, setObjectiveInput] = useState("");
 
   const handleAddObjective = () => {
@@ -60,26 +65,26 @@ export default function AddWeekModal({ onAddWeek }: AddWeekModalProps) {
   };
 
   const handleCancel = () => {
-    closeModal("add-week");
+    closeModal(initialData ? "edit-week" : "add-week");
   };
 
   const handleSubmit = form.handleSubmit((data) => {
-    // Generate a local-only id for React keying
+    // Generate a local-only id for React keying or use existing
     const draftWeek: DraftWeek = {
-      id: crypto.randomUUID(),
+      id: initialData?.id || crypto.randomUUID(),
       weekTitle: data.weekTitle,
       description: data.description || "",
       learningObjectives: objectives,
-      modules: [],
+      modules: initialData?.modules || [],
     };
 
     onAddWeek(draftWeek);
-    closeModal("add-week");
+    closeModal(initialData ? "edit-week" : "add-week");
   });
 
   return (
     <div className="space-y-5">
-      <h2 className="modal-header">Add New Week</h2>
+      <h2 className="modal-header">{title}</h2>
 
       {/* Week Title — manually configured inside Controller matching other modal styles */}
       <Controller

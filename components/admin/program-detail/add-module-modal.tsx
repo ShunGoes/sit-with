@@ -32,45 +32,48 @@ import {
 
 interface AddModuleModalProps {
   onAddModule: (module: DraftModule) => void;
+  initialData?: any;
+  title?: string;
 }
 
-export default function AddModuleModal({ onAddModule }: AddModuleModalProps) {
+export default function AddModuleModal({ onAddModule, initialData, title = "Add New Module" }: AddModuleModalProps) {
   const closeModal = useModalStore((state) => state.closeModal);
 
   const form = useForm<AddModuleFormData>({
     resolver: zodResolver(addModuleSchema),
     defaultValues: {
-      moduleTitle: "",
-      description: "",
-      type: "",
-      duration: "",
-      contentLink: "",
-      embedCode: "",
+      moduleTitle: initialData?.title || initialData?.moduleTitle || "",
+      description: initialData?.description || "",
+      type: initialData?.type || "",
+      duration: initialData?.duration || "",
+      contentLink: initialData?.contentUrl || initialData?.contentLink || "",
+      embedCode: initialData?.embedCode || "",
     },
   });
 
   const handleCancel = () => {
-    closeModal("add-module");
+    closeModal(initialData ? "edit-module" : "add-module");
   };
 
   const handleSubmit = form.handleSubmit((data) => {
-    const module: DraftModule = {
-      moduleTitle: data.moduleTitle,
+    const module: any = {
+      id: initialData?.id,
+      title: data.moduleTitle,
       description: data.description || "",
       type: data.type,
       duration: data.duration,
-      contentLink: data.contentLink,
+      contentUrl: data.contentLink,
       embedCode: data.embedCode || "",
     };
 
     onAddModule(module);
-    closeModal("add-module");
+    closeModal(initialData ? "edit-module" : "add-module");
   });
 
   return (
     <div className="space-y-5">
       <h2 className="text-primary-text font-semibold text-lg">
-        Add New Module
+        {title}
       </h2>
 
       {/* Module Title */}

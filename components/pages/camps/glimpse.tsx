@@ -52,10 +52,10 @@ export function GlimpseGallery() {
               className="object-cover transition-transform duration-500 group-hover:scale-110"
             />
             <div className="absolute bottom-0 backdrop-blur-xs bg-black/10 left-0 right-0 p-4">
-              <h3 className="text-[#EBF6DF] font-bold text-base ">
+              <h3 className="text-[#EBF6DF] font-bold text-base mb-3 ">
                 {img.title}
               </h3>
-              <p className="text-[#E6F2D9] leading-3.5 text-sm">{img.subtitle}</p>
+              <p className="text-[#E6F2D9] leading-4.5 text-sm">{img.subtitle}</p>
             </div>
           </motion.div>
         ))}

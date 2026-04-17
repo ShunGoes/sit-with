@@ -1,19 +1,17 @@
 export const PROGRAMS_TABLE: ProgramColumn[] = [
   {
-    name: "Favour Timothy",
-    type: "Leaders",
-    status: "Active",
+    title: "Favour Timothy",
+    category: "Leaders",
+    isPublished: true,
     price: 15000,
-    enrolled: "15",
-    id: ""
+    id: "1"
   },
   {
-    name: "Chris Allordiah",
-    type: "Professionals",
-    status: "Inactive",
+    title: "Chris Allordiah",
+    category: "Professionals",
+    isPublished: false,
     price: 20030,
-    enrolled: "15",
-    id: ""
+    id: "2"
   },
 ];
 

@@ -14,15 +14,17 @@ import { Plus, Check, X } from "lucide-react";
 import type { DraftModule } from "@/schemas/program-detail-schemas";
 
 interface ModulesPanelProps {
-  modules: DraftModule[];
+  modules: DraftModule[] | any[];
   onAddModule: () => void;
   onRemoveModule: (moduleIndex: number) => void;
+  onEditModule?: (moduleIndex: number) => void;
 }
 
 export default function ModulesPanel({
   modules,
   onAddModule,
   onRemoveModule,
+  onEditModule
 }: ModulesPanelProps) {
   return (
     <div className="bg-white rounded-[12px] p-5 border border-[#EAECF0]">
@@ -97,14 +99,26 @@ export default function ModulesPanel({
                 </div>
               </div>
 
-              {/* Delete module */}
-              <button
-                type="button"
-                onClick={() => onRemoveModule(index)}
-                className="text-red-500 hover:text-red-700 cursor-pointer mt-1"
-              >
-                <X className="h-4 w-4" />
-              </button>
+              {/* Actions */}
+              <div className="flex flex-col gap-2 mt-1">
+                {onEditModule && (
+                  <button
+                    type="button"
+                    onClick={() => onEditModule(index)}
+                    className="text-blue-500 hover:text-blue-700 cursor-pointer"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                  </button>
+                )}
+                {/* Delete module */}
+                <button
+                  type="button"
+                  onClick={() => onRemoveModule(index)}
+                  className="text-red-500 hover:text-red-700 cursor-pointer"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
             </div>
           ))}
         </div>

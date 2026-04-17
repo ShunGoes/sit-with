@@ -11,7 +11,7 @@
 "use client";
 
 import { useModalStore } from "@/components/store/use-modal-store";
-import { usePublishWeek } from "@/lib/api/hooks/programs/programs.hooks";
+import { useAddWeekToProgram, usePublishWeek } from "@/lib/api/hooks/programs/programs.hooks";
 import type { DraftWeek, DraftModule } from "@/schemas/program-detail-schemas";
 import DraftWeekCard from "./draft-week-card";
 import ModulesPanel from "./modules-panel";
@@ -38,12 +38,12 @@ export default function DraftWeekSection({
 }: DraftWeekSectionProps) {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
-  const { mutate, isPending } = usePublishWeek(programId);
+  const { mutate, isPending } = useAddWeekToProgram(programId);
 
   const handlePublish = () => {
     // Build the API payload — strip the local-only `id` field
     const payload = {
-      weekTitle: week.weekTitle,
+      title: week.weekTitle,
       description: week.description,
       learningObjectives: week.learningObjectives,
       modules: week.modules,

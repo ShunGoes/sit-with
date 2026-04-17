@@ -19,15 +19,15 @@ import LearningObjectivesField from "./learning-objectives-field";
 const PROGRAM_TYPE = [
   {
     label: "Student",
-    value: "student",
+    value: "STUDENTS",
   },
   {
     label: "Professional",
-    value: "professional",
+    value: "PROFESSIONALS",
   },
   {
     label: "Leadership",
-    value: "leader",
+    value: "LEADERS",
   },
 ];
 

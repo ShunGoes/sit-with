@@ -17,9 +17,9 @@ export function AboutHero() {
         <div className="relative h-full w-[90%] mx-auto  flex flex-col gap-6 justify-center items-start max-w-7xl">
           <div className="space-y-4  ">
             <h1
-              className={`text-[#F9FDF9] font-semibold text-[3.125rem] lg:text-[4rem] xl:text-[5rem] leading-[1.05]  `}
+              className={`text-[#F9FDF9] font-semibold text-[3rem] lg:text-[4rem] xl:text-[5rem] leading-[1.05]  `}
             >
-              About Sit-With-PD
+              About <br /> Sit-With-PD
             </h1>
             <p className="lg:text-[1.25rem] text-xl text-[#F7FBF6]  md:text-start  sm:w-10/12 md:w-9/12 ">
               A global therapeutic network dedicated to presence-based healing

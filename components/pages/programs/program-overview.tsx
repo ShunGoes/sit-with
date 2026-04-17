@@ -31,7 +31,7 @@ export function ProgramOverview() {
         <Pill text="What We Offer" />
 
         </div>
-        <h2 className="heading-2 xl:leading-13.5 font-normal text-center xl:text-start ">
+        <h2 className=" text-lg sm:text-[1.5rem] lg:text-[1.8rem] xl:text-[2rem] lg:leading-9.5 text-[#131313] xl:leading-13.5 font-normal text-center xl:text-start ">
           Each program is thoughtfully structured to help you understand yourself better, build emotional awareness, and grow with clarity at your own pace. No overwhelm  just steady, guided progress.
 
         </h2>

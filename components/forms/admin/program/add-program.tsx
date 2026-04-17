@@ -27,15 +27,54 @@ export default function AddProgramForm() {
   const { mutate, isPending } = useCreateProgram();
 
   const onSubmit: SubmitHandler<ProgramFormSchema> = (data) => {
-    const parsedData = {
-      ...data,
-      price: parseFloat(data.price.replace(/,/g, "")) || 0,
-      learningObjectives: data.learningObjectives?.map((obj) => obj.text) || [],
-    };
+    console.log(data)
+    const formData = new FormData();
+    
+    formData.append("title", data.title);
+    if (data.description) formData.append("description", data.description);
+    formData.append("price", (parseFloat(data.price.replace(/,/g, "")) || 0).toString());
+    formData.append("hoursPerWeek", data.hoursPerWeek);
+    if (data.date) formData.append("startDate", data.date);
+    formData.append("category", data.programType.toUpperCase());
+    if (data.facilitatorName) formData.append("facilitatorName", data.facilitatorName);
+    if (data.facilitatorEmail) formData.append("facilitatorEmail", data.facilitatorEmail);
+    if (data.duration) formData.append("duration", data.duration);
 
-    mutate(parsedData, {
+    if (data.learningObjectives && data.learningObjectives.length > 0) {
+      const learningOutcomes = data.learningObjectives.map((obj) => obj.text);
+      formData.append("learningOutcomes", JSON.stringify(learningOutcomes));
+    } else {
+      formData.append("learningOutcomes", JSON.stringify([]));
+    }
+
+    if (data.weeks && data.weeks.length > 0) {
+      const formattedWeeks = data.weeks.map(week => ({
+
+        title: week.weekTitle,
+        description: week.description,
+        learningObjectives: week.learningObjectives,
+        modules: week.modules.map(mod => ({
+          title: mod.moduleTitle,
+          description: mod.description,
+          type: mod.type,
+          duration: mod.duration,
+          contentUrl: mod.contentLink,
+        }))
+      }));
+      formData.append("weeks", JSON.stringify(formattedWeeks));
+    } else {
+      formData.append("weeks", JSON.stringify([]));
+    }
+
+    if (data.thumbnail) {
+      formData.append("thumbnail", data.thumbnail);
+    }
+
+    console.log(formData)
+    mutate(formData, {
       onSuccess: () => {
         closeModal("loading");
+        form.reset()
       },
       onError: () => {
         closeModal("loading");
@@ -60,6 +99,8 @@ export default function AddProgramForm() {
       <DashboardHeaderText
         header="Create New Program "
         subtext="Set up a new learning program for your platform"
+        backLink="/admin/program"
+        backLinkText="Back to programs"
       />
       <FormProvider {...form}>
         {" "}

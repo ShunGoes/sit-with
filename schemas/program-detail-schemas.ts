@@ -33,11 +33,11 @@ export type AddModuleFormData = z.infer<typeof addModuleSchema>;
 
 // ---------- Local draft types (page-level useState) ----------
 export type DraftModule = {
-  moduleTitle: string;
+  title: string;
   description?: string;
   type: string;
   duration: string;
-  contentLink: string;
+  contentUrl: string;
   embedCode?: string;
 };
 

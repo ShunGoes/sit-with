@@ -9,6 +9,14 @@ import {
   get_all_admin_programs,
   publish_week,
   PublishWeekPayload,
+  publishProgram,
+  addWeekToProgram,
+  PublishWeekModule,
+  updateWeek,
+  deleteWeek,
+  addModuleToWeek,
+  updateModule,
+  deleteModule,
 } from "../../services/programs/programs.services";
 import { showSuccessToast, showErrorToast } from "@/lib/toast-helpers";
 
@@ -57,8 +65,38 @@ export const useUpdateProgram = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, payload }: { id: string; payload: UpdateProgramPayload }) =>
+    mutationFn: ({ id, payload }: { id: string; payload: FormData }) =>
       updateProgram(id, payload),
+    onSuccess: (data) => {
+      showSuccessToast(data.message);
+      queryClient.invalidateQueries({ queryKey: ["programs"] });
+    },
+    onError: (error: any) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+export const usePublishProgram = (id: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: {title: string, isPublished: boolean}) =>
+      publishProgram(id, payload),
+    onSuccess: (data) => {
+      showSuccessToast(data.message);
+      queryClient.invalidateQueries({ queryKey: ["programs"] });
+    },
+    onError: (error: any) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+export const useAddWeekToProgram = (id: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: {title: string, description: string | undefined, learningObjectives: string[], modules: PublishWeekModule[]}) =>
+      addWeekToProgram(id, payload),
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["programs"] });
@@ -84,6 +122,82 @@ export const useDeleteProgram = () => {
   });
 };
 
+// --------------- existing weeks & modules hooks ----------------
+
+export const useUpdateWeek = (programId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ weekId, payload }: { weekId: string; payload: { title: string; description?: string; learningObjectives?: string[] } }) =>
+      updateWeek(programId, weekId, payload),
+    onSuccess: (data) => {
+      showSuccessToast(data?.message || "Week updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["programs"] });
+    },
+    onError: (error: any) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+
+export const useDeleteWeek = (programId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (weekId: string) => deleteWeek(programId, weekId),
+    onSuccess: (data) => {
+      showSuccessToast(data?.message || "Week deleted successfully");
+      queryClient.invalidateQueries({ queryKey: ["programs"] });
+    },
+    onError: (error: any) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+
+export const useAddModuleToWeek = (programId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ weekId, payload }: { weekId: string; payload: any }) =>
+      addModuleToWeek(programId, weekId, payload),
+    onSuccess: (data) => {
+      showSuccessToast(data?.message || "Module added successfully");
+      queryClient.invalidateQueries({ queryKey: ["programs"] });
+    },
+    onError: (error: any) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+
+export const useUpdateModule = (programId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ weekId, moduleId, payload }: { weekId: string; moduleId: string; payload: any }) =>
+      updateModule(programId, weekId, moduleId, payload),
+    onSuccess: (data) => {
+      showSuccessToast(data?.message || "Module updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["programs"] });
+    },
+    onError: (error: any) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+
+export const useDeleteModule = (programId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ weekId, moduleId }: { weekId: string; moduleId: string }) =>
+      deleteModule(programId, weekId, moduleId),
+    onSuccess: (data) => {
+      showSuccessToast(data?.message || "Module deleted successfully");
+      queryClient.invalidateQueries({ queryKey: ["programs"] });
+    },
+    onError: (error: any) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+
 // Publish a draft week (with its modules) to a program
 export const usePublishWeek = (programId: string) => {
   const queryClient = useQueryClient();
@@ -94,7 +208,7 @@ export const usePublishWeek = (programId: string) => {
     onSuccess: (data) => {
       showSuccessToast(data.message || "Week published successfully");
       // Invalidate the specific program so the weeks list refreshes
-      queryClient.invalidateQueries({ queryKey: ["programs", programId] });
+      queryClient.invalidateQueries({ queryKey: ["programs"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message || "Failed to publish week");
