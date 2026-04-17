@@ -120,7 +120,7 @@ export default function SignupForm() {
               Create Account
             </h1>
             <p className="text-[#475467] text-[14px] md:text-[12px] text-left">
-              Join us — it only takes a minute.
+              Join us, it only takes a minute.
             </p>
           </div>
         </div>
@@ -138,9 +138,9 @@ export default function SignupForm() {
                 placeholder="Funke Moore"
                 type="text"
               />
-              <p className="text-xs text-primary-text italic mt-1">
+              {/* <p className="text-xs text-primary-text italic mt-1">
                 Firstname Lastname
-              </p>
+              </p> */}
             </div>
             <FormFieldComp
               control={form.control}

@@ -80,7 +80,7 @@ export function ProgramHero() {
                       {slide.description}
                     </p>
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-4  justify-center">
+                  <div className="flex flex-col sm:flex-row gap-4 w-[70%] justify-center">
                     <Button
                       variant="regular"
                       className=""
@@ -93,7 +93,7 @@ export function ProgramHero() {
                       Browse Programs <CaretRight className="ml-2" />
                     </Button>
                     <Link href="/consultation">
-                      <Button variant="outline">Book Consultation</Button>
+                      <Button variant="outline" className="w-full">Book Consultation</Button>
                     </Link>
                   </div>
                 </div>

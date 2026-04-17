@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "motion/react";
@@ -20,6 +20,20 @@ const navLinks = [
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -45,8 +59,9 @@ export function Navbar() {
 
   return (
     <nav
-      className="fixed top-0  backdrop-blur-sm z-50 w-full"
-      style={{ backgroundColor: "#00000033" }}
+      className={`fixed top-0 backdrop-blur-sm z-50 w-full transition-colors duration-300 ${
+        isScrolled ? "bg-black/80" : "bg-black/20"
+      }`}
     >
       <div className="container mx-auto px-4 md:px-8 h-20 flex items-center max-w-6xl justify-between">
         {/* Logo */}

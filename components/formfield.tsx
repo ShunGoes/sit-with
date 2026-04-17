@@ -64,7 +64,7 @@ export default function FormFieldComp<T extends FieldValues>({
                 id={name}
                 {...field}
                 inputMode={inputMode}
-                autoComplete={autoComplete}
+                autoComplete="one-time-code"
                 className={clsx(
                   "pr-10  border-[0.75px] border-[#EAECF0] bg-[#F2F4F7] rounded-[5px] w-full text-[12px]   font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal  py-4 h-11 focus-visible:border-none focus-visible:ring-0 ",
                   isPassword &&
@@ -78,7 +78,7 @@ export default function FormFieldComp<T extends FieldValues>({
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="absolute  right-1 top-1/2 h-full -translate-y-1/2 hover:bg-transparent cursor-pointer"
+                  className="absolute border-none  right-1 top-1/2 h-full -translate-y-1/2 hover:bg-transparent cursor-pointer"
                   onClick={() => setShowPassword((prev) => !prev)}
                 >
                   <EyeOff
