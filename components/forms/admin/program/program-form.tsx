@@ -37,6 +37,9 @@ export default function ProgramForm({
   onSubmit: SubmitHandler<ProgramFormSchema>;
 }) {
   const form = useFormContext<ProgramFormSchema>();
+  if (!form.formState.isValid && Object.keys(form.formState.errors).length > 0) {
+    console.log("Form validation errors:", form.formState.errors);
+  }
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7 ">
       {/* basic information */}
@@ -220,9 +223,12 @@ export default function ProgramForm({
       </div>
 
       <div className="flex items-center justify-end w-full mt-10 gap-3">
-        <Button variant={"outline"}>Cancel</Button>
-        <Button variant={"regular"} className="m">
-          Create Program
+        <Button variant={"outline"} type="button">Cancel</Button>
+        <Button 
+          variant={"regular"} 
+          disabled={!form.formState.isValid || form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting ? "Submitting..." : "Save Program"}
         </Button>
       </div>
     </form>

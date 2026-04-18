@@ -33,7 +33,7 @@ export interface ConsultationResponse {
   message: string;
 }
 
-export const getConsultations = async (): Promise<ConsultationsResponse> => {
+export const getConsultations = async () => {
   try {
     const res = await api.get("/consultations");
     return res.data;

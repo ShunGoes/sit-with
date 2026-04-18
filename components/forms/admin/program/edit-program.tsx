@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import {
@@ -14,6 +14,7 @@ import ProgramForm from "./program-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import { usePathname } from "next/navigation";
+import { toIsoDateString } from "@/lib/utils";
 
 const DEFAULT_VALUES = {};
 
@@ -30,6 +31,8 @@ const DEFAULT_VALUES = {};
 
   const { mutate, isPending } = useUpdateProgram();
   const { data: program } = useGetProgramById(id);
+
+  console.log(program)
 
   const onSubmit = (data: ProgramFormSchema) => {
     const formData = new FormData();
@@ -53,7 +56,9 @@ const DEFAULT_VALUES = {};
 
     if (data.weeks && data.weeks.length > 0) {
       const formattedWeeks = data.weeks.map(week => ({
-        ...week,
+        title: week.weekTitle,
+        description: week.description,
+        learningObjectives: week.learningObjectives,
         modules: week.modules.map(mod => ({
           title: mod.moduleTitle,
           description: mod.description,
@@ -92,20 +97,34 @@ const DEFAULT_VALUES = {};
     if (program) {
       // Map API response (Program) to Form Schema (ProgramFormSchema)
       const mappedData: ProgramFormSchema = {
-        title: program.data.programName,
-        description: program.data.description,
-        price: program.data.amount,
-        programType: program.data.programType as any,
-        duration: program.data.programDuration,
-        hoursPerWeek: (program.data as any).hoursPerWeek || "",
+        title: program.data.title || "",
+        description: program.data.description || "",
+        price: program.data.price?.toString() || "",
+        programType: program.data.category || "",
+        duration: program.data.durationWeeks?.toString() || "",
+        hoursPerWeek: (program.data as any).hoursPerWeek?.toString() || "",
         thumbnail: (program.data as any).thumbnail || "",
-        date: program.data.date,
+        date: toIsoDateString(new Date(program.data.startDate)) || "",
         facilitatorName: (program.data as any).facilitatorName || "",
         facilitatorEmail: (program.data as any).facilitatorEmail || "",
-        weeks: (program.data as any).weeks || [],
-        learningObjectives: ((program.data as any).learningObjectives || []).map((text: string) => ({ text })),
+        weeks: ((program.data as any).weeks || []).map((week: any) => ({
+          weekTitle: week.title || "Week Title",
+          description: week.description || "",
+          learningObjectives: week.learningObjectives || [],
+          modules: (week.modules || []).map((mod: any) => ({
+            moduleTitle: mod.title || "",
+            description: mod.description || "",
+            type: mod.type || "",
+            duration: mod.duration?.toString() || "",
+            contentLink: mod.contentUrl || "",
+            embedCode: mod.embedCode || "",
+          })),
+        })),
+        learningObjectives: ((program.data as any).learningOutcomes || []).map((text: string) => ({ text })),
       };
       form.reset(mappedData);
+      // Trigger validation manually so the user can see any errors right away
+      setTimeout(() => form.trigger(), 100);
     }
   }, [program, form]);
 
@@ -126,6 +145,9 @@ const DEFAULT_VALUES = {};
           <DashboardHeaderText
             header="Edit Program "
             subtext="Edit existing program for your platform"
+            backLinkText="Back to Programs"
+            backLink="/admin/program"
+
           />
     <FormProvider {...form}>
       {" "}
@@ -137,7 +159,9 @@ const DEFAULT_VALUES = {};
 
 export default function EditProgramFormClient ({id}: {id: string}){
   return (
+    <Suspense fallback={<div>Fetching program details...</div>}>
     <EditProgramForm id={id}/>
+    </Suspense>
   )
 
 }
