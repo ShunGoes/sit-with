@@ -21,7 +21,12 @@ export interface CreateConsultationPayload {
   message?: string;
 }
 
-export interface UpdateConsultationPayload extends Partial<CreateConsultationPayload> {}
+export type UpdateConsultationPayload = Partial<CreateConsultationPayload>;
+
+export interface BookConsultationPayload {
+  serviceId: string | number;
+  userId: string | number;
+}
 
 export interface ConsultationsResponse {
   data: Consultation[];
@@ -93,6 +98,18 @@ export const deleteConsultation = async (id: string): Promise<{ message: string 
 
   try {
     const res = await api.delete(`/consultations/${id}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error(getApiError(error));
+  }
+};
+
+export const bookConsultation = async (
+  payload: BookConsultationPayload
+): Promise<{ message: string }> => {
+  try {
+    const res = await api.post("/consultations/book", payload);
     return res.data;
   } catch (error) {
     console.log(error);

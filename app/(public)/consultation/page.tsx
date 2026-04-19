@@ -1,4 +1,5 @@
 import { Hero } from "@/components/pages/consultation/hero";
+import { ConsultationServices } from "@/components/pages/consultation/consultation-services";
 import { AreasOfSupport } from "@/components/pages/consultation/areas-of-support";
 import { ProcessCards } from "@/components/shared/process-cards";
 import { Testimonials } from "@/components/pages/homepage/testimonials";
@@ -11,6 +12,7 @@ export default function ConsultationPage() {
       <Hero />
       <div className="w-11/12 mx-auto">
         <AreasOfSupport />
+      <ConsultationServices />
       <ProcessCards />
       </div>
 

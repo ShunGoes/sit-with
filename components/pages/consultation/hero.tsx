@@ -1,9 +1,52 @@
+"use client";
+import { useEffect, useState } from "react";
+import Cal, { getCalApi, type EmbedEvent } from "@calcom/embed-react";
+
 import { Button } from "@/components/ui/button";
 import CaretRight from "@/pd-icons/caret-right";
 import { Pill } from "@/components/ui/pill";
 import Image from "next/image";
+import { useBookConsultation } from "@/lib/api/hooks/consultations/consultations.hooks";
+import { useAuthStore } from "@/store/use-auth-store";
+import { useRouter } from "next/navigation";
 
 export function Hero() {
+  const { mutate: bookConsultation } = useBookConsultation();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const router = useRouter();
+
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({"namespace":"consultation"});
+      cal("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+      cal("on", {
+      action: "bookingSuccessfulV2",
+        callback: (e: any) => {
+          console.log( e.detail.data.eventTypeId)
+          console.log( e)
+          // bookConsultation({
+          //   serviceId: e.detail.data.eventTypeId,
+          //   userId: e.detail.data.eventTypeId,
+
+          // })
+        },
+      });
+    })();
+  }, [bookConsultation])
+
+  const handleBookingClick = async () => {
+    if (!isAuthenticated) {
+      router.push("/login")
+      return
+    }
+
+    const cal = await getCalApi({"namespace":"consultation"});
+    cal("modal", {
+      calLink: "shun-evelyn-xvve7u/consultation",
+      config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"}
+    });
+  }
+
   return (
     <section className="w-full">
       <div className="relative w-full min-h-svh lg:min-h-dvh flex items-center justify-center  py-24">
@@ -22,7 +65,6 @@ export function Hero() {
             >
               One-on-One Professional Consultation
             </h1>
-           
           </div>
           <div className="py-5 bg-[#A8D67599] w-full text-center rounded-[10px] ">
             <p className="text-[#0C240A] text-sm">Start your journey today</p>
@@ -34,7 +76,10 @@ export function Hero() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row justify-start md:justify-start lg:justify-center w-full gap-4 mt-4">
-            <Button variant={"regular"}>
+            <Button
+              onClick={handleBookingClick}
+              variant={"regular"}
+            >
               Book Now <CaretRight />
             </Button>
           </div>
