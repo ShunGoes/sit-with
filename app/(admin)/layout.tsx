@@ -40,24 +40,25 @@ export default function ProtectedLayout({
   const { data, isLoading, isError } = useGetCurrentUser();
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state);
 
   const firstName = user?.firstName ?? ""
   const lastName = user?.lastName ?? ""
   const userInitials = firstName.charAt(0) + lastName.charAt(0);
 
-  // console.log("Current user in ProtectedLayout:", user, data);
+  console.log("Current user in ProtectedLayout:", token);
+  const currentUser = data?.user || data?.data;
 
   useEffect(() => {
     if (isError) {
       router.replace("/login");
-    } else if (data?.user && data.user.role !== "ADMIN") {
-      router.replace(data.user.role === "USER" ? "/user" : "/login");
+    } else if (currentUser && currentUser.role !== "ADMIN") {
+      router.replace(currentUser.role === "USER" ? "/user" : "/login");
     }
-  }, [isError, data, router]);
+  }, [isError, currentUser, router]);
 
-  
   if (isLoading) return <DashboardSkeleton />;
-  if (isError || data?.user.role !== "ADMIN") return null;
+  if (isError || currentUser?.role !== "ADMIN") return null;
 
   return (
     <ThemeProvider
