@@ -24,7 +24,7 @@ export const useRegister = () => {
     mutationFn: register,
     onSuccess: (data: any) => {
       showSuccessToast(data.message);
-      setUser(data.data.user, "email");
+      setUser(data.data.user, "email", data.data.token);
       queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
     },
     onError: (error: any) => {
@@ -42,7 +42,7 @@ export const useSignin = () => {
     mutationFn: login,
     onSuccess: (data: any) => {
       showSuccessToast(data.message);
-      setUser(data.data.user, "email");
+      setUser(data.data.user, "email", data.data.token);
       queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
     },
     onError: (error: any) => {
@@ -99,12 +99,26 @@ export const useGoogleLogin = () => {
     mutationFn: googleLogin,
     onSuccess: (data) => {
       showSuccessToast(data.message);
-      setUser(data.data.user, "google");
+      setUser(data.data.user, "google", data.data.token);
       queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
     },
     onError: (error) => {
       showErrorToast(error.message);
     },
+  });
+};
+
+export const useVerifyEmail = (token: string) => {
+  const setUser = useAuthStore((state) => state.setUser);
+  const setUserEmailVerified = useAuthStore((state) => state.setUserEmailVerified);
+
+  return useQuery({
+    queryKey: ["auth", "verify-email", token],
+    queryFn: () => verifyEmail(token),
+    enabled: !!token,
+    retry: false,
+    staleTime: 0,
+    gcTime: 0,
   });
 };
 
@@ -121,7 +135,10 @@ export const useGetCurrentUser = () => {
 
   useEffect(() => {
     if (query.isSuccess && query.data?.data) {
-      setUser(query.data?.data, "email");
+      // Handle both { data: { ...user } } and { data: { user: { ... } } } shapes
+      const userData = query.data.data.user || query.data.data;
+      const token = query.data.data.token;
+      setUser(userData, "email", token);
     } else if (query.isError) {
       clearUser();
     }

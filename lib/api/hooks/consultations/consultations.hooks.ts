@@ -6,6 +6,7 @@ import {
   updateConsultation,
   deleteConsultation,
   UpdateConsultationPayload,
+  bookConsultation,
 } from "../../services/consultations/consultations.services";
 import { showSuccessToast, showErrorToast } from "@/lib/toast-helpers";
 
@@ -62,6 +63,21 @@ export const useDeleteConsultation = () => {
 
   return useMutation({
     mutationFn: deleteConsultation,
+    onSuccess: (data) => {
+      showSuccessToast(data.message);
+      queryClient.invalidateQueries({ queryKey: ["consultations"] });
+    },
+    onError: (error: any) => {
+      showErrorToast(error.message);
+    },
+  });
+};
+
+export const useBookConsultation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: bookConsultation,
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["consultations"] });

@@ -8,6 +8,7 @@ import { ModalProvider } from "@/components/providers/modal-provider";
 import QueryProvider from "@/components/providers/query-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { GoogleOAuthProvider } from "@react-oauth/google";  
+import { CalProvider } from "@/components/providers/calcom-provider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -39,7 +40,9 @@ export default function RootLayout({
         <TooltipProvider>
           <ViewTransitionTracker />
           <ModalProvider />
+          <CalProvider>
           <ViewTransition>{children}</ViewTransition>
+          </CalProvider>
           <Toaster position="top-center"/>
         </TooltipProvider>
         </QueryProvider>

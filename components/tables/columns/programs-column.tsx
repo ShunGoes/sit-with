@@ -169,7 +169,7 @@ const ProgramsColumn = (
     header: "Status",
     cell: ({ row }) => (
       <Badge variant={row.original.isPublished ? "success" : "secondary"}>
-        {row.original.isPublished ? "Active" : "Inactive"}
+        {row.original.isPublished ? "Published" : "Draft"}
       </Badge>
     ),
   },

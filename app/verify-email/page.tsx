@@ -5,20 +5,15 @@ import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Spinner } from "@/components/spinner";
 import { showErrorToast, showSuccessToast } from "@/lib/toast-helpers";
-import { useQuery } from "@tanstack/react-query";
-import { verifyEmail } from "@/lib/api/services/auth/auth.services";
+import { useVerifyEmail } from "@/lib/api/hooks/auth/auth.hooks";
 import { useAuthStore } from "@/store/use-auth-store";
 
 function VerifyEmailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token") ?? "";
-  const { data, isLoading, isError, isSuccess, error } = useQuery({
-    queryKey: ["auth", "user"],
-    queryFn: () => verifyEmail(token),
-    retry: false,
-    enabled: !!token,
-  });
+  const { data, isLoading, isError, isSuccess, error } = useVerifyEmail(token);
+  
   const setUserEmailVerified = useAuthStore(
     (state) => state.setUserEmailVerified,
   );
@@ -40,19 +35,26 @@ function VerifyEmailContent() {
 
     if (isSuccess && data) {
       showSuccessToast(data.message);
-      setUserEmailVerified(true);
-      setUser(data.data.user, "email");
+      
+      // Robustly extract user data handling {data: {user: ...}} or {data: {...}}
+      const userData = data?.data?.user || data?.data;
+      
+      if (userData) {
+        const responseToken = data?.data?.token || data?.token;
+        setUser(userData, "email", responseToken);
+        setUserEmailVerified(true);
+      }
 
       // Wait for 2 seconds to allow the user to read the success message
       setTimeout(() => {
-        const role = data?.data?.user.role
+        const role = userData?.role;
         
         if (role === "ADMIN") {
           router.replace("/admin");
         } else if (role === "USER") {
           router.replace("/user");
         } else {
-          // No role in store yet (e.g. user landed on link without being logged in)
+          // No role if userData is partial or missing
           router.replace("/login");
         }
       }, 2000);

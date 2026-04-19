@@ -19,6 +19,8 @@ export default function ProgramWeeksSection() {
     name: "weeks",
   });
 
+  console.log("fields ", fields)
+
   // Only one week can be "selected" (expanded) at a time. -1 means none.
   const [selectedWeekIndex, setSelectedWeekIndex] = useState<number>(-1);
 

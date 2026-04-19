@@ -21,6 +21,7 @@ interface ConsultationColumn{
     status: "pending" | "completed"
 }
 
+
 interface ParticipantColumn {
     participant: string,
     program: string,

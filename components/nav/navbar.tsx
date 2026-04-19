@@ -129,6 +129,7 @@ export function Navbar() {
           </Link>
           <Button
             asChild
+            variant={"regular"}
             className="bg-brand-green hover:bg-[#324414] text-white rounded-md px-6"
           >
             <Link href="/signup">Sign up</Link>
