@@ -47,17 +47,17 @@ export default function ProtectedLayout({
 
   // console.log("Current user in ProtectedLayout:", user, data);
 
-  // useEffect(() => {
-  //   if (isError) {
-  //     router.replace("/login");
-  //   } else if (data?.user && data.user.role !== "ADMIN") {
-  //     router.replace(data.user.role === "USER" ? "/user" : "/login");
-  //   }
-  // }, [isError, data, router]);
+  useEffect(() => {
+    if (isError) {
+      router.replace("/login");
+    } else if (data?.user && data.user.role !== "ADMIN") {
+      router.replace(data.user.role === "USER" ? "/user" : "/login");
+    }
+  }, [isError, data, router]);
 
   
-  // if (isLoading) return <DashboardSkeleton />;
-  // if (isError || data.data.role !== "ADMIN") return null;
+  if (isLoading) return <DashboardSkeleton />;
+  if (isError || data?.user.role !== "ADMIN") return null;
 
   return (
     <ThemeProvider
