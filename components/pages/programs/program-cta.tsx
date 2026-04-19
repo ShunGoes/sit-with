@@ -17,7 +17,7 @@ export function ProgramCta() {
             and feel supported in a calm and confidential space
           </p>
           <div>
-            <Link href="/consultation">
+            <Link href="/consultation#consultation-cta">
               <Button
                 variant="regular"
                 className="bg-[#60935D] hover:bg-[#4E7D4C] text-white border-none h-11 px-6 text-sm font-medium gap-2"

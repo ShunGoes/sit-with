@@ -4,6 +4,13 @@ import { CampParticipation } from "@/components/pages/camps/participation";
 import { Testimonials } from "@/components/pages/homepage/testimonials";
 import { CtaBlock } from "@/components/shared/cta-block";
 import { CampHero } from "@/components/pages/camps/hero";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Therapeutic Camps | Awareness & Connection",
+  description:
+    "Join our immersive therapeutic camps. Build awareness, develop practical wellbeing habits, and connect with a community focused on growth and presence.",
+};
 import { CampCtaBlock } from "@/components/pages/camps/camp-cta";
 
 export default function CampsPage() {

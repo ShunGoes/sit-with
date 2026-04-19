@@ -1,11 +1,39 @@
 import { mockBlogs } from "@/lib/mock-data/blogs";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import Link from "next/link";
 import { Facebook, Twitter, Instagram, Youtube, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Props {
   params: { slug: string };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const blog = mockBlogs.find((b) => b.slug === params.slug);
+
+  if (!blog) {
+    return {
+      title: "Blog Post Not Found",
+    };
+  }
+
+  return {
+    title: blog.title,
+    description: blog.snippet,
+    openGraph: {
+      title: blog.title,
+      description: blog.snippet,
+      type: "article",
+      images: [
+        {
+          url: "/images/logo.png", // Fallback, would ideally use post image
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+  };
 }
 
 export default function BlogPostPage({ params }: Props) {

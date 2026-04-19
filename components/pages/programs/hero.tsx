@@ -92,7 +92,7 @@ export function ProgramHero() {
                     >
                       Browse Programs <CaretRight className="ml-2" />
                     </Button>
-                    <Link href="/consultation">
+                    <Link href="/consultation#consultation-cta">
                       <Button variant="outline" className="w-full">Book Consultation</Button>
                     </Link>
                   </div>

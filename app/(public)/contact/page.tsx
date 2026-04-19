@@ -1,3 +1,11 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact Us | Get in Touch",
+  description:
+    "Have questions about our programs, camps, or consultations? Reach out to the Sit-With-PD team for support and information.",
+};
+
 export default function ContactPage() {
   return (
     <div className="container mx-auto px-4 py-20">
