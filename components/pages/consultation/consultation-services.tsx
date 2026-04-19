@@ -18,10 +18,11 @@ export function ConsultationServices() {
   const router = useRouter();
 
   const handleBookCard = async (_serviceId: string) => {
-    if (!isAuthenticated) {
-      router.push("/login?redirect=/consultation");
-      return;
-    }
+    // redirect as query param 
+    // if (!isAuthenticated) {
+    //   router.push("/login?redirect=/consultation");
+    //   return;
+    // }
 
     const cal = await getCalApi({ namespace: "consultation" });
     cal("modal", {
