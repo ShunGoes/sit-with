@@ -67,14 +67,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Sit-With-PD — Presence Changes Everything",
-    description:
-      "A global therapeutic network for presence-based healing and emotional transformation.",
-    images: ["/images/logo.png"],
-    creator: "@SitWithPD",
-  },
 };
 
 

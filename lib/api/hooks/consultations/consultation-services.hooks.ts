@@ -11,7 +11,9 @@ import {
 } from "../../services/consultations/consultation-services.services";
 import { showSuccessToast, showErrorToast } from "@/lib/toast-helpers";
 
-export const CONSULTATION_SERVICES_QUERY_KEY = ["consultation-services"] as const;
+export const CONSULTATION_SERVICES_QUERY_KEY = [
+  "consultation-services",
+] as const;
 
 export const useGetAllConsultationServices = () => {
   return useQuery({
@@ -33,11 +35,12 @@ export const useGetConsultationServiceById = (id: string) => {
 export const useCreateConsultationService = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: CreateConsultationServicePayload) =>
-      createConsultationService(payload),
+    mutationFn: createConsultationService,
     onSuccess: (data) => {
       showSuccessToast(data.message ?? "Service created.");
-      queryClient.invalidateQueries({ queryKey: CONSULTATION_SERVICES_QUERY_KEY });
+      queryClient.invalidateQueries({
+        queryKey: CONSULTATION_SERVICES_QUERY_KEY,
+      });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -48,11 +51,18 @@ export const useCreateConsultationService = () => {
 export const useUpdateConsultationService = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, payload }: { id: string; payload: UpdateConsultationServicePayload }) =>
-      updateConsultationService(id, payload),
+    mutationFn: ({
+      id,
+      payload,
+    }: {
+      id: string;
+      payload: UpdateConsultationServicePayload;
+    }) => updateConsultationService(id, payload),
     onSuccess: (data) => {
       showSuccessToast(data.message ?? "Service updated.");
-      queryClient.invalidateQueries({ queryKey: CONSULTATION_SERVICES_QUERY_KEY });
+      queryClient.invalidateQueries({
+        queryKey: CONSULTATION_SERVICES_QUERY_KEY,
+      });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -72,7 +82,9 @@ export const useUpdateConsultationStatus = () => {
     }) => updateConsultationStatus(id, payload),
     onSuccess: (data) => {
       showSuccessToast(data.message ?? "Status updated.");
-      queryClient.invalidateQueries({ queryKey: CONSULTATION_SERVICES_QUERY_KEY });
+      queryClient.invalidateQueries({
+        queryKey: CONSULTATION_SERVICES_QUERY_KEY,
+      });
       queryClient.invalidateQueries({ queryKey: ["consultations"] });
     },
     onError: (error: any) => {

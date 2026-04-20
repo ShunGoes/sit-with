@@ -26,8 +26,10 @@ export default function Home() {
             "logo": "https://sit-with-pd.vercel.app/images/logo.png",
             "description": "A global therapeutic network for presence-based healing and emotional transformation.",
             "sameAs": [
-              "https://twitter.com/SitWithPD",
-              "https://instagram.com/SitWithPD"
+              "https://www.youtube.com/@sitwithpd",
+              "https://www.tiktok.com/@sitwithpd?_r=1&_t=ZN-95g0zMOaKzW",
+              "https://www.instagram.com/sitwithpd?igsh=OHo1eHRqNTRmd2ps&utm_source=qr",
+              "https://www.facebook.com/share/19tSLd5kzH/?mibextid=wwXIfr"
             ]
           }),
         }}

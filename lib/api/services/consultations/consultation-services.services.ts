@@ -20,6 +20,7 @@ export interface CreateConsultationServicePayload {
   description: string;
   price: number;
   duration: number;
+  calBookingUrl: string;
 }
 
 export interface UpdateConsultationServicePayload {
@@ -70,7 +71,7 @@ export const getConsultationServiceById = async (
 
 export const createConsultationService = async (
   payload: CreateConsultationServicePayload
-): Promise<ConsultationServiceResponse> => {
+) => {
   try {
     const res = await api.post("/consultations/services", payload);
     return res.data;
