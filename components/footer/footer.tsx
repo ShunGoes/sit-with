@@ -5,9 +5,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
+import { Youtube, Instagram, Facebook } from "lucide-react";
 import MailIcon from "@/pd-icons/mail-icon";
 import PhoneIcon from "@/pd-icons/phone-icon";
 import LocationIcon from "@/pd-icons/location-icon";
+
+const TikTokIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="w-5 h-5"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.06-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.9-.32-1.9-.23-2.74.28-.69.44-1.22 1.06-1.35 1.88-.22 1.16.27 2.35 1.14 3.07.45.38 1.01.63 1.58.75 1.75.37 3.68-.55 4.32-2.15.14-.35.21-.73.21-1.11.02-3.52.01-7.03.02-10.55-.02-.1-.01-.3 0-.4z" />
+  </svg>
+);
 
 export function Footer() {
   const form = useForm({
@@ -206,6 +218,48 @@ export function Footer() {
                 <span>Eternity Stand Lagosi</span>
                 <span>Nigeria</span>
               </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <span className="text-[#C7CAC6] text-sm">Follow Us</span>
+            <div className="flex items-center gap-4">
+              <a
+                href="https://www.youtube.com/@sitwithpd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#C7CAC6] hover:text-[#A8D675] transition-colors"
+                aria-label="YouTube"
+              >
+                <Youtube size={20} />
+              </a>
+              <a
+                href="https://www.facebook.com/share/19tSLd5kzH/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#C7CAC6] hover:text-[#A8D675] transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook size={20} />
+              </a>
+              <a
+                href="https://www.instagram.com/sitwithpd?igsh=OHo1eHRqNTRmd2ps&utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#C7CAC6] hover:text-[#A8D675] transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram size={20} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@sitwithpd?_r=1&_t=ZN-95g0zMOaKzW"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#C7CAC6] hover:text-[#A8D675] transition-colors"
+                aria-label="TikTok"
+              >
+                <TikTokIcon />
+              </a>
             </div>
           </div>
         </div>

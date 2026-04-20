@@ -12,14 +12,14 @@ export function Testimonials() {
         "The program gave me structure and clarity at a time I felt completely stuck. The lessons were simple to follow, yet deeply impactful, and I found myself applying them to my daily life almost immediately. It truly changed how I approach my wellbeing.",
       name: "Ada",
       role: "Program Participant",
-      avatar: "https://i.pravatar.cc/150?u=ada",
+      avatar: "/images/testimonials/ada.png",
     },
     {
       quote:
         "Having someone genuinely listen and guide me through my thoughts made a huge difference. Each session felt safe and intentional, and I always left with a clearer mind and a sense of direction I didn't have before.",
       name: "James",
       role: "Consultation Client",
-      avatar: "https://i.pravatar.cc/150?u=james",
+      avatar: "/images/testimonials/james.png",
     },
     {
       quote:
@@ -30,10 +30,24 @@ export function Testimonials() {
     },
     {
       quote:
-        "Joining the community was the best decision I made this year. I've found so much support and growth here. Highly recommended for anyone seeking true transformation.",
-      name: "Michael",
-      role: "Community Member",
-      avatar: "https://i.pravatar.cc/150?img=11",
+        "The camp gave me a kind of calm I hadn't experienced in a long time. Being in such a peaceful environment, away from daily pressure, allowed me to slow down, reflect deeply, and reconnect with myself in a way that felt natural and unforced.",
+      name: "Ifeoma",
+      role: "Camp participant",
+      avatar: "/images/testimonials/ifeoma.png",
+    },
+    {
+      quote:
+        "I didn't expect to open up the way I did, but the environment felt safe and welcoming from the start. The conversations, the quiet moments, and the shared experiences helped me gain clarity and feel more grounded than I have in a while.",
+      name: "David",
+      role: "Camp attendee",
+      avatar: "/images/testimonials/david.png",
+    },
+    {
+      quote:
+        "Everything about the experience was intentional and well thought out. From the sessions to the atmosphere, it created space for real reflection and growth, and I left feeling lighter, more aware, and better equipped to move forward.",
+      name: "Zainab",
+      role: "Camp participant",
+      avatar: "/images/testimonials/zainab.png",
     },
   ];
 

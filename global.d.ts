@@ -15,10 +15,14 @@ interface ProgramColumn {
 }
 
 interface ConsultationColumn{
-    participant: string,
-    program: string,
-    date: string,
-    status: "pending" | "completed"
+  id: string
+  status: string
+  firstName: string
+  lastName: string
+  email: string
+  serviceTitle: string
+  price: number
+  date: string
 }
 
 

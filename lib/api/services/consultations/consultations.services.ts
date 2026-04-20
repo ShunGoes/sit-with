@@ -38,7 +38,24 @@ export interface ConsultationResponse {
   message: string;
 }
 
-export const getConsultations = async () => {
+type BookingApiResponse = {
+  data: {
+    id: string
+    status: string
+    user: {
+      firstName: string
+      lastName: string
+      email: string
+    }
+    service: {
+      title: string
+      price: number
+      createdAt: string
+    }
+  }[]
+}
+
+export const getConsultations = async (): Promise<BookingApiResponse> => {
   try {
     const res = await api.get("/consultations");
     return res.data;

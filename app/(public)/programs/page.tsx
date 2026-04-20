@@ -1,4 +1,11 @@
 import { ProgramHero } from "@/components/pages/programs/hero";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Guided Therapeutic Programs",
+  description:
+    "Explore our specialized therapeutic programs designed for presence-based healing, self-awareness, and emotional transformation at your own pace.",
+};
 import { ProgramOverview } from "@/components/pages/programs/program-overview";
 import { Testimonials } from "@/components/pages/homepage/testimonials";
 import { CtaBlock } from "@/components/shared/cta-block";

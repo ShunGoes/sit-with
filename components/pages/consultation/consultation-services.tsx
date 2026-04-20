@@ -18,10 +18,11 @@ export function ConsultationServices() {
   const router = useRouter();
 
   const handleBookCard = async (_serviceId: string) => {
-    if (!isAuthenticated) {
-      router.push("/login?redirect=/consultation");
-      return;
-    }
+    // redirect as query param 
+    // if (!isAuthenticated) {
+    //   router.push("/login?redirect=/consultation");
+    //   return;
+    // }
 
     const cal = await getCalApi({ namespace: "consultation" });
     cal("modal", {
@@ -50,7 +51,7 @@ export function ConsultationServices() {
 
   if (isLoading) {
     return (
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white" id="consultation-cta">
         <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
           <div className="flex flex-col items-center text-center mb-12">
             <Skeleton className="h-6 w-32 rounded-full mb-4" />
@@ -77,7 +78,7 @@ export function ConsultationServices() {
   const services = data?.data || [];
 
   return (
-    <section className="py-20 bg-white" id="services">
+    <section className="py-20 bg-white" id="consultation-cta">
       <div className="container mx-auto px-4 lg:px-8 max-w-6xl flex flex-col items-center">
         <div className="flex flex-col items-center text-center mb-16">
           <Pill text="Our Services" className="mb-4" />

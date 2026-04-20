@@ -25,6 +25,7 @@ export default function AddConsultationServiceForm() {
     mode: "onChange",
     defaultValues: {
       title: "",
+      calBookingUrl: "",
       description: "",
       price: "",
       duration: "",
@@ -50,6 +51,7 @@ export default function AddConsultationServiceForm() {
         description: data.description,
         price: Number(data.price),
         duration: Number(data.duration),
+        calBookingUrl: data.calBookingUrl,
       },
       {
         onSuccess: () => {
@@ -76,6 +78,13 @@ export default function AddConsultationServiceForm() {
           name="title"
           label="Service Title *"
           placeholder="e.g. 1-on-1 Wellness Session"
+          className="bg-white"
+        />
+        <FormFieldComp
+          control={form.control}
+          name="calBookingUrl"
+          label="Booking Link*"
+          placeholder="Enter event booking link from Calcom"
           className="bg-white"
         />
         <FormFieldComp
@@ -114,6 +123,7 @@ export default function AddConsultationServiceForm() {
           <Button
             type="button"
             variant="outline"
+            className="text-regular-button border border-regular-button "
             onClick={() => closeModal("add-consultation-service")}
           >
             Cancel

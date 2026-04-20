@@ -27,20 +27,32 @@ export default function ConsultationOverview() {
   const openModal = useModalStore((state) => state.openModal);
   const { data, isLoading, isError, isFetching } = useGetConsultations();
 
+
+  const tableData: ConsultationColumn[] | [] = data?.data?.map((booking) => ({
+  id: booking.id,
+  status: booking.status,
+  firstName: booking.user.firstName,
+  lastName: booking.user.lastName,
+  email: booking.user.email,
+  serviceTitle: booking.service.title,
+  price: booking.service.price,
+  date: booking.service.createdAt,
+})) ?? []
+
   const handleAddService = () => {
     addConsultationService();
   };
 
   return (
     <div className="space-y-15">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-4">
         <DashboardHeaderText
           header="Consultations"
           subtext="Manage and track all consultation sessions"
         />
         <div className="flex items-center gap-3">
           <Link href="/admin/consultation-services">
-            <Button variant="outline" className="font-normal">
+            <Button variant="outline" className="font-normal text-regular-button border border-regular-button">
               <Settings2 size={16} /> <span className="hidden sm:block">Services</span>
             </Button>
           </Link>
@@ -76,7 +88,7 @@ export default function ConsultationOverview() {
           >
             <ReuseableTable
               columns={ConsultationColumn()}
-              tableData={data?.data ?? []}
+              tableData={tableData}
             />
           </QueryStateHandler>
         </div>

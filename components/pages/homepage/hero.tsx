@@ -11,6 +11,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import useMobile from "@/hooks/use-mobile-breakpoint";
+import Link from "next/link";
+
 
 export function Hero() {
   const { isMobile } = useMobile();
@@ -86,11 +88,16 @@ export function Hero() {
                     </p>
                   </div>
                   <div className="flex flex-col sm:flex-row justify-start md:justify-start w-full gap-4 mt-4">
-                    <Button variant={"regular"}>
-                      Explore Programs <CaretRight />
-                    </Button>
-                    <Button variant={"outline"}>Book Consultation</Button>
+                    <Link href="/programs">
+                      <Button variant={"regular"}>
+                        Explore Programs <CaretRight />
+                      </Button>
+                    </Link>
+                    <Link href="/consultation#consultation-cta">
+                      <Button variant={"outline"}>Book Consultation</Button>
+                    </Link>
                   </div>
+                
                 </div>
               </div>
             </SwiperSlide>
@@ -100,7 +107,7 @@ export function Hero() {
 
       {/* make pagination dots white */}
       <style jsx global>{`
-         .swiper-pagination-bullet {
+        .swiper-pagination-bullet {
           background: rgba(255, 255, 255, 0.4) !important;
           opacity: 1 !important;
           width: 0.75rem !important;

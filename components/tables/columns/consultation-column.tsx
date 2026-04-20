@@ -40,30 +40,36 @@ function variantAssigner(type: "Leaders" | "Professionals" | "Students") {
 }
 const ConsultationColumn = (): ColumnDef<ConsultationColumn>[] => [
   {
-    accessorKey: "participant",
-    header: "Participants",
+    accessorKey: "name",
+    header: "Name",
     cell: ({ row }) => (
       <div className="flex gap-3 items-center">
         <div>
-          <h6 className=" text-xs text-primary-text ">
-            {row.original?.participant
-              ? `${row.original.participant.slice(0, 18)}${
-                  row.original.participant.length > 18 ? "..." : ""
-                }`
-              : "-"}
+          <h6 className=" text-sm font-medium text-primary-text ">
+            {row.original?.firstName + " " + row.original?.lastName}
           </h6>
+          <p className=" text-xs text-primary-text ">
+            {row.original?.email}
+          </p>
         </div>
       </div>
     ),
     size: 300,
   },
   {
-    accessorKey: "program",
-    header: "Program",
+    accessorKey: "service",
+    header: "Service Title",
     cell: ({ row }) => (
-      <p contextMenu="text-xs text-primary-text">{row.original.program}</p>
+      <p contextMenu="text-xs text-primary-text">{row.original.serviceTitle}</p>
     ),
     size: 300,
+  },
+  {
+    accessorKey: "price",
+    header: "Price",
+    cell: ({ row }) => (
+      <p contextMenu="text-xs text-primary-text">{formatCurrency(row.original.price)}</p>
+    ),
   },
   {
     accessorKey: "date",
@@ -90,82 +96,82 @@ const ConsultationColumn = (): ColumnDef<ConsultationColumn>[] => [
       </Badge>
     ),
   },
-  {
-    id: "actions",
-    header: "Action",
-    cell: () => {
-      const isMobile = useIsMobile();
+  // {
+  //   id: "actions",
+  //   header: "Action",
+  //   cell: () => {
+  //     const isMobile = useIsMobile();
 
-      if (!isMobile) {
-        return (
-          <div className="flex gap-2 items-center">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  className="cursor-pointer outline-none border-none bg-transparent"
-                >
-                  <FilePenLine size={15} />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-white">Edit Consulttation details</p>
-              </TooltipContent>
-            </Tooltip>
+  //     if (!isMobile) {
+  //       return (
+  //         <div className="flex gap-2 items-center">
+  //           <Tooltip>
+  //             <TooltipTrigger asChild>
+  //               <button
+  //                 type="button"
+  //                 className="cursor-pointer outline-none border-none bg-transparent"
+  //               >
+  //                 <FilePenLine size={15} />
+  //               </button>
+  //             </TooltipTrigger>
+  //             <TooltipContent>
+  //               <p className="text-white">Edit Consulttation details</p>
+  //             </TooltipContent>
+  //           </Tooltip>
 
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  className="cursor-pointer outline-none border-none bg-transparent"
-                >
-                  <Eye color="#344054" size={15}/>
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-white">View more</p>
-              </TooltipContent>
-            </Tooltip>
+  //           <Tooltip>
+  //             <TooltipTrigger asChild>
+  //               <button
+  //                 type="button"
+  //                 className="cursor-pointer outline-none border-none bg-transparent"
+  //               >
+  //                 <Eye color="#344054" size={15}/>
+  //               </button>
+  //             </TooltipTrigger>
+  //             <TooltipContent>
+  //               <p className="text-white">View more</p>
+  //             </TooltipContent>
+  //           </Tooltip>
 
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  className="cursor-pointer outline-none border-none bg-transparent"
-                >
-                  <Trash2 color="#344054" size={15} />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-white">Delete</p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        );
-      }
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger className="cursor-pointer transition-all rounded-full duration-300 w-10 h-10 hover:bg-[#EBEBEB] flex justify-center  items-center">
-            <EllipsisVertical />{" "}
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem className="py-3 px-4">
-              <Eye color="#344054" size={15}/> View
-            </DropdownMenuItem>
-            <DropdownMenuItem className="py-3 px-4">
-              {" "}
-              <FilePenLine size={15} color="#344054" /> Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem className="py-3 px-4">
-              <Trash2 color="#344054" size={15} /> Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+  //           <Tooltip>
+  //             <TooltipTrigger asChild>
+  //               <button
+  //                 type="button"
+  //                 className="cursor-pointer outline-none border-none bg-transparent"
+  //               >
+  //                 <Trash2 color="#344054" size={15} />
+  //               </button>
+  //             </TooltipTrigger>
+  //             <TooltipContent>
+  //               <p className="text-white">Delete</p>
+  //             </TooltipContent>
+  //           </Tooltip>
+  //         </div>
+  //       );
+  //     }
+  //     return (
+  //       <DropdownMenu>
+  //         <DropdownMenuTrigger className="cursor-pointer transition-all rounded-full duration-300 w-10 h-10 hover:bg-[#EBEBEB] flex justify-center  items-center">
+  //           <EllipsisVertical />{" "}
+  //         </DropdownMenuTrigger>
+  //         <DropdownMenuContent align="end">
+  //           <DropdownMenuItem className="py-3 px-4">
+  //             <Eye color="#344054" size={15}/> View
+  //           </DropdownMenuItem>
+  //           <DropdownMenuItem className="py-3 px-4">
+  //             {" "}
+  //             <FilePenLine size={15} color="#344054" /> Edit
+  //           </DropdownMenuItem>
+  //           <DropdownMenuItem className="py-3 px-4">
+  //             <Trash2 color="#344054" size={15} /> Delete
+  //           </DropdownMenuItem>
+  //         </DropdownMenuContent>
+  //       </DropdownMenu>
+  //     );
+  //   },
 
-    size: 50,
-  },
+  //   size: 50,
+  // },
 ];
 
 export default ConsultationColumn;
