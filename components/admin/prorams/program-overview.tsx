@@ -9,7 +9,6 @@ import { useModalStore } from "@/components/store/use-modal-store";
 import ProgramsColumn from "@/components/tables/columns/programs-column";
 import ReuseableTable from "@/components/tables/reuseable-table";
 import { Button } from "@/components/ui/button";
-import { PROGRAMS_TABLE } from "@/data/table-data";
 import {
   useDeleteProgram,
   useGetAllAdminPrograms,
