@@ -1,34 +1,3 @@
-export const PROGRAMS_TABLE: ProgramColumn[] = [
-  {
-    title: "Favour Timothy",
-    category: "Leaders",
-    isPublished: true,
-    price: 15000,
-    id: "1"
-  },
-  {
-    title: "Chris Allordiah",
-    category: "Professionals",
-    isPublished: false,
-    price: 20030,
-    id: "2"
-  },
-];
-
-export const CONSULTATION_DATA: ConsultationColumn[] = [
-  {
-    participant: "Mary Amaka",
-    program: "Alice in wonderland",
-    date: new Date().toLocaleDateString(),
-    status: "pending",
-  },
-  {
-    participant: "John Doe",
-    program: "On the way to calvary",
-    date: new Date().toLocaleDateString(),
-    status: "completed",
-  },
-];
 
 export const PARTICIPANTS_DATA: ParticipantColumn[] = [
   {
