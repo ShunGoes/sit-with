@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import CaretRight from "@/pd-icons/caret-right";
 import Image from "next/image";
@@ -27,7 +29,7 @@ export function CampHero() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row justify-start md:justify-start lg:justify-center w-full gap-4 mt-4">
-            <Button variant={"regular"}>
+            <Button onClick={() => document.getElementById("camp-booking-form")?.scrollIntoView({behavior: "smooth"})} variant={"regular"}>
               Apply Now <CaretRight />
             </Button>
             <Button variant={"outline"}>Learn More</Button>

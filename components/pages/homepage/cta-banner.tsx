@@ -7,7 +7,7 @@ export function CtaBanner() {
     <section className="container mx-auto ">
       <div className="w-full bg-footer-bg rounded-[10px] lg:rounded-[20px] px-5 md:px-12 md:py-20 lg:py-5 py-5 flex flex-col lg:flex-row gap-6 overflow-hidden border border-[#2A5A51]">
         {/* Left Content */}
-        <div className="flex-1  flex flex-col items-center lg:items-center text-center  justify-center">
+        <div className="flex-1  flex flex-col items-center lg:items-start text-center lg:text-left  justify-center">
           <h2 className="text-[#EBECEB] heading-2 mb-4 max-w-md">
             Join a Global Therapeutic Community
           </h2>

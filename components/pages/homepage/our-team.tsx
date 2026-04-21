@@ -68,7 +68,7 @@ export function OurTeam() {
           <motion.div
             key={index}
             variants={cardVariants}
-            className="flex flex-col shadow-[0px_4px_4px_#00000014]"
+            className="flex flex-col "
           >
             <div className="w-full aspect-4/5 mb-6 relative overflow-hidden bg-transparent">
               <Image

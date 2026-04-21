@@ -9,20 +9,18 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import useMobile from "@/hooks/use-mobile-breakpoint";
 import Link from "next/link";
 
 export function ProgramHero() {
-  const { isMobile } = useMobile();
 
   const slides = [
     {
       id: 1,
       imageSrc: "/images/programs-hero-1.png",
       alt: "Healing Through Presence",
-      title: "Healing Through Presence",
+      title: <p>Heal. Grow.<br className="hidden lg:block"/>Transform Together.</p>,
       description:
-        "Guided therapeutic journeys designed for deep healing, emotional clarity, and lasting personal transformation.",
+        "Structured programs, immersive experiences, and self-paced courses designed to guide your presence-based healing journey at your own pace.",
       imageClass: "object-cover object-center",
       titleWidth: "w-full sm:w-[50%] md:w-[45%] lg:w-[55%]",
     },
@@ -30,9 +28,9 @@ export function ProgramHero() {
       id: 2,
       imageSrc: "/images/programs-hero-2.png",
       alt: "Structured Growth Roadmap",
-      title: "Your Roadmap to Wellbeing",
+      title: <p>Understand<br className="hidden lg:block"/> Your Emotions.</p>,
       description:
-        "Our structured programs offer a clear and supportive path for your mental and emotional growth, guided by experts.",
+        "Step-by-step programs to help you identify, process, and respond to what you feel — with greater clarity and self-awareness, every week.",
       imageClass: "object-cover object-center",
       titleWidth: "w-full sm:w-[60%] md:w-[50%] lg:w-[60%]",
     },
@@ -40,9 +38,9 @@ export function ProgramHero() {
       id: 3,
       imageSrc: "/images/programs-hero-3.png",
       alt: "Presence in Daily Life",
-      title: "Presence in Every Step",
+      title: <p>Find Stability<br className="hidden lg:block"/> Through Change.</p>,
       description:
-        "Learn to integrate powerful presence-based techniques into your daily routine with our immersive guided workshops.",
+        "Navigate uncertainty, new life phases, and personal growth with structured support from experienced facilitators who walk the journey with you.",
       imageClass: "object-cover object-center",
       titleWidth: "w-full sm:w-[70%] md:w-[55%] lg:w-[65%]",
     },
@@ -69,7 +67,7 @@ export function ProgramHero() {
                   priority
                 />
                 <div className="absolute inset-0 bg-black/10" />
-                <div className="relative h-full w-[90%] mx-auto flex flex-col gap-6 justify-center items-center max-w-7xl">
+                <div className="relative h-full w-[90%]  mx-auto flex flex-col gap-6 justify-center items-center max-w-7xl">
                   <div className="space-y-4 text-center flex flex-col items-center">
                     <h1
                       className={`text-[#F9FDF9] font-medium text-[3.125rem] lg:text-[4rem] xl:text-[5rem] leading-[100%] max-w-4xl`}
@@ -93,7 +91,9 @@ export function ProgramHero() {
                       Browse Programs <CaretRight className="ml-2" />
                     </Button>
                     <Link href="/consultation#consultation-cta">
-                      <Button variant="outline" className="w-full">Book Consultation</Button>
+                      <Button variant="outline" className="w-full">
+                        Book Consultation
+                      </Button>
                     </Link>
                   </div>
                 </div>

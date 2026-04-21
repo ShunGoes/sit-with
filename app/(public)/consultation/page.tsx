@@ -4,7 +4,6 @@ import { AreasOfSupport } from "@/components/pages/consultation/areas-of-support
 import { ProcessCards } from "@/components/shared/process-cards";
 import { Testimonials } from "@/components/pages/homepage/testimonials";
 import { ConsultationCta } from "@/components/pages/consultation/consultation-cta";
-import { BookingForm } from "@/components/pages/consultation/booking-form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -46,7 +45,6 @@ export default function ConsultationPage() {
       </div>
 
       <ConsultationCta />
-      <BookingForm />
     </main>
   );
 }

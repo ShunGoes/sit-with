@@ -19,7 +19,7 @@ export function AboutHero() {
             <h1
               className={`text-[#F9FDF9] font-semibold text-[3rem] lg:text-[4rem] xl:text-[5rem] leading-[1.05]  `}
             >
-              About <br /> Sit-With-PD
+              About <br className="lg:hidden" /> Sit-With-PD
             </h1>
             <p className="lg:text-[1.25rem] text-xl text-[#F7FBF6]  md:text-start  sm:w-10/12 md:w-9/12 ">
               A global therapeutic network dedicated to presence-based healing

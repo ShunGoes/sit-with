@@ -42,7 +42,7 @@ export function CampParticipation() {
   ];
 
   return (
-    <section className="pt-24 pb-0 lg:py-24 w-full">
+    <section className="pt-24 pb-0 lg:pt-24 w-full">
       <div className="container mx-auto flex flex-col items-center">
         <Pill text="Pricing" />
         <h2 className="heading-2 text-center mb-6 lg:mb-16">
@@ -103,11 +103,7 @@ export function CampParticipation() {
             </p>
           </div>
         </div>
-        <div className="w-full max-w-[400px] md:w-[35%] md:max-w-3xl">
-          <Button variant="regular" className="w-full">
-            Begin your application
-          </Button>
-        </div>
+     
       </div>
     </section>
   );

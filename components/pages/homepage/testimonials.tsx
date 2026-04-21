@@ -79,7 +79,7 @@ export function Testimonials() {
         >
           {testimonials.map((t, i) => (
             <SwiperSlide key={i} className="h-auto">
-              <div className="flex flex-col bg-white rounded-[16px] p-8 border border-[#EEF2F6] shadow-[0px_12px_16px_-4px_#10182814,0px_4px_0px_-2px_#10182808] h-full min-h-[300px]">
+              <div className="flex flex-col bg-white rounded-[16px] p-8 border border-[#EEF2F6] shadow-[4px_4px_16px_-4px_#10182814,0px_4px_0px_-2px_#10182808] h-full min-h-[300px]">
                 <p className="text-[#697586] text-lg leading-relaxed mb-8 flex-1">
                   {t.quote}
                 </p>

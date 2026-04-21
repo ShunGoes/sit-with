@@ -23,7 +23,7 @@ export function CtaBlock({
 }: CtaBlockProps) {
   return (
     <section className="bg-footer-bg py-24 w-full text-center mt-12">
-      <div className="container mx-auto px-4 md:px-8 flex flex-col gap-4 w-full lg:w-[42%]  items-center">
+      <div className="container mx-auto px-4 md:px-8 flex flex-col gap-4 w-full lg:w-[45%]  items-center">
         <h2 className="heading-2 text-[#EBECEB] ">{title}</h2>
         <p className="text-[#F7FBF6] text-[16px]  leading-[140%]  max-w-2xl ">
           {subtext}
@@ -40,7 +40,7 @@ export function CtaBlock({
 
           {secondLink && (
             <Link href={secondLink.href ?? ""}>
-              <Button variant={"outline"} className="rounded-[8px]">
+              <Button variant={"outline"} className="rounded-[8px] border">
                 {secondLink.text}
               </Button>
             </Link>
