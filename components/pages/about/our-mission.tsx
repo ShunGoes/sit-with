@@ -12,7 +12,7 @@ export function OurMission() {
                 className="w-6 h-6 object-contain bg-[#EBECEB33]"
               />
             ),
-      text: "Safe spaces",
+      text: "Compassion",
     },
     {
         icon: (
@@ -37,7 +37,7 @@ export function OurMission() {
               />
             ),
     
-      text: "Supportive Network",
+      text: "Connection",
     },
   ];
 

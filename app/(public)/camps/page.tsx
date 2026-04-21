@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     "Join our immersive therapeutic camps. Build awareness, develop practical wellbeing habits, and connect with a community focused on growth and presence.",
 };
-import { CampCtaBlock } from "@/components/pages/camps/camp-cta";
+import { BookingForm } from "@/components/pages/consultation/booking-form";
 
 export default function CampsPage() {
   return (
@@ -24,13 +24,12 @@ export default function CampsPage() {
       <div className="w-11/12 mx-auto">
         <CampParticipation />
       </div>
-
+      <BookingForm />
       <div className="w-full bg-white ">
         <Testimonials />
       </div>
 
       {/* Shared CTA Block with custom props */}
-      <CampCtaBlock />
     </div>
   );
 }

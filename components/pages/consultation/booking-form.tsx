@@ -46,7 +46,7 @@ export function BookingForm() {
   };
 
   return (
-    <section className="py-10 lg:py-24 w-full bg-white flex flex-col items-center">
+    <section id="camp-booking-form" className="py-10 lg:py-24 w-full bg-white flex flex-col items-center">
       <div className="container mx-auto  max-w-4xl border border-[#0000001A] bg-[#FBFFF9] rounded-[8px] p-6 md:p-13 shadow-[2px_2px_4px_#0000001F]">
         <div className="flex flex-col items-center text-center mb-10">
           <h2 className="heading-2 mb-2">Book Your Consultation</h2>

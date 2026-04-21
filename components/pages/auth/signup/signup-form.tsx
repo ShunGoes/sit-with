@@ -17,6 +17,10 @@ import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
 import { GoogleLogin } from "@react-oauth/google";
 import { showErrorToast } from "@/lib/toast-helpers";
+import Link from "next/link";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { ChevronLeft } from "lucide-react";
 
 const signupSchema = z
   .object({
@@ -34,6 +38,8 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 
 export default function SignupForm() {
   const router = useRouter();
+  const [step, setStep] = useState(1);
+
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -70,6 +76,13 @@ export default function SignupForm() {
         closeModal("loading");
       },
     });
+  };
+
+  const handleNextStep = async () => {
+    const isStep1Valid = await form.trigger(["fullName", "email"]);
+    if (isStep1Valid) {
+      setStep(2);
+    }
   };
 
   useEffect(() => {
@@ -128,62 +141,92 @@ export default function SignupForm() {
 
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 px-5 py-10 md:py-0 md:px-0 bg-[#FEFFFBCC] border border-[#FFFFFF5C] rounded-[5px] md:rounded-none md:border-none "
+          className="space-y-4 px-5 py-10 md:py-0 md:px-0 bg-[#FEFFFBCC] border border-[#FFFFFF5C] rounded-[5px] md:rounded-none md:border-none overflow-hidden"
         >
-          <div className="flex flex-col gap-5">
-            <div>
-              <FormFieldComp
-                control={form.control}
-                name="fullName"
-                label="Full Name"
-                placeholder="Funke Moore"
-                type="text"
-              />
-              {/* <p className="text-xs text-primary-text italic mt-1">
-                Firstname Lastname
-              </p> */}
-            </div>
-            <FormFieldComp
-              control={form.control}
-              name="email"
-              label="Email address"
-              placeholder="Enter your email"
-              type="email"
-            />
-
-            <FormFieldComp
-              control={form.control}
-              name="password"
-              label="Password"
-              placeholder="************"
-              type="password"
-            />
-            <FormFieldComp
-              control={form.control}
-              name="confirmPassword"
-              label="Confirm Password"
-              placeholder="************"
-              type="password"
-            />
+          <div className="relative">
+            <AnimatePresence mode="wait">
+              {step === 1 ? (
+                <motion.div
+                  key="step1"
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: 20, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex flex-col gap-5"
+                >
+                  <FormFieldComp
+                    control={form.control}
+                    name="fullName"
+                    label="Full Name"
+                    placeholder="Funke Moore"
+                    type="text"
+                  />
+                  <FormFieldComp
+                    control={form.control}
+                    name="email"
+                    label="Email address"
+                    placeholder="Enter your email"
+                    type="email"
+                  />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="step2"
+                  initial={{ x: 20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -20, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex flex-col gap-5"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <button
+                      type="button"
+                      onClick={() => setStep(1)}
+                      className="p-1 hover:bg-gray-100 rounded-full transition-colors text-brand-green"
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
+                    <span className="text-sm font-medium text-gray-500">Back to profile</span>
+                  </div>
+                  <FormFieldComp
+                    control={form.control}
+                    name="password"
+                    label="Password"
+                    placeholder="************"
+                    type="password"
+                  />
+                  <FormFieldComp
+                    control={form.control}
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    placeholder="************"
+                    type="password"
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* buttons  */}
-          <div className="space-y-10">
-            <Button
-              type="submit"
-              className="w-full bg-brand-green borer-[0.75px] border-brand-green text-white mt-6 rouned-[8px] md:rounded-[3.75px] text-[14px] md:text-[10.5px] font-medium  transition-colors shadow-[0px_1px_2px_0px_#1018280D] md:shadow-[0px_0.75px_1.5px_0px_#1018280D] "
-            >
-              Sign Up
-            </Button>
-            <div className="relative hidden md:block ">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t-[0.75px] border-[#E4E4E4]"></div>
-              </div>
-              <div className="relative flex justify-center text-[12px] text-[#344054] font-medium ">
-                <span className="px-3 bg-[#FEFFFBCC]">Or</span>
-              </div>
-            </div>
-            <div className="flex justify-center w-full">
+          <div className="space-y-5">
+            {step === 1 ? (
+              <Button
+                type="button"
+                onClick={handleNextStep}
+                className="w-full bg-brand-green borer-[0.75px] border-brand-green text-white mt-6 rouned-[8px] md:rounded-[3.75px] text-[14px] md:text-[10.5px] font-medium transition-colors shadow-[0px_1px_2px_0px_#1018280D] md:shadow-[0px_0.75px_1.5px_0px_#1018280D]"
+              >
+                Continue
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                className="w-full bg-brand-green borer-[0.75px] border-brand-green text-white mt-6 rouned-[8px] md:rounded-[3.75px] text-[14px] md:text-[10.5px] font-medium transition-colors shadow-[0px_1px_2px_0px_#1018280D] md:shadow-[0px_0.75px_1.5px_0px_#1018280D]"
+              >
+                Sign Up
+              </Button>
+            )}
+          
+            <div className="flex justify-center w-full overflow-hidden border border-regular-button">
             <GoogleLogin
               onSuccess={(credentialResponse) => {
                 const idToken = credentialResponse.credential;
@@ -211,8 +254,21 @@ export default function SignupForm() {
                 closeModal("loading");
                 showErrorToast("Google login failed");
               }}
+                width="400"
+                  logo_alignment="center"
             />
 
+            </div>
+              <div className="relative my-6 lg:my-0 text-center font-medium ">
+              <p className="text-[12px] text-[#475467]">
+                Already have an account?{" "}
+                <Link
+                  href="/login"
+                  className="text-regular-button hover:text-[#8cb054] font-medium transition-colors"
+                >
+                  Sign in
+                </Link>
+              </p>
             </div>
           </div>
         </form>

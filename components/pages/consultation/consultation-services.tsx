@@ -78,7 +78,7 @@ export function ConsultationServices() {
   const services = data?.data || [];
 
   return (
-    <section className="py-20 bg-white" id="consultation-cta">
+    <section className="py-20 lg:pt-0 bg-white" id="consultation-cta">
       <div className="container mx-auto px-4 lg:px-8 max-w-6xl flex flex-col items-center">
         <div className="flex flex-col items-center text-center mb-16">
           <Pill text="Our Services" className="mb-4" />

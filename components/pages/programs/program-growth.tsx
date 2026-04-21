@@ -106,12 +106,12 @@ export default function ProgramGrowth() {
               return (
                 <SwiperSlide
                   key={id || index}
-                  className="h-full border border-black"
+                  className=""
                 >
                   {" "}
                   <div className="flex flex-col  h-full bg-[#F2F2F1] p-4 transition-shadow">
                     {/* Image Placeholder */}
-                    <div className="w-full object-top lg:object-center lg:aspect-3/3 aspect-3/2 mb-6 overflow-hidden relative">
+                    <div className="w-full object-top lg:object-center  aspect-3/2 mb-3 overflow-hidden relative">
                       <Image
                         src={thumbnail ?? "/images/glimpse-2.png"}
                         alt={title || "Program"}
@@ -133,7 +133,7 @@ export default function ProgramGrowth() {
                     <h3 className="text-xl font-semibold text-[#627B3A] mb-2">
                       {title}
                     </h3>
-                    <p className="text-base text-[#263016] leading- mb-6 ">
+                    <p className="text-base text-[#263016] leading-[30px] mb-6 ">
                       {description}
                     </p>
 

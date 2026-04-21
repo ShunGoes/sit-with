@@ -45,7 +45,7 @@ export function MembershipFaq() {
           return (
             <div
               key={idx}
-              className={`shadow-[2px_2px_4px_#C7CAC61F] border border-[#EAEAEA] rounded-[8px] last:border-0`}
+              className={`shadow-[2px_2px_4px_#C7CAC61F] border border-[#EAEAEA] rounded-[8px] `}
             >
               <button
                 className="w-full flex items-center justify-between p-4 lg:p-6 text-left focus:outline-none"

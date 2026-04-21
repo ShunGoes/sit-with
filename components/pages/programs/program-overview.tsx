@@ -7,7 +7,7 @@ export function ProgramOverview() {
   const cards = [
     {
       title: "Core Programs",
-      value: "4"
+      value: "3"
     },
     {
       title: "Per Program",

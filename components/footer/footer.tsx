@@ -64,6 +64,47 @@ export function Footer() {
             <p className="text-[#F8FFF5] text-sm leading-relaxed max-w-xs">
               Helping you pause, reflect, and grow.
             </p>
+            <div className="flex flex-col gap-4 mt-6">
+              <span className="text-[#F8FFF5] text-sm">Follow Us</span>
+              <div className="flex items-center gap-4">
+                <a
+                  href="https://www.youtube.com/@sitwithpd"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#C7CAC6] hover:text-[#A8D675] transition-colors"
+                  aria-label="YouTube"
+                >
+                  <Youtube size={20} />
+                </a>
+                <a
+                  href="https://www.facebook.com/share/19tSLd5kzH/?mibextid=wwXIfr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#C7CAC6] hover:text-[#A8D675] transition-colors"
+                  aria-label="Facebook"
+                >
+                  <Facebook size={20} />
+                </a>
+                <a
+                  href="https://www.instagram.com/sitwithpd?igsh=OHo1eHRqNTRmd2ps&utm_source=qr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#C7CAC6] hover:text-[#A8D675] transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram size={20} />
+                </a>
+                <a
+                  href="https://www.tiktok.com/@sitwithpd?_r=1&_t=ZN-95g0zMOaKzW"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#C7CAC6] hover:text-[#A8D675] transition-colors"
+                  aria-label="TikTok"
+                >
+                  <TikTokIcon />
+                </a>
+              </div>
+            </div>
           </div>
 
           <div className="flex flex-col md:flex-row gap-5 md:gap-15 lg:justify-center ">
@@ -171,95 +212,61 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row justify-between lg:items-center mb-10 gap-8 pt-8 ">
-          <div className="flex items-center gap-3">
-            <MailIcon />
+        <div className="grid grid-cols-1 md:grid-cols-3 mb-10 gap-8 pt-8 items-start">
+          <div className="flex items-start gap-3">
+            <div className="mt-1">
+              <MailIcon />
+            </div>
             <div className="flex flex-col team-sm text-[#C7CAC6]">
               <span className=" ">Email</span>
               <a
-                href="mailto:hello@sitwithpd.com"
-                className=" underline underline-offset-4 hover:text-white transition-colors"
+                href="mailto:info@sitwithpd.com"
+                className=" underline underline-offset-4 hover:text-white transition-colors text-sm"
               >
-                hello@sitwithpd.com
+                info@sitwithpd.com
               </a>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <PhoneIcon />
+          <div className="flex items-start gap-3">
+            <div className="mt-1">
+              <PhoneIcon />
+            </div>
             <div className="flex flex-col team-sm text-[#C7CAC6]">
               <span className=" ">Phone</span>
               <a
-                href="tel:+16475330472"
-                className=" underline underline-offset-4 hover:text-white transition-colors"
+                href="tel:+447359307733"
+                className=" underline underline-offset-4 hover:text-white transition-colors text-sm"
               >
-                +1 (647) 533-0472
+                <span>+44 7359 307 733 </span>
               </a>
               <a
-                href="tel:+2348120241629"
-                className=" underline underline-offset-4 hover:text-white transition-colors"
+                href="tel:+234201 453 6932"
+                className=" underline underline-offset-4 hover:text-white transition-colors text-sm"
               >
-                +234 812 024 1629
+                +234 201 453 6932
               </a>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <LocationIcon />
-            <div className="flex flex-col team-sm text-[#C7CAC6]">
+          <div className="flex items-start gap-3 min-w-0">
+            <div className="mt-1">
+              <LocationIcon />
+            </div>
+            <div className="flex flex-col team-sm text-[#C7CAC6] min-w-0">
               <span className=" ">Address</span>
-              <div className="flex flex-col gap-1 text-sm">
-                <span>Bsc Kelsey Pradia-Lawson,</span>
-                <span>Tornada Tropical Line,</span>
-                <span>31 Indian Dr. Lawson,</span>
-                <span>A. John Lagos</span>
-                <span className="mt-1">Abbot Locally option:</span>
-                <span>Oly Zone Tropical Center,</span>
-                <span>Eternity Stand Lagosi</span>
-                <span>Nigeria</span>
+              <div className="flex flex-col gap-1 text-sm min-w-0">
+                <p className="w-full min-w-0 leading-relaxed text-wrap text-[#C7CAC6]">
+                  <span className="block">International Headquarters; </span>
+                  <span className="block">Gardenia Tropicana Lane</span>
+                  <span className="block">Urmston, Manchester </span>
+                  <span className="block mb-3">United Kingdom. </span>
+                  <span className="block">African Headquarters; </span>
+                  <span className="block">Gardenia Tropicana Camps </span>
+                  <span className="block">Victoria Island, </span>
+                  <span className="block">Lagos, Nigeria.</span>
+                </p>
               </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-4">
-            <span className="text-[#C7CAC6] text-sm">Follow Us</span>
-            <div className="flex items-center gap-4">
-              <a
-                href="https://www.youtube.com/@sitwithpd"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#C7CAC6] hover:text-[#A8D675] transition-colors"
-                aria-label="YouTube"
-              >
-                <Youtube size={20} />
-              </a>
-              <a
-                href="https://www.facebook.com/share/19tSLd5kzH/?mibextid=wwXIfr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#C7CAC6] hover:text-[#A8D675] transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook size={20} />
-              </a>
-              <a
-                href="https://www.instagram.com/sitwithpd?igsh=OHo1eHRqNTRmd2ps&utm_source=qr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#C7CAC6] hover:text-[#A8D675] transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram size={20} />
-              </a>
-              <a
-                href="https://www.tiktok.com/@sitwithpd?_r=1&_t=ZN-95g0zMOaKzW"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#C7CAC6] hover:text-[#A8D675] transition-colors"
-                aria-label="TikTok"
-              >
-                <TikTokIcon />
-              </a>
             </div>
           </div>
         </div>

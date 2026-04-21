@@ -126,7 +126,7 @@ export function NewPasswordForm({ token, onSuccess, onError }: NewPasswordFormPr
         <Button
           type="submit"
           disabled={isPending || !passwordForm.formState.isValid}
-          className="w-full mt-6"
+          className="w-full bg-brand-green borer-[0.75px] border-brand-green text-white rouned-[8px] md:rounded-[3.75px] text-[14px] md:text-[10.5px] font-medium  transition-colors shadow-[0px_1px_2px_0px_#1018280D] md:shadow-[0px_0.75px_1.5px_0px_#1018280D] mt-3"
         >
           Reset Password
         </Button>
