@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "motion/react";
-import { X } from "lucide-react";
+import { X, LogOut, LayoutDashboard } from "lucide-react";
 import Image from "next/image";
+import { useAuthStore } from "@/store/use-auth-store";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -14,13 +15,19 @@ const navLinks = [
   { label: "Camps", href: "/camps" },
   { label: "Consultation", href: "/consultation" },
   { label: "Contact", href: "/contact" },
-  { label: "Membership", href: "/membership" },
+  // { label: "Membership", href: "/membership" },
   { label: "Blog", href: "/blog" },
 ];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const user = useAuthStore((state) => state.user);
+  const clearUser = useAuthStore((state) => state.clearUser);
+  console.log("user", user, isAuthenticated);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -93,12 +100,12 @@ export function Navbar() {
           >
             Programs
           </Link>
-          <Link
+          {/* <Link
             href="/membership"
             className="text-white text-sm font-medium hover:text-green-50 transition-colors"
           >
             Membership
-          </Link>
+          </Link> */}
           <Link
             href="/camps"
             className="text-white text-sm font-medium hover:text-green-50 transition-colors"
@@ -121,19 +128,41 @@ export function Navbar() {
 
         {/* Auth Buttons */}
         <div className="hidden lg:flex items-center gap-4">
-          <Link
-            href="/login"
-            className="text-white text-sm font-medium hover:text-green-50 transition-colors"
-          >
-            Login
-          </Link>
-          <Button
-            asChild
-            variant={"regular"}
-            className="bg-brand-green hover:bg-[#324414] text-white rounded-md px-6"
-          >
-            <Link href="/signup">Sign up</Link>
-          </Button>
+          {!isAuthenticated ? (
+            <>
+              <Link
+                href="/login"
+                className="text-white text-sm font-medium hover:text-green-50 transition-colors"
+              >
+                Login
+              </Link>
+              <Button
+                asChild
+                variant={"regular"}
+                className="bg-brand-green hover:bg-[#324414] text-white rounded-md px-6"
+              >
+                <Link href="/signup">Sign up</Link>
+              </Button>
+            </>
+          ) : (
+            <div className="flex items-center gap-4">
+              <Link
+                href={user?.role === "ADMIN" ? "/admin" : "/dashboard"}
+                className="text-regular-button hover:text-brand-green transition-colors flex items-center gap-2 p-2 rounded-full hover:bg-white/10"
+                title="Dashboard"
+              >
+                <LayoutDashboard size={20} />
+              </Link>
+              <Button
+                variant="danger"
+                onClick={() => clearUser()}
+                className="  flex items-center gap-2 px-3"
+              >
+                <LogOut size={18} />
+                <span>Logout</span>
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* Mobile Hamburger Menu Button */}
@@ -247,24 +276,50 @@ export function Navbar() {
               transition={{ duration: 0.3, delay: 0.5 }}
               className="border-t border-gray-700 pt-6"
             >
-              <Button
-                asChild
-                variant={"outline"}
-                className="w-full bg-white text-regular-button mb-3"
-              >
-                <Link href="/login" onClick={() => setIsOpen(false)}>
-                  Login
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="regular"
-                className="w-full "
-              >
-                <Link href="/signup" onClick={() => setIsOpen(false)}>
-                 Sign up
-                </Link>
-              </Button>
+              {!isAuthenticated ? (
+                <>
+                  <Button
+                    asChild
+                    variant={"outline"}
+                    className="w-full bg-white text-regular-button mb-3"
+                  >
+                    <Link href="/login" onClick={() => setIsOpen(false)}>
+                      Login
+                    </Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="regular"
+                    className="w-full "
+                  >
+                    <Link href="/signup" onClick={() => setIsOpen(false)}>
+                     Sign up
+                    </Link>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full bg-white text-regular-button mb-3"
+                  >
+                    <Link href={user?.role === "ADMIN" ? "/admin" : "/dashboard"} onClick={() => setIsOpen(false)}>
+                      Dashboard
+                    </Link>
+                  </Button>
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      clearUser();
+                      setIsOpen(false);
+                    }}
+                    className="w-full"
+                  >
+                    Logout
+                  </Button>
+                </>
+              )}
             </motion.div>
           </motion.div>
         )}

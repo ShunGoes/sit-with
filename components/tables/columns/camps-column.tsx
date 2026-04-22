@@ -12,9 +12,10 @@ import { Eye } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import { Trash2 } from "lucide-react";
-import { EllipsisVertical } from "lucide-react";
+import { EllipsisVertical, Plus } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { Camp } from "@/lib/api/services/camps/camps.services";
+import { addCampTierWithId } from "@/components/modal-helper";
 
 let typeVariant;
 
@@ -53,6 +54,12 @@ const ActionCell = ({
           >
             <Eye color="#344054" size={15} /> View Details
           </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => addCampTierWithId(row.original.id)}
+          className="py-3 px-4"
+        >
+          <Plus size={15} color="#344054" /> Add Tier
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => editCamp(row.original)}
