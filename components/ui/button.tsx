@@ -11,6 +11,7 @@ const buttonVariants = cva(
       variant: {
         default: "bg-brand-green text-white border-brand-green ",
         regular: "bg-regular-button text-white ",
+        danger: "bg-brand-red hover:bg-red-600 text-white border-brand-red ",
         outline:
           "border-border bg-transparent hover:bg-muted hover:text-brand-green aria-expanded:bg-muted aria-expanded:text-foreground text-secondary-green",
         secondary:
