@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import { FormControl, FormField, FormItem, FormMessage } from './ui/form';
-import { Label } from './ui/label';
 import { Field, FieldLabel, FieldError } from './ui/field';
 
 interface DateFormFieldProps<T extends FieldValues> {
@@ -138,7 +136,7 @@ export default function SelectDateComp<T extends FieldValues>({
             <FieldLabel className='mb-2'>{label}</FieldLabel>
               <DatePicker
                 selected={selectedDate}
-                onChange={(date) => {
+                onChange={(date: any) => {
                   // When a date is picked from calendar, store as YYYY-MM-DD string and sync raw input
                   if (date instanceof Date && !isNaN(date.getTime())) {
                     const iso = formatISO(date);

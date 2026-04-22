@@ -16,7 +16,7 @@ import {
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { showErrorToast } from "@/lib/toast-helpers";
 import { useSearchParams } from "next/navigation";
@@ -28,7 +28,7 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
-export default function LoginForm() {
+export  function LoginForm() {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
@@ -230,4 +230,12 @@ export default function LoginForm() {
       </div>
     </Card>
   );
+}
+
+export default function LoginClient() {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center h-screen"><Spinner /></div>}>
+            <LoginForm />
+        </Suspense>
+    );
 }
