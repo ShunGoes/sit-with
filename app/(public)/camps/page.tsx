@@ -12,6 +12,9 @@ export const metadata: Metadata = {
     "Join our immersive therapeutic camps. Build awareness, develop practical wellbeing habits, and connect with a community focused on growth and presence.",
 };
 import { BookingForm } from "@/components/pages/consultation/booking-form";
+import CampServices from "@/components/pages/camps/camp-services";
+import { Suspense } from "react";
+import CardSkeletons from "@/components/skeletons/card-skeletons";
 
 export default function CampsPage() {
   return (
@@ -21,6 +24,9 @@ export default function CampsPage() {
         <RetreatBenefits />
       </div>
       <GlimpseGallery />
+      <Suspense fallback={<CardSkeletons />}>
+        <CampServices />
+      </Suspense>
       <div className="w-11/12 mx-auto">
         <CampParticipation />
       </div>
