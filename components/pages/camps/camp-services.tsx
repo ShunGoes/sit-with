@@ -16,8 +16,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { useModalStore } from "@/components/store/use-modal-store";
 import { Spinner } from "@/components/spinner";
-
-
+import Link from "next/link";
 
 export default function CampServices() {
   const { data: campsData, isLoading, isError, isFetching } = useGetCamps();
@@ -25,49 +24,48 @@ export default function CampServices() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const router = useRouter();
 
-
-    const openModal = useModalStore((state) => state.openModal);
-    const closeModal = useModalStore((state) => state.closeModal);
+  const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
 
   const camp =
     campsData?.data.filter(
       (camp) => camp.status === "UPCOMING" || camp.status === "ONGOING",
     ) || [];
 
-    const handleCampSuccessModal = (data: SuccessBannerProps) => {
-      openModal(
-        "success",
-        <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
-          <CheckCircle className="w-16 h-16 text-regular-button" />
-          <h2 className="heading-2 mb-12 max-w-2xl">
-            You have successfully booked a {data?.title} camp session.
-          </h2>
-          <Button onClick={() => closeModal("success")} variant="outline">
-            Close
-          </Button>
-        </div>,
-      );
-    };
+  const handleCampSuccessModal = (data: SuccessBannerProps) => {
+    openModal(
+      "success",
+      <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+        <CheckCircle className="w-16 h-16 text-regular-button" />
+        <h2 className="heading-2 mb-12 max-w-2xl">
+          You have successfully booked a {data?.title} camp session.
+        </h2>
+        <Button onClick={() => closeModal("success")} variant="outline">
+          Close
+        </Button>
+      </div>,
+    );
+  };
 
   const handleBookCard = async (serviceId: string) => {
-    if(!isAuthenticated){
+    if (!isAuthenticated) {
       router.push("/login?callbackUrl=/camps#camp-services");
       return;
     }
     bookACamp(serviceId, {
       onSuccess: (data) => {
         closeModal("loading");
-        const camp = data?.data?.camp
-        const successBanner  = {
+        const camp = data?.data?.camp;
+        const successBanner = {
           title: camp?.title,
           description: camp?.description,
           location: camp?.location,
           price: camp?.price,
           thumbnail: camp?.thumbnail,
           capacity: camp?.capacity,
-          startDate: camp?.startDate
-        }
-        handleCampSuccessModal(successBanner)
+          startDate: camp?.startDate,
+        };
+        handleCampSuccessModal(successBanner);
       },
       onError: () => {
         closeModal("loading");
@@ -93,19 +91,17 @@ export default function CampServices() {
     },
   } as const;
 
-
-    useEffect(() => {
-      if (isPending) {
-        openModal(
-          "loading",
-          <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
-            <Spinner size={40} />
-          </div>,
-          { isMutation: true },
-        );
-      }
-    }, [isPending, openModal]);
-
+  useEffect(() => {
+    if (isPending) {
+      openModal(
+        "loading",
+        <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+          <Spinner size={40} />
+        </div>,
+        { isMutation: true },
+      );
+    }
+  }, [isPending, openModal]);
 
   return (
     <section className="py-20  bg-white" id="camp-services">
@@ -119,7 +115,7 @@ export default function CampServices() {
 
         {camp.length === 0 ? (
           <div className="text-center py-20 bg-slate-50 rounded-3xl w-full border border-dashed border-slate-200">
-            <p className="heading-2 mb-12 max-w-2xl">
+            <p className="text-base text-primary-text mb-12 max-w-2xl">
               No camps are available at the moment. Please check back later.
             </p>
           </div>
@@ -176,15 +172,14 @@ export default function CampServices() {
                     {formatCurrency(service.price, "USD")}
                   </div>
                 </div>
-
-                <Button
-                  onClick={() => handleBookCard(service.id)}
-                  variant="regular"
-                  className="w-full mt-auto group/btn"
-                >
-                  Book Session
-                  <CaretRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </Button>
+                <Link href={`/camps/${service.id}`}>
+                  <Button
+                    variant="regular"
+                    className="w-full mt-auto group/btn"
+                  >
+                    View Camp Details
+                  </Button>
+                </Link>
               </motion.div>
             ))}
           </motion.div>

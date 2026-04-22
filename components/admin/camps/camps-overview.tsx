@@ -9,10 +9,7 @@ import { useModalStore } from "@/components/store/use-modal-store";
 import CampsColumn from "@/components/tables/columns/camps-column";
 import ReuseableTable from "@/components/tables/reuseable-table";
 import { Button } from "@/components/ui/button";
-import {
-  useDeleteCamp,
-  useGetCamps,
-} from "@/lib/api/hooks/camps/camps.hooks";
+import { useDeleteCamp, useGetCamps } from "@/lib/api/hooks/camps/camps.hooks";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -56,7 +53,8 @@ export default function CampsOverview() {
 
   // Client-side filtering
   const filteredData = campsData?.data?.filter((camp) => {
-    if (search && !camp.title.toLowerCase().includes(search.toLowerCase())) return false;
+    if (search && !camp.title.toLowerCase().includes(search.toLowerCase()))
+      return false;
     return true;
   });
 
@@ -67,9 +65,17 @@ export default function CampsOverview() {
           header="Camps"
           subtext="Manage all camps on the platform"
         />
-        <Button variant={"regular"} className="font-normal" onClick={() => addCamp()}>
-          <Plus /> <span className="hidden sm:block">Add Camp</span>
-        </Button>
+
+        <div className="flex items-center gap-2">
+         
+          <Button
+            variant={"regular"}
+            className="font-normal"
+            onClick={() => addCamp()}
+          >
+            <Plus /> <span className="hidden sm:block">Add Camp</span>
+          </Button>
+        </div>
       </div>
 
       <div className="space-y-4">
