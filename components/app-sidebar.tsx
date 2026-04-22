@@ -22,6 +22,7 @@ import {
   LogOut,
   Settings,
   Users,
+  Tent,
 } from "lucide-react";
 import { useAuthStore } from "@/store/use-auth-store";
 import Image from "next/image";
@@ -39,6 +40,11 @@ const data = {
       title: "Programs",
       url: "/admin/program",
       icon: <BookOpen />,
+    },
+    {
+      title: "Camps",
+      url: "/admin/camps",
+      icon: <Tent />,
     },
     {
       title: "Consultation",

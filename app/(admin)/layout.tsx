@@ -46,7 +46,6 @@ export default function ProtectedLayout({
   const lastName = user?.lastName ?? ""
   const userInitials = firstName.charAt(0) + lastName.charAt(0);
 
-  console.log("Current user in ProtectedLayout:", token);
   const currentUser = data?.user || data?.data;
 
   useEffect(() => {

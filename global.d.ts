@@ -42,3 +42,13 @@ interface BlogListItem {
     author: string;
     date: string;
 }
+
+interface SuccessBannerProps {
+  title: string;
+  description: string;
+  location: string;
+  price: number;
+  thumbnail: string;
+  capacity: number;
+  startDate: string;
+}

@@ -16,9 +16,10 @@ import {
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { showErrorToast } from "@/lib/toast-helpers";
+import { useSearchParams } from "next/navigation";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -27,18 +28,23 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
-
-export default function LoginForm() {
+export  function LoginForm() {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
 
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
+
   const { mutate, isPending } = useSignin();
   const { mutate: resendVerification } = useResendVerification();
+
   const router = useRouter();
+
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
+
   const { mutate: googleLogin, isPending: googleSignInPending } =
     useGoogleLogin();
 
@@ -49,10 +55,10 @@ export default function LoginForm() {
       onSuccess: (resData) => {
         if (resData.data?.user?.isEmailVerified) {
           closeModal("loading");
-          if (resData.data.user.role === "ADMIN") {
-            router.replace("/admin");
-          } else {
-            router.replace("/user");
+          if(callbackUrl){
+            router.replace(callbackUrl);
+          }else{
+            router.replace("/");
           }
         } else {
           // If unverified, resend verification email using the user's email
@@ -75,8 +81,6 @@ export default function LoginForm() {
       },
     });
   };
-
-
 
   useEffect(() => {
     if (isPending || googleSignInPending) {
@@ -172,9 +176,8 @@ export default function LoginForm() {
               >
                 Log in
               </Button>
-              
-              <div className="flex justify-center w-full overflow-hidden border border-regular-button ">
 
+              <div className="flex justify-center w-full overflow-hidden border border-regular-button ">
                 <GoogleLogin
                   onSuccess={(credentialResponse) => {
                     const idToken = credentialResponse.credential;
@@ -227,4 +230,12 @@ export default function LoginForm() {
       </div>
     </Card>
   );
+}
+
+export default function LoginClient() {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center h-screen"><Spinner /></div>}>
+            <LoginForm />
+        </Suspense>
+    );
 }

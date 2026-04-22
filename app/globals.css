@@ -14,6 +14,7 @@
   --color-regular-button: var(--primary-regular-button);
   --color-primary-text: var(--primary-text-color);
   --color-secondary-text: var(--secondary-text-color);
+  --color-brand-red: var(--brand-red);
 
   --color-dash-secondary-bg: var(--dash-secondary-bg);
 
@@ -108,6 +109,7 @@ h6 {
   --primary-regular-button: #60935D;
   --primary-text-color: #344054;
   --secondary-text-color: ##475467;
+  --brand-red: #B42318;
 
   --dash-secondary-bg: #fff;
 }
