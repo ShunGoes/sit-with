@@ -10,6 +10,8 @@ export function StatsCards() {
 
   const statsData = data?.data;
 
+  console.log(statsData)
+
   const stats = [
     { title: "Total Users", value: statsData?.totalUsers ?? 0 },
     { title: "Total Programs", value: statsData?.totalPrograms ?? 0 },
