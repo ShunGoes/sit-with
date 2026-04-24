@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import CardSkeletons from "@/components/skeletons/card-skeletons";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { formatCurrency } from "@/lib/utils";
 import { Calendar, CheckCircle, Clock10Icon, Lightbulb } from "lucide-react";
 import LocationIcon from "@/pd-icons/location-icon";
@@ -15,6 +15,7 @@ import { useAuthStore } from "@/store/use-auth-store";
 import { useRouter } from "next/navigation";
 import { useCreatePayment } from "@/lib/api/hooks/payments/payments.hooks";
 import { useModalStore } from "@/components/store/use-modal-store";
+import { Spinner } from "@/components/spinner";
 
 const WHAT_YOU_WILL_GAIN = [
   "Greater emotional awareness and self-understanding",
@@ -50,23 +51,6 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
 
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
-
-  if (isLoading)
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <CardSkeletons />{" "}
-      </div>
-    );
-  if (isError) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <p className="text-primary-text text-lg tex-center font-medium ">
-          There was an error loading this program. Please try refreshing this
-          page
-        </p>
-      </div>
-    );
-  }
 
   // adge color
   let typeVariant;
@@ -118,10 +102,43 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
 
     createPayment(payload, {
       onSuccess: (data) => {
+        closeModal("loading");
         openModal("success", <PaymentSuccessModal />);
+      },
+      onError: (error) => {
+        closeModal("loading");
       },
     });
   };
+
+  useEffect(() => {
+    if (isCreatingPayment) {
+      openModal(
+        "loading",
+        <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+          <Spinner size={40} />
+        </div>,
+        { isMutation: true },
+      );
+    }
+  }, [isCreatingPayment, openModal]);
+
+  if (isLoading)
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <CardSkeletons />{" "}
+      </div>
+    );
+  if (isError) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <p className="text-primary-text text-lg tex-center font-medium ">
+          There was an error loading this program. Please try refreshing this
+          page
+        </p>
+      </div>
+    );
+  }
 
   return (
     <section>
@@ -234,7 +251,11 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
             About This Programme
           </header>
           <p className="text-sm text-[#606060] mt-2 border border-[#E8E8E8] p-2 rounded-[8px] ">
-            This programme is designed to support undergraduates navigating identity, pressure, and life transitions. Through guided sessions, reflective practices, and structured conversations, participants develop emotional awareness, clarity, and a stronger sense of direction
+            This programme is designed to support undergraduates navigating
+            identity, pressure, and life transitions. Through guided sessions,
+            reflective practices, and structured conversations, participants
+            develop emotional awareness, clarity, and a stronger sense of
+            direction
           </p>
         </section>
       </div>

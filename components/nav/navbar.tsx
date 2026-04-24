@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { X, LogOut, LayoutDashboard } from "lucide-react";
 import Image from "next/image";
 import { useAuthStore } from "@/store/use-auth-store";
+import { logout } from "@/lib/api/services/auth/auth.services";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -155,7 +156,12 @@ export function Navbar() {
               </Link>
               <Button
                 variant="danger"
-                onClick={() => clearUser()}
+                onClick={async () => {
+                  try { await logout(); } catch (e) { console.error(e); }
+                  clearUser();
+                  localStorage.removeItem("sit-with-auth");
+                  window.location.href = "/login";
+                }}
                 className="  flex items-center gap-2 px-3"
               >
                 <LogOut size={18} />
@@ -310,9 +316,12 @@ export function Navbar() {
                   </Button>
                   <Button
                     variant="danger"
-                    onClick={() => {
+                    onClick={async () => {
+                      try { await logout(); } catch (e) { console.error(e); }
                       clearUser();
                       setIsOpen(false);
+                      localStorage.removeItem("sit-with-auth");
+                      window.location.href = "/login";
                     }}
                     className="w-full"
                   >

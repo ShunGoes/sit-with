@@ -14,6 +14,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BookOpen, LayoutDashboard, LogOut, Settings } from "lucide-react";
 import { useAuthStore } from "@/store/use-auth-store";
+import { logout } from "@/lib/api/services/auth/auth.services";
 import Image from "next/image";
 
 // This is sample data.
@@ -79,9 +80,11 @@ export function AppUserSidebar({ ...props }: React.ComponentProps<typeof Sidebar
             <SidebarMenuItem>
               <SidebarMenuButton
                 tooltip="Logout"
-                onClick={() => {
+                onClick={async () => {
+                  try { await logout(); } catch (e) { console.error(e); }
                   const clearUser = useAuthStore.getState().clearUser;
                   clearUser();
+                  localStorage.removeItem("sit-with-auth");
                   window.location.href = "/login";
                 }}
                 className="py-6 px-4 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-xl"

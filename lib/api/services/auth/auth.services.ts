@@ -121,3 +121,13 @@ export const googleLogin = async (
     throw new Error(getApiError(error));
   }
 };
+
+export const logout = async () => {
+  try {
+    const res = await api.post("/auth/logout");
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error(getApiError(error));
+  }
+};
