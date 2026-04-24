@@ -1,25 +1,19 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import FormFieldComp from "@/components/formfield";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/spinner";
-import { useModalStore } from "@/components/store/use-modal-store";
 import { useCreateConsultationService } from "@/lib/api/hooks/consultations/consultation-services.hooks";
 import {
   ConsultationServiceSchema,
   ConsultationServiceFormValues,
 } from "@/schemas/consultation-service-schema";
+import { Spinner } from "@/components/spinner";
+import { useModalStore } from "@/components/store/use-modal-store";
+import ConsultationServiceForm from "./consultation-service-form";
 
-export default function AddConsultationServiceForm() {
-  const closeModal = useModalStore((state) => state.closeModal);
-  const openModal = useModalStore((state) => state.openModal);
-
-  const { mutate, isPending, isError, error } = useCreateConsultationService();
-
+export default function AddConsultationServiceModal() {
   const form = useForm<ConsultationServiceFormValues>({
     resolver: zodResolver(ConsultationServiceSchema),
     mode: "onChange",
@@ -32,19 +26,12 @@ export default function AddConsultationServiceForm() {
     },
   });
 
-  useEffect(() => {
-    if (isPending) {
-      openModal(
-        "loading",
-        <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
-          <Spinner size={40} />
-        </div>,
-        { isMutation: true }
-      );
-    }
-  }, [isPending, openModal]);
+  const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
 
-  const onSubmit = (data: ConsultationServiceFormValues) => {
+  const { mutate, isPending } = useCreateConsultationService();
+
+  const onSubmit: SubmitHandler<ConsultationServiceFormValues> = (data) => {
     mutate(
       {
         title: data.title,
@@ -57,6 +44,7 @@ export default function AddConsultationServiceForm() {
         onSuccess: () => {
           closeModal("loading");
           closeModal("add-consultation-service");
+          form.reset();
         },
         onError: () => {
           closeModal("loading");
@@ -65,78 +53,34 @@ export default function AddConsultationServiceForm() {
     );
   };
 
+  useEffect(() => {
+    if (isPending) {
+      openModal(
+        "loading",
+        <div className="flex items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+          <Spinner size={40} />
+        </div>,
+        { isMutation: true }
+      );
+    }
+  }, [isPending, openModal]);
+
   return (
-    <div className="bg-white rounded-[12px] p-6 w-full max-w-lg mx-auto">
-      <h2 className="modal-header mb-1">Add Consultation Service</h2>
-      <p className="text-secondary-text text-sm mb-6">
-        Fill in the details for the new consultation service.
+    <div className="bg-white rounded-[12px] md:w-full overflow-y-auto no-scrollbar mx-auto">
+      <h2 className="text-2xl font-semibold mb-1 text-primary-text">
+        Add Consultation Service
+      </h2>
+      <p className="text-[#667085] text-sm mb-6">
+        Set up a new consultation service for your platform.
       </p>
 
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormFieldComp
-          control={form.control}
-          name="title"
-          label="Service Title *"
-          placeholder="e.g. 1-on-1 Wellness Session"
-          className="bg-white"
+      <FormProvider {...form}>
+        <ConsultationServiceForm
+          onSubmit={onSubmit}
+          onCancel={() => closeModal("add-consultation-service")}
+          isLoading={isPending}
         />
-        <FormFieldComp
-          control={form.control}
-          name="calBookingUrl"
-          label="Booking Link*"
-          placeholder="Enter event booking link from Calcom"
-          className="bg-white"
-        />
-        <FormFieldComp
-          control={form.control}
-          name="description"
-          label="Description *"
-          placeholder="A brief description of this service"
-          className="bg-white"
-        />
-        <div className="grid grid-cols-2 gap-4">
-          <FormFieldComp
-            control={form.control}
-            name="price"
-            label="Price (₦) *"
-            placeholder="e.g. 15000"
-            type="number"
-            className="bg-white"
-          />
-          <FormFieldComp
-            control={form.control}
-            name="duration"
-            label="Duration (mins) *"
-            placeholder="e.g. 60"
-            type="number"
-            className="bg-white"
-          />
-        </div>
-
-        {isError && (
-          <p className="text-red-500 text-sm">
-            {(error as any)?.message ?? "Something went wrong. Please try again."}
-          </p>
-        )}
-
-        <div className="flex justify-end gap-3 pt-2">
-          <Button
-            type="button"
-            variant="outline"
-            className="text-regular-button border border-regular-button "
-            onClick={() => closeModal("add-consultation-service")}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            variant="regular"
-            disabled={!form.formState.isValid || isPending}
-          >
-            Create Service
-          </Button>
-        </div>
-      </form>
+      </FormProvider>
     </div>
   );
 }

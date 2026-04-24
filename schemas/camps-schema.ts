@@ -18,3 +18,18 @@ export const CampSchema = z.object({
 });
 
 export type CampFormSchema = z.infer<typeof CampSchema>;
+
+
+export const CampBookingFormSchema = z.object({
+  fullName: z.string().min(3, "Your full name is required"),
+  phone: z.string(),
+  emergencyName: z.string().min(1, "You are required to provide a name"),
+  emergencyPhone: z.string().min(1, "You are required to provide a name"),
+  emergencyStatus: z.string().min(1, "You are required to provide a STATUS"),
+  dietaryRestrictions: z.string(),
+  accommodationPreference: z.string(),
+  notes: z.string(),
+  partyMembers: z.array(z.object({text: z.string().min(1, "Provide a name")}))
+})
+
+export type CampBookingFormSchemaTpe = z.infer<typeof CampBookingFormSchema>

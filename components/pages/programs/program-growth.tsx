@@ -138,7 +138,7 @@ export default function ProgramGrowth() {
                     </p>
 
                     {/* Link */}
-                    <Link href={program?.link ?? ""} className="w-full mt-auto">
+                    <Link href={`/programs/${id ?? ''}`} className="w-full mt-auto">
                       <Button
                         variant={"outline"}
                         className="border border-[#B1B4B1] text-regular text-[#072608] text-base w-full"

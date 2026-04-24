@@ -8,6 +8,7 @@ import {
   CreateConsultationServicePayload,
   UpdateConsultationServicePayload,
   UpdateConsultationStatusPayload,
+  getCalEventTypes,
 } from "../../services/consultations/consultation-services.services";
 import { showSuccessToast, showErrorToast } from "@/lib/toast-helpers";
 
@@ -90,5 +91,15 @@ export const useUpdateConsultationStatus = () => {
     onError: (error: any) => {
       showErrorToast(error.message);
     },
+  });
+};
+
+export const CAL_EVENT_TYPES_QUERY_KEY = ["cal-event-types"] as const;
+
+export const useGetCalEventTypes = () => {
+  return useQuery({
+    queryKey: CAL_EVENT_TYPES_QUERY_KEY,
+    queryFn: getCalEventTypes,
+    retry: false,
   });
 };

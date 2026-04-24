@@ -13,12 +13,8 @@ export interface Payment {
 }
 
 export interface CreatePaymentPayload {
-  amount: number;
-  currency: string;
-  paymentMethod: string;
-  email: string;
-  reference?: string;
-  description?: string;
+itemId: string;
+type: "PROGRAM" | "CONSULTATION" | "CAMP";
 }
 
 export interface UpdatePaymentPayload extends Partial<CreatePaymentPayload> {
@@ -59,11 +55,16 @@ export const getPayment = async (id: string): Promise<PaymentResponse> => {
   }
 };
 
+export interface CreatePaymentParams {
+  itemId: string;
+  type: "PROGRAM" | "MENTORSHIP";
+}
+
 export const createPayment = async (
   payload: CreatePaymentPayload
-): Promise<PaymentResponse> => {
+) => {
   try {
-    const res = await api.post("/payments", payload);
+    const res = await api.post("/payments/initialize", payload);
     return res.data;
   } catch (error) {
     console.log(error);
