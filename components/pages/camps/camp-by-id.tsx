@@ -12,16 +12,31 @@ import { flushSync } from "react-dom";
 import { useModalStore } from "@/components/store/use-modal-store";
 
 import { CampTier, CampImage } from "@/types/camps.types";
+import { CampParticipation } from "./participation";
+import GrayCheckIcon from "@/pd-icons/gray-check";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import BookCampForm from "@/components/forms/admin/camps/book-camp-form";
+import { showSuccessToast } from "@/lib/toast-helpers";
 
 function CardByIdOverview({ id }: { id: string }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [campTierId, setCampTierId] = useState<{
+    id: string;
+    label: string;
+  } | null>(null);
 
   const { data: campData, isLoading, isError } = useGetCamp(id);
 
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const camp = campData?.data;
+
+  const labelText = "text-brand-green font-medium text-sm uppercase";
+  const valueText = "text-secondary-text font-medium text-base";
+
+  console.log("this is the camping event details:", camp);
 
   // Lightbox with ViewTransition
   const handleOpenLightbox = (imageId: string, imageUrl: string) => {
@@ -62,15 +77,16 @@ function CardByIdOverview({ id }: { id: string }) {
   };
 
   return (
-    <div className="space-y-10">
-      <section className="max-w-7xl w-10/12 mx-auto lg:w-11/12">
+    <div className=" bg-[#F7F7F7] py-30">
+      <section className="max-w-7xl w-11/12 mx-auto lg:w-11/12 space-y-10">
         <DashboardHeaderText
           header="Camp Details"
           subtext="View comprehensive information about this camp."
-          backLink="/admin/camps"
+          backLink="/camps"
           backLinkText="Back to camps"
         />
 
+        {/* camp details  */}
         <QueryStateHandler
           data={camp ? [camp] : undefined}
           isLoading={isLoading}
@@ -81,40 +97,33 @@ function CardByIdOverview({ id }: { id: string }) {
         >
           <div className="bg-dash-secondary-bg p-6 rounded-[16px] space-y-6">
             <div className="flex justify-between items-start">
-              <h1 className="text-2xl font-bold">{camp?.title}</h1>
-              <Badge variant="secondary">{camp?.status}</Badge>
+              <h1 className="text-xl text-primary-text font-bold">
+                {camp?.title}
+              </h1>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h3 className="font-semibold text-sm mb-1 text-gray-500">
-                  Location
-                </h3>
-                <p>{camp?.location}</p>
+                <h3 className={labelText}>Location</h3>
+                <p className={valueText}>{camp?.location}</p>
               </div>
               <div>
-                <h3 className="font-semibold text-sm mb-1 text-gray-500">
-                  Price
-                </h3>
-                <p>{formatCurrency(camp?.price || 0, "NGN")}</p>
+                <h3 className={labelText}>Price</h3>
+                <p className={valueText}>
+                  {formatCurrency(camp?.price || 0, "NGN")}
+                </p>
               </div>
               <div>
-                <h3 className="font-semibold text-sm mb-1 text-gray-500">
-                  Capacity
-                </h3>
-                <p>{camp?.capacity} Participants max</p>
+                <h3 className={labelText}>Capacity</h3>
+                <p className={valueText}>{camp?.capacity} Participants max</p>
               </div>
               <div>
-                <h3 className="font-semibold text-sm mb-1 text-gray-500">
-                  Seats Remaining
-                </h3>
-                <p>{camp?.seatsRemaining}</p>
+                <h3 className={labelText}>Seats Remaining</h3>
+                <p className={valueText}>{camp?.seatsRemaining}</p>
               </div>
               <div>
-                <h3 className="font-semibold text-sm mb-1 text-gray-500">
-                  Dates
-                </h3>
-                <p>
+                <h3 className={labelText}>Dates</h3>
+                <p className={valueText}>
                   {camp?.startDate &&
                     new Date(camp.startDate).toLocaleString("en-US", {
                       dateStyle: "medium",
@@ -129,32 +138,39 @@ function CardByIdOverview({ id }: { id: string }) {
             </div>
 
             <div>
-              <h3 className="font-semibold text-sm mb-2 text-gray-500">
-                Description
-              </h3>
-              <p className="text-sm leading-relaxed">{camp?.description}</p>
+              <h3 className={labelText}>Description</h3>
+              <p className={valueText}>{camp?.description}</p>
             </div>
 
-            {camp?.thumbnail && (
-              <div>
-                <h3 className="font-semibold text-sm mb-2 text-gray-500">
-                  Thumbnail
-                </h3>
-                <ViewTransition name={camp.id}>
-                  <div
-                    onClick={() =>
-                      handleOpenLightbox(camp.id, camp.thumbnail || "")
-                    }
-                    className="relative cursor-pointer w-full max-w-sm h-48 rounded-lg overflow-hidden border"
-                  >
-                    <Image
-                      src={camp.thumbnail}
-                      fill
-                      className="object-cover"
-                      alt={camp.title}
-                    />
-                  </div>
-                </ViewTransition>
+            {camp?.images && camp.images.length > 0 && (
+              <div className="space-y-2">
+                <h3 className={labelText}>Gallery Images</h3>
+                <div className="flex items-center gap-4 overflow-x-auto">
+                  {camp.images.map((image: CampImage) => (
+                    <div key={image.id}>
+                      <div
+                        style={{
+                          viewTransitionName:
+                            lightboxOpen && selectedImage === image.id
+                              ? "none"
+                              : `camp-image-${image.id}`,
+                        }}
+                        className="relative rounded-md  w-[250px] aspect-3/2  cursor-pointer "
+                        onClick={() => handleOpenLightbox(image.id, image.url)}
+                      >
+                        <Image
+                          src={image.url}
+                          alt={image.caption || "Camp gallery"}
+                          fill
+                          className="object-cover rounded-md"
+                        />
+                      </div>
+                      <p className="text-xs uppercase wrap-break-word line-clamp-2 w-full  text-primary-text mt-2">
+                        {image.caption}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -163,119 +179,72 @@ function CardByIdOverview({ id }: { id: string }) {
         {/* Camp Tiers Section */}
         {camp?.tiers && camp.tiers.length > 0 && (
           <div className="space-y-4">
-            <h2 className="text-xl font-semibold">Camp Tiers</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {camp.tiers.map((tier: CampTier) => (
+            <h2 className="text-xl text-primary-text font-bold">Camp Tiers</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-120 mx-auto lg:max-w-7xl gap-4  px-6 rounded-[16px]">
+              {camp.tiers.map((plan: CampTier) => (
                 <div
-                  key={tier.id}
-                  className="bg-dash-secondary-bg border border-gray-200 rounded-[12px] p-4 space-y-3"
+                  key={plan.id}
+                  className={`flex flex-col gap-6 rounded-[32px] px-8 py-15 md:py-[100px]   transition-all duration-300 relative ${
+                    plan.isFeatured
+                      ? "bg-white border-2 border-[#649351] z-10 xl:-mt-4 xl:mb-4"
+                      : "bg-white border border-[#2C2D47]  xl:mt-2 xl:scale-[0.95]"
+                  }`}
                 >
-                  {/* Header */}
-                  <div className="flex justify-between items-start gap-2">
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-base text-primary-text">
-                        {tier.label}
-                      </h3>
-                      {tier.isFeatured && (
-                        <Badge variant="success" className="mt-1">
-                          Featured
-                        </Badge>
-                      )}
+                  <div className="text-center ">
+                    <h3 className="text-lg font-medium text-[#242424] mb-4">
+                      {plan.label}
+                    </h3>
+                    <div className="flex items-end justify-center gap-1 mb-2">
+                      <span
+                        className={`text-[56px] font-medium leading-none ${plan.isFeatured ? "text-[#649351]" : "text-[#242424]"}`}
+                      >
+                        {formatCurrency(plan.price)}
+                      </span>
                     </div>
                   </div>
 
-                  {/* Description */}
-                  <p className="text-sm text-secondary-text leading-relaxed">
-                    {tier.description}
-                  </p>
+                  <ul className="space-y-4 flex-1">
+                    {plan.inclusions?.map((feature, fIdx) => (
+                      <li key={fIdx} className="flex items-center gap-3">
+                        <span
+                          style={{
+                            background: "rgba(100, 147, 81, 0.2)",
+                          }}
+                          className="  w-[17px] h-[17px] rounded-full flex items-center justify-center "
+                        >
+                          <GrayCheckIcon color={"#649351"} />
+                        </span>
+                        <span className="text-black text-base font-medium ">
+                          {feature}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
 
-                  {/* Price and Details Grid */}
-                  <div className="grid grid-cols-2 gap-3 text-sm border-t border-gray-100 pt-3">
-                    <div>
-                      <p className="text-xs text-gray-500 font-medium">Price</p>
-                      <p className="text-primary-text font-semibold">
-                        {formatCurrency(tier.price, "NGN")}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500 font-medium">
-                        Seats/Unit
-                      </p>
-                      <p className="text-primary-text font-semibold">
-                        {tier.seatsPerUnit}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500 font-medium">
-                        Max Units
-                      </p>
-                      <p className="text-primary-text font-semibold">
-                        {tier.maxUnits ? tier.maxUnits : "Unlimited"}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500 font-medium">Order</p>
-                      <p className="text-primary-text font-semibold">
-                        {tier.order}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Inclusions */}
-                  {tier.inclusions && tier.inclusions.length > 0 && (
-                    <div className="border-t border-gray-100 pt-3">
-                      <p className="text-xs text-gray-500 font-medium mb-2">
-                        Inclusions
-                      </p>
-                      <ul className="space-y-1">
-                        {tier.inclusions.map((inclusion, idx) => (
-                          <li
-                            key={idx}
-                            className="text-xs text-primary-text flex items-center gap-2"
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-regular-button"></span>
-                            {inclusion}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                  <Button
+                    variant="regular"
+                    className="w-full mt-10 "
+                    onClick={() =>{
+                      setCampTierId({ id: plan.id, label: plan.label })
+                      showSuccessToast(`You selected the ${plan.label} camp.`)
+                    }
+                      
+                    }
+                  >
+                    Book Camp
+                  </Button>
                 </div>
               ))}
             </div>
           </div>
         )}
-
-        {/* Gallery Images Section */}
-        {camp?.images && camp.images.length > 0 && (
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold">Gallery Images</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {camp.images.map((image: CampImage) => (
-                <div key={image.id}>
-                  <div
-                    style={{
-                      viewTransitionName:
-                        lightboxOpen && selectedImage === image.id
-                          ? "none"
-                          : `camp-image-${image.id}`,
-                    }}
-                    className="relative group rounded-lg border border-gray-200 bg-gray-50 overflow-hidden shadow-sm aspect-square flex flex-col items-center justify-center cursor-pointer hover:shadow-md transition-shadow"
-                    onClick={() => handleOpenLightbox(image.id, image.url)}
-                  >
-                    <Image
-                      src={image.url}
-                      alt={image.caption || "Camp gallery"}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <p className="text-sm uppercase wrap-break-word line-clamp-2 w-full  text-primary-text mt-2">
-                    {image.caption} hello
-                  </p>
-                </div>
-              ))}
-            </div>
+        {campTierId && camp && (
+          <div className="w-11/12 lg:w-7/12 mx-auto">
+            <BookCampForm
+              tierId={campTierId?.id}
+              campId={id}
+              tierLabel={campTierId?.label}
+            />
           </div>
         )}
       </section>

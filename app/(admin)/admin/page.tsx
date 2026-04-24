@@ -6,6 +6,9 @@ import { QuickActions } from "@/components/admin/dashboard/quick-actions";
 import { RecentActivities } from "@/components/admin/dashboard/recent-activities";
 import FilterSelectComp from "@/components/filter";
 import { useState } from "react";
+import UsersTable from "@/components/admin/users/users-table";
+
+import { RecentPayments } from "@/components/admin/dashboard/recent-payments";
 
 export default function Page() {
   const [filteredItem, setFilteredItem] = useState("");
@@ -24,18 +27,36 @@ export default function Page() {
 
       <StatsCards />
       <QuickActions />
-      <section className="space-y-2">
-        <div className="flex justify-end w-full">
-          <div className="w-auto ">
-            <FilterSelectComp
-              placeholder="Filter by status"
-              options={STATUS_OPTIONS}
-              value={filteredItem}
-              onValueChange={setFilteredItem}
-            />
+      
+      <section className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <div className="flex justify-end w-full">
+            <div className="w-auto ">
+              <FilterSelectComp
+                placeholder="Filter by status"
+                options={STATUS_OPTIONS}
+                value={filteredItem}
+                onValueChange={setFilteredItem}
+              />
+            </div>
           </div>
+          <RecentActivities />
         </div>
-        <RecentActivities />
+        
+        <div className="space-y-2">
+          <div className="h-11 hidden xl:block"></div> {/* Spacer to align with the filter dropdown */}
+          <RecentPayments />
+        </div>
+      </section>
+
+      <section className="space-y-6">
+        <div>
+          <h2 className="text-xl font-semibold text-primary-text">Users</h2>
+          <p className="text-sm text-secondary-text">
+            All registered users on the platform
+          </p>
+        </div>
+        <UsersTable />
       </section>
     </div>
   );

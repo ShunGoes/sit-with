@@ -20,8 +20,12 @@ export default function EditCampModal({ camp }: { camp: Camp }) {
       location: camp.location,
       price: formatAmount(camp.price.toString()),
       capacity: camp.capacity.toString(),
-      startDate: camp.startDate ? new Date(camp.startDate).toISOString().split('T')[0] : "",
-      endDate: camp.endDate ? new Date(camp.endDate).toISOString().split('T')[0] : "",
+      startDate: camp.startDate
+        ? new Date(camp.startDate).toISOString().split("T")[0]
+        : "",
+      endDate: camp.endDate
+        ? new Date(camp.endDate).toISOString().split("T")[0]
+        : "",
       thumbnail: camp.thumbnail || undefined,
     },
   });
@@ -33,11 +37,11 @@ export default function EditCampModal({ camp }: { camp: Camp }) {
 
   const onSubmit: SubmitHandler<CampFormSchema> = (data) => {
     const formData = new FormData();
-    
+
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("location", data.location);
-    
+
     const priceStr = data.price.toString();
     const cleanPrice = priceStr.replace(/,/g, "");
     formData.append("price", cleanPrice);
@@ -50,15 +54,18 @@ export default function EditCampModal({ camp }: { camp: Camp }) {
       formData.append("thumbnail", data.thumbnail);
     }
 
-    mutate({ id: camp.id, payload: formData }, {
-      onSuccess: () => {
-        closeModal("loading");
-        closeModal(`edit-camp-${camp.id}`);
+    mutate(
+      { id: camp.id, payload: formData },
+      {
+        onSuccess: () => {
+          closeModal("loading");
+          closeModal(`edit-camp-${camp.id}`);
+        },
+        onError: () => {
+          closeModal("loading");
+        },
       },
-      onError: () => {
-        closeModal("loading");
-      },
-    });
+    );
   };
 
   useEffect(() => {
@@ -68,20 +75,25 @@ export default function EditCampModal({ camp }: { camp: Camp }) {
         <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
           <Spinner size={40} />
         </div>,
-        { isMutation: true }
+        { isMutation: true },
       );
     }
   }, [isPending, openModal]);
 
   return (
     <div className="bg-white rounded-[12px]   md:w-full  overflow-y-auto no-scrollbar mx-auto">
-      <h2 className="text-2xl font-semibold mb-1 text-primary-text">Edit Camp</h2>
+      <h2 className="text-2xl font-semibold mb-1 text-primary-text">
+        Edit Camp
+      </h2>
       <p className="text-[#667085] text-sm mb-6">
         Update details for {camp.title}.
       </p>
 
       <FormProvider {...form}>
-        <CampForm onSubmit={onSubmit} onCancel={() => closeModal(`edit-camp-${camp.id}`)} />
+        <CampForm
+          onSubmit={onSubmit}
+          onCancel={() => closeModal(`edit-camp-${camp.id}`)}
+        />
       </FormProvider>
     </div>
   );

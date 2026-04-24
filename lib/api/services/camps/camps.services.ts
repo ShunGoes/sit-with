@@ -80,12 +80,12 @@ export const createCamp = async (
   }
 };
 // logged in users call this function to book a camp slot
-export const bookACamp = async (id: string) => {
-  if (!id) {
+export const bookACamp = async ({campId, payload}: {campId: string, payload: any}) => {
+  if (!campId) {
     throw new Error("Camp ID is required.");
   }
   try {
-    const res = await api.post(`/camps/${id}/register`);
+    const res = await api.post(`/camps/${campId}/register`, payload);
     return res.data;
   } catch (error) {
     throw new Error(getApiError(error));

@@ -10,9 +10,25 @@ export interface ConsultationService {
   price: number;
   duration: number; // minutes
   calEventTypeId: string | null;
+  calBookingUrl: string;
   isActive: boolean;
   createdAt: string;
   updatedAt?: string;
+}
+
+export interface CalEventType {
+  calEventTypeId: number;
+  title: string;
+  slug: string;
+  lengthInMinutes: number;
+  calBookingUrl: string;
+  username: string;
+}
+
+export interface CalEventTypesResponse {
+  success: boolean;
+  message: string;
+  data: CalEventType[];
 }
 
 export interface CreateConsultationServicePayload {
@@ -28,6 +44,7 @@ export interface UpdateConsultationServicePayload {
   description?: string;
   price?: number;
   duration?: number;
+  calBookingUrl?: string;
   isActive?: boolean;
 }
 
@@ -100,6 +117,15 @@ export const updateConsultationStatus = async (
   if (!consultationId) throw new Error("Consultation ID is required.");
   try {
     const res = await api.patch(`/consultations/${consultationId}`, payload);
+    return res.data;
+  } catch (error) {
+    throw new Error(getApiError(error));
+  }
+};
+
+export const getCalEventTypes = async (): Promise<CalEventTypesResponse> => {
+  try {
+    const res = await api.get("/admin/cal/event-types");
     return res.data;
   } catch (error) {
     throw new Error(getApiError(error));

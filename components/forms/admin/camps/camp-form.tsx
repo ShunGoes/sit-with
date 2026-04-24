@@ -133,9 +133,11 @@ export default function CampForm({
       </div>
 
       <div className="flex items-center justify-end w-full mt-10 gap-3">
-        <Button variant={"outline"} type="button" onClick={onCancel}>Cancel</Button>
-        <Button 
-          variant={"regular"} 
+        <Button variant={"outline"} type="button" onClick={onCancel}>
+          Cancel
+        </Button>
+        <Button
+          variant={"regular"}
           disabled={!form.formState.isValid || form.formState.isSubmitting}
         >
           {form.formState.isSubmitting ? "Submitting..." : "Save Camp"}

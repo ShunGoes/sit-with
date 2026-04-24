@@ -28,9 +28,9 @@ export default function CampsPage() {
         <CampServices />
       </Suspense>
       <div className="w-11/12 mx-auto">
-        <CampParticipation />
+
       </div>
-      <BookingForm />
+      {/* <BookingForm /> */}
       <div className="w-full bg-white ">
         <Testimonials />
       </div>

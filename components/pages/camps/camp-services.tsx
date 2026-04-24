@@ -32,46 +32,9 @@ export default function CampServices() {
       (camp) => camp.status === "UPCOMING" || camp.status === "ONGOING",
     ) || [];
 
-  const handleCampSuccessModal = (data: SuccessBannerProps) => {
-    openModal(
-      "success",
-      <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
-        <CheckCircle className="w-16 h-16 text-regular-button" />
-        <h2 className="heading-2 mb-12 max-w-2xl">
-          You have successfully booked a {data?.title} camp session.
-        </h2>
-        <Button onClick={() => closeModal("success")} variant="outline">
-          Close
-        </Button>
-      </div>,
-    );
-  };
 
-  const handleBookCard = async (serviceId: string) => {
-    if (!isAuthenticated) {
-      router.push("/login?callbackUrl=/camps#camp-services");
-      return;
-    }
-    bookACamp(serviceId, {
-      onSuccess: (data) => {
-        closeModal("loading");
-        const camp = data?.data?.camp;
-        const successBanner = {
-          title: camp?.title,
-          description: camp?.description,
-          location: camp?.location,
-          price: camp?.price,
-          thumbnail: camp?.thumbnail,
-          capacity: camp?.capacity,
-          startDate: camp?.startDate,
-        };
-        handleCampSuccessModal(successBanner);
-      },
-      onError: () => {
-        closeModal("loading");
-      },
-    });
-  };
+
+
 
   const containerVariants = {
     hidden: {},
