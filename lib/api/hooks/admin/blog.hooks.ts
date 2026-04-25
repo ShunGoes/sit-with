@@ -13,14 +13,14 @@ export const adminBlogDetailQueryKey = (id: string) => ["admin-blog", id] as con
 
 export const useGetAdminBlogs = (params = {}) => {
   return useQuery({
-    queryKey: ADMIN_BLOGS_QUERY_KEY,
+    queryKey: [...ADMIN_BLOGS_QUERY_KEY, params],
     queryFn: () => getAdminBlogs(params),
   });
 };
 
 export const useGetAdminBlogById = (id: string) => {
   return useQuery({
-    queryKey: adminBlogDetailQueryKey(id),
+    queryKey: ["admin-blog", id],
     queryFn: () => getAdminBlogById(id),
     enabled: !!id,
   });
@@ -51,7 +51,7 @@ export const useUpdateBlogPost = () => {
       toast.success(response.message || "Blog post updated successfully");
       queryClient.invalidateQueries({ queryKey: ADMIN_BLOGS_QUERY_KEY });
       queryClient.invalidateQueries({
-        queryKey: adminBlogDetailQueryKey(variables.id),
+        queryKey: ["admin-blog", variables.id],
       });
     },
     onError: (error: Error) => {

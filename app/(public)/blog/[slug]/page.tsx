@@ -37,13 +37,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  
-
 
   return (
     <BlogDetailsClient slug={slug} />
   );
 }
+
+
 
 export async function generateStaticParams() {
   try {

@@ -2,8 +2,8 @@
 
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import SeacrchAndFilter from "@/components/seach-and-filter";
-import { Plus, Loader2 } from "lucide-react";
-import { useState, useMemo } from "react";
+import { Plus, Loader2, Globe } from "lucide-react";
+import { useState, useMemo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import BlogContent from "./blog-content";
 import { handleAddBlog } from "@/components/modal-helper";
@@ -47,6 +47,7 @@ const CATEGORY_OPTIONS = [
 export default function BlogOverview() {
   const [filteredItem, setFilteredItem] = useState("all");
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [category, setCategory] = useState("all");
 
   const isMobile = useIsMobile();
@@ -54,25 +55,18 @@ export default function BlogOverview() {
   const params = {
     category: category !== "all" ? category : undefined,
     status: filteredItem !== "all" ? filteredItem : undefined,
-  }
+    search: debouncedSearch,
+  };
   const { data: blogsResponse, isLoading, error } = useGetAdminBlogs(params);
 
-  const filteredBlogs = useMemo(() => {
-    if (!blogsResponse?.data) return [];
+  const blogList = blogsResponse?.data || [];
 
-    return blogsResponse.data.filter((blog) => {
-      const matchesStatus =
-        filteredItem === "all" ||
-        (filteredItem === "published" && blog.isPublished) ||
-        (filteredItem === "draft" && !blog.isPublished);
-
-      const matchesSearch =
-        blog.title.toLowerCase().includes(search.toLowerCase()) ||
-        (blog.author || "").toLowerCase().includes(search.toLowerCase());
-
-      return matchesStatus && matchesSearch;
-    });
-  }, [blogsResponse, filteredItem, search]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [search]);
 
   return (
     <div className="space-y-15">
@@ -92,18 +86,18 @@ export default function BlogOverview() {
 
       <div className="space-y-4">
         {/* search and filter functionality */}
-        <div className="flex items-center w-full border-4 gap-4">
+        <div className="flex items-center w-full gap-4">
           <div className="flex-1">
-          <SeacrchAndFilter
-            filterPplaceholder="Filter by status"
-            searchPlaceholder="search by title or author...."
-            options={STATUS_OPTIONS}
-            filteredItem={filteredItem}
-            setFilteredItem={setFilteredItem}
-            search={search}
-            setSearch={setSearch}
-          />
-
+            <SeacrchAndFilter
+              filterPplaceholder="Filter by status"
+              searchPlaceholder="search by title or author...."
+              options={STATUS_OPTIONS}
+              filteredItem={filteredItem}
+              setFilteredItem={setFilteredItem}
+              search={debouncedSearch}
+              setSearch={setSearch}
+              icon={<Globe className="text-secondary-text" />}
+            />
           </div>
           <div className="w-auto">
             <FilterSelectComp
@@ -130,10 +124,8 @@ export default function BlogOverview() {
                 {error.message}
               </p>
             </div>
-          ) : filteredBlogs.length > 0 ? (
-            filteredBlogs.map((blog) => (
-              <BlogContent key={blog.id} blog={blog} />
-            ))
+          ) : blogList.length > 0 ? (
+            blogList.map((blog) => <BlogContent key={blog.id} blog={blog} />)
           ) : (
             <div className="p-20 text-center bg-muted/20 rounded-xl border border-dashed border-border">
               <p className="text-secondary-text">No blog posts found</p>

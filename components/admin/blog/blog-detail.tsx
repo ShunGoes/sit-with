@@ -1,18 +1,36 @@
 "use client";
 
-import { useGetAdminBlogById, useDeleteBlogPost } from "@/lib/api/hooks/admin/blog.hooks";
+import {
+  useGetAdminBlogById,
+  useDeleteBlogPost,
+} from "@/lib/api/hooks/admin/blog.hooks";
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import QueryStateHandler from "@/components/query-state-handler";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
-import { Calendar, Clock, Tag, Trash2, Edit2, User } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  Tag,
+  Trash2,
+  Edit2,
+  User,
+  EllipsisVertical,
+  Edit,
+} from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { handleEditBlog } from "@/components/modal-helper";
 import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
 import { useEffect } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function BlogDetail({ id }: { id: string }) {
   const router = useRouter();
@@ -27,7 +45,7 @@ export default function BlogDetail({ id }: { id: string }) {
     if (isDeleting) {
       openModal(
         "loading",
-        <div className="flex items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+        <div className="flex items-center justify-center gap-4 bg-dash-secondary-bg p-10 rounded-lg min-w-50">
           <Spinner size={40} />
         </div>,
         { isMutation: true },
@@ -36,7 +54,11 @@ export default function BlogDetail({ id }: { id: string }) {
   }, [isDeleting, openModal]);
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this blog post? This action cannot be undone.")) {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this blog post? This action cannot be undone.",
+      )
+    ) {
       deletePost(id, {
         onSuccess: () => {
           closeModal("loading");
@@ -70,33 +92,58 @@ export default function BlogDetail({ id }: { id: string }) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-8">
-              <div className="bg-dash-secondary-bg p-8 rounded-[16px] space-y-6">
-                <div className="space-y-4">
-                  <div className="flex flex-wrap gap-2">
-                    <Badge variant={blog.isPublished ? "success" : "warning"}>
-                      {blog.isPublished ? "Published" : "Draft"}
-                    </Badge>
-                    <Badge variant="hibiscus" className="flex items-center gap-1">
-                      <Tag size={12} /> {blog.category}
-                    </Badge>
-                  </div>
-                  
-                  <h1 className="text-3xl font-bold text-primary-text leading-tight">
-                    {blog.title}
-                  </h1>
+              <div className="bg-dash-secondary-bg px-5 py-8 rounded-sm lg:rounded-[16px] space-y-6">
+                <div className="space-y-8">
+                  <div className="flex justify-between gap-4">
+                    <div className="flex flex-wrap gap-2 ">
+                      <Badge variant={blog.isPublished ? "success" : "warning"}>
+                        {blog.isPublished ? "Published" : "Draft"}
+                      </Badge>
+                      <Badge
+                        variant="hibiscus"
+                        className="flex items-center gap-1"
+                      >
+                        <Tag size={12} /> {blog.category}
+                      </Badge>
+                    </div>
 
-                  <div className="flex flex-wrap items-center gap-6 text-sm text-secondary-text">
-                    <div className="flex items-center gap-2">
-                      <User size={16} />
-                      <span>{blog.author || "Admin"}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar size={16} />
-                      <span>{format(new Date(blog.createdAt), "MMMM d, yyyy")}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock size={16} />
-                      <span>{blog.readTimeMinutes} min read</span>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="cursor-pointer lg:hidden transition-all rounded-full duration-300 w-10 h-10 hover:bg-[#EBEBEB] flex justify-center items-center">
+                        <EllipsisVertical />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-[200px]">
+                        <DropdownMenuItem onClick={() => blog && handleEditBlog(blog)} className="py-3 px-4">
+                          <Edit size={15} color="var(--primary-text-color)" />{" "}
+                          Edit Post
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleDelete} className="py-3 px-4 text-brand-red">
+                          <Trash2 color="var(--brand-red)" size={15} /> Delete
+                          Post
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h1 className="lg:text-3xl text-xl font-bold text-primary-text leading-tight">
+                      {blog.title}
+                    </h1>
+
+                    <div className="flex flex-wrap items-center gap-6 text-sm text-secondary-text">
+                      <div className="flex items-center gap-2">
+                        <User size={16} />
+                        <span>{blog.author || "Admin"}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Calendar size={16} />
+                        <span>
+                          {format(new Date(blog.createdAt), "MMMM d, yyyy")}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock size={16} />
+                        <span>{blog.readTimeMinutes} min read</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -113,14 +160,16 @@ export default function BlogDetail({ id }: { id: string }) {
                 )}
 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-primary-text">Excerpt</h3>
+                  <h3 className="text-lg font-semibold text-primary-text">
+                    Excerpt
+                  </h3>
                   <p className="text-secondary-text italic border-l-4 border-primary/20 pl-4 py-1 leading-relaxed">
                     {blog.excerpt}
                   </p>
                 </div>
 
                 <div className="border-t border-border pt-8">
-                  <div 
+                  <div
                     className="prose prose-sm md:prose-base max-w-none dark:prose-invert"
                     dangerouslySetInnerHTML={{ __html: blog.body }}
                   />
@@ -131,43 +180,60 @@ export default function BlogDetail({ id }: { id: string }) {
             {/* Sidebar / Actions */}
             <div className="space-y-6">
               <div className="bg-dash-secondary-bg p-6 rounded-[16px] border border-border sticky top-8">
-                <h3 className="font-bold text-lg mb-4">Actions</h3>
-                <div className="space-y-3">
-                  <Button 
-                    className="w-full justify-start gap-2 font-normal" 
+                <h3 className="font-bold text-lg mb-4 hidden lg:block">Actions</h3>
+                <div className="space-y-3 hidden lg:block">
+                  <Button
+                    className="w-full justify-start gap-2 font-normal"
                     variant="regular"
                     onClick={() => blog && handleEditBlog(blog)}
                   >
                     <Edit2 size={16} /> Edit Post
                   </Button>
-                  <Button 
-                    className="w-full justify-start gap-2 font-normal hover:bg-destructive/10 text-destructive border-destructive/20" 
+                  <Button
+                    className="w-full justify-start gap-2 font-normal hover:bg-destructive/10 text-destructive border-destructive/20"
                     variant="outline"
                     onClick={handleDelete}
                     disabled={isDeleting}
                   >
-                    <Trash2 size={16} /> {isDeleting ? "Deleting..." : "Delete Post"}
+                    <Trash2 size={16} />{" "}
+                    {isDeleting ? "Deleting..." : "Delete Post"}
                   </Button>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-border space-y-4">
-                  <div>
-                    <p className="text-xs font-medium text-secondary-text uppercase tracking-wider">Created At</p>
-                    <p className="text-sm font-medium">{format(new Date(blog.createdAt), "PPpp")}</p>
+                <div className="mt-8 lg:pt-6 border-t border-border space-y-6">
+                  <div className="">
+                    <p className="text-xs font-medium text-secondary-text mb-1 uppercase tracking-wider">
+                      Created At
+                    </p>
+                    <p className="text-sm font-medium text-primary-text">
+                      {format(new Date(blog.createdAt), "PPpp")}
+                    </p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-secondary-text uppercase tracking-wider">Last Updated</p>
-                    <p className="text-sm font-medium">{format(new Date(blog.updatedAt), "PPpp")}</p>
+                    <p className="text-xs font-medium text-secondary-text mb-1 uppercase tracking-wider">
+                      Last Updated
+                    </p>
+                    <p className="text-sm font-medium text-primary-text">
+                      {format(new Date(blog.updatedAt), "PPpp")}
+                    </p>
                   </div>
                   {blog.publishedAt && (
                     <div>
-                      <p className="text-xs font-medium text-secondary-text uppercase tracking-wider">Published At</p>
-                      <p className="text-sm font-medium">{format(new Date(blog.publishedAt), "PPpp")}</p>
+                      <p className="text-xs font-medium text-secondary-text mb-1 uppercase tracking-wider">
+                        Published At
+                      </p>
+                      <p className="text-sm font-medium text-primary-text">
+                        {format(new Date(blog.publishedAt), "PPpp")}
+                      </p>
                     </div>
                   )}
                   <div>
-                    <p className="text-xs font-medium text-secondary-text uppercase tracking-wider">Slug</p>
-                    <p className="text-sm font-mono bg-muted px-2 py-1 rounded mt-1 break-all">{blog.slug}</p>
+                    <p className="text-xs font-medium text-secondary-text mb-1 uppercase tracking-wider">
+                      Slug
+                    </p>
+                    <p className="text-sm font-mono bg-muted px-2 py-1 rounded mt-1 break-all text-primary-text">
+                      {blog.slug}
+                    </p>
                   </div>
                 </div>
               </div>
