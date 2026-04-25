@@ -1,6 +1,5 @@
 import AdminBlogEditor from "../forms/admin/blog/add-blog";
 import { BlogPost } from "@/lib/api/services/admin/blog.services";
-import { SuccessBannerProps } from "@/types/common.types"; // Assuming this exists or needed for handleCampSuccessModal
 import EditBlogEditor from "../forms/admin/blog/edit-blog";
 import AddProgramForm from "../forms/admin/program/add-program";
 import EditProgramForm from "../forms/admin/program/edit-program";
