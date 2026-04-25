@@ -33,12 +33,12 @@ export default function ProtectedLayout({
   const lastName = user?.lastName ?? ""
   const userInitials = firstName.charAt(0) + lastName.charAt(0) || "U";
 
-  useEffect(() => {
-    if (isError) router.replace("/login");
-  }, [isError, router]);
+  // useEffect(() => {
+  //   if (isError) router.replace("/login");
+  // }, [isError, router]);
 
-  if (isLoading) return <DashboardSkeleton />;
-  if (isError) return null;
+  // if (isLoading) return <DashboardSkeleton />;
+  // if (isError) return null;
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>

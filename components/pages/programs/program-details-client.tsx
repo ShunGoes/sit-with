@@ -26,8 +26,8 @@ const WHAT_YOU_WILL_GAIN = [
 function PaymentSuccessModal() {
   return (
     <section className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
-      <CheckCircle className="w-16 h-16 text-regular-button" />
-      <h2 className="heading-2 mb-12 max-w-2xl">
+      <CheckCircle className="w-10 h-10 text-regular-button" />
+      <h2 className="text-base text-center mb-12 max-w-2xl">
         You have successfully enrolled for this coure. Please check your mail
         for the next steps .
       </h2>
@@ -81,7 +81,7 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
     price,
     durationWeeks,
     hoursPerWeek,
-  } = program;
+  } = program ?? {};
 
   // submit enrollment
   const enrolNow = () => {

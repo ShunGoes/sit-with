@@ -49,7 +49,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
     },
     editorProps: {
       attributes: {
-        class: "prose prose-sm max-w-none min-h-[400px] p-4 focus:outline-none",
+        class: "prose prose-sm max-w-none min-h-[400px] p-4 text-primary-text focus:outline-none",
       },
     },
   });
@@ -163,7 +163,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
       </div>
 
       {/* Editor area */}
-      <EditorContent editor={editor} className="cursor-text" />
+      <EditorContent editor={editor} className="cursor-text " />
     </div>
   );
 }

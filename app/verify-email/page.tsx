@@ -40,8 +40,7 @@ function VerifyEmailContent() {
       const userData = data?.data?.user || data?.data;
       
       if (userData) {
-        const responseToken = data?.data?.token || data?.token;
-        setUser(userData, "email", responseToken);
+        setUser(userData, "email");
         setUserEmailVerified(true);
       }
 

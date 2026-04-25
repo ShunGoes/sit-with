@@ -2,8 +2,19 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { CATEGORIES } from "@/lib/mock-data/blogs";
 import Image from "next/image";
+import { useGetPublicBlogs } from "@/lib/api/hooks/blog/blog.hooks";
+import { Spinner } from "@/components/spinner";
+import QueryStateHandler from "@/components/query-state-handler";
+
+const CATEGORIES = ["All", "WELLBEING", "REFLECTION", "PERSONAL_GROWTH"];
+
+const CATEGORY_LABELS: Record<string, string> = {
+  All: "All",
+  WELLBEING: "Wellbeing",
+  REFLECTION: "Reflection",
+  PERSONAL_GROWTH: "Personal Growth",
+};
 
 interface BlogClientProps {
   blogs: Array<{
@@ -13,16 +24,25 @@ interface BlogClientProps {
     readTime: string;
     snippet: string;
     category: string;
+    coverImageUrl?: string;
   }>;
 }
 
-export function BlogClient({ blogs }: BlogClientProps) {
+export function BlogClient() {
+  const [category, setCategory] = useState<string | undefined>(undefined);
+
+  const {
+    data: blogs,
+    isLoading: isLoadingBlogs,
+    isError,
+    isFetching,
+  } = useGetPublicBlogs({
+    category: category !== "All" ? category : undefined,
+  });
+
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const filteredBlogs =
-    activeCategory === "All"
-      ? blogs
-      : blogs.filter((b) => b.category === activeCategory);
+  const blogsList = blogs?.data || [];
 
   return (
     <div className="w-full">
@@ -53,7 +73,10 @@ export function BlogClient({ blogs }: BlogClientProps) {
             return (
               <button
                 key={category}
-                onClick={() => setActiveCategory(category)}
+                onClick={() => {
+                  setActiveCategory(category);
+                  setCategory(category);
+                }}
                 className={`whitespace-nowrap px-5 py-2 rounded-full text-sm md:text-base cursor-pointer transition-all ${
                   isActive
                     ? "bg-regular-button text-white "
@@ -67,46 +90,71 @@ export function BlogClient({ blogs }: BlogClientProps) {
                 
                 `}
               >
-                {category}
+                {CATEGORY_LABELS[category] || category}
               </button>
             );
           })}
         </div>
 
         {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
-          {filteredBlogs.map((blog) => (
-            <Link
-              href={`/blog/${blog.slug}`}
-              key={blog.id}
-              className="flex flex-col group"
-            >
-              {/* Image */}
-              <div className="w-full aspect-video bg-[#DEE5DF] rounded-sm mb-5 overflow-hidden" />
+        <QueryStateHandler
+          data={blogsList}
+          isLoading={isLoadingBlogs}
+          isError={isError}
+          isFetching={isFetching}
+          fetchingMessage="Fetching blogs..."
+          loadingMessage="Loading Blogs..."
+          errorMessage="Error loading blogs..."
+          emptyMessage="No blogs found."
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+            {blogsList.map((blog) => (
+              <Link
+                href={`/blog/${blog.slug}`}
+                key={blog.id}
+                className="flex flex-col group max-w-[500px] mx-auto w-full"
+              >
+                {/* Image */}
+                <div className="w-full aspect-video bg-[#DEE5DF] rounded-t-sm  mb-5 overflow-hidden relative">
+                  {blog.coverImageUrl ? (
+                    <Image
+                      src={blog.coverImageUrl}
+                      alt={blog.title}
+                      fill
+                      className="object-cover group-hover:scale-105 rounded-t-sm transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-400">
+                      No Image
+                    </div>
+                  )}
+                </div>
 
-              {/* Read time badge */}
-              <div className="mb-3">
-                <span className="inline-block bg-[#60935D33] text-[#213A1F] px-3 py-1 rounded-full text-xs font-medium">
-                  {blog.readTime}
-                </span>
-              </div>
+                {/* Read time badge */}
+                <div className="mb-3">
+                  <span className="inline-block bg-[#60935D33] text-[#213A1F] px-3 py-1 rounded-full text-xs font-medium">
+                    {blog?.readTimeMinutes}
+                    {blog?.readTimeMinutes > 1 ? " mins" : " min"} read
+                  </span>
+                </div>
 
-              <h2 className="text-[#242424] text-lg font-medium leading-[30px] mb-2 group-hover:text-[#649351] transition-colors">
-                {blog.title}
-              </h2>
+                <h2 className="text-[#242424] text-lg font-medium leading-[30px] mb-1 group-hover:text-[#649351] transition-colors">
+                  {blog?.title}
+                </h2>
 
-              <p className="text-[#242424] text-sm leading-[30px] line-clamp-3 mb-5 flex-1">
-                {blog.snippet}
-              </p>
+                <p className="text-[#242424] text-sm leading-[30px] line-clamp-3 mb-5 flex-1">
+                  {blog?.excerpt}
+                </p>
 
-              <div className="mt-auto">
-                <span className="text-[#242424] text-lg font-medium border-b border-[#242424] pb-0.5 group-hover:text-[#649351] group-hover:border-[#649351] transition-colors">
-                  Read more
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
+                <div className="mt-auto">
+                  <span className="text-[#242424] text-lg font-medium border-b border-[#242424] pb-0.5 group-hover:text-[#649351] group-hover:border-[#649351] transition-colors">
+                    Read more
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </QueryStateHandler>
       </section>
     </div>
   );

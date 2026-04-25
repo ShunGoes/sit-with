@@ -1,4 +1,6 @@
 import AdminBlogEditor from "../forms/admin/blog/add-blog";
+import { BlogPost } from "@/lib/api/services/admin/blog.services";
+import { SuccessBannerProps } from "@/types/common.types"; // Assuming this exists or needed for handleCampSuccessModal
 import EditBlogEditor from "../forms/admin/blog/edit-blog";
 import AddProgramForm from "../forms/admin/program/add-program";
 import EditProgramForm from "../forms/admin/program/edit-program";
@@ -63,23 +65,15 @@ export function handleCampSuccessModal(data: SuccessBannerProps) {
 export const handleEditFileCaption = (campId: string, imageId: string, order: number | undefined) => {
   openModal("edit-image-caption", <UpdateCaptionForm campId={campId} imqgeId={imageId} order={order} />);
 };
+
 //>>>>>>>>>>>>>>>>>>> BLOG <<<<<<<<<<<<<<<<<<<<<<<<<
 export const handleAddBlog = () => {
   openModal("add-new-blog", <AdminBlogEditor />);
 };
 
-export const handleEditBlog = () => {
+export const handleEditBlog = (blog: BlogPost) => {
   openModal(
     "open-edit-blog",
-    <EditBlogEditor
-      blog={{
-        id: "",
-        title: "Favour",
-        author: "",
-        excerpt: "",
-        coverImage: "",
-        content: "",
-      }}
-    />,
+    <EditBlogEditor blog={blog} />,
   );
 };

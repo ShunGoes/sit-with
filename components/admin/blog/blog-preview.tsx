@@ -8,7 +8,7 @@ import Image from "next/image";
 export default function BlogPreview() {
   const values = useWatch<AddBlogFormValues>();
   const [fileSrc, setFileSrc] = useState<string | null>(null);
-  const { title, author, excerpt, coverImage, content } =
+  const { title, author, excerpt, coverImage, body } =
     values as AddBlogFormValues;
 
   // Resolve cover image src safely without memory leaks
@@ -65,7 +65,7 @@ export default function BlogPreview() {
         className="prose prose-sm max-w-none"
         dangerouslySetInnerHTML={{
           __html:
-            content ||
+            body ||
             "<p class='text-muted-foreground'>Nothing written yet…</p>",
         }}
       />

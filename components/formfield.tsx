@@ -51,7 +51,7 @@ export default function FormFieldComp<T extends FieldValues>({
         <Field data-invalid={fieldState.invalid}>
           <div className=" ">
             <FieldLabel
-              className={clsx("text-[#344054]  text-[14px] mb-2")}
+              className={clsx("text-primary-text dark:font-medium  text-[14px] mb-2")}
               htmlFor={name}
             >
               {label}
@@ -66,7 +66,7 @@ export default function FormFieldComp<T extends FieldValues>({
                 inputMode={inputMode}
                 autoComplete="one-time-code"
                 className={clsx(
-                  "pr-10  border-[0.75px] border-[#EAECF0] bg-[#F2F4F7] rounded-[5px] w-full text-[12px]   font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal  py-4 h-11 focus-visible:border-none focus-visible:ring-0 ",
+                  "pr-10  border-[0.75px]  border-[#EAECF0] bg-[#F2F4F7] rounded-[5px] w-full text-[12px]   font-medium text-primary-text placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal  py-4 h-11 focus-visible:border-none focus-visible:ring-0 ",
                   isPassword &&
                     !showPassword &&
                     " text-[#344054] [-webkit-text-security:disc] ",

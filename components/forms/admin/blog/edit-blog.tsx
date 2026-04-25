@@ -9,59 +9,98 @@ import BlogPreview from "@/components/admin/blog/blog-preview";
 import { Button } from "@/components/ui/button";
 import { PenLine, Eye } from "lucide-react";
 
-// Shape of an existing blog post from your API
-export interface ExistingBlog {
-  id: string;
-  title: string;
-  author: string;
-  excerpt: string;
-  coverImage: string; // URL from the server
-  content: string;
-}
+import { useUpdateBlogPost } from "@/lib/api/hooks/admin/blog.hooks";
+import { BlogPost } from "@/lib/api/services/admin/blog.services";
+import { useModalStore } from "@/components/store/use-modal-store";
+import { Spinner } from "@/components/spinner";
 
 interface EditBlogEditorProps {
-  blog: ExistingBlog;
+  blog: BlogPost;
 }
 
 type Mode = "write" | "preview";
 
 export default function EditBlogEditor({ blog }: EditBlogEditorProps) {
   const [mode, setMode] = useState<Mode>("write");
+  const { mutate: updateBlogPost, isPending } = useUpdateBlogPost();
+  const closeModal = useModalStore((state) => state.closeModal);
+  const openModal = useModalStore((state) => state.openModal);
 
   const form = useForm<EditBlogFormValues>({
     resolver: zodResolver(editBlogSchema),
     defaultValues: {
       title: "",
+      slug: "",
       author: "",
       excerpt: "",
       coverImage: undefined,
-      content: "",
+      body: "",
+      category: "",
+      readTimeMinutes: 5,
+      isPublished: false,
     },
   });
 
-  // Prefill form once blog data is available (handles both direct props and async fetched data)
+  // Prefill form once blog data is available
   useEffect(() => {
     if (blog) {
       form.reset({
         title: blog.title,
-        author: blog.author,
+        slug: blog.slug,
+        author: blog.author || "Admin",
         excerpt: blog.excerpt,
-        coverImage: blog.coverImage,
-        content: blog.content,
+        coverImage: blog.coverImageUrl,
+        body: blog.body,
+        category: blog.category,
+        readTimeMinutes: blog.readTimeMinutes,
+        isPublished: blog.isPublished,
       });
     }
   }, [blog, form]);
 
+  useEffect(() => {
+    if (isPending) {
+      openModal(
+        "loading",
+        <div className="flex items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+          <Spinner size={40} className="text-primary-text" />
+        </div>,
+        { isMutation: true },
+      );
+    }
+  }, [isPending, openModal]);
+
   const onSubmit = (data: EditBlogFormValues) => {
-    console.log("Edit blog submitted:", { id: blog.id, ...data });
-    // TODO: wire up API call (e.g. PATCH /api/blogs/:id)
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      if (key === "coverImage") {
+        if (value instanceof File) {
+          formData.append(key, value);
+        }
+      } else {
+        formData.append(key, String(value));
+      }
+    });
+
+    updateBlogPost(
+      { id: blog.id, data: formData },
+      {
+        onSuccess: () => {
+          closeModal("loading");
+          closeModal("open-edit-blog");
+        },
+        onError: () => {
+          closeModal("loading");
+        },
+      }
+    );
   };
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-border pb-4">
-        <div className="flex  justify-between w-10/12 sm:w-11/12">
+        <div className="flex justify-between w-10/12 sm:w-11/12">
           <div>
             <h1 className="text-2xl text-primary-text font-bold">
               {mode === "write" ? "Edit Post" : "Preview Post"}
@@ -71,7 +110,7 @@ export default function EditBlogEditor({ blog }: EditBlogEditorProps) {
             </p>
           </div>
 
-          <div className="flex  gap-2  rounded-lg p-1">
+          <div className="flex gap-2 rounded-lg p-1">
             <Button
               type="button"
               size="sm"
@@ -96,7 +135,11 @@ export default function EditBlogEditor({ blog }: EditBlogEditorProps) {
 
       <FormProvider {...form}>
         {mode === "write" ? (
-          <BlogForm onSubmit={onSubmit} submitLabel="Save Changes" />
+          <BlogForm 
+            onSubmit={onSubmit} 
+            submitLabel="Save Changes" 
+            isLoading={isPending} 
+          />
         ) : (
           <BlogPreview />
         )}
