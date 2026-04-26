@@ -1,11 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllUsers } from "../../services/users/users.services";
 
-export const USERS_QUERY_KEY = ["users"] as const;
-
-export const useGetAllUsers = (params = {}) => {
+export const useGetAllUsers = (params: any = {}) => {
   return useQuery({
-    queryKey: [...USERS_QUERY_KEY, params],
+    queryKey: ["users", params.page, params.limit, params.search],
     queryFn: () => getAllUsers(params),
     retry: false,
   });

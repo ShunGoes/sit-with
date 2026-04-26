@@ -9,9 +9,10 @@ type QueryStateHandlerProps = {
   errorMessage?: string;
   emptyMessage?: string;
   children: React.ReactNode;
-  isFetching?: boolean
-  fetchingMessage?: string,
-  imageUrl?: string
+  isFetching?: boolean;
+  fetchingMessage?: string;
+  imageUrl?: string;
+  queryErrorMessage?: string;
 };
 
 export default function QueryStateHandler({
@@ -24,7 +25,8 @@ export default function QueryStateHandler({
   children,
   isFetching,
   fetchingMessage,
-  imageUrl = ""
+  imageUrl = "",
+  queryErrorMessage,
 }: QueryStateHandlerProps) {
   if (isLoading) {
     return (
@@ -36,7 +38,7 @@ export default function QueryStateHandler({
       </div>
     );
   }
-  if (isFetching) {
+  if (isFetching && (!data || data.length === 0)) {
     return (
       <div className="flex items-center justify-center py-12">
         <div className="text-center flex items-center justify-center flex-col gap-6">
@@ -49,10 +51,9 @@ export default function QueryStateHandler({
 
   if (isError) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-center">
-          <h3 className="font-bold text-secondary-text mb-1">{errorMessage}</h3>
-        </div>
+      <div className="p-8 text-center bg-destructive/5 rounded-xl border border-destructive/20">
+        <p className="text-destructive font-medium">{errorMessage}</p>
+        <p className="text-sm text-secondary-text mt-1">{queryErrorMessage}</p>
       </div>
     );
   }

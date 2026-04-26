@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useGetPublicBlogs } from "@/lib/api/hooks/blog/blog.hooks";
 import { Spinner } from "@/components/spinner";
 import QueryStateHandler from "@/components/query-state-handler";
+import SearchInput from "@/components/searchInput";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const CATEGORIES = ["All", "WELLBEING", "REFLECTION", "PERSONAL_GROWTH"];
 
@@ -29,17 +31,29 @@ interface BlogClientProps {
 }
 
 export function BlogClient() {
-  const [category, setCategory] = useState<string | undefined>(undefined);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const search = searchParams.get("search");
+  const categoryParams = searchParams.get("category");
+
+  const params = {
+    search,
+    ...(categoryParams && { category: categoryParams }),
+  };
 
   const {
     data: blogs,
     isLoading: isLoadingBlogs,
     isError,
     isFetching,
-  } = useGetPublicBlogs({
-    category: category !== "All" ? category : undefined,
-  });
+  } = useGetPublicBlogs(params);
 
+  const handleChange = (newValue: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("category", newValue);
+    router.push(`?${params.toString()}`);
+  };
   const [activeCategory, setActiveCategory] = useState("All");
 
   const blogsList = blogs?.data || [];
@@ -66,22 +80,23 @@ export function BlogClient() {
 
       {/* Main Content */}
       <section className="container mx-auto px-4 md:px-8 pt-12 pb-30 max-w-[1200px] ">
-        {/* Category Filters */}
-        <div className="flex items-center gap-3 overflow-x-auto pb-4 mb-12 scrollbar-hide">
-          {CATEGORIES.map((category) => {
-            const isActive = category === activeCategory;
-            return (
-              <button
-                key={category}
-                onClick={() => {
-                  setActiveCategory(category);
-                  setCategory(category);
-                }}
-                className={`whitespace-nowrap px-5 py-2 rounded-full text-sm md:text-base cursor-pointer transition-all ${
-                  isActive
-                    ? "bg-regular-button text-white "
-                    : "bg-transparent text-regular-button border border-regular-button hover:border-[#60935D]"
-                }
+        <div className="flex  justify-between gap-x-3">
+          {/* Category Filters */}
+          <div className="flex items-center gap-3 overflow-x-auto  pb-4 mb-12 scrollbar-hide">
+            {CATEGORIES.map((category) => {
+              const isActive = category === activeCategory;
+              return (
+                <button
+                  key={category}
+                  onClick={() => {
+                    setActiveCategory(category);
+                    handleChange(category);
+                  }}
+                  className={`whitespace-nowrap px-5 py-2 rounded-full text-sm md:text-base cursor-pointer transition-all ${
+                    isActive
+                      ? "bg-regular-button text-white "
+                      : "bg-transparent text-regular-button border border-regular-button hover:border-[#60935D]"
+                  }
                 ${
                   activeCategory === "All"
                     ? "p-3 h-10 rounded-full flex items-center justify-center"
@@ -89,11 +104,15 @@ export function BlogClient() {
                 }
                 
                 `}
-              >
-                {CATEGORY_LABELS[category] || category}
-              </button>
-            );
-          })}
+                >
+                  {CATEGORY_LABELS[category] || category}
+                </button>
+              );
+            })}
+          </div>
+          <div>
+            <SearchInput placeholder="Search blogs..." className=" border-regular-button border" />
+          </div>
         </div>
 
         {/* Blog Grid */}

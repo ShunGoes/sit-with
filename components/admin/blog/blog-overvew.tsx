@@ -10,6 +10,10 @@ import { handleAddBlog } from "@/components/modal-helper";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useGetAdminBlogs } from "@/lib/api/hooks/admin/blog.hooks";
 import FilterSelectComp from "@/components/filter";
+import QueryStateHandler from "@/components/query-state-handler";
+import Pagination from "@/components/pagination";
+import SearchInput from "@/components/searchInput";
+import { useSearchParams } from "next/navigation";
 
 const STATUS_OPTIONS = [
   {
@@ -43,30 +47,36 @@ const CATEGORY_OPTIONS = [
     value: "all",
   },
 ];
+const LIMIT = 10;
 
 export default function BlogOverview() {
-  const [filteredItem, setFilteredItem] = useState("all");
-  const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [category, setCategory] = useState("all");
+  const searchParams = useSearchParams();
+
+  //  extra all query params from the url
+  const page = Number(searchParams.get("page") ?? 1);
+  const search = searchParams.get("search") ?? "";
+  const status = searchParams.get("status") ?? "";
+  const category = searchParams.get("category") ?? "";
 
   const isMobile = useIsMobile();
 
   const params = {
-    category: category !== "all" ? category : undefined,
-    status: filteredItem !== "all" ? filteredItem : undefined,
-    search: debouncedSearch,
+    page,
+    limit: LIMIT,
+    ...(search !== "" && { search }),
+    ...(status !== "" && { status }),
+    ...(category !== "" && { category }),
   };
-  const { data: blogsResponse, isLoading, error } = useGetAdminBlogs(params);
+
+  const {
+    data: blogsResponse,
+    isLoading,
+    isError,
+    isFetching,
+    error,
+  } = useGetAdminBlogs(params);
 
   const blogList = blogsResponse?.data || [];
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearch(search);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [search]);
 
   return (
     <div className="space-y-15">
@@ -85,54 +95,44 @@ export default function BlogOverview() {
       </div>
 
       <div className="space-y-4">
-        {/* search and filter functionality */}
+        {/* search and filter bar  */}
         <div className="flex items-center w-full gap-4">
           <div className="flex-1">
-            <SeacrchAndFilter
-              filterPplaceholder="Filter by status"
-              searchPlaceholder="search by title or author...."
-              options={STATUS_OPTIONS}
-              filteredItem={filteredItem}
-              setFilteredItem={setFilteredItem}
-              search={debouncedSearch}
-              setSearch={setSearch}
-              icon={<Globe className="text-secondary-text" />}
-            />
+            <SearchInput />
           </div>
-          <div className="w-auto">
+
+          <div className="w-auto flex items-center gap-3">
             <FilterSelectComp
-              value={category}
-              onValueChange={setCategory}
               options={CATEGORY_OPTIONS}
-              placeholder="Filter by category"
+              placeholder=" category"
+              paramKey="category"
+            />
+            <FilterSelectComp
+              options={STATUS_OPTIONS}
+              placeholder=" status"
+              paramKey="status"
             />
           </div>
         </div>
 
         <div className="flex flex-col gap-4">
-          {isLoading ? (
-            <div className="flex flex-col items-center justify-center py-20 gap-3 text-secondary-text">
-              <Loader2 className="animate-spin h-8 w-8 text-primary" />
-              <p>Loading blog posts...</p>
-            </div>
-          ) : error ? (
-            <div className="p-8 text-center bg-destructive/5 rounded-xl border border-destructive/20">
-              <p className="text-destructive font-medium">
-                Failed to load blogs
-              </p>
-              <p className="text-sm text-secondary-text mt-1">
-                {error.message}
-              </p>
-            </div>
-          ) : blogList.length > 0 ? (
-            blogList.map((blog) => <BlogContent key={blog.id} blog={blog} />)
-          ) : (
-            <div className="p-20 text-center bg-muted/20 rounded-xl border border-dashed border-border">
-              <p className="text-secondary-text">No blog posts found</p>
-            </div>
-          )}
+          <QueryStateHandler
+            data={blogList}
+            isLoading={isLoading}
+            isError={isError}
+            loadingMessage="Loading your post(s)"
+            errorMessage="Posts failed to load"
+            queryErrorMessage={error?.message}
+            isFetching={isFetching}
+            emptyMessage="No blog posts found"
+          >
+            {blogList.map((blog) => (
+              <BlogContent key={blog.id} blog={blog} />
+            ))}
+          </QueryStateHandler>
 
           {/* Pagination */}
+          <Pagination totalPages={blogsResponse?.meta?.totalPages ?? 1} />
         </div>
       </div>
     </div>

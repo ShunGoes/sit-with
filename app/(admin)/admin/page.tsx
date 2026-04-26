@@ -9,6 +9,8 @@ import { useState } from "react";
 import UsersTable from "@/components/admin/users/users-table";
 
 import { RecentPayments } from "@/components/admin/dashboard/recent-payments";
+import Pagination from "@/components/pagination";
+import SearchInput from "@/components/searchInput";
 
 export default function Page() {
   const [filteredItem, setFilteredItem] = useState("");
@@ -32,12 +34,12 @@ export default function Page() {
         <div className="space-y-2">
           <div className="flex justify-end w-full">
             <div className="w-auto ">
-              <FilterSelectComp
+              {/* <FilterSelectComp
                 placeholder="Filter by status"
                 options={STATUS_OPTIONS}
                 value={filteredItem}
                 onValueChange={setFilteredItem}
-              />
+              /> */}
             </div>
           </div>
           <RecentActivities />
@@ -50,11 +52,15 @@ export default function Page() {
       </section>
 
       <section className="space-y-6">
-        <div>
+        <div className="flex justify-between  gap-3">
+          <div>
           <h2 className="text-xl font-semibold text-primary-text">Users</h2>
           <p className="text-sm text-secondary-text">
             All registered users on the platform
           </p>
+
+          </div>
+          <SearchInput />
         </div>
         <UsersTable />
       </section>

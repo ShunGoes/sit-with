@@ -21,6 +21,12 @@ export interface BlogResponse {
   success: boolean;
   message: string;
   data: BlogPost[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  }
 }
 
 export interface SingleBlogResponse {
