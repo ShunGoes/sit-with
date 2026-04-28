@@ -8,7 +8,10 @@ import { useModalStore } from "@/components/store/use-modal-store";
 import WeekCard from "./week-card";
 import ModulesSection from "./modules-section";
 import AddWeekModal from "./add-week-modal";
-import type { ProgramFormSchema, WeekFormData } from "@/schemas/programs-schema";
+import type {
+  ProgramFormSchema,
+  WeekFormData,
+} from "@/schemas/programs-schema";
 
 export default function ProgramWeeksSection() {
   const { control } = useFormContext<ProgramFormSchema>();
@@ -18,8 +21,6 @@ export default function ProgramWeeksSection() {
     control,
     name: "weeks",
   });
-
-  console.log("fields ", fields)
 
   // Only one week can be "selected" (expanded) at a time. -1 means none.
   const [selectedWeekIndex, setSelectedWeekIndex] = useState<number>(-1);
@@ -48,7 +49,7 @@ export default function ProgramWeeksSection() {
         onAddWeek={(week: WeekFormData) => {
           append(week);
         }}
-      />
+      />,
     );
   };
 
@@ -61,7 +62,7 @@ export default function ProgramWeeksSection() {
             <header className="text-primary-text font-semibold text-base ">
               Program Weeks
             </header>
-            <p className="text-xs text-[#667185]">
+            <p className="text-xs text-primary-text">
               Add and manage weekly content that appears on the user dashboard
             </p>
           </div>

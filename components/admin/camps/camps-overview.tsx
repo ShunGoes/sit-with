@@ -1,9 +1,11 @@
 "use client";
 
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
+import FilterSelectComp from "@/components/filter";
 import { addCamp, editCamp } from "@/components/modal-helper";
 import QueryStateHandler from "@/components/query-state-handler";
 import SeacrchAndFilter from "@/components/seach-and-filter";
+import SearchInput from "@/components/searchInput";
 import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
 import CampsColumn from "@/components/tables/columns/camps-column";
@@ -14,6 +16,12 @@ import { Plus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+
+const FILTER_BY_STATUS = [
+  {
+    label: "published", value: "published"
+  }
+]
 export default function CampsOverview() {
   const searchParams = useSearchParams();
   const filteredItem = searchParams.get("status") ?? "";
@@ -80,15 +88,14 @@ export default function CampsOverview() {
       </div>
 
       <div className="space-y-4">
-        {/* search and filter functionality */}
-        <SeacrchAndFilter
-          filterPplaceholder="Filter by status"
-          searchPlaceholder="Search camps..."
-          options={[]} // Add status options here if required
-          paramKey="status"
-          search={search}
-          setSearch={setSearch}
-        />
+
+        <div className="flex justify-between gap-4">
+          <SearchInput />
+            
+          <div>
+          <FilterSelectComp paramKey="" options={FILTER_BY_STATUS} />
+          </div>
+        </div>
 
         {/* table */}
         <div className="bg-dash-secondary-bg rounded-[16px] pb-1">

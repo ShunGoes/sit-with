@@ -38,10 +38,10 @@ export default function LearningObjectivesField() {
           {fields.map((field, index) => (
             <li
               key={field.id}
-              className="flex items-center justify-between text-sm text-[#344054] bg-[#F9FAFB] rounded-md px-3 py-2"
+              className="flex items-center justify-between text-sm text-primary-text bg-dash-secondary-bg rounded-md px-3 py-2"
             >
               <span className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-green-600" />
+                <Check className="h-4 w-4 text-regular-button" />
                 {field.text}
               </span>
               <button
@@ -63,7 +63,7 @@ export default function LearningObjectivesField() {
           onChange={(e) => setObjectiveInput(e.target.value)}
           onKeyDown={handleObjectiveKeyDown}
           placeholder="Add a learning objective..."
-          className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] flex-1 text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+          className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] flex-1 text-[12px] font-medium text-primary-text placeholder:text-[#98A2B3] placeholder:text-[12px] py-4 h-11 focus-visible:border-none focus-visible:ring-0"
         />
         <Button
           type="button"

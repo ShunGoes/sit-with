@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import QueryStateHandler from "@/components/query-state-handler";
 import ReuseableTable from "@/components/tables/reuseable-table";
@@ -13,6 +13,8 @@ import {
 } from "@/lib/api/hooks/camps/camps.hooks";
 import Image from "next/image";
 import ParticipantsColumn from "@/components/tables/columns/participants-column";
+import CampParticipantsColumn from "@/components/tables/columns/camp-participants-column";
+import ParticipantDetailModal from "@/components/admin/camps/participant-detail-modal";
 import { formatCurrency } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { ViewTransition } from "react";
@@ -36,24 +38,66 @@ import MultiImageUpload from "@/components/multi-image-upload";
 import { useUploadCampImages } from "@/lib/api/hooks/camps/camps.hooks";
 import { editCampTier, handleEditFileCaption } from "@/components/modal-helper";
 import { CampTier, CampImage } from "@/types/camps.types";
+import Pagination from "@/components/pagination";
+import { useSearchParams } from "next/navigation";
+
 
 export default function CampDetail({ id }: { id: string }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const searchParams = useSearchParams()
+
+  const page = Number(searchParams.get('page'))
+  const PARTICIPANT_TABLE_LIMIT = 20
+  
+  const params = {
+    page,
+    limit: PARTICIPANT_TABLE_LIMIT
+  }
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const { data: campData, isLoading, isError } = useGetCamp(id);
   const { data: participantsData, isLoading: participantsLoading } =
-    useGetCampParticipants(id);
+    useGetCampParticipants({id, params});
 
   const { mutate: deleteTier } = useDeleteCampTier();
   const { mutate: deleteImage } = useDeleteCampImage();
-  const { mutate: replaceImage } = useReplaceCampImage();
   const { mutate: uploadImages, isPending: isUploadingImages } =
     useUploadCampImages();
 
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const camp = campData?.data;
+
+  const participantTableData = participantsData?.data;
+  
+  const mappedparticipationArray = participantTableData?.map((participant: any) => {
+    return {
+      id: participant.id,
+      name: `${participant.applicantDetails?.fullName}`,
+      phone: participant.applicantDetails?.phone,
+      tier: participant.tier?.label,
+      amountPaid: participant.tier?.price,
+      payment: participant.payment?.status,
+      emergencyContact: participant.applicantDetails?.emergencyContact,
+    };
+  });
+
+  const handleViewParticipantDetails = (participantId: string) => {
+    const fullParticipantData = participantTableData?.find(
+      (p: any) => p.id === participantId
+    );
+    if (fullParticipantData) {
+      openModal(
+        `participant-detail-${participantId}`,
+        <ParticipantDetailModal participant={fullParticipantData} />
+      );
+    }
+  };
 
   // Image replacement handler
   const handleReplaceImage = (imageId: string, order: number | undefined) => {
@@ -187,15 +231,16 @@ export default function CampDetail({ id }: { id: string }) {
                 Dates
               </h3>
               <p>
-                {camp?.startDate &&
+                {isMounted && camp?.startDate &&
                   new Date(camp.startDate).toLocaleString("en-US", {
                     dateStyle: "medium",
                   })}{" "}
                 -{" "}
-                {camp?.endDate &&
+                {isMounted && camp?.endDate &&
                   new Date(camp.endDate).toLocaleString("en-US", {
                     dateStyle: "medium",
                   })}
+                {!isMounted && "Loading dates..."}
               </p>
             </div>
           </div>
@@ -414,18 +459,19 @@ export default function CampDetail({ id }: { id: string }) {
         <h2 className="text-xl font-semibold">Camp Participants</h2>
         <div className="bg-dash-secondary-bg rounded-[16px] pb-1">
           <QueryStateHandler
-            data={participantsData?.data || []}
+            data={mappedparticipationArray || []}
             isLoading={participantsLoading}
             isError={false}
             loadingMessage="Loading Participants..."
             emptyMessage="No participants registered yet."
           >
             <ReuseableTable
-              columns={ParticipantsColumn()}
-              tableData={participantsData?.data || []}
+              columns={CampParticipantsColumn(handleViewParticipantDetails)}
+              tableData={mappedparticipationArray || []}
             />
           </QueryStateHandler>
         </div>
+        <Pagination totalPages={participantsData ? participantsData.meta.totalPages : 1}/>
       </div>
     </div>
   );
