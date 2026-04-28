@@ -25,6 +25,9 @@ export const useRegister = () => {
     onSuccess: (data: any) => {
       showSuccessToast(data.message);
       setUser(data.data.user, "email");
+      if (data.data.token) {
+        localStorage.setItem("sit-with-token", data.data.token);
+      }
       queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
     },
     onError: (error: any) => {
@@ -43,6 +46,9 @@ export const useSignin = () => {
     onSuccess: (data: any) => {
       showSuccessToast(data.message);
       setUser(data.data.user, "email");
+      if (data.data.token) {
+        localStorage.setItem("sit-with-token", data.data.token);
+      }
       queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
     },
     onError: (error: any) => {
@@ -100,6 +106,9 @@ export const useGoogleLogin = () => {
     onSuccess: (data) => {
       showSuccessToast(data.message);
       setUser(data.data.user, "google");
+      if (data.data.token) {
+        localStorage.setItem("sit-with-token", (data.data as any).token);
+      }
       queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
     },
     onError: (error) => {

@@ -160,6 +160,7 @@ export function Navbar() {
                   try { await logout(); } catch (e) { console.error(e); }
                   clearUser();
                   localStorage.removeItem("sit-with-auth");
+                  localStorage.removeItem("sit-with-token");
                   window.location.href = "/login";
                 }}
                 className="  flex items-center gap-2 px-3"
@@ -321,6 +322,7 @@ export function Navbar() {
                       clearUser();
                       setIsOpen(false);
                       localStorage.removeItem("sit-with-auth");
+                      localStorage.removeItem("sit-with-token");
                       window.location.href = "/login";
                     }}
                     className="w-full"
