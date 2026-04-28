@@ -16,7 +16,14 @@ import {
   Check,
   ExternalLink,
   CheckCircle2,
+  MoreVertical,
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import type { Module, Week } from "@/lib/api/services/dashboard/dashboard.services";
 
 export default function WeekDetailPage() {
@@ -106,7 +113,7 @@ export default function WeekDetailPage() {
 
     return (
       <div
-        className={`w-11 h-11 rounded-lg flex flex-shrink-0 items-center justify-center ${bgColor} ${iconColor}`}
+        className={`w-11 h-11 rounded-lg flex shrink-0 items-center justify-center ${bgColor} ${iconColor}`}
       >
         <IconComp size={18} />
       </div>
@@ -147,12 +154,12 @@ export default function WeekDetailPage() {
         <div className="flex items-center gap-3">
           <Badge
             variant="success"
-            className="font-semibold px-3 py-1 rounded-full text-xs"
+            className=""
           >
             {weekLabel}
           </Badge>
           {program.startDate && (
-            <span className="text-sm text-secondary-text font-medium">
+            <span className="text-xs text-secondary-text ">
               Due:{" "}
               {new Date(program.startDate).toLocaleDateString("en-US", {
                 month: "long",
@@ -163,12 +170,12 @@ export default function WeekDetailPage() {
           )}
         </div>
 
-        <h1 className="text-[2rem] font-bold text-primary-text leading-tight">
+        <h1 className="xl:text-[1.75rem] text-2xl font-semibold text-secondary-text leading-tight">
           {weekSubtitle || week.title}
         </h1>
 
         {week.description && (
-          <p className="text-secondary-text text-base">{week.description}</p>
+          <p className="text-primary-text text-base">{week.description}</p>
         )}
 
         <div className="flex items-center gap-6 mt-1 text-sm text-secondary-text font-medium">
@@ -189,7 +196,7 @@ export default function WeekDetailPage() {
           <span>
             Progress: {completedCount} of {totalModules} completed
           </span>
-          <span className="text-[#445b1c]">{progressPercentage}%</span>
+          <span className="text-regular-button">{progressPercentage}%</span>
         </div>
         <div className="w-full bg-[#E4E7EC] h-2.5 rounded-full overflow-hidden">
           <div
@@ -201,18 +208,18 @@ export default function WeekDetailPage() {
 
       {/* Learning Objectives */}
       {week.learningObjectives && week.learningObjectives.length > 0 && (
-        <div className="bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#EAECF0] dark:border-[#333] rounded-2xl p-6">
-          <h3 className="text-base font-semibold text-primary-text mb-4">
+        <div className="bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#EAECF0] dark:border-[#333] rounded-[12px] p-6">
+          <h3 className="text-base font-semibold text-secondary-text mb-4">
             Learning Objectives
           </h3>
           <ul className="flex flex-col gap-3">
             {week.learningObjectives.map((obj, i) => (
               <li
                 key={i}
-                className="flex items-start gap-3 text-sm text-secondary-text leading-relaxed"
+                className="flex items-start gap-3 text-sm text-primary-text leading-relaxed"
               >
                 <Check
-                  className="text-brand-green flex-shrink-0 mt-0.5"
+                  className="text-regular-button shrink-0 mt-0.5"
                   size={18}
                 />
                 <span>{obj}</span>
@@ -230,7 +237,7 @@ export default function WeekDetailPage() {
           const status = resolvedStatuses[idx];
           const actionLabel =
             status === "completed"
-              ? null
+              ? "View Content"
               : status === "started"
               ? "Continue"
               : "Start";
@@ -238,26 +245,26 @@ export default function WeekDetailPage() {
           return (
             <div
               key={mod.id}
-              className="bg-white dark:bg-dash-secondary-bg border border-[#EAECF0] dark:border-[#333] rounded-2xl p-5 flex items-center justify-between gap-4"
+              className="bg-dash-secondary-bg border-[0.67px] border-[#EAECF0] dark:border-[#333] rounded-[12px] p-5 flex items-center justify-between gap-4"
             >
               {/* Left: Icon + Info */}
               <div className="flex items-start gap-4 flex-1 min-w-0">
                 {getModuleIcon(mod.type, status)}
 
                 <div className="flex flex-col gap-1 flex-1 min-w-0">
-                  <h4 className="font-semibold text-base text-primary-text leading-snug">
+                  <h4 className="font-semibold text-base text-econdary-text leading-snug">
                     {mod.title}
                   </h4>
                   {mod.description && (
-                    <p className="text-sm text-secondary-text line-clamp-2">
+                    <p className="text-sm text-primary-text line-clamp-2">
                       {mod.description}
                     </p>
                   )}
-                  <div className="flex items-center gap-3 text-xs font-medium text-secondary-text mt-1">
+                  <div className="flex items-center gap-3 text-xs font-medium text-primary-text mt-1">
                     <span className="capitalize">{mod.type.toLowerCase()}</span>
                     {mod.duration && <span>{mod.duration}</span>}
                     {mod.contentUrl && (
-                      <span className="flex items-center gap-1 text-brand-green">
+                      <span className="flex items-center gap-1 text-regular-button">
                         <ExternalLink size={11} />
                         Has content
                       </span>
@@ -267,18 +274,61 @@ export default function WeekDetailPage() {
               </div>
 
               {/* Right: Actions */}
-              <div className="flex items-center gap-2 flex-shrink-0 pl-2">
+              <div className="flex items-center gap-2 shrink-0 pl-2">
                 {status === "completed" ? (
                   <div className="flex items-center gap-2">
                     <CheckCircle2
-                      className="text-brand-green"
-                      size={22}
+                      className="text-regular-button shrink-0"
+                      size={20}
                     />
+                    {mod.contentUrl && (
+                      <>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="hidden md:flex text-regular-button border border-regular-button text-xs whitespace-nowrap"
+                          onClick={() =>
+                            window.open(
+                              mod.contentUrl!,
+                              "_blank",
+                              "noopener,noreferrer",
+                            )
+                          }
+                        >
+                          View Course
+                        </Button>
+                        <div className="md:hidden">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon" className="h-8 w-8 text-regular-button n">
+                                <MoreVertical size={16} />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="min-w-[200px] h-16 ">
+                              <DropdownMenuItem
+                              className="h-full"
+                                onClick={() =>
+                                  window.open(
+                                    mod.contentUrl!,
+                                    "_blank",
+                                    "noopener,noreferrer"
+                                  )
+                                }
+                              >
+                                <ExternalLink size={14} className="mr-2" />
+                                View Course
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
+                      </>
+                    )}
                   </div>
                 ) : (
                   <>
                     <Button
-                      variant={status === "started" ? "default" : "outline"}
+                      variant={status === "started" ? "regular" : "outline"}
+                      size="sm"
                       className={`w-[90px] text-sm ${
                         status === "not-started"
                           ? "border-[#D0D5DD] text-[#344054]"
@@ -291,7 +341,7 @@ export default function WeekDetailPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="text-xs border-[#D0D5DD] text-[#344054] hover:bg-[#ECFDF3] hover:text-[#05603A] hover:border-[#ABEFC6] px-3"
+                      className="text-regular-button border border-regular-button"
                       onClick={() => completeModule(mod.id)}
                       title="Mark as completed"
                     >

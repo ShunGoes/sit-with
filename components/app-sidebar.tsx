@@ -23,6 +23,7 @@ import {
   Settings,
   Users,
   Tent,
+  MessageSquare,
 } from "lucide-react";
 import { useAuthStore } from "@/store/use-auth-store";
 import { logout } from "@/lib/api/services/auth/auth.services";
@@ -62,6 +63,11 @@ const data = {
       url: "/admin/blog",
       icon: <FileText />,
     },
+    {
+      title: "Testimonials",
+      url: "/admin/testimonials",
+      icon: <MessageSquare />,
+    },
 
     {
       title: "Settings",
@@ -77,7 +83,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader className="px-3 mt-5">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/admin" className="flex items-center gap-2">
           <div className="w-[31px] h-[31px] relative ">
             <Image
               src="/images/logo.webp"
@@ -86,7 +92,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="object-cover"
             />
           </div>
-          <h4 className="text-sm font-semibold text-[#A8D675] tracking-tight">
+          <h4 className="text-sm font-semibold text-regular-button] tracking-tight">
             Sit With PD
           </h4>
         </Link>

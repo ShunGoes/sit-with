@@ -57,11 +57,8 @@ export default function ProgramDetailPage() {
   }
 
   // Badge variant based on category
-  let badgeVariant:
-    | "warning"
-    | "hibiscus"
-    | "success"
-    | "secondary" = "secondary";
+  let badgeVariant: "warning" | "hibiscus" | "success" | "secondary" =
+    "secondary";
   if (program.category === "LEADERS") badgeVariant = "warning";
   else if (program.category === "PROFESSIONALS") badgeVariant = "hibiscus";
   else if (program.category === "STUDENTS") badgeVariant = "success";
@@ -85,7 +82,7 @@ export default function ProgramDetailPage() {
       </button>
 
       {/* Programme Overview Card — same design as /dashboard card */}
-      <div className="bg-dash-secondary-bg rounded-[12px] border-[0.67px] border-[#EAECF0] p-6">
+      <div className="bg-dash-secondary-bg rounded-[12px] border-[0.67px] border-[#EAECF0] dark:border-none p-6">
         <div className="flex items-center gap-3 mb-4">
           <h2 className="xl:text-2xl-text text-xl font-semibold text-primary-text">
             {program.title}
@@ -103,8 +100,8 @@ export default function ProgramDetailPage() {
           <div className="flex items-center gap-2 text-[#667085] text-sm">
             <Clock size={16} />
             <span>
-              {program.durationWeeks ?? 0}
-              {program.durationWeeks === 1 ? " week" : " weeks"}
+              {program.weeks.length}{" "}
+              {program.weeks.length === 1 ? "week" : "weeks"}
             </span>
           </div>
           <div className="flex items-center gap-2 text-[#667085] text-sm">
@@ -114,21 +111,14 @@ export default function ProgramDetailPage() {
               {program.hoursPerWeek === 1 ? "hr" : "hrs"}/week
             </span>
           </div>
-          <div className="flex items-center gap-2 text-[#667085] text-sm">
-            <BookOpen size={16} />
-            <span>
-              {program.weeks.length}{" "}
-              {program.weeks.length === 1 ? "week" : "weeks"}
-            </span>
-          </div>
         </div>
 
         <div className="space-y-2">
           <div className="flex justify-between items-center text-sm">
-            <span className="font-medium text-[#101828]">
+            <span className="font-medium text-primary-text">
               Progress: {completedModules} of {totalModules} modules completed
             </span>
-            <span className="font-semibold text-[#445b1c]">
+            <span className="font-semibold text-regular-button">
               {progressPercentage}%
             </span>
           </div>
@@ -158,7 +148,7 @@ export default function ProgramDetailPage() {
               const weekModules = week.modules ?? [];
               const weekTotal = weekModules.length;
               const weekCompleted = weekModules.filter(
-                (m) => m.isCompleted
+                (m) => m.isCompleted,
               ).length;
               const weekProgress =
                 weekTotal > 0
@@ -169,75 +159,78 @@ export default function ProgramDetailPage() {
               return (
                 <div
                   key={week.id}
-                  className="bg-dash-secondary-bg rounded-[12px] border-[0.67px] border-[#EAECF0] p-6"
+                  className="bg-dash-secondary-bg rounded-[12px] border-[0.67px] border-[#EAECF0] flex flex-col md:flex-row gap-4 dark:border-none p-6"
                 >
-                  {/* Week header */}
-                  <div className="flex items-center justify-between gap-3 mb-3">
-                    <div className="flex items-center gap-3">
-                      <Badge
-                        variant={isWeekDone ? "success" : "secondary"}
-                        className="text-xs font-semibold px-2.5 py-0.5"
-                      >
-                        {week.title.startsWith("Week")
-                          ? week.title.split(":")[0]
-                          : `Week ${week.order}`}
-                      </Badge>
-                      <h4 className="text-base font-semibold text-primary-text">
-                        {week.title.includes(":")
-                          ? week.title.split(":").slice(1).join(":").trim()
-                          : week.title}
-                      </h4>
-                    </div>
-                    <span className="text-xs font-medium text-[#445b1c] shrink-0">
-                      {weekProgress}%
-                    </span>
-                  </div>
 
-                  {week.description && (
-                    <p className="text-sm text-secondary-text mb-3">
-                      {week.description}
-                    </p>
-                  )}
-
-                  {/* Meta row */}
-                  <div className="flex gap-4 mb-4">
-                    <div className="flex items-center gap-2 text-[#667085] text-sm">
-                      <BookOpen size={14} />
-                      <span>
-                        {weekTotal}{" "}
-                        {weekTotal === 1 ? "module" : "modules"}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 text-[#667085] text-sm">
-                      <span>
-                        {weekCompleted} of {weekTotal} completed
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Progress bar */}
-                  <div className="space-y-2 mb-4">
-                    <div className="h-2 w-full bg-[#F2F4F7] rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-regular-button transition-all duration-300"
-                        style={{ width: `${weekProgress}%` }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* CTA */}
-                  <Link
-                    href={`/dashboard/program/${programId}/${week.id}`}
+                  {/* week number and title  */}
+                  <Badge
+                    variant={isWeekDone ? "success" : "secondary"}
+                    className="text-xs font-semibold px-2.5 py-0.5 shrink-0 "
                   >
-                    <Button variant="regular" className="w-full">
-                      {isWeekDone
-                        ? "Review Week"
-                        : weekCompleted > 0
-                        ? "Continue Week"
-                        : "Start Week"}
-                      <ChevronRight size={16} className="ml-1" />
-                    </Button>
-                  </Link>
+                    {week.title.startsWith("Week")
+                      ? week.title.split(":")[0]
+                      : `Week ${week.order}`}
+                  </Badge>
+
+                  <div className="w-full">
+                    {/* Week header */}
+                    <div className="flex items-center justify-between gap-3 mb-3 w-full">
+                      <div className="flex items-center gap-3">
+                        <h4 className="text-base font-semibold text-primary-text">
+                          {week.title.includes(":")
+                            ? week.title.split(":").slice(1).join(":").trim()
+                            : week.title}
+                        </h4>
+                      </div>
+                      <span className="text-xs font-medium text-regular-button shrink-0">
+                        {weekProgress}%
+                      </span>
+                    </div>
+
+                    {week.description && (
+                      <p className="text-sm text-secondary-text mb-3">
+                        {week.description}
+                      </p>
+                    )}
+
+                    {/* Meta row */}
+                    <div className="flex gap-4 mb-4">
+                      <div className="flex items-center gap-2 text-[#667085] text-sm">
+                        <BookOpen size={14} />
+                        <span>
+                          {weekTotal} {weekTotal === 1 ? "module" : "modules"}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#667085] text-sm">
+                        <span>
+                          {weekCompleted} of {weekTotal} completed
+                        </span>
+                      </div>
+                    </div>
+                    {/* Progress bar */}
+                    <div className="space-y-2 mb-4">
+                      <div className="h-2 w-full bg-[#F2F4F7] rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-regular-button transition-all duration-300"
+                          style={{ width: `${weekProgress}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* CTA */}
+                    <Link href={`/dashboard/program/${programId}/${week.id}`}>
+                      <Button variant="regular" className="w-full">
+                        {isWeekDone
+                          ? "Review Week"
+                          : weekCompleted > 0
+                            ? "Continue Week"
+                            : "Start Week"}
+                        <ChevronRight size={16} className="ml-1" />
+                      </Button>
+                    </Link>
+
+                    <div></div>
+                  </div>
                 </div>
               );
             })}
