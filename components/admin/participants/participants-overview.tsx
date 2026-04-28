@@ -7,6 +7,8 @@ import ReuseableTable from "@/components/tables/reuseable-table";
 import { PARTICIPANTS_DATA } from "@/data/table-data";
 import React, { useState } from "react";
 
+import { useSearchParams } from "next/navigation";
+
 const STATUS_OPTIONS = [
   {
     label: "Active",
@@ -19,7 +21,8 @@ const STATUS_OPTIONS = [
 ];
 
 export default function ParticipantsOverview() {
-  const [filteredItem, setFilteredItem] = useState("");
+  const searchParams = useSearchParams();
+  const filteredItem = searchParams.get("status") ?? "";
   const [search, setSearch] = useState("");
 
   return (
@@ -35,8 +38,7 @@ export default function ParticipantsOverview() {
           filterPplaceholder="Filter by status"
           searchPlaceholder="search by name or email...."
           options={STATUS_OPTIONS}
-          filteredItem={filteredItem}
-          setFilteredItem={setFilteredItem}
+          paramKey="status"
           search={search}
           setSearch={setSearch}
         />

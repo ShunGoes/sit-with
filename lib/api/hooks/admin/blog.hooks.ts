@@ -11,9 +11,9 @@ import { toast } from "sonner";
 export const ADMIN_BLOGS_QUERY_KEY = ["admin-blogs"] as const;
 export const adminBlogDetailQueryKey = (id: string) => ["admin-blog", id] as const;
 
-export const useGetAdminBlogs = (params = {}) => {
+export const useGetAdminBlogs = (params: any = {}) => {
   return useQuery({
-    queryKey: [...ADMIN_BLOGS_QUERY_KEY, params],
+    queryKey: [...ADMIN_BLOGS_QUERY_KEY, params.page, params.limit, params.search, params.status, params.category],
     queryFn: () => getAdminBlogs(params),
   });
 };

@@ -13,13 +13,16 @@ import { useGetAllConsultationServices } from "@/lib/api/hooks/consultations/con
 import ConsultationServicesColumn from "@/components/tables/columns/consultation-services-column";
 import AddConsultationServiceForm from "@/components/forms/admin/consultation/add-consultation-service";
 
+import { useSearchParams } from "next/navigation";
+
 const STATUS_OPTIONS = [
   { label: "Active", value: "active" },
   { label: "Inactive", value: "inactive" },
 ];
 
 export default function ConsultationServicesOverview() {
-  const [filteredItem, setFilteredItem] = useState("");
+  const searchParams = useSearchParams();
+  const filteredItem = searchParams.get("status") ?? "";
   const [search, setSearch] = useState("");
 
   const openModal = useModalStore((state) => state.openModal);
@@ -67,8 +70,7 @@ const filteredData = useMemo(() => {
           filterPplaceholder="Filter by status"
           searchPlaceholder="Search services..."
           options={STATUS_OPTIONS}
-          filteredItem={filteredItem}
-          setFilteredItem={setFilteredItem}
+          paramKey="status"
           search={search}
           setSearch={setSearch}
         />

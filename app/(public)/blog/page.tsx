@@ -1,5 +1,6 @@
 import { BlogClient } from "@/components/pages/blog/blog-client";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Wellness & Therapeutic Insights Blog",
@@ -8,5 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-  return <BlogClient />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BlogClient />
+    </Suspense>
+  );
 }

@@ -11,12 +11,13 @@ import ReuseableTable from "@/components/tables/reuseable-table";
 import { Button } from "@/components/ui/button";
 import { useDeleteCamp, useGetCamps } from "@/lib/api/hooks/camps/camps.hooks";
 import { Plus } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function CampsOverview() {
+  const searchParams = useSearchParams();
+  const filteredItem = searchParams.get("status") ?? "";
   const [search, setSearch] = useState("");
-  // Usually we'd map "UPCOMING", "COMPLETED" strings in filteredItem but can map generic search
-  const [filteredItem, setFilteredItem] = useState("");
 
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
@@ -84,8 +85,7 @@ export default function CampsOverview() {
           filterPplaceholder="Filter by status"
           searchPlaceholder="Search camps..."
           options={[]} // Add status options here if required
-          filteredItem={filteredItem}
-          setFilteredItem={setFilteredItem}
+          paramKey="status"
           search={search}
           setSearch={setSearch}
         />

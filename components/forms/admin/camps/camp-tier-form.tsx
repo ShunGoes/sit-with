@@ -30,7 +30,7 @@ export default function CampTierForm({
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7">
       {/* Basic Tier Information */}
-      <div className="bg-dash-secondary-bg rounded-[12px]">
+      <div className="bg-transparent  rounded-[12px]">
         <header className="text-primary-text font-semibold text-base mb-4">
           Tier Details
         </header>
@@ -48,7 +48,7 @@ export default function CampTierForm({
                   {...field}
                   type="text"
                   placeholder="E.g. Individual"
-                  className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
+                  className="border-[0.75px] border-[#EAECF0] bg-dash-secondary-bg rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />

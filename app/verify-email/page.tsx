@@ -51,7 +51,7 @@ function VerifyEmailContent() {
         if (role === "ADMIN") {
           router.replace("/admin");
         } else if (role === "USER") {
-          router.replace("/user");
+          router.replace("/dashboard");
         } else {
           // No role if userData is partial or missing
           router.replace("/login");

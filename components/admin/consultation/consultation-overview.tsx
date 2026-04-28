@@ -85,6 +85,7 @@ export default function ConsultationOverview() {
         {/* table */}
         <div className="bg-dash-secondary-bg rounded-[16px] pb-1">
           <QueryStateHandler
+            key={`${page}-${search}`}
             data={data?.data}
             isLoading={isLoading}
             isError={isError}

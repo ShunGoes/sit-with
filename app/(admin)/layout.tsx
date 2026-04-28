@@ -52,7 +52,7 @@ export default function ProtectedLayout({
     if (isError) {
       router.replace("/login");
     } else if (currentUser && currentUser.role !== "ADMIN") {
-      router.replace(currentUser.role === "USER" ? "/user" : "/login");
+      router.replace(currentUser.role === "USER" ? "/dashboard" : "/login");
     }
   }, [isError, currentUser, router]);
 

@@ -15,6 +15,7 @@ import {
 } from "@/lib/api/hooks/programs/programs.hooks";
 import { Plus } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const CHURCH_OPTIONS = [
@@ -24,7 +25,8 @@ const CHURCH_OPTIONS = [
   },
 ];
 export default function ProgramOverview() {
-  const [filteredItem, setFilteredItem] = useState("");
+  const searchParams = useSearchParams();
+  const filteredItem = searchParams.get("type") ?? "";
   const [search, setSearch] = useState("");
 
   const openModal = useModalStore((state) => state.openModal);
@@ -82,8 +84,7 @@ export default function ProgramOverview() {
           filterPplaceholder="Filter by type"
           searchPlaceholder="search progrma..."
           options={CHURCH_OPTIONS}
-          filteredItem={filteredItem}
-          setFilteredItem={setFilteredItem}
+          paramKey="type"
           search={search}
           setSearch={setSearch}
         />

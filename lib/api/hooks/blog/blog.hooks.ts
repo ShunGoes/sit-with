@@ -4,9 +4,9 @@ import { getPublishedBlogs, getPublicBlogBySlug } from "../../services/blog/blog
 export const PUBLIC_BLOGS_QUERY_KEY = ["public-blogs"] as const;
 export const publicBlogDetailQueryKey = (slug: string) => ["public-blog", slug] as const;
 
-export const useGetPublicBlogs = (params = {}) => {
+export const useGetPublicBlogs = (params: any = {}) => {
   return useQuery({
-    queryKey: [...PUBLIC_BLOGS_QUERY_KEY, params],
+    queryKey: [...PUBLIC_BLOGS_QUERY_KEY, params.search, params.category],
     queryFn: () => getPublishedBlogs(params),
   });
 };

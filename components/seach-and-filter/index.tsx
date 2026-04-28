@@ -7,18 +7,16 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
 interface InputProps {
-  filteredItem: string;
-  setFilteredItem: React.Dispatch<React.SetStateAction<string>>;
   options: { label: string; value: string }[];
   filterPplaceholder?: string;
   searchPlaceholder?: string;
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   icon?: React.ReactNode;
+  paramKey: string;
 }
 export default function SeacrchAndFilter({
-  filteredItem,
-  setFilteredItem,
+  paramKey,
   options,
   search,
   setSearch,
@@ -62,8 +60,8 @@ export default function SeacrchAndFilter({
       </div>
       <div>
         <FilterSelectComp
-          value={filteredItem}
-          onValueChange={setFilteredItem}
+          paramKey={paramKey}
+
           options={options}
           placeholder={filterPplaceholder}
           icon={icon ? icon : undefined}

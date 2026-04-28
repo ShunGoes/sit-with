@@ -117,6 +117,7 @@ export default function BlogOverview() {
 
         <div className="flex flex-col gap-4">
           <QueryStateHandler
+            key={`${page}-${search}-${status}-${category}`}
             data={blogList}
             isLoading={isLoading}
             isError={isError}

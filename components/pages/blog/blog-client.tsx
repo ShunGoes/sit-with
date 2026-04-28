@@ -117,6 +117,7 @@ export function BlogClient() {
 
         {/* Blog Grid */}
         <QueryStateHandler
+          key={`${search}-${categoryParams}`}
           data={blogsList}
           isLoading={isLoadingBlogs}
           isError={isError}

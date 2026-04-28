@@ -16,7 +16,14 @@ import { useModalStore } from "../store/use-modal-store";
 import CampSuccessModal from "../pages/camps/camp-success";
 import UpdateCaptionForm from "../forms/admin/camps/update-caption";
 
+import { MessageFacilitatorModal } from "../user/dashboard/message-facilitator-modal";
+
 const openModal = useModalStore.getState().openModal;
+
+//>>>>>>>>>>>>>>>>>>> USER DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<
+export function messageFacilitator() {
+  openModal("message-facilitator", <MessageFacilitatorModal />);
+}
 
 //>>>>>>>>>>>>>>>>>>> PROGRAMS <<<<<<<<<<<<<<<<<<<<<<<<<<
 export function addNewProgram() {
