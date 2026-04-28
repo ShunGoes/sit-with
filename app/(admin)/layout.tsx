@@ -49,16 +49,16 @@ export default function ProtectedLayout({
   const currentUser = data?.user || data?.data;
   console.log( "current user", currentUser)
 
-  // useEffect(() => {
-  //   if (isError) {
-  //     router.replace("/login");
-  //   } else if (currentUser && currentUser.role !== "ADMIN") {
-  //     router.replace(currentUser.role === "USER" ? "/dashboard" : "/login");
-  //   }
-  // }, [isError, currentUser, router]);
+  useEffect(() => {
+    if (isError) {
+      router.replace("/login");
+    } else if (currentUser && currentUser.role !== "ADMIN") {
+      router.replace(currentUser.role === "USER" ? "/dashboard" : "/login");
+    }
+  }, [isError, currentUser, router]);
 
-  // if (isLoading) return <DashboardSkeleton />;
-  // if (isError || currentUser?.role !== "ADMIN") return null;
+  if (isLoading) return <DashboardSkeleton />;
+  if (isError || currentUser?.role !== "ADMIN") return null;
 
   return (
     <ThemeProvider

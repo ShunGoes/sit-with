@@ -101,6 +101,7 @@ export function AppUserSidebar({ ...props }: React.ComponentProps<typeof Sidebar
                 const clearUser = useAuthStore.getState().clearUser;
                 clearUser();
                 localStorage.removeItem("sit-with-auth");
+                localStorage.removeItem("sit-with-token");
                 window.location.href = "/login";
               }}
               className="text-[#B42318] h-11 font-medium hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
