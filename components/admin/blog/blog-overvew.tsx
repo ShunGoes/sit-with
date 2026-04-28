@@ -3,7 +3,7 @@
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import SeacrchAndFilter from "@/components/seach-and-filter";
 import { Plus, Loader2, Globe } from "lucide-react";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import BlogContent from "./blog-content";
 import { handleAddBlog } from "@/components/modal-helper";
@@ -14,6 +14,7 @@ import QueryStateHandler from "@/components/query-state-handler";
 import Pagination from "@/components/pagination";
 import SearchInput from "@/components/searchInput";
 import { useSearchParams } from "next/navigation";
+import CardSkeletons from "@/components/skeletons/card-skeletons";
 
 const STATUS_OPTIONS = [
   {
@@ -49,7 +50,7 @@ const CATEGORY_OPTIONS = [
 ];
 const LIMIT = 10;
 
-export default function BlogOverview() {
+export  function BlogOverview() {
   const searchParams = useSearchParams();
 
   //  extra all query params from the url
@@ -138,4 +139,15 @@ export default function BlogOverview() {
       </div>
     </div>
   );
+}
+
+
+export default function BlogOverviewWrapper() {
+    return (
+        <Suspense fallback={<div>
+          <CardSkeletons/>
+        </div>}>
+            <BlogOverview />
+        </Suspense>
+    );
 }

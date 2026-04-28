@@ -1,8 +1,10 @@
 import ConsultationOverview from '@/components/admin/consultation/consultation-overview'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 export default function ConsultationPage() {
   return (
-    <div><ConsultationOverview /></div>
+    <Suspense fallback={<div>Loading consultations...</div>}>
+      <ConsultationOverview />
+    </Suspense>
   )
 }

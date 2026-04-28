@@ -5,21 +5,14 @@ import { StatsCards } from "@/components/admin/dashboard/stats-cards";
 import { QuickActions } from "@/components/admin/dashboard/quick-actions";
 import { RecentActivities } from "@/components/admin/dashboard/recent-activities";
 import FilterSelectComp from "@/components/filter";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import UsersTable from "@/components/admin/users/users-table";
 
 import { RecentPayments } from "@/components/admin/dashboard/recent-payments";
 import Pagination from "@/components/pagination";
 import SearchInput from "@/components/searchInput";
 
-export default function Page() {
-  const [filteredItem, setFilteredItem] = useState("");
-
-  const STATUS_OPTIONS = [
-    { label: "Ascending", value: "ascending" },
-    { label: "Descending", value: "descending" },
-  ];
-
+function DashboardContent() {
   return (
     <div className="flex flex-col gap-10 w-full pb-8">
       <DashboardHeaderText
@@ -34,12 +27,7 @@ export default function Page() {
         <div className="space-y-2">
           <div className="flex justify-end w-full">
             <div className="w-auto ">
-              {/* <FilterSelectComp
-                placeholder="Filter by status"
-                options={STATUS_OPTIONS}
-                value={filteredItem}
-                onValueChange={setFilteredItem}
-              /> */}
+             
             </div>
           </div>
           <RecentActivities />
@@ -65,5 +53,13 @@ export default function Page() {
         <UsersTable />
       </section>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading dashboard...</div>}>
+      <DashboardContent />
+    </Suspense>
   );
 }
