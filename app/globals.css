@@ -173,6 +173,9 @@ h6 {
   .modal-header {
     @apply text-primary-text font-semibold text-lg;
   }
+  .ProseMirror {
+  @apply text-primary-text
+}
 }
 
 /* Transition styles  */

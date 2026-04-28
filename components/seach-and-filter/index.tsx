@@ -7,22 +7,22 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
 interface InputProps {
-  filteredItem: string;
-  setFilteredItem: React.Dispatch<React.SetStateAction<string>>;
   options: { label: string; value: string }[];
   filterPplaceholder?: string;
   searchPlaceholder?: string;
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
+  icon?: React.ReactNode;
+  paramKey: string;
 }
 export default function SeacrchAndFilter({
-  filteredItem,
-  setFilteredItem,
+  paramKey,
   options,
   search,
   setSearch,
   filterPplaceholder = "Filter",
   searchPlaceholder = "search...",
+  icon
 }: InputProps) {
   const [localSearch, setLocalSearch] = useState(search);
 
@@ -50,7 +50,7 @@ export default function SeacrchAndFilter({
           value={localSearch}
           onChange={(e) => setLocalSearch(e.target.value)}
           placeholder={searchPlaceholder}
-          className="pl-10 shadow-none h-[40px] rounded-[6px] placeholer:text-[0.77375rem] bg-white border border-[#D0D5DD] placeholder:text-[#667085] font-normal text-primary-text text-[0.9375rem] "
+          className="pl-10 shadow-none h-[40px] rounded-[6px] placeholer:text-[0.77375rem] bg-dash-secondary-bg border border-[#D0D5DD] dark:border-none placeholder:text-[#667085] font-normal text-primary-text text-[0.9375rem] "
         />
         <Search
           color="#667085"
@@ -60,10 +60,11 @@ export default function SeacrchAndFilter({
       </div>
       <div>
         <FilterSelectComp
-          value={filteredItem}
-          onValueChange={setFilteredItem}
+          paramKey={paramKey}
+
           options={options}
           placeholder={filterPplaceholder}
+          icon={icon ? icon : undefined}
         />
       </div>
     </div>

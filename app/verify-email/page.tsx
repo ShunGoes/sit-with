@@ -40,8 +40,7 @@ function VerifyEmailContent() {
       const userData = data?.data?.user || data?.data;
       
       if (userData) {
-        const responseToken = data?.data?.token || data?.token;
-        setUser(userData, "email", responseToken);
+        setUser(userData, "email");
         setUserEmailVerified(true);
       }
 
@@ -52,7 +51,7 @@ function VerifyEmailContent() {
         if (role === "ADMIN") {
           router.replace("/admin");
         } else if (role === "USER") {
-          router.replace("/user");
+          router.replace("/dashboard");
         } else {
           // No role if userData is partial or missing
           router.replace("/login");

@@ -24,7 +24,7 @@ export const useRegister = () => {
     mutationFn: register,
     onSuccess: (data: any) => {
       showSuccessToast(data.message);
-      setUser(data.data.user, "email", data.data.token);
+      setUser(data.data.user, "email");
       queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
     },
     onError: (error: any) => {
@@ -42,7 +42,7 @@ export const useSignin = () => {
     mutationFn: login,
     onSuccess: (data: any) => {
       showSuccessToast(data.message);
-      setUser(data.data.user, "email", data.data.token);
+      setUser(data.data.user, "email");
       queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
     },
     onError: (error: any) => {
@@ -99,7 +99,7 @@ export const useGoogleLogin = () => {
     mutationFn: googleLogin,
     onSuccess: (data) => {
       showSuccessToast(data.message);
-      setUser(data.data.user, "google", data.data.token);
+      setUser(data.data.user, "google");
       queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
     },
     onError: (error) => {
@@ -137,8 +137,7 @@ export const useGetCurrentUser = () => {
     if (query.isSuccess && query.data?.data) {
       // Handle both { data: { ...user } } and { data: { user: { ... } } } shapes
       const userData = query.data.data.user || query.data.data;
-      const token = query.data.data.token;
-      setUser(userData, "email", token);
+      setUser(userData, "email");
     } else if (query.isError) {
       clearUser();
     }

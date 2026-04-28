@@ -241,7 +241,7 @@ export default function SignupForm() {
                     if (resData.data.user.role === "ADMIN") {
                       router.replace("/admin");
                     } else {
-                      router.replace("/user");
+                      router.replace("/dashboard");
                     }
                   },
                   onError: (error: any) => {

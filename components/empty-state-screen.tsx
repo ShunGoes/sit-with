@@ -24,7 +24,7 @@ type EmptyStateScreenProps =
     };
 
 const EmptyStateScreen = ({
-  image,
+  image = "/images/empty-state.png",
   title,
   isBtn,
   btnDetails,
@@ -34,9 +34,9 @@ const EmptyStateScreen = ({
     <section className="flex-1   flex justify-center items-center ">
       <div className="space-y-7 w-[80%]  lg:w-3/12  h-full">
         <div className="relative max-w-[200px] mx-auto   aspect-214/146">
-          <Image src={image} alt={alt} fill className="object-cover" />
+          <Image src="/images/empty-state.png" alt="Empty state "  fill className="object-cover" />
         </div>
-        <p className="paragraph text-[14px] text-[#151515]  text-center ">
+        <p className="paragraph text-[14px] text-primary-text  text-center ">
           {title}
         </p>
         {isBtn && (

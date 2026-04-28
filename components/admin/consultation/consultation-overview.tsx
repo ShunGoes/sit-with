@@ -12,6 +12,9 @@ import { addConsultationService } from "@/components/modal-helper";
 import { Plus, Settings2 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import Pagination from "@/components/pagination";
+import SearchInput from "@/components/searchInput";
 
 const STATUS_OPTIONS = [
   { label: "Confirmed", value: "confirmed" },
@@ -20,12 +23,24 @@ const STATUS_OPTIONS = [
   { label: "Cancelled", value: "cancelled" },
 ];
 
+const LIMIT = 20;
+
 export default function ConsultationOverview() {
   const [filteredItem, setFilteredItem] = useState("");
-  const [search, setSearch] = useState("");
+
+  const searchParams = useSearchParams();
+ 
+  const page = Number(searchParams.get("page") ?? 1);
+  const search = searchParams.get("search") ?? "";
+
+  const params = {
+    page,
+    limit: LIMIT,
+    ...(search !== "" && { search }),
+  };
 
   const openModal = useModalStore((state) => state.openModal);
-  const { data, isLoading, isError, isFetching } = useGetConsultations();
+  const { data, isLoading, isError, isFetching } = useGetConsultations(params);
 
 
   const tableData: ConsultationColumn[] | [] = data?.data?.map((booking) => ({
@@ -64,19 +79,13 @@ export default function ConsultationOverview() {
 
       {/* search bar, filter and table */}
       <div className="space-y-4">
-        <SeacrchAndFilter
-          filterPplaceholder="Filter by status"
-          searchPlaceholder="Search by name or email"
-          options={STATUS_OPTIONS}
-          filteredItem={filteredItem}
-          setFilteredItem={setFilteredItem}
-          search={search}
-          setSearch={setSearch}
-        />
+        <SearchInput placeholder="Search by name or email"/>
+        
 
         {/* table */}
         <div className="bg-dash-secondary-bg rounded-[16px] pb-1">
           <QueryStateHandler
+            key={`${page}-${search}`}
             data={data?.data}
             isLoading={isLoading}
             isError={isError}
@@ -91,6 +100,9 @@ export default function ConsultationOverview() {
               tableData={tableData}
             />
           </QueryStateHandler>
+        </div>
+        <div>
+          <Pagination totalPages={data?.meta?.totalPages ?? 1}  />
         </div>
       </div>
     </div>

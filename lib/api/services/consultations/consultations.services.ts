@@ -1,5 +1,5 @@
 import { api } from "@/lib/axios";
-import { getApiError } from "@/lib/utils";
+import { buildQueryString, getApiError } from "@/lib/utils";
 
 export interface Consultation {
   id: string;
@@ -39,6 +39,12 @@ export interface ConsultationResponse {
 }
 
 type BookingApiResponse = {
+  meta: {
+    page: number
+    limit: number
+    totalPages: number
+    totalCount: number
+  }
   data: {
     id: string
     status: string
@@ -55,9 +61,11 @@ type BookingApiResponse = {
   }[]
 }
 
-export const getConsultations = async (): Promise<BookingApiResponse> => {
+export const getConsultations = async (param = {}): Promise<BookingApiResponse> => {
+  const queryString = buildQueryString(param)
+  const url = queryString ? `/consultations?${queryString}` : "/consultations";
   try {
-    const res = await api.get("/consultations");
+    const res = await api.get(url);
     return res.data;
   } catch (error) {
     console.log(error);

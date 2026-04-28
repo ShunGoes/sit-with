@@ -2,15 +2,18 @@
 
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import SeacrchAndFilter from "@/components/seach-and-filter";
-import { BLOG_LIST_DATA } from "@/data/table-data";
-import {
-  Plus,
-} from "lucide-react";
-import  { useState } from "react";
+import { Plus, Loader2, Globe } from "lucide-react";
+import { useState, useMemo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import BlogContent from "./blog-content";
 import { handleAddBlog } from "@/components/modal-helper";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useGetAdminBlogs } from "@/lib/api/hooks/admin/blog.hooks";
+import FilterSelectComp from "@/components/filter";
+import QueryStateHandler from "@/components/query-state-handler";
+import Pagination from "@/components/pagination";
+import SearchInput from "@/components/searchInput";
+import { useSearchParams } from "next/navigation";
 
 const STATUS_OPTIONS = [
   {
@@ -26,12 +29,54 @@ const STATUS_OPTIONS = [
     value: "all",
   },
 ];
+const CATEGORY_OPTIONS = [
+  {
+    label: "Wellbeing",
+    value: "WELLBEING",
+  },
+  {
+    label: "Reflection",
+    value: "REFLECTION",
+  },
+  {
+    label: "Personal Growth",
+    value: "PERSONAL_GROWTH",
+  },
+  {
+    label: "All Categories",
+    value: "all",
+  },
+];
+const LIMIT = 10;
 
 export default function BlogOverview() {
-  const [filteredItem, setFilteredItem] = useState("all");
-  const [search, setSearch] = useState("");
+  const searchParams = useSearchParams();
 
-  const isMobile = useIsMobile()
+  //  extra all query params from the url
+  const page = Number(searchParams.get("page") ?? 1);
+  const search = searchParams.get("search") ?? "";
+  const status = searchParams.get("status") ?? "";
+  const category = searchParams.get("category") ?? "";
+
+  const isMobile = useIsMobile();
+
+  const params = {
+    page,
+    limit: LIMIT,
+    ...(search !== "" && { search }),
+    ...(status !== "" && { status }),
+    ...(category !== "" && { category }),
+  };
+
+  const {
+    data: blogsResponse,
+    isLoading,
+    isError,
+    isFetching,
+    error,
+  } = useGetAdminBlogs(params);
+
+  const blogList = blogsResponse?.data || [];
 
   return (
     <div className="space-y-15">
@@ -40,35 +85,55 @@ export default function BlogOverview() {
           header="Blogs"
           subtext="Manage and track all blog content"
         />
-        {/* @ts-ignore */}
         <Button
           variant="regular"
           className="font-normal"
           onClick={handleAddBlog}
         >
-          <Plus/> {!isMobile && "New Post"} 
+          <Plus /> {!isMobile && "New Post"}
         </Button>
       </div>
 
       <div className="space-y-4">
-        {/* search and filter functionality */}
-        <SeacrchAndFilter
-          filterPplaceholder="Filter by status"
-          searchPlaceholder="search by title or author...."
-          options={STATUS_OPTIONS}
-          filteredItem={filteredItem}
-          setFilteredItem={setFilteredItem}
-          search={search}
-          setSearch={setSearch}
-        />
+        {/* search and filter bar  */}
+        <div className="flex items-center w-full gap-4">
+          <div className="flex-1">
+            <SearchInput />
+          </div>
+
+          <div className="w-auto flex items-center gap-3">
+            <FilterSelectComp
+              options={CATEGORY_OPTIONS}
+              placeholder=" category"
+              paramKey="category"
+            />
+            <FilterSelectComp
+              options={STATUS_OPTIONS}
+              placeholder=" status"
+              paramKey="status"
+            />
+          </div>
+        </div>
 
         <div className="flex flex-col gap-4">
-          {BLOG_LIST_DATA.map((blog,index) => (
-           <BlogContent key={`${blog.title}_${index}`} blog={blog} />
-          ))}
+          <QueryStateHandler
+            key={`${page}-${search}-${status}-${category}`}
+            data={blogList}
+            isLoading={isLoading}
+            isError={isError}
+            loadingMessage="Loading your post(s)"
+            errorMessage="Posts failed to load"
+            queryErrorMessage={error?.message}
+            isFetching={isFetching}
+            emptyMessage="No blog posts found"
+          >
+            {blogList.map((blog) => (
+              <BlogContent key={blog.id} blog={blog} />
+            ))}
+          </QueryStateHandler>
 
           {/* Pagination */}
-        
+          <Pagination totalPages={blogsResponse?.meta?.totalPages ?? 1} />
         </div>
       </div>
     </div>

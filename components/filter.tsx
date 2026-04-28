@@ -10,37 +10,44 @@ import {
 } from "@/components/ui/select";
 import FilterIcon from "@/pd-icons/filter";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface FilterSelectProps {
-  options: {
-    value: string;
-    label: string;
-  }[];
-  value: string;
+  options: { label: string; value: string }[];
   placeholder?: string;
-  onValueChange: React.Dispatch<React.SetStateAction<string>>;
+  icon?: React.ReactNode;
+  paramKey: string;
 }
 export default function FilterSelectComp({
   options,
-  value,
-  onValueChange,
-  placeholder = "All group"
+  placeholder = "All group",
+  icon = <FilterIcon />,
+  paramKey,
 }: FilterSelectProps) {
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const value = searchParams.get(paramKey) ?? "";
+
+  const handleChange = (newValue: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(paramKey, newValue);
+    params.set("page", "1");
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
 
   return (
-    <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className=" bg-white flex items-center gap-2 ">
-        <FilterIcon />
-        {
-          !isMobile && (
-            <SelectValue
-              placeholder={placeholder}
-              className="placeholder:text-primary-text placeholder:text-base "
-            />
-
-          )
-        }
+    <Select value={value} onValueChange={handleChange}>
+      <SelectTrigger className=" bg-dash-secondary-bg  dark:border-none text-primary-text flex items-center gap-2 ">
+        {icon}
+        {!isMobile && (
+          <SelectValue
+            placeholder={placeholder}
+            className="placeholder:text-primary-text placeholder:text-base "
+          />
+        )}
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

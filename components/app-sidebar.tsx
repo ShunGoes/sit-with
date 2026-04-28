@@ -25,6 +25,7 @@ import {
   Tent,
 } from "lucide-react";
 import { useAuthStore } from "@/store/use-auth-store";
+import { logout } from "@/lib/api/services/auth/auth.services";
 import Image from "next/image";
 
 // This is sample data.
@@ -124,9 +125,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem className="px-2">
             <SidebarMenuButton
               tooltip="Logout"
-              onClick={() => {
+              onClick={async () => {
+                try { await logout(); } catch (e) { console.error(e); }
                 const clearUser = useAuthStore.getState().clearUser;
                 clearUser();
+                localStorage.removeItem("sit-with-auth");
                 window.location.href = "/login";
               }}
               className="text-[#B42318] h-11 font-medium hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"

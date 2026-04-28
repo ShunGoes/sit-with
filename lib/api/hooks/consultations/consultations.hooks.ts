@@ -10,10 +10,10 @@ import {
 } from "../../services/consultations/consultations.services";
 import { showSuccessToast, showErrorToast } from "@/lib/toast-helpers";
 
-export const useGetConsultations = () => {
+export const useGetConsultations = (params: any = {}) => {
   return useQuery({
-    queryKey: ["consultations"],
-    queryFn: getConsultations,
+    queryKey: ["consultations", params.page, params.limit, params.search],
+    queryFn: () => getConsultations(params),
     retry: false,
   });
 };

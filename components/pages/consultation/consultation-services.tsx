@@ -14,19 +14,11 @@ import { Clock } from "lucide-react";
 
 export function ConsultationServices() {
   const { data, isLoading } = useGetAllConsultationServices();
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const router = useRouter();
 
-  const handleBookCard = async (_serviceId: string) => {
-    // redirect as query param 
-    // if (!isAuthenticated) {
-    //   router.push("/login?redirect=/consultation");
-    //   return;
-    // }
-
+  const handleBookCard = async (bookingUrl: string) => {
     const cal = await getCalApi({ namespace: "consultation" });
     cal("modal", {
-      calLink: "shun-evelyn-xvve7u/consultation",
+      calLink: bookingUrl,
       config: { layout: "month_view", useSlotsViewOnSmallScreen: "true" },
     });
   };
@@ -48,6 +40,8 @@ export function ConsultationServices() {
       transition: { duration: 0.5, ease: "easeOut" },
     },
   } as const;
+
+
 
   if (isLoading) {
     return (
@@ -75,7 +69,8 @@ export function ConsultationServices() {
     );
   }
 
-  const services = data?.data || [];
+  const services = data?.data.filter((service) => service.calBookingUrl !== null) || [];
+  console.log("services", services)
 
   return (
     <section className="py-20 lg:pt-0 bg-white" id="consultation-cta">
@@ -128,7 +123,7 @@ export function ConsultationServices() {
                 </div>
 
                 <Button
-                  onClick={() => handleBookCard(service.id)}
+                  onClick={() => handleBookCard(service.calBookingUrl.startsWith("cal.com/") ? service.calBookingUrl.slice("cal.com/".length) : service.calBookingUrl)}
                   variant="regular"
                   className="w-full  group/btn"
                 >

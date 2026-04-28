@@ -18,12 +18,13 @@ export interface AdminUser {
 export interface UsersResponse {
   success: boolean;
   message: string;
-  data: {
-    users: AdminUser[];
+  data: AdminUser[];
+  meta?: {
     total: number;
     page: number;
-    pages: number;
-  };
+    limit: number;
+    totalPages: number;
+  }
 }
 
 export const getAllUsers = async (params = {}): Promise<UsersResponse> => {
