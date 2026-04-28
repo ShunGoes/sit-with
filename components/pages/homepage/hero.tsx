@@ -87,7 +87,7 @@ export function Hero() {
                       {slide.description}
                     </p>
                   </div>
-                  <div className="flex flex-col sm:flex-row justify-start md:justify-start w-full gap-4 mt-4">
+                  <div className="flex flex-row justify-start md:justify-start w-full gap-4 mt-4">
                     <Link href="/programs">
                       <Button variant={"regular"}>
                         Explore Programs <CaretRight />

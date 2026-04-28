@@ -47,7 +47,7 @@ export default function ProgramForm({
         <header className="text-primary-text font-semibold text-base mb-4">
           Basic Information
         </header>
-        <div className="space-y-4">
+        <div className="space-y-10">
           <FormFieldComp
             name="title"
             control={form.control}
@@ -75,7 +75,7 @@ export default function ProgramForm({
               name="price"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid} className="">
-                  <FieldLabel className="text-[#344054]  text-sm">
+                  <FieldLabel className="text-primary-text  text-sm">
                     Price (₦)
                   </FieldLabel>
                   <Input
@@ -88,7 +88,7 @@ export default function ProgramForm({
                       field.onChange(formatted);
                     }}
                     placeholder="0.00"
-                    className="pr-10  border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px]   font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal  py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+                    className="pr-10  border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px]   font-medium text-primary-text placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal  py-4 h-11 focus-visible:border-none focus-visible:ring-0"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -102,7 +102,7 @@ export default function ProgramForm({
               control={form.control}
               label="Start Date *"
               placeholder="DD/MM/YYYY"
-              className="bg-white"
+              className="bg-dash-secondary-bg"
             />
           </div>
           <Controller
@@ -115,20 +115,20 @@ export default function ProgramForm({
               >
                 <div className="flex flex-col">
                   <FieldLabel
-                    className="text-[#344054] text-[14px] mb-2"
+                    className="text-primary-text text-[14px] mb-2"
                     htmlFor="type"
                   >
                     Program Type *
                   </FieldLabel>
                   <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger className="bg-white" id="type">
-                      <SelectValue placeholder="Select program type" />
+                    <SelectTrigger className="bg-dash-secondary-bg text-primary-text" id="type">
+                      <SelectValue placeholder="Select program type" className="text-primary-text" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="min-w-[200px]">
                       {PROGRAM_TYPE.map((type, index) => (
                         <SelectItem
                           key={`${type.label}_${index}`}
-                          className="text-sm text-[#101928"
+                          className="text-sm text-[#101928]"
                           value={type.value}
                         >
                           {type.label}
@@ -150,7 +150,7 @@ export default function ProgramForm({
               <Field data-invalid={fieldState.invalid} className="mt-4">
                 <div className="flex flex-col">
                   <FieldLabel
-                    className="text-[#344054] text-[14px] mb-2"
+                    className="text-primary-text text-sm mb-2"
                     htmlFor="description"
                   >
                     Description
@@ -159,7 +159,7 @@ export default function ProgramForm({
                     id="description"
                     {...field}
                     placeholder="Describe the program, its goal and who its for......."
-                    className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] py-4 min-h-30 outline-none px-3 resize-none"
+                    className="border-[0.75px] border-[#EAECF0] bg-dash-secondary-bg rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] py-4 min-h-30 outline-none px-3 resize-none"
                   />
                 </div>
                 {fieldState.invalid && (

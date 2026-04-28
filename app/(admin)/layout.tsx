@@ -47,6 +47,7 @@ export default function ProtectedLayout({
   const userInitials = firstName.charAt(0) + lastName.charAt(0);
 
   const currentUser = data?.user || data?.data;
+  console.log( "current user", currentUser)
 
   useEffect(() => {
     if (isError) {

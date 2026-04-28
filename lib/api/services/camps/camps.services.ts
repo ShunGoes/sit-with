@@ -1,5 +1,5 @@
 import { api } from "@/lib/axios";
-import { getApiError } from "@/lib/utils";
+import { buildQueryString, getApiError } from "@/lib/utils";
 import {
   CampTier,
   CampImage,
@@ -66,7 +66,7 @@ export const getCamp = async (id: string): Promise<CampResponse> => {
 
 // create camp
 export const createCamp = async (
-  payload: CreateCampPayload
+  payload: CreateCampPayload,
 ): Promise<CampResponse> => {
   try {
     const res = await api.post("/camps", payload, {
@@ -80,7 +80,13 @@ export const createCamp = async (
   }
 };
 // logged in users call this function to book a camp slot
-export const bookACamp = async ({campId, payload}: {campId: string, payload: any}) => {
+export const bookACamp = async ({
+  campId,
+  payload,
+}: {
+  campId: string;
+  payload: any;
+}) => {
   if (!campId) {
     throw new Error("Camp ID is required.");
   }
@@ -95,7 +101,7 @@ export const bookACamp = async ({campId, payload}: {campId: string, payload: any
 // update camp details
 export const updateCamp = async (
   id: string,
-  payload: UpdateCampPayload
+  payload: UpdateCampPayload,
 ): Promise<CampResponse> => {
   if (!id) {
     throw new Error("Camp ID is required for updates.");
@@ -128,10 +134,16 @@ export const deleteCamp = async (id: string): Promise<{ message: string }> => {
 };
 
 export const getCampParticipants = async (
-  id: string
-): Promise<{ data: any; message: string }> => {
+  id: string,
+  params?: { page: number; limit: number },
+): Promise<{ data: any; message: string; meta: { totalPages: number } }> => {
+  if (!id) {
+    throw new Error("Camp ID is required.");
+  }
+  const queryString = params && new URLSearchParams(params.toString());
+  const url = queryString ? `/participants?${queryString}` : `/participants`;
   try {
-    const res = await api.get(`/camps/${id}/participants`);
+    const res = await api.get(`/camps/${id}${url}`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -143,7 +155,7 @@ export const getCampParticipants = async (
 
 export const createCampTier = async (
   campId: string,
-  payload: CreateCampTierPayload
+  payload: CreateCampTierPayload,
 ): Promise<{ data: CampTier; message: string }> => {
   if (!campId) {
     throw new Error("Camp ID is required.");
@@ -160,7 +172,7 @@ export const createCampTier = async (
 export const updateCampTier = async (
   campId: string,
   tierId: string,
-  payload: UpdateCampTierPayload
+  payload: UpdateCampTierPayload,
 ): Promise<{ data: CampTier; message: string }> => {
   if (!campId || !tierId) {
     throw new Error("Camp ID and Tier ID are required.");
@@ -176,7 +188,7 @@ export const updateCampTier = async (
 
 export const deleteCampTier = async (
   campId: string,
-  tierId: string
+  tierId: string,
 ): Promise<{ message: string }> => {
   if (!campId || !tierId) {
     throw new Error("Camp ID and Tier ID are required.");
@@ -195,7 +207,7 @@ export const deleteCampTier = async (
 export const uploadCampImages = async (
   campId: string,
   files: File[],
-  captions?: string[]
+  captions?: string[],
 ): Promise<{ data: CampImage[]; message: string }> => {
   if (!campId) {
     throw new Error("Camp ID is required.");
@@ -225,7 +237,7 @@ export const uploadCampImages = async (
 export const replaceCampImage = async (
   campId: string,
   imageId: string,
-  payload: { caption?: string; order?: number }
+  payload: { caption?: string; order?: number },
 ): Promise<{ data: CampImage; message: string }> => {
   if (!campId || !imageId) {
     throw new Error("Camp ID and Image ID are required.");
@@ -243,7 +255,7 @@ export const updateCampImageMetadata = async (
   campId: string,
   imageId: string,
   caption?: string,
-  order?: number
+  order?: number,
 ): Promise<{ data: CampImage; message: string }> => {
   if (!campId || !imageId) {
     throw new Error("Camp ID and Image ID are required.");
@@ -265,7 +277,7 @@ export const updateCampImageMetadata = async (
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
     return res.data;
   } catch (error) {
@@ -275,7 +287,7 @@ export const updateCampImageMetadata = async (
 
 export const deleteCampImage = async (
   campId: string,
-  imageId: string
+  imageId: string,
 ): Promise<{ message: string }> => {
   if (!campId || !imageId) {
     throw new Error("Camp ID and Image ID are required.");

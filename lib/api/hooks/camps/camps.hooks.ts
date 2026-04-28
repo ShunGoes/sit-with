@@ -37,11 +37,11 @@ export const useGetCamp = (campId: string) => {
   });
 };
 
-export const useGetCampParticipants = (campId: string) => {
+export const useGetCampParticipants = ({id, params }: {id: string, params?: {page: number, limit: number}}) => {
   return useQuery({
-    queryKey: ["camps", campId, "participants"],
-    queryFn: () => getCampParticipants(campId),
-    enabled: Boolean(campId),
+    queryKey: ["camps", id, "participants", params?.page, params?.limit],
+    queryFn: () => getCampParticipants(id, params ) ,
+    enabled: Boolean(id),
     retry: false,
   });
 };
