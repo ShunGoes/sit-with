@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 import { useAuthStore } from "@/store/use-auth-store";
-import { Bell } from "lucide-react";
+import { Bell, Home } from "lucide-react";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
@@ -55,14 +55,15 @@ export default function ProtectedLayout({
             </div>
             <div className=" w-full flex items-center justify-end gap-3">
               <div className="w-11.5 h-11.5 bg-[#F5F7FA] dark:bg-dash-secondary-bg rounded-full relative flex items-center justify-center">
-                <Bell color="#737791"/>
+                <Bell color="#737791" size={20}/>
               </div>
              <div className="flex items-center gap-2">
                <p className="w-11.5 h-11.5 bg-[#F5F7FA] dark:bg-dash-secondary-bg text-secondary-text font-medium  rounded-full relative flex items-center justify-center">
                {userInitials}
+              
               </p>
-              <p className="text-base text-regular-button font-medium ">Student</p>
              </div>
+              <Home className="text-regular-button cursor-pointer" size={20} onClick={() => router.push("/")}/>
                 <ModeToggle />
               </div>
           </header>

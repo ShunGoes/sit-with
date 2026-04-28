@@ -17,6 +17,9 @@ import CampSuccessModal from "../pages/camps/camp-success";
 import UpdateCaptionForm from "../forms/admin/camps/update-caption";
 
 import { MessageFacilitatorModal } from "../user/dashboard/message-facilitator-modal";
+import AddTestimonialModal from "../forms/admin/testimonials/add-testimonial";
+import EditTestimonialModal from "../forms/admin/testimonials/edit-testimonial";
+import { Testimonial } from "@/lib/api/services/testimonials/testimonials.services";
 
 const openModal = useModalStore.getState().openModal;
 
@@ -83,3 +86,16 @@ export const handleEditBlog = (blog: BlogPost) => {
     <EditBlogEditor blog={blog} />,
   );
 };
+
+//>>>>>>>>>>>>>>>>>>> TESTIMONIALS <<<<<<<<<<<<<<<<<<<<<<<<<
+export const handleAddTestimonial = () => {
+  openModal("testimonial-modal", <AddTestimonialModal />);
+};
+
+export const handleEditTestimonial = (testimonial: Testimonial) => {
+  openModal(
+    "testimonial-modal",
+    <EditTestimonialModal testimonial={testimonial} />,
+  );
+};
+

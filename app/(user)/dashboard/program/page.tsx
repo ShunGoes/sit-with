@@ -20,7 +20,7 @@ export default function UserProgramsPage() {
         subtext={`You're enrolled in ${purchases.length} ${purchases.length === 1 ? 'programme' : 'programmes'}`}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {purchases.map((purchase) => {
           const program = purchase.program;
           
@@ -35,10 +35,10 @@ export default function UserProgramsPage() {
           return (
             <div
               key={purchase.id}
-              className="bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col pt-6 pb-6 px-6 h-[280px]"
+              className="bg-dash-secondary-bg rounded-[12px] border-[0.67px] border-[#EAECF0] dark:border-none overflow-hidden flex flex-col  p-4 "
             >
               <div className="flex items-start justify-between gap-4 mb-4">
-                <h3 className="font-semibold text-lg text-primary-text leading-tight w-[60%]">
+                <h3 className="font-semibold text-lg text-primary-text leading-tight line-clamp-2 w-[60%]">
                   {program.title}
                 </h3>
                 <Badge variant={badgeVariant}>{program.category}</Badge>
@@ -47,33 +47,25 @@ export default function UserProgramsPage() {
               <div className="mt-auto flex flex-col gap-4">
                 {/* Progress */}
                 <div className="flex flex-col gap-2">
-                  <div className="flex justify-between items-center text-xs text-secondary-text font-medium">
+                  <div className="flex justify-between items-center text-xs text-secondary-text font-normal">
                     <span>
                       Week {progress.current} of {progress.total}
                     </span>
-                    <span className="text-brand-green">
+                    <span className="text-regular-button font-semibold">
                       {progress.percentage}%
                     </span>
                   </div>
                   <div className="w-full bg-[#f0f0f0] h-2 rounded-full overflow-hidden">
                     <div
-                      className="bg-[#609960] h-full rounded-full"
+                      className="bg-regular-button h-full rounded-full"
                       style={{ width: `${progress.percentage}%` }}
                     />
                   </div>
                 </div>
 
-                {/* Next session or spacer */}
-                <div className="h-5 flex items-center text-xs text-secondary-text font-medium mt-2">
-                  <div className="flex items-center gap-1.5">
-                    <Clock size={14} />
-                    <span>Next: Tomorrow, 10:00 AM</span>
-                  </div>
-                </div>
-
                 {/* Action Button */}
                 <Link href={`/dashboard/program/${purchase.programId}`}>
-                  <Button className="w-full border-transparent" variant="default">
+                  <Button className="w-full" variant="regular">
                     Continue <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
                 </Link>

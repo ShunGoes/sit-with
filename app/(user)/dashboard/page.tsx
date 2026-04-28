@@ -116,7 +116,7 @@ export default function UserDashboardPage() {
           {/* Main Content Area */}
           <div className="flex flex-col gap-8">
             {/* Active Program Progress Card */}
-            <div className="bg-dash-secondary-bg rounded-[12px] border-[0.67px] border-[#EAECF0] p-6 ">
+            <div className="bg-dash-secondary-bg rounded-[12px] border-[0.67px] border-[#EAECF0] dark:border-none p-6 ">
               <div className="flex items-center gap-3 mb-4">
                 <h2 className="xl:text-2xl-text text-xl font-semibold text-primary-text">
                   {selectedPurchase.program.title}
@@ -127,7 +127,7 @@ export default function UserDashboardPage() {
               </div>
 
               <div className="flex gap-4 mb-6">
-                <div className="flex items-center gap-2 text-[#667085] text-sm">
+                <div className="flex items-center gap-2 text-primary-text text-sm">
                   <Clock size={16} />
                   <span>
                     {selectedPurchase.program.durationWeeks ?? 0}
@@ -136,7 +136,7 @@ export default function UserDashboardPage() {
                       : " weeks"}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 text-[#667085] text-sm">
+                <div className="flex items-center gap-2 text-primary-text text-sm">
                   <Calendar size={16} />
                   <span>
                     {selectedPurchase.program.hoursPerWeek}
@@ -148,10 +148,10 @@ export default function UserDashboardPage() {
 
               <div className="space-y-2 mb-6">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="font-medium text-[#101828]">
+                  <span className="font-medium text-primary-text">
                     Progress: Week 3 of 12
                   </span>
-                  <span className="font-semibold text-[#445b1c]">25%</span>
+                  <span className="font-semibold text-regular-button">25%</span>
                 </div>
                 <div className="h-2 w-full bg-[#F2F4F7] rounded-full overflow-hidden">
                   <div
@@ -160,13 +160,12 @@ export default function UserDashboardPage() {
                   />
                 </div>
               </div>
-                    
-                    <Link href={`/dashboard/program`}>
-              <Button variant="regular" className="w-full ">
-                Continue Programme
-              </Button>``
-                    
-                    </Link>
+
+              <Link href={`/dashboard/program`}>
+                <Button variant="regular" className="w-full ">
+                  Continue Programme
+                </Button>
+              </Link>
             </div>
 
             {/* Programme Content Section */}
@@ -294,7 +293,7 @@ export default function UserDashboardPage() {
             </div>
 
             {/* Need Support Card */}
-            <div className="bg-white rounded-2xl border border-[#EAECF0] px-4 py-5 shadow-sm">
+            <div className="bg-dash-secondary-bg rounded-2xl border border-[#EAECF0] px-4 py-5 shadow-sm">
               <h3 className="text-base font-semibold text-primary-text mb-3">
                 Need Support?
               </h3>

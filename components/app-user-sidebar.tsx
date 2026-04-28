@@ -53,7 +53,7 @@ export function AppUserSidebar({ ...props }: React.ComponentProps<typeof Sidebar
               className="object-cover"
             />
           </div>
-          <h4 className="text-sm font-semibold text-[#A8D675] tracking-tight">
+          <h4 className="text-sm font-semibold text-regular-button tracking-tight">
             Sit With PD
           </h4>
         </Link>
