@@ -38,6 +38,10 @@ export default function AddTestimonialModal() {
     mutate(formData, {
       onSuccess: () => {
         closeModal("testimonial-modal");
+        closeModal("loading");
+      },
+      onError: () => {
+        closeModal("loading");
       },
     });
   };

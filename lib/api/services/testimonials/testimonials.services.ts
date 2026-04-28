@@ -34,6 +34,17 @@ export interface TestimonialsResponse {
   message: string;
 }
 
+
+export const getAllTestimonials = async (
+): Promise<TestimonialsResponse> => {
+  try {
+    const res = await api.get("/testimonials");
+    return res.data;
+  } catch (error) {
+    throw new Error(getApiError(error));
+  }
+};
+
 export const getAdminTestimonials = async (
   params: GetTestimonialsParams
 ): Promise<TestimonialsResponse> => {
