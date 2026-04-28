@@ -6,8 +6,15 @@ import {
   updateTestimonial,
   deleteTestimonial,
   GetTestimonialsParams,
+  getAllTestimonials,
 } from "../../services/testimonials/testimonials.services";
 
+export const useGetAllTestimonials = () => {
+  return useQuery({
+    queryKey: ["testimonials", "all"],
+    queryFn: getAllTestimonials,
+  });
+};
 export const useGetAdminTestimonials = (params: GetTestimonialsParams) => {
   return useQuery({
     queryKey: ["admin-testimonials", params],
@@ -23,6 +30,7 @@ export const useCreateTestimonial = () => {
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["admin-testimonials"] });
+      queryClient.invalidateQueries({ queryKey: ["testimonials", "all"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -39,6 +47,7 @@ export const useUpdateTestimonial = () => {
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["admin-testimonials"] });
+      queryClient.invalidateQueries({ queryKey: ["testimonials", "all"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -54,6 +63,7 @@ export const useDeleteTestimonial = () => {
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["admin-testimonials"] });
+      queryClient.invalidateQueries({ queryKey: ["testimonials", "all"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
