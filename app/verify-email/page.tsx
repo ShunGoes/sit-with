@@ -46,16 +46,7 @@ function VerifyEmailContent() {
 
       // Wait for 2 seconds to allow the user to read the success message
       setTimeout(() => {
-        const role = userData?.role;
-        
-        if (role === "ADMIN") {
-          router.replace("/admin");
-        } else if (role === "USER") {
-          router.replace("/dashboard");
-        } else {
-          // No role if userData is partial or missing
-          router.replace("/login");
-        }
+        router.replace("/");
       }, 2000);
     }
 

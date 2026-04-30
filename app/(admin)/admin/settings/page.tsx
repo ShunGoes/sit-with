@@ -1,8 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import FormFieldComp from "@/components/formfield";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
@@ -15,41 +15,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { showSuccessToast } from "@/lib/toast-helpers";
-
-// ─── Schemas ────────────────────────────────────────────────────────────────
-
-const generalSettingsSchema = z.object({
-  platformName: z.string().min(1, "Platform name is required"),
-  supportEmail: z.string().email("Invalid email"),
-  defaultTimezone: z.string().min(1, "Timezone is required"),
-  currency: z.string().min(1, "Currency is required"),
-});
-type GeneralSettingsValues = z.infer<typeof generalSettingsSchema>;
-
-const platformFeaturesSchema = z.object({
-  maintenanceMode: z.boolean(),
-  allowUserRegistration: z.boolean(),
-  requireEmailVerification: z.boolean(),
-  autoEnrollment: z.boolean(),
-});
-type PlatformFeaturesValues = z.infer<typeof platformFeaturesSchema>;
-
-const notificationsIntegrationsSchema = z.object({
-  emailNotifications: z.boolean(),
-});
-type NotificationsIntegrationsValues = z.infer<
-  typeof notificationsIntegrationsSchema
->;
+import {
+  generalSettingsSchema,
+  GeneralSettingsValues,
+  platformFeaturesSchema,
+  PlatformFeaturesValues,
+  notificationsIntegrationsSchema,
+  NotificationsIntegrationsValues,
+} from "@/schemas/settings-schema";
+import {
+  useGetPlatformSettings,
+  useUpdateGeneralSettings,
+  useUpdateFeaturesSettings,
+  useUpdateNotificationsSettings,
+} from "@/lib/api/hooks/admin/settings.hooks";
+import { Spinner } from "@/components/spinner";
+import { useModalStore } from "@/components/store/use-modal-store";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
 const TIMEZONES = [
-  { label: "Africa/Lagos (WAT)", value: "Africa/Lagos" },
+  { label: "Africa/Lagos", value: "Africa/Lagos" },
   { label: "UTC", value: "UTC" },
-  { label: "America/New_York (EST)", value: "America/New_York" },
-  { label: "Europe/London (GMT)", value: "Europe/London" },
-  { label: "Asia/Kolkata (IST)", value: "Asia/Kolkata" },
+  { label: "America/New_York", value: "America/New_York" },
+  { label: "Europe/London", value: "Europe/London" },
+  { label: "Asia/Kolkata", value: "Asia/Kolkata" },
 ];
 
 const CURRENCIES = [
@@ -59,23 +49,73 @@ const CURRENCIES = [
   { label: "Euro (€)", value: "EUR" },
 ];
 
+const PLATFORM_FEATURES = [
+  {
+    name: "maintenanceMode" as const,
+    label: "Maintenance Mode",
+    description: "Temporarily disable access to the platform for maintenance",
+  },
+  {
+    name: "allowUserRegistration" as const,
+    label: "Allow User Registration",
+    description: "Enable new users to register for an account",
+  },
+  {
+    name: "requireEmailVerification" as const,
+    label: "Require Email Verification",
+    description: "Users must verify their email before accessing the platform",
+  },
+  {
+    name: "autoEnrollment" as const,
+    label: "Auto-Enrollment",
+    description: "Automatically enroll users in programs after payment",
+  },
+];
+
 // ─── Section 1: General Settings ─────────────────────────────────────────────
 
-function GeneralSettingsSection() {
+function GeneralSettingsSection({ initialData }: { initialData?: any }) {
   const form = useForm<GeneralSettingsValues>({
     resolver: zodResolver(generalSettingsSchema),
     defaultValues: {
-      platformName: "Sit-With-PD",
-      supportEmail: "support@sitwithpd.com",
-      defaultTimezone: "Africa/Lagos",
-      currency: "NGN",
+      platformName: initialData?.platformName || "",
+      supportEmail: initialData?.supportEmail || "",
+      defaultTimezone: initialData?.defaultTimezone || "Africa/Lagos",
+      currency: initialData?.currency || "NGN",
     },
   });
 
+  const { mutate, isPending } = useUpdateGeneralSettings();
+  const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
+
+  useEffect(() => {
+    if (initialData) {
+      form.reset({
+        platformName: initialData.platformName,
+        supportEmail: initialData.supportEmail,
+        defaultTimezone: initialData.defaultTimezone,
+        currency: initialData.currency,
+      });
+    }
+  }, [initialData, form]);
+
+  useEffect(() => {
+    if (isPending) {
+      openModal(
+        "loading",
+        <div className="flex items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+          <Spinner size={40} />
+        </div>,
+        { isMutation: true }
+      );
+    } else {
+      closeModal("loading");
+    }
+  }, [isPending, openModal, closeModal]);
+
   const onSubmit = (values: GeneralSettingsValues) => {
-    // TODO: PATCH /api/admin/settings/general
-    console.log(values);
-    showSuccessToast("General settings update coming soon");
+    mutate(values);
   };
 
   return (
@@ -84,16 +124,14 @@ function GeneralSettingsSection() {
         General Settings
       </header>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {/* Platform Name */}
         <FormFieldComp
           name="platformName"
           control={form.control}
           label="Platform Name"
-          placeholder="Sit-With-PD"
+          placeholder="Sit With PD"
           className="bg-white"
         />
 
-        {/* Support Email + Default Timezone */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
           <FormFieldComp
             name="supportEmail"
@@ -115,10 +153,7 @@ function GeneralSettingsSection() {
                   >
                     Default Timezone
                   </FieldLabel>
-                  <Select
-                    value={field.value}
-                    onValueChange={field.onChange}
-                  >
+                  <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger className="bg-white" id="defaultTimezone">
                       <SelectValue placeholder="Select timezone" />
                     </SelectTrigger>
@@ -139,7 +174,6 @@ function GeneralSettingsSection() {
           />
         </div>
 
-        {/* Currency */}
         <Controller
           control={form.control}
           name="currency"
@@ -173,12 +207,8 @@ function GeneralSettingsSection() {
         />
 
         <div className="flex justify-end pt-2">
-          <Button
-            type="submit"
-            variant="regular"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? "Saving..." : "Save Settings"}
+          <Button type="submit" variant="regular" disabled={isPending}>
+            {isPending ? "Saving..." : "Save Settings"}
           </Button>
         </div>
       </form>
@@ -188,47 +218,48 @@ function GeneralSettingsSection() {
 
 // ─── Section 2: Platform Features ─────────────────────────────────────────────
 
-const PLATFORM_FEATURES = [
-  {
-    name: "maintenanceMode" as const,
-    label: "Maintenance Mode",
-    description:
-      "Temporarily disable access to the platform for maintenance",
-  },
-  {
-    name: "allowUserRegistration" as const,
-    label: "Allow User Registration",
-    description: "Enable new users to register for an account",
-  },
-  {
-    name: "requireEmailVerification" as const,
-    label: "Require Email Verification",
-    description:
-      "Users must verify their email before accessing the platform",
-  },
-  {
-    name: "autoEnrollment" as const,
-    label: "Auto-Enrollment",
-    description:
-      "Automatically enroll users in programs after payment",
-  },
-];
-
-function PlatformFeaturesSection() {
+function PlatformFeaturesSection({ initialData }: { initialData?: any }) {
   const form = useForm<PlatformFeaturesValues>({
     resolver: zodResolver(platformFeaturesSchema),
     defaultValues: {
-      maintenanceMode: true,
-      allowUserRegistration: true,
-      requireEmailVerification: true,
-      autoEnrollment: false,
+      maintenanceMode: initialData?.maintenanceMode ?? false,
+      allowUserRegistration: initialData?.allowUserRegistration ?? true,
+      requireEmailVerification: initialData?.requireEmailVerification ?? true,
+      autoEnrollment: initialData?.autoEnrollment ?? false,
     },
   });
 
+  const { mutate, isPending } = useUpdateFeaturesSettings();
+  const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
+
+  useEffect(() => {
+    if (initialData) {
+      form.reset({
+        maintenanceMode: initialData.maintenanceMode,
+        allowUserRegistration: initialData.allowUserRegistration,
+        requireEmailVerification: initialData.requireEmailVerification,
+        autoEnrollment: initialData.autoEnrollment,
+      });
+    }
+  }, [initialData, form]);
+
+  useEffect(() => {
+    if (isPending) {
+      openModal(
+        "loading",
+        <div className="flex items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+          <Spinner size={40} />
+        </div>,
+        { isMutation: true }
+      );
+    } else {
+      closeModal("loading");
+    }
+  }, [isPending, openModal, closeModal]);
+
   const onSubmit = (values: PlatformFeaturesValues) => {
-    // TODO: PATCH /api/admin/settings/features
-    console.log(values);
-    showSuccessToast("Platform features update coming soon");
+    mutate(values);
   };
 
   return (
@@ -264,12 +295,8 @@ function PlatformFeaturesSection() {
         ))}
 
         <div className="flex justify-end pt-2">
-          <Button
-            type="submit"
-            variant="regular"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? "Saving..." : "Save Settings"}
+          <Button type="submit" variant="regular" disabled={isPending}>
+            {isPending ? "Saving..." : "Save Settings"}
           </Button>
         </div>
       </form>
@@ -279,18 +306,42 @@ function PlatformFeaturesSection() {
 
 // ─── Section 3: Notifications & Integrations ──────────────────────────────────
 
-function NotificationsIntegrationsSection() {
+function NotificationsIntegrationsSection({ initialData }: { initialData?: any }) {
   const form = useForm<NotificationsIntegrationsValues>({
     resolver: zodResolver(notificationsIntegrationsSchema),
     defaultValues: {
-      emailNotifications: true,
+      emailNotificationsEnabled: initialData?.emailNotificationsEnabled ?? true,
     },
   });
 
+  const { mutate, isPending } = useUpdateNotificationsSettings();
+  const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
+
+  useEffect(() => {
+    if (initialData) {
+      form.reset({
+        emailNotificationsEnabled: initialData.emailNotificationsEnabled,
+      });
+    }
+  }, [initialData, form]);
+
+  useEffect(() => {
+    if (isPending) {
+      openModal(
+        "loading",
+        <div className="flex items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+          <Spinner size={40} />
+        </div>,
+        { isMutation: true }
+      );
+    } else {
+      closeModal("loading");
+    }
+  }, [isPending, openModal, closeModal]);
+
   const onSubmit = (values: NotificationsIntegrationsValues) => {
-    // TODO: PATCH /api/admin/settings/notifications
-    console.log(values);
-    showSuccessToast("Notifications settings update coming soon");
+    mutate(values);
   };
 
   return (
@@ -310,23 +361,16 @@ function NotificationsIntegrationsSection() {
           </div>
           <Controller
             control={form.control}
-            name="emailNotifications"
+            name="emailNotificationsEnabled"
             render={({ field }) => (
-              <Switch
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
+              <Switch checked={field.value} onCheckedChange={field.onChange} />
             )}
           />
         </div>
 
         <div className="flex justify-end pt-2">
-          <Button
-            type="submit"
-            variant="regular"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? "Saving..." : "Save Settings"}
+          <Button type="submit" variant="regular" disabled={isPending}>
+            {isPending ? "Saving..." : "Save Settings"}
           </Button>
         </div>
       </form>
@@ -337,16 +381,27 @@ function NotificationsIntegrationsSection() {
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function AdminSettingsPage() {
+  const { data: platformData, isLoading } = useGetPlatformSettings();
+  const settings = platformData?.data;
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[400px] items-center justify-center w-full">
+        <Spinner size={40} />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-6 w-full">
       <DashboardHeaderText
         header="Settings"
-        subtext="Manage your account settings and preferences"
+        subtext="Manage your platform settings and preferences"
       />
       <div className="space-y-7">
-        <GeneralSettingsSection />
-        <PlatformFeaturesSection />
-        <NotificationsIntegrationsSection />
+        <GeneralSettingsSection initialData={settings} />
+        <PlatformFeaturesSection initialData={settings} />
+        <NotificationsIntegrationsSection initialData={settings} />
       </div>
     </div>
   );

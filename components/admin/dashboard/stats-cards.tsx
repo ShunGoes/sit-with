@@ -2,9 +2,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useGetAdminStats } from "@/lib/api/hooks/admin/admin.hooks";
 import { formatCurrency } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 
 export function StatsCards() {
   const { data, isLoading, isError } = useGetAdminStats();
+  const settings = usePlatformSettingsStore((state) => state.settings);
 
   if (isError) return null;
 
@@ -19,7 +21,7 @@ export function StatsCards() {
     { title: "Total Consultations", value: statsData?.totalConsultations ?? 0 },
     { 
       title: "Total Revenue", 
-      value: formatCurrency(statsData?.totalRevenue ?? 0, "NGN") 
+      value: formatCurrency(statsData?.totalRevenue ?? 0, settings?.currency || "NGN") 
     },
   ];
 

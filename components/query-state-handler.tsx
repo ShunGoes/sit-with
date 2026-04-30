@@ -42,7 +42,7 @@ export default function QueryStateHandler({
     return (
       <div className="flex items-center justify-center py-12">
         <div className="text-center flex items-center justify-center flex-col gap-6">
-          <Spinner size={40} />
+          {/* <Spinner size={40} /> */}
           <p className="mt-2 text-sm text-secondary-text">{fetchingMessage}</p>
         </div>
       </div>

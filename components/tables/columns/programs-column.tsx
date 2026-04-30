@@ -125,6 +125,7 @@ const ActionCell = ({
 const ProgramsColumn = (
   handleDeleteProgram: (id: string) => void,
   editProgram: (id: string) => void,
+  currency: string = "NGN"
 ): ColumnDef<ProgramColumn>[] => [
   {
     accessorKey: "title",
@@ -160,7 +161,7 @@ const ProgramsColumn = (
     header: "Price",
     cell: ({ row }) => (
       <h6 contextMenu="text-xs ">
-        {formatCurrency(row.original.price, "NGN")}
+        {formatCurrency(row.original.price, currency)}
       </h6>
     ),
   },

@@ -25,7 +25,7 @@ import { Purchase } from "@/lib/api/services/dashboard/dashboard.services";
 import Image from "next/image";
 import CardSkeletons from "@/components/skeletons/card-skeletons";
 import ProgramCards from "@/components/user/dashboard/program-cards";
-import { messageFacilitator } from "@/components/modal-helper";
+import { messageFacilitator, contactSupport } from "@/components/modal-helper";
 import { useDashboardStore } from "@/store/use-dashboard-store";
 import Link from "next/link";
 
@@ -318,7 +318,7 @@ export default function UserDashboardPage() {
                 <Button
                   variant="outline"
                   className="w-full border-[#D0D5DD] border-[0.67px] "
-                  onClick={messageFacilitator}
+                  onClick={() => messageFacilitator(selectedPurchase.program.id)}
                 >
                   <MessageCircle size={18} className="text-primary-text" />
                   <span className="text-sm font-medium text-primary-text">
@@ -334,7 +334,11 @@ export default function UserDashboardPage() {
                     Join Community
                   </span>
                 </Button>
-                <Button variant="regular" className="w-full ">
+                <Button
+                  variant="regular"
+                  className="w-full "
+                  onClick={contactSupport}
+                >
                   Contact Support
                 </Button>
               </div>

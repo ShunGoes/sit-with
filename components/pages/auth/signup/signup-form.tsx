@@ -15,6 +15,7 @@ import {
 import { useEffect } from "react";
 import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import { GoogleLogin } from "@react-oauth/google";
 import { showErrorToast } from "@/lib/toast-helpers";
 import Link from "next/link";
@@ -39,6 +40,7 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 export default function SignupForm() {
   const router = useRouter();
   const [step, setStep] = useState(1);
+  const settings = usePlatformSettingsStore((state) => state.settings);
 
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
@@ -125,7 +127,7 @@ export default function SignupForm() {
               height={30}
             />
             <span className="font-semibold text-[14px] text-[##1E1E1E]">
-              Sit With PD
+              {settings?.platformName || "Sit With PD"}
             </span>
           </div>
 

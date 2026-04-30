@@ -16,6 +16,7 @@ import {
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import { Suspense, useEffect } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { showErrorToast } from "@/lib/toast-helpers";
@@ -33,6 +34,8 @@ export  function LoginForm() {
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
+
+  const settings = usePlatformSettingsStore((state) => state.settings);
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
@@ -122,7 +125,7 @@ export  function LoginForm() {
                 height={30}
               />
               <span className="font-semibold text-[14px] text-[##1E1E1E]">
-                Sit With PD
+                {settings?.platformName || "Sit With PD"}
               </span>
             </div>
 

@@ -77,7 +77,8 @@ const ActionCell = ({
 
 const CampsColumn = (
   handleDeleteCamp: (id: string) => void,
-  editCamp: (camp: Camp) => void
+  editCamp: (camp: Camp) => void,
+  currency: string = "NGN"
 ): ColumnDef<Camp>[] => [
   {
     accessorKey: "title",
@@ -104,7 +105,7 @@ const CampsColumn = (
     header: "Price",
     cell: ({ row }) => (
       <h6 className="text-xs">
-        {formatCurrency(row.original.price, "NGN")}
+        {formatCurrency(row.original.price, currency)}
       </h6>
     ),
   },

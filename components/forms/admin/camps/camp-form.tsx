@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ImageUpload from "@/components/image-upload";
 import { CampFormSchema } from "@/schemas/camps-schema";
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import SelectDateComp from "@/components/date-selector";
 
 export default function CampForm({
@@ -16,6 +17,7 @@ export default function CampForm({
   onCancel: () => void;
 }) {
   const form = useFormContext<CampFormSchema>();
+  const settings = usePlatformSettingsStore((state) => state.settings);
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7">
@@ -46,7 +48,7 @@ export default function CampForm({
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid} className="">
                   <FieldLabel className="text-[#344054] text-sm mb-2">
-                    Price (₦) *
+                    Price ({settings?.currency || "NGN"}) *
                   </FieldLabel>
                   <Input
                     {...field}

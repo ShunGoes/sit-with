@@ -17,7 +17,9 @@ import {
   ExternalLink,
   CheckCircle2,
   MoreVertical,
+  MessageCircleMore,
 } from "lucide-react";
+import { messageFacilitator } from "@/components/modal-helper";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -139,7 +141,7 @@ export default function WeekDetailPage() {
     : week.title;
 
   return (
-    <div className="flex flex-col gap-6 w-full max-w-[900px]">
+    <div className="flex flex-col gap-6 w-full max-w-[900px] relative">
       {/* Back button */}
       <button
         onClick={() => router.back()}
@@ -354,6 +356,16 @@ export default function WeekDetailPage() {
             </div>
           );
         })}
+      </div>
+
+      <div className="fixed bottom-10 right-10 z-50 pointer-events-auto">
+        <button
+          onClick={() => messageFacilitator(programId)}
+          className="w-14 h-14 bg-regular-button rounded-full flex items-center justify-center text-white shadow-lg hover:bg-brand-green transition-all duration-300"
+          aria-label="Message Facilitator"
+        >
+          <MessageCircleMore size={28} />
+        </button>
       </div>
     </div>
   );

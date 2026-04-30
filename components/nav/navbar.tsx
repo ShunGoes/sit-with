@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { X, LogOut, LayoutDashboard } from "lucide-react";
 import Image from "next/image";
 import { useAuthStore } from "@/store/use-auth-store";
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import { logout } from "@/lib/api/services/auth/auth.services";
 
 const navLinks = [
@@ -27,6 +28,7 @@ export function Navbar() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const user = useAuthStore((state) => state.user);
   const clearUser = useAuthStore((state) => state.clearUser);
+  const settings = usePlatformSettingsStore((state) => state.settings);
   console.log("user", user, isAuthenticated);
 
 
@@ -83,7 +85,7 @@ export function Navbar() {
             />
           </div>
           <h4 className="text-sm font-semibold text-[#A8D675] tracking-tight">
-            Sit With PD
+            {settings?.platformName || "Sit With PD"}
           </h4>
         </Link>
 
@@ -243,7 +245,7 @@ export function Navbar() {
                   />
                 </div>
                 <h4 className="text-sm font-semibold text-[#A8D675] tracking-tight">
-                  Sit With PD
+                  {settings?.platformName || "Sit With PD"}
                 </h4>
               </Link>
               <button
