@@ -81,10 +81,10 @@ export default function CampsOverview() {
          
           <Button
             variant={"regular"}
-            className="font-normal"
+            className="font-normal hidden sm:flex"
             onClick={() => addCamp()}
           >
-            <Plus /> <span className="hidden sm:block">Add Camp</span>
+            <Plus /> <span>Add Camp</span>
           </Button>
         </div>
       </div>
@@ -117,6 +117,17 @@ export default function CampsOverview() {
             />
           </QueryStateHandler>
         </div>
+      </div>
+
+      {/* Mobile Floating Action Button */}
+      <div className="md:hidden fixed bottom-10 right-10 z-50 pointer-events-auto">
+        <button
+          onClick={() => addCamp()}
+          className="w-14 h-14 bg-regular-button rounded-full flex items-center justify-center text-white shadow-lg hover:bg-brand-green transition-all duration-300"
+          aria-label="Add Camp"
+        >
+          <Plus size={28} />
+        </button>
       </div>
     </div>
   );

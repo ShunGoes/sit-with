@@ -74,8 +74,8 @@ export default function ProgramOverview() {
           subtext="Manage all learning programs on the platform"
         />
         <Link href={"/admin/program/add"}>
-          <Button variant={"regular"} className="font-normal">
-            <Plus /> <span className="hidden sm:block">New Program </span>
+          <Button variant={"regular"} className="font-normal hidden sm:flex">
+            <Plus /> <span>New Program </span>
           </Button>
         </Link>
       </div>
@@ -109,6 +109,18 @@ export default function ProgramOverview() {
             />
           </QueryStateHandler>
         </div>
+      </div>
+
+      {/* Mobile Floating Action Button */}
+      <div className="md:hidden fixed bottom-10 right-10 z-50 pointer-events-auto">
+        <Link href={"/admin/program/add"}>
+          <button
+            className="w-14 h-14 bg-regular-button rounded-full flex items-center justify-center text-white shadow-lg hover:bg-brand-green transition-all duration-300"
+            aria-label="New Program"
+          >
+            <Plus size={28} />
+          </button>
+        </Link>
       </div>
     </div>
   );
