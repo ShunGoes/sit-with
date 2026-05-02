@@ -4,35 +4,44 @@ import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import FilterSelectComp from "@/components/filter";
 import { addCamp, editCamp } from "@/components/modal-helper";
 import QueryStateHandler from "@/components/query-state-handler";
-import SeacrchAndFilter from "@/components/seach-and-filter";
 import SearchInput from "@/components/searchInput";
 import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
 import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import CampsColumn from "@/components/tables/columns/camps-column";
+import Pagination from "@/components/pagination";
 import ReuseableTable from "@/components/tables/reuseable-table";
 import { Button } from "@/components/ui/button";
-import { useDeleteCamp, useGetCamps } from "@/lib/api/hooks/camps/camps.hooks";
+import { useDeleteCamp, useGetAdminCamps } from "@/lib/api/hooks/camps/camps.hooks";
 import { Plus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
 const FILTER_BY_STATUS = [
-  {
-    label: "published", value: "published"
-  }
-]
+  { label: "All Status", value: "all" },
+  { label: "Upcoming", value: "UPCOMING" },
+  { label: "Ongoing", value: "ONGOING" },
+  { label: "Completed", value: "COMPLETED" },
+  { label: "Cancelled", value: "CANCELLED" },
+];
 export default function CampsOverview() {
   const searchParams = useSearchParams();
-  const filteredItem = searchParams.get("status") ?? "";
-  const [search, setSearch] = useState("");
+  const page = Number(searchParams.get("page")) || 1;
+  const limit = Number(searchParams.get("limit")) || 20;
+  const search = searchParams.get("search") || "";
+  const status =  searchParams.get("status") === "all" ? "" : searchParams.get("status") || "";
 
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const settings = usePlatformSettingsStore((state) => state.settings);
 
-  const { data: campsData, isLoading, isError, isFetching } = useGetCamps();
+  const { data: campsData, isLoading, isError, isFetching } = useGetAdminCamps({
+    page,
+    limit,
+    search,
+    status,
+  });
 
   const { mutate, isPending } = useDeleteCamp();
 
@@ -62,12 +71,7 @@ export default function CampsOverview() {
     }
   }, [isPending, openModal]);
 
-  // Client-side filtering
-  const filteredData = campsData?.data?.filter((camp) => {
-    if (search && !camp.title.toLowerCase().includes(search.toLowerCase()))
-      return false;
-    return true;
-  });
+
 
   return (
     <div className="space-y-15">
@@ -91,18 +95,18 @@ export default function CampsOverview() {
 
       <div className="space-y-4">
 
-        {/* <div className="flex justify-between gap-4">
+        <div className="flex justify-between gap-4">
           <SearchInput />
             
           <div>
-          <FilterSelectComp paramKey="" options={FILTER_BY_STATUS} />
+            <FilterSelectComp paramKey="status" options={FILTER_BY_STATUS} />
           </div>
-        </div> */}
+        </div>
 
         {/* table */}
         <div className="bg-dash-secondary-bg rounded-[16px] pb-1">
           <QueryStateHandler
-            data={filteredData}
+            data={campsData?.data}
             isLoading={isLoading}
             isError={isError}
             loadingMessage="Loading Camps"
@@ -113,8 +117,11 @@ export default function CampsOverview() {
           >
             <ReuseableTable
               columns={CampsColumn(handleDeleteCamp, editCamp, settings?.currency)}
-              tableData={filteredData ?? []}
+              tableData={campsData?.data ?? []}
             />
+            {campsData?.meta?.totalPages && (
+              <Pagination totalPages={campsData.meta.totalPages} />
+            )}
           </QueryStateHandler>
         </div>
       </div>

@@ -34,6 +34,17 @@ export interface CampsResponse {
   message: string;
 }
 
+export interface AdminCampsResponse {
+  data: Camp[];
+  message: string;
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
 export interface CampResponse {
   data: Camp;
   message: string;
@@ -43,6 +54,18 @@ export interface CampResponse {
 export const getCamps = async (): Promise<CampsResponse> => {
   try {
     const res = await api.get("/camps");
+    return res.data;
+  } catch (error) {
+    throw new Error(getApiError(error));
+  }
+};
+
+// get all camps created by admin
+export const getAdminCamps = async (params?: { page?: number; limit?: number; search?: string; status?: string }): Promise<AdminCampsResponse> => {
+  const queryString = params ? new URLSearchParams(params as any).toString() : "";
+  const url = queryString ? `/camps/admin/all?${queryString}` : `/camps/admin/all`;
+  try {
+    const res = await api.get(url);
     return res.data;
   } catch (error) {
     throw new Error(getApiError(error));
