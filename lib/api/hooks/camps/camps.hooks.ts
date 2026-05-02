@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getCamps,
+  getAdminCamps,
   getCamp,
   createCamp,
   updateCamp,
@@ -24,6 +25,14 @@ export const useGetCamps = () => {
   return useQuery({
     queryKey: ["camps",],
     queryFn: getCamps,
+    retry: false,
+  });
+};
+
+export const useGetAdminCamps = (params?: { page?: number; limit?: number; search?: string; status?: string }) => {
+  return useQuery({
+    queryKey: ["admin-camps", params],
+    queryFn: () => getAdminCamps(params),
     retry: false,
   });
 };
