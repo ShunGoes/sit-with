@@ -12,7 +12,7 @@ import { flushSync } from "react-dom";
 import { useModalStore } from "@/components/store/use-modal-store";
 
 import { CampTier, CampImage } from "@/types/camps.types";
-import { CampParticipation } from "./participation";
+import CampParticipation from "./participation";
 import GrayCheckIcon from "@/pd-icons/gray-check";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -110,7 +110,7 @@ function CardByIdOverview({ id }: { id: string }) {
               <div>
                 <h3 className={labelText}>Price</h3>
                 <p className={valueText}>
-                  {formatCurrency(camp?.price || 0, "NGN")}
+                  {formatCurrency(camp?.price || 0)}
                 </p>
               </div>
               <div>

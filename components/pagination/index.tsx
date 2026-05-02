@@ -35,7 +35,7 @@ export default function Pagination({ totalPages }: PaginationProps) {
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center gap-4 justify-between px-2 py-4">
+    <div className="flex w-full items-center gap-4 justify-between px-2 py-4">
       <p className="text-sm text-primary-text font-medium">
         Page {currentPage} <span className="font-normal"> of </span>{" "}
         {totalPages}

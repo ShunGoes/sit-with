@@ -8,6 +8,7 @@ import { Spinner } from "@/components/spinner";
 import QueryStateHandler from "@/components/query-state-handler";
 import SearchInput from "@/components/searchInput";
 import { useRouter, useSearchParams } from "next/navigation";
+import FilterSelectComp from "@/components/filter";
 
 const CATEGORIES = ["All", "WELLBEING", "REFLECTION", "PERSONAL_GROWTH"];
 
@@ -17,6 +18,11 @@ const CATEGORY_LABELS: Record<string, string> = {
   REFLECTION: "Reflection",
   PERSONAL_GROWTH: "Personal Growth",
 };
+
+const CATEGORY_OPTIONS = CATEGORIES.map((cat) => ({
+  label: CATEGORY_LABELS[cat] || cat,
+  value: cat === "All" ? "all" : cat,
+}));
 
 interface BlogClientProps {
   blogs: Array<{
@@ -39,7 +45,7 @@ export function BlogClient() {
 
   const params = {
     search,
-    ...(categoryParams && { category: categoryParams }),
+    ...(categoryParams && categoryParams !== "all" && { category: categoryParams }),
   };
 
   const {
@@ -49,12 +55,17 @@ export function BlogClient() {
     isFetching,
   } = useGetPublicBlogs(params);
 
+  const activeCategory = categoryParams || "All";
+
   const handleChange = (newValue: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set("category", newValue);
+    if (newValue === "All" || newValue === "all") {
+      params.delete("category");
+    } else {
+      params.set("category", newValue);
+    }
     router.push(`?${params.toString()}`);
   };
-  const [activeCategory, setActiveCategory] = useState("All");
 
   const blogsList = blogs?.data || [];
 
@@ -80,16 +91,24 @@ export function BlogClient() {
 
       {/* Main Content */}
       <section className="container mx-auto px-4 md:px-8 pt-12 pb-30 max-w-[1200px] ">
-        <div className="flex  justify-between gap-x-3">
-          {/* Category Filters */}
-          <div className="flex items-center gap-3 overflow-x-auto  pb-4 mb-12 scrollbar-hide">
+        <div className="flex w-full items-center justify-between gap-x-4 md:gap-x-7 mb-12">
+          {/* Category Filters (Mobile) */}
+          <div className="md:hidden flex-shrink-0">
+             <FilterSelectComp
+               options={CATEGORY_OPTIONS}
+               placeholder="Category"
+               paramKey="category"
+             />
+          </div>
+
+          {/* Category Filters (Desktop) */}
+          <div className="hidden md:flex flex-1 items-center gap-3 overflow-x-auto scrollbar-hide">
             {CATEGORIES.map((category) => {
               const isActive = category === activeCategory;
               return (
                 <button
                   key={category}
                   onClick={() => {
-                    setActiveCategory(category);
                     handleChange(category);
                   }}
                   className={`whitespace-nowrap px-5 py-2 rounded-full text-sm md:text-base cursor-pointer transition-all ${
@@ -110,8 +129,9 @@ export function BlogClient() {
               );
             })}
           </div>
-          <div>
-            <SearchInput placeholder="Search blogs..." className=" border-regular-button border" />
+
+          <div className="flex-1 md:flex-none">
+            <SearchInput placeholder="Search blogs..." className="w-full border-regular-button border" />
           </div>
         </div>
 

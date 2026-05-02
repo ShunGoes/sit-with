@@ -212,7 +212,7 @@ export default function CampDetail({ id }: { id: string }) {
               <h3 className="font-semibold text-sm mb-1 text-gray-500">
                 Price
               </h3>
-              <p>{formatCurrency(camp?.price || 0, "NGN")}</p>
+              <p>{formatCurrency(camp?.price || 0)}</p>
             </div>
             <div>
               <h3 className="font-semibold text-sm mb-1 text-gray-500">
@@ -330,7 +330,7 @@ export default function CampDetail({ id }: { id: string }) {
                   <div>
                     <p className="text-xs text-gray-500 font-medium">Price</p>
                     <p className="text-primary-text font-semibold">
-                      {formatCurrency(tier.price, "NGN")}
+                      {formatCurrency(tier.price)}
                     </p>
                   </div>
                   <div>

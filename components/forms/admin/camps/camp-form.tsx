@@ -80,6 +80,7 @@ export default function CampForm({
               name="startDate"
               label="Start Date *"
               placeholder="Select start date"
+              disablePastDates={true}
             />
             <SelectDateComp
               control={form.control}

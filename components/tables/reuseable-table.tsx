@@ -13,10 +13,8 @@ interface TableDateProps<T> {
 }
 
 const ReuseableTable = <T,>({ tableData, columns }: TableDateProps<T>) => {
-  const [data] = useState(tableData);
-
   const table = useReactTable({
-    data,
+    data: tableData || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

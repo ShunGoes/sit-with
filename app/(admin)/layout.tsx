@@ -51,7 +51,7 @@ export default function ProtectedLayout({
   const userInitials = firstName.charAt(0) + lastName.charAt(0);
 
   const currentUser = data?.user || data?.data;
-  console.log( "current user", currentUser)
+  // console.log( "current user", currentUser)
 
   useEffect(() => {
     if (isError) {
@@ -68,7 +68,7 @@ export default function ProtectedLayout({
         platformName: data.platformName,
         supportEmail: data.supportEmail,
         defaultTimezone: data.defaultTimezone,
-        currency: data.currency,
+        currency: data.currency as "NGN" | "USD" | "GBP" | "EUR",
         maintenanceMode: data.maintenanceMode,
         allowUserRegistration: data.allowUserRegistration,
         requireEmailVerification: data.requireEmailVerification,

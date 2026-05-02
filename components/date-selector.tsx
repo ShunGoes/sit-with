@@ -133,7 +133,7 @@ export default function SelectDateComp<T extends FieldValues>({
 
         return (
           <Field data-invalid={fieldState.invalid} aria-invalid={fieldState.invalid} className="flex flex-col">
-            <FieldLabel className='mb-2'>{label}</FieldLabel>
+            <FieldLabel className=''>{label}</FieldLabel>
               <DatePicker
                 selected={selectedDate}
                 onChange={(date: any) => {
@@ -174,7 +174,7 @@ export default function SelectDateComp<T extends FieldValues>({
                 scrollableYearDropdown
                 maxDate={computedMaxDate}
                 minDate={computedMinDate}
-                className="flex h-[54px] w-full placeholder:text-[#767676] rounded-md border border-[#C0C0C0] bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[14px] focus-visible:outline-none  disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex h-11 w-full  placeholder:text-[#767676] rounded-md border border-[#C0C0C0] bg-dash-secondary-bg dark:bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[14px] focus-visible:outline-none dark:text-primary-text disabled:cursor-not-allowed disabled:opacity-50"
                 wrapperClassName="w-full"
               />
             {fieldState.invalid && (

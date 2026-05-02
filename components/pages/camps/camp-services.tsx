@@ -132,7 +132,7 @@ export default function CampServices() {
                     </span>
                   </div>
                   <div className="text-regular-button font-bold text-lg">
-                    {formatCurrency(service.price, "USD")}
+                    {formatCurrency(service.price)}
                   </div>
                 </div>
                 <Link href={`/camps/${service.id}`}>

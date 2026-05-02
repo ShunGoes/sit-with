@@ -40,7 +40,7 @@ export default function FilterSelectComp({
 
   return (
     <Select value={value} onValueChange={handleChange}>
-      <SelectTrigger className=" bg-dash-secondary-bg  dark:border-none text-primary-text flex items-center gap-2 ">
+      <SelectTrigger className=" bg-dash-secondary-bg  dark:border-none text-primary-text flex items-center w-fit gap-2 ">
         {icon}
         {!isMobile && (
           <SelectValue

@@ -59,7 +59,7 @@ export default function ProgramWeeksSection() {
         {/* Section header */}
         <div className="flex items-start justify-between gap-4 mb-6 md:mb-4">
           <div>
-            <header className="text-primary-text font-semibold text-base ">
+            <header className="text-secondary-text font-semibold text-base mb-1">
               Program Weeks
             </header>
             <p className="text-xs text-primary-text">

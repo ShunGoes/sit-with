@@ -28,16 +28,16 @@ export default function ModuleCard({
             Module {index + 1}: {module.moduleTitle}
           </p>
           {module.description && (
-            <p className="text-xs text-[#667085]">{module.description}</p>
+            <p className="text-xs text-[#667085] dark:text-primary-text">{module.description}</p>
           )}
           <div className="flex items-center gap-2 mt-1 flex-wrap">
             {/* Type badge */}
             <Badge variant="success">
               {module.type}
             </Badge>
-            <span className="text-xs text-[#667085]">{module.duration}</span>
+            <span className="text-xs text-[#667085] dark:text-primary-text">{module.duration} mins</span>
             <span className="text-[#667185]">·</span>
-            <span className="flex items-center gap-1 text-xs text-[#027A48]">
+            <span className="flex items-center gap-1 text-xs text-regular-button">
               <Check className="h-3 w-3" />
               Content linked
             </span>
@@ -49,7 +49,7 @@ export default function ModuleCard({
       <button
         type="button"
         onClick={onRemove}
-        className="text-red-500 hover:text-red-700 cursor-pointer mt-1"
+        className="text-brand-red hover:text-red-700 cursor-pointer mt-1"
       >
         <X className="h-4 w-4" />
       </button>

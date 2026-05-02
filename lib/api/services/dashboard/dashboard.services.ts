@@ -13,6 +13,9 @@ export interface Program {
   hoursPerWeek: number | null;
   facilitatorName: string | null;
   startDate: string | null;
+  _count: {
+    weeks: number;
+  };
 }
 
 export interface Purchase {

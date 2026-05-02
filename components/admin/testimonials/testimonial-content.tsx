@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Trash2, FilePenLine } from "lucide-react";
 import { Testimonial } from "@/lib/api/services/testimonials/testimonials.services";
-import { format } from "date-fns";
+import { formatAppDate } from "@/lib/utils";
 import { useDeleteTestimonial } from "@/lib/api/hooks/testimonials/testimonials.hooks";
 import { useModalStore } from "@/components/store/use-modal-store";
 import { Spinner } from "@/components/spinner";
@@ -76,7 +76,7 @@ export default function TestimonialContent({ testimonial }: { testimonial: Testi
             "{testimonial.quote}"
           </p>
           <p className="text-xs text-secondary-text/70 mt-2">
-            {format(new Date(testimonial.createdAt), "MMM d, yyyy")}
+            {formatAppDate(testimonial.createdAt)}
           </p>
         </div>
       </div>

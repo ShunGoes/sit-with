@@ -48,7 +48,7 @@ const CampParticipantsColumn = (
     header: "Amount Paid",
     cell: ({ row }) => (
       <span className="text-xs font-medium">
-        {formatCurrency(row.original.amountPaid || 0, "NGN")}
+        {formatCurrency(row.original.amountPaid || 0)}
       </span>
     ),
   },

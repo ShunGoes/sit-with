@@ -95,7 +95,7 @@ export default function TestimonialsOverview() {
   const testimonialsList = testimonialsResponse?.data || [];
 
   return (
-    <div className="space-y-15">
+    <div className="space-y-15 relative">
       <div className="flex justify-between items-center">
         <DashboardHeaderText
           header="Testimonials"
@@ -103,10 +103,10 @@ export default function TestimonialsOverview() {
         />
         <Button
           variant="regular"
-          className="font-normal"
+          className="font-normal hidden md:inline-flex"
           onClick={handleAddTestimonial}
         >
-          <Plus /> {!isMobile && "Add Testimonial"}
+          <Plus /> Add Testimonial
         </Button>
       </div>
 
@@ -124,7 +124,9 @@ export default function TestimonialsOverview() {
             }
           </div>
 
-          <Pagination totalPages={testimonialsResponse?.meta?.totalPages ?? 1} />
+          <div className="hidden lg:block">
+            <Pagination totalPages={testimonialsResponse?.meta?.totalPages ?? 1} />
+          </div>
         </div>
 
         <div className="flex flex-col gap-4">
@@ -144,8 +146,22 @@ export default function TestimonialsOverview() {
             ))}
           </QueryStateHandler>
 
-          
+          {/* Mobile Pagination */}
+          <div className="lg:hidden mt-4 flex w-full ">
+            <Pagination totalPages={testimonialsResponse?.meta?.totalPages ?? 1} />
+          </div>
         </div>
+      </div>
+
+      {/* Mobile Floating Action Button */}
+      <div className="md:hidden fixed bottom-10 right-10 z-50 pointer-events-auto">
+        <button
+          onClick={handleAddTestimonial}
+          className="w-14 h-14 bg-regular-button rounded-full flex items-center justify-center text-white shadow-lg hover:bg-brand-green transition-all duration-300"
+          aria-label="Add Testimonial"
+        >
+          <Plus size={28} />
+        </button>
       </div>
     </div>
   );

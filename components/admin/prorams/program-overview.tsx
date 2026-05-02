@@ -82,14 +82,14 @@ export default function ProgramOverview() {
 
       <div className="space-y-4">
         {/* search and filter functionality */}
-        <SeacrchAndFilter
+        {/* <SeacrchAndFilter
           filterPplaceholder="Filter by type"
           searchPlaceholder="search progrma..."
           options={CHURCH_OPTIONS}
           paramKey="type"
           search={search}
           setSearch={setSearch}
-        />
+        /> */}
 
         {/* table  */}
         <div className="bg-dash-secondary-bg rounded-[16px]  pb-1">

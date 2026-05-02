@@ -91,13 +91,13 @@ export default function CampsOverview() {
 
       <div className="space-y-4">
 
-        <div className="flex justify-between gap-4">
+        {/* <div className="flex justify-between gap-4">
           <SearchInput />
             
           <div>
           <FilterSelectComp paramKey="" options={FILTER_BY_STATUS} />
           </div>
-        </div>
+        </div> */}
 
         {/* table */}
         <div className="bg-dash-secondary-bg rounded-[16px] pb-1">

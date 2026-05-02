@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatAppDate } from "@/lib/utils";
 import {
   User,
   Phone,
@@ -171,12 +171,12 @@ export default function ParticipantDetailModal({
           "Payment Summary",
           <Mail size={18} />,
           <>
-            {detailItem("Amount Due", formatCurrency(tier.price || 0, "NGN"))}
+            {detailItem("Amount Due", formatCurrency(tier.price || 0))}
             {detailItem("Payment Sstatus", payment.status)}
             {detailItem(
               "Registration Date",
               isMounted && participant.payment?.createdAt
-                ? new Date(participant?.payment?.createdAt).toLocaleDateString()
+                ? formatAppDate(participant.payment.createdAt)
                 : "Loading...",
             )}
           </>,

@@ -2,7 +2,7 @@
 
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import SeacrchAndFilter from "@/components/seach-and-filter";
-import { Plus, Loader2, Globe } from "lucide-react";
+import { Plus, Loader2, Globe, BookCheck } from "lucide-react";
 import { useState, useMemo, useEffect, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import BlogContent from "./blog-content";
@@ -44,7 +44,7 @@ const CATEGORY_OPTIONS = [
     value: "PERSONAL_GROWTH",
   },
   {
-    label: "All Categories",
+    label: "All ategories",
     value: "all",
   },
 ];
@@ -66,7 +66,7 @@ export  function BlogOverview() {
     limit: LIMIT,
     ...(search !== "" && { search }),
     ...(status !== "" && { status }),
-    ...(category !== "" && { category }),
+    ...(category !== "all" && { category }),
   };
 
   const {
@@ -112,6 +112,7 @@ export  function BlogOverview() {
               options={STATUS_OPTIONS}
               placeholder=" status"
               paramKey="status"
+              icon={<BookCheck className="text-primary-text" size={18} />}
             />
           </div>
         </div>

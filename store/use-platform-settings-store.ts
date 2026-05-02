@@ -5,7 +5,7 @@ export interface PlatformSettings {
   platformName: string;
   supportEmail: string;
   defaultTimezone: string;
-  currency: string;
+  currency: "NGN" | "USD" | "GBP" | "EUR";
   maintenanceMode: boolean;
   allowUserRegistration: boolean;
   requireEmailVerification: boolean;

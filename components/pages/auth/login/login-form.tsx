@@ -56,7 +56,8 @@ export  function LoginForm() {
 
     mutate(values, {
       onSuccess: (resData) => {
-        if (resData.data?.user?.isEmailVerified) {
+        const requireVerification = settings?.requireEmailVerification ?? true;
+        if (!requireVerification || resData.data?.user?.isEmailVerified) {
           closeModal("loading");
           if(callbackUrl){
             router.replace(callbackUrl);

@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useModalStore } from "@/components/store/use-modal-store";
 import { Calendar, Mail, User, ShieldCheck, ShieldAlert, ShoppingBag, Tent, Headphones } from "lucide-react";
+import { formatAppDate } from "@/lib/utils";
 
 interface UserDetailsModalProps {
   user: AdminUser;
@@ -14,7 +15,7 @@ interface UserDetailsModalProps {
 export default function UserDetailsModal({ user }: UserDetailsModalProps) {
   const closeModal = useModalStore((state) => state.closeModal);
 
-  const formattedDate = new Date(user.createdAt).toLocaleDateString("en-US", {
+  const formattedDate = formatAppDate(user.createdAt, {
     month: "long",
     day: "numeric",
     year: "numeric",

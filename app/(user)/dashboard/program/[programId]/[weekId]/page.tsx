@@ -26,6 +26,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { formatAppDate } from "@/lib/utils";
 import type { Module, Week } from "@/lib/api/services/dashboard/dashboard.services";
 
 export default function WeekDetailPage() {
@@ -163,7 +164,7 @@ export default function WeekDetailPage() {
           {program.startDate && (
             <span className="text-xs text-secondary-text ">
               Due:{" "}
-              {new Date(program.startDate).toLocaleDateString("en-US", {
+              {formatAppDate(program.startDate, {
                 month: "long",
                 day: "numeric",
                 year: "numeric",

@@ -75,7 +75,7 @@ export default function AddModuleModal({ onAddModule }: AddModuleModalProps) {
 
       {/* Module Title */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-[#344054] text-sm">Module Title *</label>
+        <label className="text-primary-text text-sm">Module Title *</label>
         <Input
           value={moduleTitle}
           onChange={(e) => {
@@ -84,7 +84,7 @@ export default function AddModuleModal({ onAddModule }: AddModuleModalProps) {
               setErrors((prev) => ({ ...prev, moduleTitle: "" }));
           }}
           placeholder="e.g., Active Listening Techniques"
-          className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+          className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#0A0A0A80] dark:placeholder:text-primary-text placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
         />
         {errors.moduleTitle && (
           <span className="text-sm text-destructive">{errors.moduleTitle}</span>
@@ -93,19 +93,19 @@ export default function AddModuleModal({ onAddModule }: AddModuleModalProps) {
 
       {/* Description */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-[#344054] text-sm">Description</label>
+        <label className="text-primary-text text-sm">Description</label>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Brief description of this module..."
-          className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
+          className="border-[0.67px] dark:bg-transparent border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#0A0A0A80] dark:placeholder:text-primary-text placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
         />
       </div>
 
       {/* Type & Duration — side by side */}
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-1.5">
-          <label className="text-[#344054] text-sm">Type *</label>
+          <label className="text-primary-text text-sm">Type *</label>
           <Select
             value={type}
             onValueChange={(val) => {
@@ -113,10 +113,10 @@ export default function AddModuleModal({ onAddModule }: AddModuleModalProps) {
               if (errors.type) setErrors((prev) => ({ ...prev, type: "" }));
             }}
           >
-            <SelectTrigger className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-sm font-medium text-[#344054] py-4 h-11 focus:ring-0 focus:ring-offset-0 focus-visible:ring-0">
+            <SelectTrigger className="border-[0.67px] border-[#D0D5DD] bg-white dark:bg-transparent rounded-[5px] w-full text-sm font-medium text-primary-text py-4 h-11 focus:ring-0 focus:ring-offset-0 focus-visible:ring-0">
               <SelectValue placeholder="Select type" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="w-[250px]">
               <SelectItem value="READING">Reading</SelectItem>
               <SelectItem value="ASSIGNMENT">Assignment</SelectItem>
               <SelectItem value="QUIZ">Quiz</SelectItem>
@@ -129,7 +129,7 @@ export default function AddModuleModal({ onAddModule }: AddModuleModalProps) {
         </div>
         
         <div className="flex flex-col gap-1.5">
-          <label className="text-[#344054] text-sm">Duration *</label>
+          <label className="text-primary-text text-sm">Duration *</label>
           <Input
             value={duration}
             onChange={(e) => {
@@ -138,7 +138,7 @@ export default function AddModuleModal({ onAddModule }: AddModuleModalProps) {
                 setErrors((prev) => ({ ...prev, duration: "" }));
             }}
             placeholder="e.g., 45min"
-            className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+            className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#0A0A0A80] dark:placeholder:text-primary-text placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
           />
           {errors.duration && (
             <span className="text-sm text-destructive">{errors.duration}</span>
@@ -148,7 +148,7 @@ export default function AddModuleModal({ onAddModule }: AddModuleModalProps) {
 
       {/* Content Link */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-[#344054] text-sm">Content Link *</label>
+        <label className="text-primary-text text-sm">Content Link *</label>
         <Input
           value={contentLink}
           onChange={(e) => {
@@ -157,7 +157,7 @@ export default function AddModuleModal({ onAddModule }: AddModuleModalProps) {
               setErrors((prev) => ({ ...prev, contentLink: "" }));
           }}
           placeholder="https://..."
-          className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+          className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#0A0A0A80] dark:placeholder:text-primary-text placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
         />
         {errors.contentLink && (
           <span className="text-sm text-destructive">
@@ -166,16 +166,6 @@ export default function AddModuleModal({ onAddModule }: AddModuleModalProps) {
         )}
       </div>
 
-      {/* Embed Code */}
-      <div className="flex flex-col gap-1.5">
-        <label className="text-[#344054] text-sm">Embed Code</label>
-        <textarea
-          value={embedCode}
-          onChange={(e) => setEmbedCode(e.target.value)}
-          placeholder="Paste embed code here (optional)..."
-          className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
-        />
-      </div>
 
       {/* Action buttons */}
       <div className="flex items-center justify-end gap-3 pt-2">

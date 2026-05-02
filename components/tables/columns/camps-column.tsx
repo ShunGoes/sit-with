@@ -13,7 +13,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import { Trash2 } from "lucide-react";
 import { EllipsisVertical, Plus } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatAppDate } from "@/lib/utils";
 import { Camp } from "@/lib/api/services/camps/camps.services";
 import { addCampTierWithId } from "@/components/modal-helper";
 
@@ -28,7 +28,7 @@ function statusVariantAssigner(status: string) {
     case "CANCELLED":
       return "destructive";
     default:
-      return "default";
+      return "hibiscus";
   }
 }
 
@@ -115,7 +115,7 @@ const CampsColumn = (
     cell: ({ row }) => {
       const dateStr = row.original.startDate;
       const formattedDate = dateStr 
-        ? new Date(dateStr).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+        ? formatAppDate(dateStr)
         : "-";
       return <h6 className="text-xs">{formattedDate}</h6>;
     },

@@ -2,12 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Pill } from "@/components/ui/pill";
 import GrayCheckIcon from "@/pd-icons/gray-check";
 import { CheckCircle2, Info } from "lucide-react";
+import { formatCurrency } from "@/lib/utils";
 
-export function CampParticipation() {
+export default function CampParticipation() {
   const plans = [
     {
       name: "Individual",
-      price: "$500",
+      price: formatCurrency(500),
       features: [
         "Accommodation",
         "Meals",
@@ -18,7 +19,7 @@ export function CampParticipation() {
     },
     {
       name: "Couple",
-      price: "$750",
+      price: formatCurrency(750),
       highlight: true,
       features: [
         "Accommodation",
@@ -30,7 +31,7 @@ export function CampParticipation() {
     },
     {
       name: "Family",
-      price: "$1500",
+      price: formatCurrency(1500),
       features: [
         "Accommodation",
         "Meals",

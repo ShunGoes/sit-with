@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Trash2 } from "lucide-react";
 import { EllipsisVertical } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatAppDate } from "@/lib/utils";
 
 let typeVariant;
 
@@ -76,11 +76,7 @@ const ConsultationColumn = (): ColumnDef<ConsultationColumn>[] => [
     header: "Date",
     cell: ({ row }) => (
       <p contextMenu="text-xs text-primary-text">
-        {new Date(row.original.date).toLocaleDateString("en-Us", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        })}
+        {formatAppDate(row.original.date)}
       </p>
     ),
   },

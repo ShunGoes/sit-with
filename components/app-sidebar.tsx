@@ -55,11 +55,6 @@ const data = {
       icon: <CalendarClock />,
     },
     {
-      title: "Participants",
-      url: "/admin/participants",
-      icon: <Users />,
-    },
-    {
       title: "Blog",
       url: "/admin/blog",
       icon: <FileText />,

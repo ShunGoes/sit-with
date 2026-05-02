@@ -11,7 +11,7 @@ import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
 import { useGetConsultationServiceById, useUpdateConsultationService } from "@/lib/api/hooks/consultations/consultation-services.hooks";
 import { editConsultationService } from "@/components/modal-helper";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatAppDate } from "@/lib/utils";
 
 export default function ConsultationServiceDetailPage() {
   const { id } = useParams() as { id: string };
@@ -114,7 +114,7 @@ export default function ConsultationServiceDetailPage() {
               </div>
               <div>
                 <p className="text-xs text-secondary-text">Price</p>
-                <p className="text-sm font-semibold">{formatCurrency(service.price, "NGN")}</p>
+                <p className="text-sm font-semibold">{formatCurrency(service.price)}</p>
               </div>
             </div>
 
@@ -141,7 +141,7 @@ export default function ConsultationServiceDetailPage() {
             </div>
 
             <div className="pt-2">
-               <p className="text-[10px] text-slate-400">Created on {new Date(service.createdAt).toLocaleDateString()}</p>
+               <p className="text-[10px] text-slate-400">Created on {formatAppDate(service.createdAt)}</p>
             </div>
           </div>
         </div>

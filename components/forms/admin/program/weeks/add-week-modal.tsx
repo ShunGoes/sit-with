@@ -68,7 +68,7 @@ export default function AddWeekModal({ onAddWeek }: AddWeekModalProps) {
       {/* Week Title */}
       <div className="flex flex-col gap-1.5">
         {/* <FormFieldComp name="" control={} /> */}
-        <label className="text-[#344054] text-sm">Week Title *</label>
+        <label className="text-primary-text text-sm">Week Title *</label>
         <Input
           value={weekTitle}
           onChange={(e) => {
@@ -76,7 +76,7 @@ export default function AddWeekModal({ onAddWeek }: AddWeekModalProps) {
             if (titleError) setTitleError("");
           }}
           placeholder="e.g., Introduction to Leadership"
-          className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+          className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium textprimary-text placeholder:text-[#0A0A0A80] dark:placeholder:text-primary-text  placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
         />
         {titleError && (
           <span className="text-sm text-destructive">{titleError}</span>
@@ -85,18 +85,18 @@ export default function AddWeekModal({ onAddWeek }: AddWeekModalProps) {
 
       {/* Description */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-[#344054] text-sm">Description</label>
+        <label className="text-primary-text text-sm">Description</label>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Brief description of what this week covers..."
-          className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[8px] w-full text-sm font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
+          className="border-[0.67px] border-[#D0D5DD] dark:placeholder:text-primary-text bg-transparent d-[8px] w-full text-sm font-medium text-primary-text placeholder:text-[#0A0A0A80] placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
         />
       </div>
 
       {/* Learning Objectives — tag-input pattern */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-[#344054] text-sm">
+        <label className="text-primary-text text-sm">
           Learning Objectives
         </label>
          {/* Rendered objective list */}
@@ -105,7 +105,7 @@ export default function AddWeekModal({ onAddWeek }: AddWeekModalProps) {
             {objectives.map((obj, index) => (
               <li
                 key={index}
-                className="flex items-center justify-between text-sm text-[#344054] bg-[#F9FAFB] rounded-md px-3 py-2"
+                className="flex items-center justify-between text-sm text-primary-text bg-[#F9FAFB] dark:text-white dark:bg-primary-text/20 rounded-md px-3 py-2"
               >
                 <span className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-green-600" />
@@ -128,7 +128,7 @@ export default function AddWeekModal({ onAddWeek }: AddWeekModalProps) {
             onChange={(e) => setObjectiveInput(e.target.value)}
             onKeyDown={handleObjectiveKeyDown}
             placeholder="Add a learning objective..."
-            className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] flex-1 text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+            className="border-[0.67px] border-[#D0D5DD] dark:placeholder:text-primary-text bg-white rounded-[5px] flex-1 text-[12px] font-medium text-primary-text placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
           />
           <Button
             type="button"

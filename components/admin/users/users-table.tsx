@@ -11,7 +11,7 @@ import { AdminUser } from "@/lib/api/services/users/users.services";
 import Pagination from "@/components/pagination";
 import { useSearchParams } from "next/navigation";
 
-const LIMIT = 2;
+const LIMIT = 10;
 
 export default function UsersTable() {
 

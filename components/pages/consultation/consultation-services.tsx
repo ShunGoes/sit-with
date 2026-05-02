@@ -1,8 +1,6 @@
 "use client";
 
 import { useGetAllConsultationServices } from "@/lib/api/hooks/consultations/consultation-services.hooks";
-import { useAuthStore } from "@/store/use-auth-store";
-import { useRouter } from "next/navigation";
 import { getCalApi } from "@calcom/embed-react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
@@ -118,7 +116,7 @@ export function ConsultationServices() {
                     <span className="text-sm font-medium">{service.duration} mins</span>
                   </div>
                   <div className="text-regular-button font-bold text-lg">
-                    {formatCurrency(service.price, "USD")}
+                    {formatCurrency(service.price)}
                   </div>
                 </div>
 

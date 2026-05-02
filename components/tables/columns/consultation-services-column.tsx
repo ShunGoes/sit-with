@@ -104,7 +104,7 @@ const ConsultationServicesColumn = (): ColumnDef<ConsultationService>[] => [
     header: "Price",
     cell: ({ row }) => (
       <p className="text-xs text-primary-text">
-        {formatCurrency(row.original.price, "NGN")}
+        {formatCurrency(row.original.price)}
       </p>
     ),
   },
