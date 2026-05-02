@@ -1,5 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 
+import { formatCurrency } from "@/lib/utils";
+
 export function RecentActivities() {
   const activities = [
     {
@@ -18,7 +20,7 @@ export function RecentActivities() {
     },
     {
       boldName: "Chidinma Eze",
-      action: "Paid ₦45,000 for",
+      action: `Paid ${formatCurrency(45000)} for`,
       boldTarget: "Professional Growth Program",
       badge1: "Enrollment",
       badge2: "New",
@@ -39,7 +41,7 @@ export function RecentActivities() {
     },
     {
       boldName: "Seun Adebayo",
-      action: "Paid ₦32,000 for",
+      action: `Paid ${formatCurrency(32000)} for`,
       boldTarget: "Student Success Bootcamp",
       badge1: "Enrollment",
       badge2: "New",

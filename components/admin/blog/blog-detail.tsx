@@ -8,7 +8,7 @@ import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import QueryStateHandler from "@/components/query-state-handler";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { format } from "date-fns";
+import { formatAppDate, formatAppDateTime } from "@/lib/utils";
 import {
   Calendar,
   Clock,
@@ -136,8 +136,8 @@ export default function BlogDetail({ id }: { id: string }) {
                       </div>
                       <div className="flex items-center gap-2">
                         <Calendar size={16} />
-                        <span>
-                          {format(new Date(blog.createdAt), "MMMM d, yyyy")}
+                        <span className="text-sm font-medium text-primary-text">
+                          {formatAppDate(blog.createdAt, { month: "long", day: "numeric", year: "numeric" })}
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
@@ -206,7 +206,7 @@ export default function BlogDetail({ id }: { id: string }) {
                       Created At
                     </p>
                     <p className="text-sm font-medium text-primary-text">
-                      {format(new Date(blog.createdAt), "PPpp")}
+                      {formatAppDateTime(blog.createdAt)}
                     </p>
                   </div>
                   <div>
@@ -214,7 +214,7 @@ export default function BlogDetail({ id }: { id: string }) {
                       Last Updated
                     </p>
                     <p className="text-sm font-medium text-primary-text">
-                      {format(new Date(blog.updatedAt), "PPpp")}
+                      {formatAppDateTime(blog.updatedAt)}
                     </p>
                   </div>
                   {blog.publishedAt && (
@@ -223,7 +223,7 @@ export default function BlogDetail({ id }: { id: string }) {
                         Published At
                       </p>
                       <p className="text-sm font-medium text-primary-text">
-                        {format(new Date(blog.publishedAt), "PPpp")}
+                        {formatAppDateTime(blog.publishedAt)}
                       </p>
                     </div>
                   )}

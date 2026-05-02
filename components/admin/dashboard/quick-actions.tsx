@@ -14,8 +14,8 @@ export function QuickActions() {
       icon: <div className="w-12 h-12 rounded-full bg-[#DDF8DB] text-[#445B1C] flex items-center justify-center"><FileText size={24} /></div>
     },
     {
-      label: "Schedule Content",
-      url: "/admin/program/add",
+      label: "Add Consultation Service",
+      url: "/admin/consultation-services",
       icon: <div className="w-12 h-12 rounded-full bg-[#FFFBD4] text-[#FFC555] flex items-center justify-center"><CalendarCheck2 size={24} /></div>
     }
   ];

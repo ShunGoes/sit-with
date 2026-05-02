@@ -26,6 +26,7 @@ import {
   MessageSquare,
 } from "lucide-react";
 import { useAuthStore } from "@/store/use-auth-store";
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import { logout } from "@/lib/api/services/auth/auth.services";
 import Image from "next/image";
 
@@ -54,11 +55,6 @@ const data = {
       icon: <CalendarClock />,
     },
     {
-      title: "Participants",
-      url: "/admin/participants",
-      icon: <Users />,
-    },
-    {
       title: "Blog",
       url: "/admin/blog",
       icon: <FileText />,
@@ -79,6 +75,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
+  const settings = usePlatformSettingsStore((state) => state.settings);
 
   return (
     <Sidebar {...props}>
@@ -92,8 +89,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="object-cover"
             />
           </div>
-          <h4 className="text-sm font-semibold text-regular-button] tracking-tight">
-            Sit With PD
+          <h4 className="text-sm font-semibold text-regular-button tracking-tight">
+            {settings?.platformName || "Sit With PD"}
           </h4>
         </Link>
       </SidebarHeader>

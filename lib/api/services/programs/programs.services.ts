@@ -61,6 +61,8 @@ export const get_program_by_ID = async (id: string) => {
     throw new Error("Program ID is required.");
   }
 
+  console.log(id)
+
   try {
     const res = await api.get(`/programs/${id}`);
     return res.data;

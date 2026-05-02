@@ -32,7 +32,7 @@ export default function CampSuccessModal({
               <h3 className="font-semibold text-sm mb-1 text-gray-500">
                 Price
               </h3>
-              <p>{formatCurrency(camp?.price || 0, "NGN")}</p>
+              <p>{formatCurrency(camp?.price || 0)}</p>
             </div>
             <div>
               <h3 className="font-semibold text-sm mb-1 text-gray-500">

@@ -24,8 +24,12 @@ import { Testimonial } from "@/lib/api/services/testimonials/testimonials.servic
 const openModal = useModalStore.getState().openModal;
 
 //>>>>>>>>>>>>>>>>>>> USER DASHBOARD <<<<<<<<<<<<<<<<<<<<<<<<<
-export function messageFacilitator() {
-  openModal("message-facilitator", <MessageFacilitatorModal />);
+export function messageFacilitator(programId?: string) {
+  openModal("message-facilitator", <MessageFacilitatorModal programId={programId} />);
+}
+
+export function contactSupport() {
+  openModal("message-facilitator", <MessageFacilitatorModal isSupport />);
 }
 
 //>>>>>>>>>>>>>>>>>>> PROGRAMS <<<<<<<<<<<<<<<<<<<<<<<<<<

@@ -188,27 +188,7 @@ export default function AddModuleModal({ onAddModule, initialData, title = "Add 
           )}
         />
 
-        <div className="flex items-center justify-center">
-          <span className="text-xs text-[#667185]">OR</span>
-        </div>
 
-        <Controller
-          name="embedCode"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[#344054] text-sm">Embed Code (iframe or HTML embed code)</label>
-              <textarea
-                {...field}
-                placeholder='<iframe src="..." width="100%" height="400"></iframe>'
-                className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
-              />
-              {fieldState.invalid && (
-                <span className="text-sm text-destructive">{fieldState.error?.message}</span>
-              )}
-            </div>
-          )}
-        />
       </div>
 
       {/* Examples hint */}

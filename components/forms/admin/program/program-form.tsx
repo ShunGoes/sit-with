@@ -15,6 +15,8 @@ import ImageUpload from "@/components/image-upload";
 import { ProgramFormSchema } from "@/schemas/programs-schema";
 import ProgramWeeksSection from "./weeks/program-weeks-section";
 import LearningObjectivesField from "./learning-objectives-field";
+import SelectDateComp from "@/components/date-selector";
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 
 const PROGRAM_TYPE = [
   {
@@ -36,15 +38,34 @@ export default function ProgramForm({
 }: {
   onSubmit: SubmitHandler<ProgramFormSchema>;
 }) {
+  const settings = usePlatformSettingsStore(state =>state.settings)
+  let defaultCurrency: "(₦)" | "($)" | "(£)" | "(€)";
+
+  if(settings  ){
+    if( settings.currency === "NGN"){
+      defaultCurrency = "(₦)"
+    } else if (settings.currency === "USD"){
+      defaultCurrency = "($)"
+    } else if (settings.currency === "GBP"){
+      defaultCurrency = "(£)"
+    } else if (settings.currency === "EUR"){
+      defaultCurrency = "(€)"
+    }
+  }
+
   const form = useFormContext<ProgramFormSchema>();
-  if (!form.formState.isValid && Object.keys(form.formState.errors).length > 0) {
+
+  if (
+    !form.formState.isValid &&
+    Object.keys(form.formState.errors).length > 0
+  ) {
     console.log("Form validation errors:", form.formState.errors);
   }
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7 ">
       {/* basic information */}
       <div className="bg-dash-secondary-bg p-5 rounded-[12px]">
-        <header className="text-primary-text font-semibold text-base mb-4">
+        <header className="text-secondary-text font-semibold text-base mb-4">
           Basic Information
         </header>
         <div className="space-y-10">
@@ -75,8 +96,8 @@ export default function ProgramForm({
               name="price"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid} className="">
-                  <FieldLabel className="text-primary-text  text-sm">
-                    Price (₦)
+                  <FieldLabel className="text-secondary-text  text-sm">
+                    {`Price ${defaultCurrency}`}
                   </FieldLabel>
                   <Input
                     {...field}
@@ -97,12 +118,12 @@ export default function ProgramForm({
               )}
             />
 
-            <FormFieldComp
-              name="date"
+            <SelectDateComp
               control={form.control}
+              name="date"
               label="Start Date *"
-              placeholder="DD/MM/YYYY"
-              className="bg-dash-secondary-bg"
+              placeholder="Select start date"
+              disablePastDates={true}
             />
           </div>
           <Controller
@@ -115,14 +136,20 @@ export default function ProgramForm({
               >
                 <div className="flex flex-col">
                   <FieldLabel
-                    className="text-primary-text text-[14px] mb-2"
+                    className="text-secondary-text text-[14px] mb-2"
                     htmlFor="type"
                   >
                     Program Type *
                   </FieldLabel>
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger className="bg-dash-secondary-bg text-primary-text" id="type">
-                      <SelectValue placeholder="Select program type" className="text-primary-text" />
+                  <Select key={field.value} value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger
+                      className="bg-dash-secondary-bg text-primary-text"
+                      id="type"
+                    >
+                      <SelectValue
+                        placeholder="Select program type"
+                        className="text-primary-text"
+                      />
                     </SelectTrigger>
                     <SelectContent className="min-w-[200px]">
                       {PROGRAM_TYPE.map((type, index) => (
@@ -150,7 +177,7 @@ export default function ProgramForm({
               <Field data-invalid={fieldState.invalid} className="mt-4">
                 <div className="flex flex-col">
                   <FieldLabel
-                    className="text-primary-text text-sm mb-2"
+                    className="text-secondary-text text-sm mb-2"
                     htmlFor="description"
                   >
                     Description
@@ -159,7 +186,7 @@ export default function ProgramForm({
                     id="description"
                     {...field}
                     placeholder="Describe the program, its goal and who its for......."
-                    className="border-[0.75px] border-[#EAECF0] bg-dash-secondary-bg rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] py-4 min-h-30 outline-none px-3 resize-none"
+                    className="border-[0.75px] border-[#EAECF0] bg-dash-secondary-bg rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#98A2B3] py-4 min-h-30 outline-none px-3 resize-none"
                   />
                 </div>
                 {fieldState.invalid && (
@@ -173,7 +200,7 @@ export default function ProgramForm({
 
       {/* learning objectives  */}
       <div className="bg-dash-secondary-bg p-5 rounded-[12px]">
-        <header className="text-primary-text font-semibold text-base mb-3">
+        <header className="text-secondary-text font-semibold text-base mb-3">
           Learning Objectives
         </header>
         <LearningObjectivesField />
@@ -181,7 +208,7 @@ export default function ProgramForm({
 
       {/* facilitator information  */}
       <div className="bg-dash-secondary-bg p-5  rounded-[12px]">
-        <header className="text-primary-text font-semibold text-base mb-2">
+        <header className="text-secondary-text font-semibold text-base mb-2">
           Facilitator Information
         </header>
         <div className="flex flex-col md:flex-row items-center gap-6">
@@ -212,7 +239,7 @@ export default function ProgramForm({
           name="thumbnail"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid} className="mt-4">
-              <FieldLabel className="text-primary-text font-semibold text-base ">
+              <FieldLabel className="text-secondary-text font-semibold text-base mb-1 ">
                 Thumbnail
               </FieldLabel>
               <ImageUpload value={field.value} onChange={field.onChange} />
@@ -223,9 +250,11 @@ export default function ProgramForm({
       </div>
 
       <div className="flex items-center justify-end w-full mt-10 gap-3">
-        <Button variant={"outline"} type="button">Cancel</Button>
-        <Button 
-          variant={"regular"} 
+        <Button variant={"outline"} type="button">
+          Cancel
+        </Button>
+        <Button
+          variant={"regular"}
           disabled={!form.formState.isValid || form.formState.isSubmitting}
         >
           {form.formState.isSubmitting ? "Submitting..." : "Save Program"}

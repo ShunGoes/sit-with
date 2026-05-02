@@ -50,9 +50,10 @@ export default function EditTestimonialModal({ testimonial }: EditTestimonialMod
       {
         onSuccess: () => {
           closeModal("testimonial-modal");
+          closeModal("loading");
         },
         onError: () => {
-          closeModal("testimonial-modal");
+          closeModal("loading");
         },
       }
     );

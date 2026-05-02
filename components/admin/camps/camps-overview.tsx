@@ -8,6 +8,7 @@ import SeacrchAndFilter from "@/components/seach-and-filter";
 import SearchInput from "@/components/searchInput";
 import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import CampsColumn from "@/components/tables/columns/camps-column";
 import ReuseableTable from "@/components/tables/reuseable-table";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,7 @@ export default function CampsOverview() {
 
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
+  const settings = usePlatformSettingsStore((state) => state.settings);
 
   const { data: campsData, isLoading, isError, isFetching } = useGetCamps();
 
@@ -89,13 +91,13 @@ export default function CampsOverview() {
 
       <div className="space-y-4">
 
-        <div className="flex justify-between gap-4">
+        {/* <div className="flex justify-between gap-4">
           <SearchInput />
             
           <div>
           <FilterSelectComp paramKey="" options={FILTER_BY_STATUS} />
           </div>
-        </div>
+        </div> */}
 
         {/* table */}
         <div className="bg-dash-secondary-bg rounded-[16px] pb-1">
@@ -110,7 +112,7 @@ export default function CampsOverview() {
             isFetching={isFetching}
           >
             <ReuseableTable
-              columns={CampsColumn(handleDeleteCamp, editCamp)}
+              columns={CampsColumn(handleDeleteCamp, editCamp, settings?.currency)}
               tableData={filteredData ?? []}
             />
           </QueryStateHandler>

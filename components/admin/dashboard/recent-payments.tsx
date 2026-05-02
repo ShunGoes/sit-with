@@ -15,9 +15,6 @@ export function RecentPayments() {
 
   return (
     <div className="bg-dash-secondary-bg rounded-[16px] flex flex-col w-full p-4 md:p-6 overflow-hidden">
-      <h3 className="text-brand-green text-sm font-bold pb-4 border-b border-[#EAECF0] dark:border-gray-800">
-        Recent Payments
-      </h3>
 
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse mt-4">

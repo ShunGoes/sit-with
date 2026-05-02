@@ -15,6 +15,7 @@ import {
 import { useEffect } from "react";
 import { Spinner } from "@/components/spinner";
 import { useModalStore } from "@/components/store/use-modal-store";
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import { GoogleLogin } from "@react-oauth/google";
 import { showErrorToast } from "@/lib/toast-helpers";
 import Link from "next/link";
@@ -39,6 +40,7 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 export default function SignupForm() {
   const router = useRouter();
   const [step, setStep] = useState(1);
+  const settings = usePlatformSettingsStore((state) => state.settings);
 
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
@@ -97,6 +99,20 @@ export default function SignupForm() {
     }
   }, [isPending, googleSignInPending, openModal]);
 
+  if (settings && settings.allowUserRegistration === false) {
+    return (
+      <Card className="flex flex-col items-center justify-center p-10 text-center mx-auto max-w-lg mt-20 border-none shadow-none">
+        <h2 className="text-2xl font-bold text-primary-text mb-4">Registration Disabled</h2>
+        <p className="text-secondary-text mb-6">
+          New user registrations are currently disabled by the administrator. Please try again later.
+        </p>
+        <Link href="/login">
+          <Button variant="regular">Return to Login</Button>
+        </Link>
+      </Card>
+    );
+  }
+
   return (
     <Card className="flex flex-col  lg:w-full lg:flex-row lg:items-stretch justify-center mx-auto w-full bg-transparent md:bg-[#FEFFFB] shadow-none md:shadow-sm md:rounded-[16px] overflow-hidden lg:p-6 lg:h-[min(635px,90vh)] lg:gap-8">
       {/* Left side Image (Hidden on mobile) */}
@@ -125,7 +141,7 @@ export default function SignupForm() {
               height={30}
             />
             <span className="font-semibold text-[14px] text-[##1E1E1E]">
-              Sit With PD
+              {settings?.platformName || "Sit With PD"}
             </span>
           </div>
 

@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import GrayCheckIcon from "@/pd-icons/gray-check";
-import { CheckCircle2 } from "lucide-react";
+import { formatCurrency } from "@/lib/utils";
 
 export function MembershipPricing() {
   const pricingPlans = [
     {
       name: "Standard",
-      price: "$100",
+      price: formatCurrency(100),
       period: "Per month",
       highlight: false,
       features: [
@@ -19,7 +19,7 @@ export function MembershipPricing() {
     },
     {
       name: "Plus",
-      price: "$250",
+      price: formatCurrency(250),
       period: "Per month",
       highlight: true,
       features: [
@@ -33,7 +33,7 @@ export function MembershipPricing() {
     },
     {
       name: "Green",
-      price: "$500",
+      price: formatCurrency(500),
       period: "Per month",
       highlight: false,
       features: [

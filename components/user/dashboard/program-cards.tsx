@@ -2,16 +2,22 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Purchase } from "@/lib/api/services/dashboard/dashboard.services";
 import { Calendar, Clock, Monitor, User } from "lucide-react";
-import React from "react";
-import { useDashboardStore } from "@/store/use-dashboard-store";
+import Link from "next/link";
 
-export default function ProgramCards({
-  purchase,
-}: {
-  purchase: Purchase;
-}) {
-  const setSelectedPurchaseId = useDashboardStore((state) => state.setSelectedPurchaseId);
-  let programStatusBadge : "warning" | "hibiscus" | "success" | "secondary" | "link" | "default" | "outline" | "ghost" | "destructive" | null | undefined;
+export default function ProgramCards({ purchase }: { purchase: Purchase }) {
+
+  let programStatusBadge:
+    | "warning"
+    | "hibiscus"
+    | "success"
+    | "secondary"
+    | "link"
+    | "default"
+    | "outline"
+    | "ghost"
+    | "destructive"
+    | null
+    | undefined;
 
   if (purchase.program.category === "LEADERS") {
     programStatusBadge = "warning";
@@ -19,19 +25,19 @@ export default function ProgramCards({
     programStatusBadge = "hibiscus";
   } else if (purchase.program.category === "STUDENTS") {
     programStatusBadge = "success";
-  } else { 
+  } else {
     programStatusBadge = "secondary";
   }
 
-  const cardLabel = "text-[#667085] text-xs "
-  const cardValue = "text-primary-text text-base font-semibold"
+  const cardLabel = "text-[#667085] text-xs ";
+  const cardValue = "text-primary-text text-sm font-semibold";
 
-  console.log({purchase})
+  
   return (
     <div>
-      <div className="bg-dash-secondary-bg rounded-[16px] dark:border-none border-2 border-[#E8E9E7] p-8">
-        <div className="flex items-center gap-3 mb-2">
-          <h2 className="xl:text-3xl text-2xl font-semibold text-primary-text">
+      <div className="bg-dash-secondary-bg rounded-[16px] dark:border-none border-2 border-[#E8E9E7] p-6">
+        <div className="flex items-center gap-3 mb-1">
+          <h2 className="xl:text-2xl text-xl font-semibold text-primary-text">
             {purchase.program.title}
           </h2>
           <Badge variant={programStatusBadge}>
@@ -44,33 +50,35 @@ export default function ProgramCards({
         </p>
 
         {/* Info Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-          <div className="bg-[#F9FAFB] rounded-2xl p-5 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
-              <Calendar size={24} />
+        <div className="grid grid-cols-1 md:grid-cols-2  gap-4 mb-10">
+          <div className="bg-[#F9FAFB] dark:bg-transparent rounded-2xl p-5 flex items-center gap-4">
+            <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
+              <Calendar size={18} />
             </div>
             <div>
               <p className={cardLabel}>Duration</p>
               <p className={cardValue}>
-                {purchase.program.durationWeeks ?? 0} Weeks
-                
+                {purchase.program?._count?.weeks ?? 0} Weeks
               </p>
             </div>
           </div>
 
-          <div className="dark:bg-primary-text bg-[#F9FAFB] rounded-2xl p-5 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
-              <Clock size={24} />
+          <div className="dark:bg-transparent bg-[#F9FAFB] rounded-2xl p-5 flex items-center gap-4">
+            <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
+              <Clock size={18} />
             </div>
             <div>
               <p className={cardLabel}>Time Commitment</p>
-              <p className={cardValue}>{purchase.program.hoursPerWeek}{purchase.program.hoursPerWeek === 1 ? 'hr' : 'hrs'}/week</p>
+              <p className={cardValue}>
+                {purchase.program.hoursPerWeek}
+                {purchase.program.hoursPerWeek === 1 ? "hr" : "hrs"}/week
+              </p>
             </div>
           </div>
 
-          <div className="dark:bg-primary-text bg-[#F9FAFB] rounded-2xl p-5 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
-              <Monitor size={24} />
+          <div className="dark:bg-transparent bg-[#F9FAFB] rounded-2xl p-5 flex items-center gap-4">
+            <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
+              <Monitor size={18} />
             </div>
             <div>
               <p className={cardLabel}>Format</p>
@@ -78,9 +86,9 @@ export default function ProgramCards({
             </div>
           </div>
 
-          <div className="dark:bg-primary-text bg-[#F9FAFB] rounded-2xl p-5 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
-              <User size={24} />
+          <div className="dark:bg-transparent bg-[#F9FAFB] rounded-2xl p-5 flex items-center gap-4">
+            <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
+              <User size={18} />
             </div>
             <div>
               <p className={cardLabel}>Facilitator</p>
@@ -90,7 +98,7 @@ export default function ProgramCards({
         </div>
 
         {/* Progress Section */}
-        <div className="dark:bg-primary-text bg-[#F9FAFB] rounded-2xl p-6 mb-8">
+        {/* <div className="dark:bg-primary-text bg-[#F9FAFB] rounded-2xl p-6 mb-8">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-bold text-[#101828]">Your Progress</h3>
             <span className="text-lg font-bold text-[#445b1c]">0%</span>
@@ -102,15 +110,16 @@ export default function ProgramCards({
             Ready to start Week 1 • 0 of {purchase.program.durationWeeks ?? 0}{" "}
             weeks completed
           </p>
-        </div>
-
+        </div> */}
+    <Link href={`/dashboard/program/${purchase.program?.id}`}>
         <Button
-          onClick={() => setSelectedPurchaseId(purchase.id)}
           variant={"regular"}
           className="w-full "
         >
-          Start Week 1 Now
+          Start Program
         </Button>
+    
+    </Link>
       </div>
     </div>
   );

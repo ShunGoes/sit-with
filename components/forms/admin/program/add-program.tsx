@@ -8,6 +8,7 @@ import { useModalStore } from "@/components/store/use-modal-store";
 import ProgramForm from "./program-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
+import { useRouter } from "next/navigation";
 
 const DEFAULT_VALUES = {
   weeks: [] as any[],
@@ -20,6 +21,8 @@ export default function AddProgramForm() {
     resolver: zodResolver(ProgramSchema),
     mode: "onChange",
   });
+
+  const router = useRouter();
 
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
@@ -39,7 +42,7 @@ export default function AddProgramForm() {
     formData.append("category", data.programType.toUpperCase());
     if (data.facilitatorName) formData.append("facilitatorName", data.facilitatorName);
     if (data.facilitatorEmail) formData.append("facilitatorEmail", data.facilitatorEmail);
-    if (data.duration) formData.append("duration", data.duration);
+    if (data.duration) formData.append("durationWeeks", data.duration);
 
     if (data.learningObjectives && data.learningObjectives.length > 0) {
       const learningOutcomes = data.learningObjectives.map((obj) => obj.text);
@@ -71,11 +74,12 @@ export default function AddProgramForm() {
       formData.append("thumbnail", data.thumbnail);
     }
 
-    console.log(formData)
+   
     mutate(formData, {
       onSuccess: () => {
         closeModal("loading");
         form.reset()
+        router.push("/admin/program")
       },
       onError: () => {
         closeModal("loading");

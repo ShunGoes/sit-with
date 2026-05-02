@@ -40,14 +40,14 @@ export default function ModulesSection({ weekIndex }: ModulesSectionProps) {
   };
 
   return (
-    <div className="bg-white p-5 rounded-[12px]">
+    <div className="bg-dash-secondary-bg p-5 rounded-[12px]">
       {/* Section header */}
       <div className="flex items-start justify-between mb-4">
         <div>
           <header className="text-primary-text font-semibold text-base ">
             Modules for Week {weekIndex + 1}
           </header>
-          <p className="text-xs text-[#667185]">
+          <p className="text-xs text-primary-text">
             {weekTitle} – Add learning modules with embedded content
           </p>
         </div>

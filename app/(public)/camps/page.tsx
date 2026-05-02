@@ -1,6 +1,6 @@
 import { RetreatBenefits } from "@/components/pages/camps/retreat-benefits";
 import { GlimpseGallery } from "@/components/pages/camps/glimpse";
-import { CampParticipation } from "@/components/pages/camps/participation";
+import CampParticipation from "@/components/pages/camps/participation";
 import { Testimonials } from "@/components/pages/homepage/testimonials";
 import { CtaBlock } from "@/components/shared/cta-block";
 import { CampHero } from "@/components/pages/camps/hero";

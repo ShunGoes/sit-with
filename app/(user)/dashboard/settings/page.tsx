@@ -3,6 +3,9 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { api } from "@/lib/axios";
+import { useAuthStore } from "@/store/use-auth-store";
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import FormFieldComp from "@/components/formfield";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
@@ -15,14 +18,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { showSuccessToast } from "@/lib/toast-helpers";
+import { showSuccessToast, showErrorToast } from "@/lib/toast-helpers";
 
 // ─── Schemas ────────────────────────────────────────────────────────────────
 
 const profileSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
-  email: z.string().email("Invalid email address"),
+  email: z.string().email("Invalid email address").optional().or(z.literal("")),
   phoneNumber: z.string().min(1, "Phone number is required"),
   timezone: z.string().min(1, "Timezone is required"),
 });
@@ -60,29 +63,55 @@ const TIMEZONES = [
 // ─── Section 1: Profile Information ─────────────────────────────────────────
 
 function ProfileSection() {
+  const user = useAuthStore((state) => (state as any).user);
+  const queryClient = useQueryClient();
+
   const form = useForm<ProfileValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-      timezone: "Africa/Lagos",
+      firstName: user?.firstName ?? "",
+      lastName: user?.lastName ?? "",
+      email: user?.email ?? "",
+      phoneNumber: user?.phone ?? "",
+      timezone: user?.timezone ?? "Africa/Lagos",
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (values: ProfileValues) => {
+      const payload: any = {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        phone: values.phoneNumber,
+        timezone: values.timezone,
+      };
+      if (values.email) {
+        payload.email = values.email;
+      }
+      const res = await api.patch("/auth/profile", payload);
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
+      showSuccessToast("Profile updated successfully");
+    },
+    onError: (error: any) => {
+      showErrorToast(
+        error?.response?.data?.message || "Failed to update profile"
+      );
     },
   });
 
   const onSubmit = (values: ProfileValues) => {
-    // TODO: POST /api/user/profile
-    console.log(values);
-    showSuccessToast("Profile update coming soon");
+    mutation.mutate(values);
   };
 
   return (
     <div className="bg-dash-secondary-bg p-5 rounded-[12px]">
-      <header className="text-primary-text font-semibold text-base mb-5">
+      <header className="text-secondary-text font-semibold text-base mb-5">
         Profile Information
       </header>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         {/* First Name + Last Name */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
           <FormFieldComp
@@ -127,7 +156,7 @@ function ProfileSection() {
               <Field data-invalid={fieldState.invalid}>
                 <div className="flex flex-col">
                   <FieldLabel
-                    className="text-[#344054] text-[14px] mb-2"
+                    className="text-secondary-text text-[14px] mb-2"
                     htmlFor="timezone"
                   >
                     Timezone
@@ -136,7 +165,7 @@ function ProfileSection() {
                     value={field.value}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger className="bg-white" id="timezone">
+                    <SelectTrigger className="bg-ddash-secondary-bg text-primary-text" id="timezone">
                       <SelectValue placeholder="Select timezone" />
                     </SelectTrigger>
                     <SelectContent>
@@ -160,9 +189,9 @@ function ProfileSection() {
           <Button
             type="submit"
             variant="regular"
-            disabled={form.formState.isSubmitting}
+            disabled={mutation.isPending}
           >
-            {form.formState.isSubmitting ? "Saving..." : "Save Changes"}
+            {mutation.isPending ? "Saving..." : "Save Changes"}
           </Button>
         </div>
       </form>
@@ -173,6 +202,9 @@ function ProfileSection() {
 // ─── Section 2: Change Password ───────────────────────────────────────────────
 
 function ChangePasswordSection() {
+  const user = useAuthStore((state) => (state as any).user);
+  const queryClient = useQueryClient();
+
   const form = useForm<PasswordValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: {
@@ -182,18 +214,49 @@ function ChangePasswordSection() {
     },
   });
 
+  const mutation = useMutation({
+    mutationFn: async (values: PasswordValues) => {
+      const res = await api.patch("/auth/password", {
+        currentPassword: values.currentPassword,
+        newPassword: values.newPassword,
+      });
+      return res.data;
+    },
+    onSuccess: () => {
+      form.reset();
+      queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
+      showSuccessToast("Password updated successfully");
+    },
+    onError: (error: any) => {
+      showErrorToast(
+        error?.response?.data?.message || "Failed to update password"
+      );
+    },
+  });
+
   const onSubmit = (values: PasswordValues) => {
-    // TODO: POST /api/user/change-password
-    console.log(values);
-    showSuccessToast("Password update coming soon");
+    mutation.mutate(values);
   };
+
+  if (user && user.hasPassword === false) {
+    return (
+      <div className="bg-dash-secondary-bg p-5 rounded-[12px] opacity-70">
+        <header className="text-primary-text font-semibold text-base mb-5">
+          Change Password
+        </header>
+        <div className="p-4 bg-white rounded-[8px] border border-[#EAECF0] text-sm text-secondary-text">
+          You signed in with a social account. Password login is not available for your account.
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-dash-secondary-bg p-5 rounded-[12px]">
-      <header className="text-primary-text font-semibold text-base mb-5">
+      <header className="text-secondary-text font-semibold text-base mb-5">
         Change Password
       </header>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormFieldComp
           name="currentPassword"
           control={form.control}
@@ -223,9 +286,9 @@ function ChangePasswordSection() {
           <Button
             type="submit"
             variant="regular"
-            disabled={form.formState.isSubmitting}
+            disabled={mutation.isPending}
           >
-            {form.formState.isSubmitting ? "Updating..." : "Update Password"}
+            {mutation.isPending ? "Updating..." : "Update Password"}
           </Button>
         </div>
       </form>
@@ -254,37 +317,58 @@ const NOTIFICATION_PREFS = [
 ];
 
 function NotificationsSection() {
+  const user = useAuthStore((state) => (state as any).user);
+  const queryClient = useQueryClient();
+
   const form = useForm<NotificationsValues>({
     resolver: zodResolver(notificationsSchema),
     defaultValues: {
-      emailNotifications: true,
-      programReminders: false,
-      pushNotifications: true,
+      emailNotifications: user?.notifyEmail ?? true,
+      programReminders: user?.notifyProgramReminders ?? false,
+      pushNotifications: user?.notifyPush ?? true,
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (values: NotificationsValues) => {
+      const res = await api.patch("/auth/notifications", {
+        notifyEmail: values.emailNotifications,
+        notifyProgramReminders: values.programReminders,
+        notifyPush: values.pushNotifications,
+      });
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
+      showSuccessToast("Preferences updated successfully");
+    },
+    onError: (error: any) => {
+      showErrorToast(
+        error?.response?.data?.message || "Failed to update preferences"
+      );
     },
   });
 
   const onSubmit = (values: NotificationsValues) => {
-    // TODO: POST /api/user/notifications
-    console.log(values);
-    showSuccessToast("Preferences update coming soon");
+    mutation.mutate(values);
   };
 
   return (
     <div className="bg-dash-secondary-bg p-5 rounded-[12px]">
-      <header className="text-primary-text font-semibold text-base mb-5">
+      <header className="text-secondary-text font-semibold text-base mb-5">
         Notification Preferences
       </header>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         {NOTIFICATION_PREFS.map((pref) => (
           <div
             key={pref.name}
-            className="flex items-center justify-between gap-4 p-4 bg-white rounded-[8px] border border-[#EAECF0]"
+            className="flex items-center justify-between gap-4 p-4 bg-dash-secondary-bg rounded-[8px] dark:border-none border border-[#EAECF0]"
           >
             <div className="flex flex-col gap-0.5">
-              <span className="text-sm font-semibold text-primary-text">
+              <span className="text-sm font-semibold text-secondary-text">
                 {pref.label}
               </span>
-              <span className="text-xs text-secondary-text">
+              <span className="text-xs text-primary-text">
                 {pref.description}
               </span>
             </div>
@@ -305,9 +389,9 @@ function NotificationsSection() {
           <Button
             type="submit"
             variant="regular"
-            disabled={form.formState.isSubmitting}
+            disabled={mutation.isPending}
           >
-            {form.formState.isSubmitting ? "Saving..." : "Save Preferences"}
+            {mutation.isPending ? "Saving..." : "Save Preferences"}
           </Button>
         </div>
       </form>

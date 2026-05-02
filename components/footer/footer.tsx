@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { Youtube, Instagram, Facebook } from "lucide-react";
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import MailIcon from "@/pd-icons/mail-icon";
 import PhoneIcon from "@/pd-icons/phone-icon";
 import LocationIcon from "@/pd-icons/location-icon";
@@ -22,6 +23,7 @@ const TikTokIcon = () => (
 );
 
 export function Footer() {
+  const settings = usePlatformSettingsStore((state) => state.settings);
   const form = useForm({
     defaultValues: {
       email: "",
@@ -58,7 +60,7 @@ export function Footer() {
                 />
               </div>
               <h4 className="text-sm font-semibold text-[#A8D675] tracking-tight">
-                Sit With PD
+                {settings?.platformName || "Sit With PD"}
               </h4>
             </Link>
             <p className="text-[#F8FFF5] text-sm leading-relaxed max-w-xs">
@@ -119,12 +121,7 @@ export function Footer() {
               >
                 Programs
               </Link>
-              <Link
-                href="/membership"
-                className="text-[#F8FFF5] hover:underline  text-sm transition-all"
-              >
-                Membership
-              </Link>
+
               <Link
                 href="/camps"
                 className="text-[#F8FFF5] hover:underline  text-sm transition-all"
@@ -220,10 +217,10 @@ export function Footer() {
             <div className="flex flex-col team-sm text-[#C7CAC6]">
               <span className=" ">Email</span>
               <a
-                href="mailto:info@sitwithpd.com"
+                href={`mailto:${settings?.supportEmail || "info@sitwithpd.com"}`}
                 className=" underline underline-offset-4 hover:text-white transition-colors text-sm"
               >
-                info@sitwithpd.com
+                {settings?.supportEmail || "info@sitwithpd.com"}
               </a>
             </div>
           </div>
@@ -273,7 +270,7 @@ export function Footer() {
 
         <div className="text-center mt-12">
           <p className="text-[#F2F8EC] text-sm">
-            © 2026 Sit-with-PD. All rights reserved.
+            © 2026 {settings?.platformName || "Sit-with-PD"}. All rights reserved.
           </p>
         </div>
       </div>

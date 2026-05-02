@@ -14,6 +14,8 @@ import { CampTierFormSchema } from "@/schemas/camp-tier-schema";
 import { X, Plus, Trash2 } from "lucide-react";
 import { formatAmount } from "@/lib/utils";
 
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
+
 export default function CampTierForm({
   onSubmit,
   onCancel,
@@ -21,6 +23,15 @@ export default function CampTierForm({
   onSubmit: SubmitHandler<CampTierFormSchema>;
   onCancel: () => void;
 }) {
+  const settings = usePlatformSettingsStore((state) => state.settings);
+  let defaultCurrency: "(₦)" | "($)" | "(£)" | "(€)" = "(₦)";
+  if (settings) {
+    if (settings.currency === "NGN") defaultCurrency = "(₦)";
+    else if (settings.currency === "USD") defaultCurrency = "($)";
+    else if (settings.currency === "GBP") defaultCurrency = "(£)";
+    else if (settings.currency === "EUR") defaultCurrency = "(€)";
+  }
+
   const form = useFormContext<CampTierFormSchema>();
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -93,7 +104,7 @@ export default function CampTierForm({
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid} className="">
                   <FieldLabel className="text-[#344054] text-sm mb-2">
-                    Price (₦) *
+                    {`Price ${defaultCurrency} *`}
                   </FieldLabel>
                   <Input
                     {...field}
@@ -230,6 +241,14 @@ export default function CampTierForm({
               </button>
             </div>
           ))}
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full border-dashed"
+            onClick={() => append({ text: "" })}
+          >
+            <Plus className="h-4 w-4 mr-2" /> Add Inclusion
+          </Button>
         </div>
       </div>
       {/* Featured Toggle */}

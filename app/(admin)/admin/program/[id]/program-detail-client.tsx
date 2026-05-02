@@ -35,7 +35,7 @@ export default function ProgramDetailClient({
   const { data: program, isLoading } = useGetProgramById(programId);
   const openModal = useModalStore((state) => state.openModal);
 
-console.log(program)
+// console.log(program)
   // Page-level draft state — weeks built locally before publishing
   const [draftWeeks, setDraftWeeks] = useState<DraftWeek[]>([]);
 

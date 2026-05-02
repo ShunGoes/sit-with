@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FileText, Trash2, FilePenLine } from "lucide-react";
 import { BlogPost } from "@/lib/api/services/admin/blog.services";
 import Link from "next/link";
-import { format } from "date-fns";
+import { formatAppDate } from "@/lib/utils";
 import { useDeleteBlogPost } from "@/lib/api/hooks/admin/blog.hooks";
 import { useModalStore } from "@/components/store/use-modal-store";
 import { Spinner } from "@/components/spinner";
@@ -58,7 +58,7 @@ export default function BlogContent({ blog }: { blog: BlogPost }) {
             {blog.excerpt}
           </p>
           <p className="text-sm text-secondary-text">
-            {blog.author || "Admin"} · {format(new Date(blog.createdAt), "MMM d, yyyy")}
+            {blog.author || "Admin"} · {formatAppDate(blog.createdAt)}
           </p>
         </div>
       </Link>

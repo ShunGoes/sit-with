@@ -57,8 +57,6 @@ export const useSignin = () => {
   });
 };
 
-
-
 // resend verification email if previous one became invalid or expired
 export const useResendVerification = () => {
   return useMutation({
@@ -100,7 +98,7 @@ export const useResetPassword = () => {
 export const useGoogleLogin = () => {
   const queryClient = useQueryClient();
   const setUser = useAuthStore((state) => state.setUser);
-  
+
   return useMutation({
     mutationFn: googleLogin,
     onSuccess: (data) => {
@@ -118,9 +116,6 @@ export const useGoogleLogin = () => {
 };
 
 export const useVerifyEmail = (token: string) => {
-  const setUser = useAuthStore((state) => state.setUser);
-  const setUserEmailVerified = useAuthStore((state) => state.setUserEmailVerified);
-
   return useQuery({
     queryKey: ["auth", "verify-email", token],
     queryFn: () => verifyEmail(token),

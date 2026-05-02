@@ -90,32 +90,39 @@ const ActionCell = ({
       <DropdownMenuTrigger className="cursor-pointer transition-all rounded-full duration-300 w-10 h-10 hover:bg-[#EBEBEB] flex justify-center  items-center">
         <EllipsisVertical />{" "}
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="w-[200px]">
         <DropdownMenuItem onClick={handlePublishProgram} className="py-3 px-4">
-          {row.original.isPublished ? <EyeOff color="#344054" size={15} /> : <Eye color="#344054" size={15} />} {row.original.isPublished ? "Unpublish" : "Publish"} Program
+          {row.original.isPublished ? (
+            <EyeOff className="text-[#344054] dark:text-white" size={15} />
+          ) : (
+            <Eye className="text-[#344054] dark:text-white" size={15} />
+          )}{" "}
+          {row.original.isPublished ? "Unpublish" : "Publish"} Program
         </DropdownMenuItem>
         <DropdownMenuItem className="">
           <Link
             href={`/admin/program/${row.original.id}`}
             className="py-3 w-full h-full flex px-3 gap-1"
           >
-            <Eye color="#344054" size={15} /> View
+            <Eye className="text-[#344054] dark:text-white" size={15} /> View
           </Link>
         </DropdownMenuItem>
+        {row.original.isPublished && (
+          <DropdownMenuItem
+            onClick={() =>
+              router.push(`/admin/program/${row.original.id}/edit`)
+            }
+            className="py-3 px-4"
+          >
+            {" "}
+            <FilePenLine className="text-[#344054] dark:text-white" /> Edit
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem
-          onClick={() => router.push(`/admin/program/${row.original.id}/edit`)}
-          className="py-3 px-4"
+          onClick={() => handleDeleteProgram(row.original.id)}
+          className="py-3 px-4 text-brand-red hover:text-brand-red"
         >
-          {" "}
-          <FilePenLine size={15} color="#344054" /> Edit
-        </DropdownMenuItem>
-        <DropdownMenuItem className="py-3 px-4">
-          <Trash2
-            color="#344054"
-            size={15}
-            onClick={() => handleDeleteProgram(row.original.id)}
-          />{" "}
-          Delete
+          <Trash2 color="var(--brand-red)" size={15} /> Delete Program
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -125,6 +132,7 @@ const ActionCell = ({
 const ProgramsColumn = (
   handleDeleteProgram: (id: string) => void,
   editProgram: (id: string) => void,
+  currency: string = "NGN",
 ): ColumnDef<ProgramColumn>[] => [
   {
     accessorKey: "title",
@@ -160,7 +168,7 @@ const ProgramsColumn = (
     header: "Price",
     cell: ({ row }) => (
       <h6 contextMenu="text-xs ">
-        {formatCurrency(row.original.price, "NGN")}
+        {formatCurrency(row.original.price, currency)}
       </h6>
     ),
   },

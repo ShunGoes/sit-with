@@ -17,13 +17,16 @@ import {
   ExternalLink,
   CheckCircle2,
   MoreVertical,
+  MessageCircleMore,
 } from "lucide-react";
+import { messageFacilitator } from "@/components/modal-helper";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { formatAppDate } from "@/lib/utils";
 import type { Module, Week } from "@/lib/api/services/dashboard/dashboard.services";
 
 export default function WeekDetailPage() {
@@ -139,7 +142,7 @@ export default function WeekDetailPage() {
     : week.title;
 
   return (
-    <div className="flex flex-col gap-6 w-full max-w-[900px]">
+    <div className="flex flex-col gap-6 w-full max-w-[900px] relative">
       {/* Back button */}
       <button
         onClick={() => router.back()}
@@ -161,7 +164,7 @@ export default function WeekDetailPage() {
           {program.startDate && (
             <span className="text-xs text-secondary-text ">
               Due:{" "}
-              {new Date(program.startDate).toLocaleDateString("en-US", {
+              {formatAppDate(program.startDate, {
                 month: "long",
                 day: "numeric",
                 year: "numeric",
@@ -354,6 +357,16 @@ export default function WeekDetailPage() {
             </div>
           );
         })}
+      </div>
+
+      <div className="fixed bottom-10 right-10 z-50 pointer-events-auto">
+        <button
+          onClick={() => messageFacilitator(programId)}
+          className="w-14 h-14 bg-regular-button rounded-full flex items-center justify-center text-white shadow-lg hover:bg-brand-green transition-all duration-300"
+          aria-label="Message Facilitator"
+        >
+          <MessageCircleMore size={28} />
+        </button>
       </div>
     </div>
   );

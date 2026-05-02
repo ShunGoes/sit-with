@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "motion/react";
 import { X, LogOut, LayoutDashboard } from "lucide-react";
 import Image from "next/image";
 import { useAuthStore } from "@/store/use-auth-store";
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import { logout } from "@/lib/api/services/auth/auth.services";
 
 const navLinks = [
@@ -21,12 +23,14 @@ const navLinks = [
 ];
 
 export function Navbar() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const user = useAuthStore((state) => state.user);
   const clearUser = useAuthStore((state) => state.clearUser);
+  const settings = usePlatformSettingsStore((state) => state.settings);
   console.log("user", user, isAuthenticated);
 
 
@@ -83,48 +87,34 @@ export function Navbar() {
             />
           </div>
           <h4 className="text-sm font-semibold text-[#A8D675] tracking-tight">
-            Sit With PD
+            {settings?.platformName || "Sit With PD"}
           </h4>
         </Link>
 
         {/* Desktop Links */}
         <div className="hidden lg:flex items-center gap-6 xl:gap-8">
-          <Link
-            href="/about"
-            className="text-white text-sm font-medium hover:text-green-50 transition-colors"
-          >
-            About
-          </Link>
-          <Link
-            href="/programs"
-            className="text-white text-sm font-medium hover:text-green-50 transition-colors"
-          >
-            Programs
-          </Link>
-          {/* <Link
-            href="/membership"
-            className="text-white text-sm font-medium hover:text-green-50 transition-colors"
-          >
-            Membership
-          </Link> */}
-          <Link
-            href="/camps"
-            className="text-white text-sm font-medium hover:text-green-50 transition-colors"
-          >
-            Camps
-          </Link>
-          <Link
-            href="/consultation"
-            className="text-white text-sm font-medium hover:text-green-50 transition-colors"
-          >
-            Consultation
-          </Link>
-          <Link
-            href="/blog"
-            className="text-white text-sm font-medium hover:text-green-50 transition-colors"
-          >
-            Blog
-          </Link>
+          {navLinks
+            .filter((link) => link.label !== "Home")
+            .map((link) => {
+              const isActive =
+                link.href === "/"
+                  ? pathname === "/"
+                  : pathname === link.href || pathname.startsWith(link.href + "/");
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-sm font-medium transition-colors ${
+                    isActive
+                      ? "text-regular-button underline underline-offset-4"
+                      : "text-white hover:text-green-50"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
         </div>
 
         {/* Auth Buttons */}
@@ -243,7 +233,7 @@ export function Navbar() {
                   />
                 </div>
                 <h4 className="text-sm font-semibold text-[#A8D675] tracking-tight">
-                  Sit With PD
+                  {settings?.platformName || "Sit With PD"}
                 </h4>
               </Link>
               <button
@@ -262,17 +252,28 @@ export function Navbar() {
               animate="visible"
               className="flex-1 flex flex-col gap-2"
             >
-              {navLinks.map((link) => (
-                <motion.div key={link.href} variants={itemVariants}>
-                  <Link
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="text-black text-lg font-medium hover:text-brand-green transition-colors py-3 px-4 block"
-                  >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
+              {navLinks.map((link) => {
+                const isActive =
+                  link.href === "/"
+                    ? pathname === "/"
+                    : pathname === link.href || pathname.startsWith(link.href + "/");
+
+                return (
+                  <motion.div key={link.href} variants={itemVariants}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`text-lg font-medium transition-colors py-3 px-4 block ${
+                        isActive
+                          ? "text-regular-button underline underline-offset-4"
+                          : "text-black hover:text-brand-green"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                );
+              })}
             </motion.div>
 
             {/* Login Button - Separated at Bottom */}

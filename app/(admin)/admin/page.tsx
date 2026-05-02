@@ -4,12 +4,10 @@ import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import { StatsCards } from "@/components/admin/dashboard/stats-cards";
 import { QuickActions } from "@/components/admin/dashboard/quick-actions";
 import { RecentActivities } from "@/components/admin/dashboard/recent-activities";
-import FilterSelectComp from "@/components/filter";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import UsersTable from "@/components/admin/users/users-table";
 
 import { RecentPayments } from "@/components/admin/dashboard/recent-payments";
-import Pagination from "@/components/pagination";
 import SearchInput from "@/components/searchInput";
 
 function DashboardContent() {
@@ -22,35 +20,42 @@ function DashboardContent() {
 
       <StatsCards />
       <QuickActions />
-      
+
+      <section className="space-y-6 mt-5">
+        <div className="flex justify-between  gap-3">
+          <div>
+            <h2 className="text-xl font-semibold text-primary-text">Users</h2>
+            <p className="text-sm text-secondary-text">
+              All registered users on the platform
+            </p>
+          </div>
+          <SearchInput />
+        </div>
+        <UsersTable />
+      </section>
+
       <section className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <div className="flex justify-end w-full">
             <div className="w-auto ">
              
             </div>
           </div>
           <RecentActivities />
-        </div>
-        
-        <div className="space-y-2">
-          <div className="h-11 hidden xl:block"></div> {/* Spacer to align with the filter dropdown */}
-          <RecentPayments />
-        </div>
-      </section>
+        </div> */}
 
-      <section className="space-y-6">
-        <div className="flex justify-between  gap-3">
-          <div>
-          <h2 className="text-xl font-semibold text-primary-text">Users</h2>
+        <div className="space-y-2">
+          <div className="h-11 hidden xl:block"></div>{" "}
+          {/* Spacer to align with the filter dropdown */}
+           <div className="mb-7">
+          <h2 className="text-xl font-semibold text-primary-text">Racent Payments</h2>
           <p className="text-sm text-secondary-text">
-            All registered users on the platform
+    Usrs payment across the app
           </p>
 
           </div>
-          <SearchInput />
+          <RecentPayments />
         </div>
-        <UsersTable />
       </section>
     </div>
   );

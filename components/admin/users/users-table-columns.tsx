@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { EllipsisVertical, Eye } from "lucide-react";
+import { formatAppDate } from "@/lib/utils";
 
 const ActionCell = ({
   user,
@@ -74,11 +75,7 @@ export const UsersTableColumns = (
     cell: ({ row }) => {
       const dateStr = row.original.createdAt;
       const formattedDate = dateStr
-        ? new Date(dateStr).toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          })
+        ? formatAppDate(dateStr)
         : "-";
       return <h6 className="text-xs">{formattedDate}</h6>;
     },

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import CaretRight from "@/pd-icons/caret-right";
 import Image from "next/image";
 import { useBookConsultation } from "@/lib/api/hooks/consultations/consultations.hooks";
+import { formatCurrency } from "@/lib/utils";
 
 export function Hero() {
   const { mutate: bookConsultation } = useBookConsultation();
@@ -59,7 +60,7 @@ export function Hero() {
           <div className="py-5 bg-[#A8D67599] w-full text-center rounded-[10px] ">
             <p className="text-[#0C240A] text-sm">Start your journey today</p>
             <p className="text-[#0C240A] font-semibold text-[1.875rem] ">
-              $99 per session
+              {formatCurrency(99)} per session
             </p>
             <p className="text-[#0C240A] text-base font-medium">
               Start your journey today

@@ -26,8 +26,8 @@ export default function WeekCard({
     <div
       className={`flex items-center justify-between border rounded-[12px] p-4 transition-colors ${
         isSelected
-          ? "border-regular-button border-[0.67px] bg-[#F0F9FF]"
-          : "border-[#EAECF0] border-[0.67px] bg-white"
+          ? "border-regular-button border-[0.67px] bg-[#F0F9FF] dark:bg-dash-secondary-bg"
+          : "border-[#EAECF0] border-[0.67px] bg-dash-secondary-bg"
       }`}
     >
       <div className="flex flex-col gap-1">
@@ -47,7 +47,7 @@ export default function WeekCard({
         </p>
       </div>
 
-      <div className="flex items-center gap-2 flex-shrink-0">
+      <div className="flex flex-col md:fllex-row items-end md:items-center gap-2 shrink-0">
         {/* Toggle between "Manage Modules" and "Selected" */}
         <Button
           type="button"

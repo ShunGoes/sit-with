@@ -30,10 +30,15 @@ export const formatAmount = (value: string) => {
     : formattedInteger;
 };
 
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
+
 // formatting figures in naira
-export const formatCurrency = (amount: number, currency = "NGN") => {
+export const formatCurrency = (amount: number, currencyParam?: string) => {
+  const storeCurrency = usePlatformSettingsStore.getState().settings?.currency;
+  const currency = currencyParam || storeCurrency || "NGN";
+  
   const currencyDomain =
-    currency === "NGN" ? "en-NG" : currency === "USD" ? "en-US" : "en-GB";
+    currency === "NGN" ? "en-NG" : currency === "USD" ? "en-US" : currency === "GBP" ? "en-GB" : "en-DE";
   const formattedTotal = new Intl.NumberFormat(currencyDomain, {
     style: "currency",
     currency,
@@ -93,3 +98,42 @@ export const buildQueryString = (params: Record<string, string>) => {
     const d = String(date.getDate()).padStart(2, "0");
     return `${d}-${m}-${y}`;
   };
+
+export const formatAppDate = (dateString: string | Date | undefined | null, options?: Intl.DateTimeFormatOptions) => {
+  if (!dateString) return "";
+  
+  try {
+    const storeTimezone = usePlatformSettingsStore.getState().settings?.defaultTimezone;
+    const date = new Date(dateString);
+    
+    // Default format if no options provided: e.g. "Oct 14, 2023"
+    const defaultOptions: Intl.DateTimeFormatOptions = {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    };
+    
+    const finalOptions = {
+      ...defaultOptions,
+      ...options,
+      ...(storeTimezone && storeTimezone !== "all" ? { timeZone: storeTimezone } : {})
+    };
+
+    return new Intl.DateTimeFormat('en-US', finalOptions).format(date);
+  } catch (error) {
+    // Fallback if timezone is invalid
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', options);
+  }
+};
+
+export const formatAppDateTime = (dateString: string | Date | undefined | null) => {
+  return formatAppDate(dateString, {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  });
+};

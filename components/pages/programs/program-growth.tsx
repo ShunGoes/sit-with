@@ -14,7 +14,7 @@ import { useGetPrograms } from "@/lib/api/hooks/programs/programs.hooks";
 import QueryStateHandler from "@/components/query-state-handler";
 import { Badge } from "@/components/ui/badge";
 
-export default function ProgramGrowth() {
+export default function ProgramGrowth({paddingTop = "lg:py-24"}: {paddingTop?: string}) {
   const { data: programs, isLoading, isError, isFetching } = useGetPrograms();
 
   let typeVariant;
@@ -55,7 +55,7 @@ export default function ProgramGrowth() {
   return (
     <section
       id="program-growth"
-      className="container mx-auto py-10 lg:py-24 flex flex-col  items-center justify-between gap-10 "
+      className={`container mx-auto py-10 ${paddingTop}  flex flex-col  items-center justify-between gap-10 `}
     >
       {/* Left Content */}
       <div className="flex-1  max-w-xl">
@@ -106,7 +106,7 @@ export default function ProgramGrowth() {
               return (
                 <SwiperSlide
                   key={id || index}
-                  className=""
+                  className="h-auto"
                 >
                   {" "}
                   <div className="flex flex-col  h-full bg-[#F2F2F1] p-4 transition-shadow">
@@ -133,7 +133,7 @@ export default function ProgramGrowth() {
                     <h3 className="text-xl font-semibold text-[#627B3A] mb-2">
                       {title}
                     </h3>
-                    <p className="text-base text-[#263016] leading-[30px] mb-6 ">
+                    <p className="text-base text-[#263016] leading-[30px] mb-6 line-clamp-2">
                       {description}
                     </p>
 

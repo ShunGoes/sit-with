@@ -23,6 +23,8 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { DashboardSkeleton } from "@/components/dashboard-skeleton";
 import { useAuthStore } from "@/store/use-auth-store";
+import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
+import { useGetPlatformSettings } from "@/lib/api/hooks/admin/settings.hooks";
 import { Bell, Home } from "lucide-react";
 
 const poppins = Poppins({
@@ -40,14 +42,16 @@ export default function ProtectedLayout({
   const { data, isLoading, isError } = useGetCurrentUser();
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
-  const token = useAuthStore((state) => state);
+  const setSettings = usePlatformSettingsStore((state) => state.setSettings);
+  
+  const { data: platformData, isLoading: isPlatformLoading } = useGetPlatformSettings();
 
   const firstName = user?.firstName ?? ""
   const lastName = user?.lastName ?? ""
   const userInitials = firstName.charAt(0) + lastName.charAt(0);
 
   const currentUser = data?.user || data?.data;
-  console.log( "current user", currentUser)
+  // console.log( "current user", currentUser)
 
   useEffect(() => {
     if (isError) {
@@ -57,7 +61,22 @@ export default function ProtectedLayout({
     }
   }, [isError, currentUser, router]);
 
-  if (isLoading) return <DashboardSkeleton />;
+  useEffect(() => {
+    if (platformData?.data) {
+      const data = platformData.data;
+      setSettings({
+        platformName: data.platformName,
+        supportEmail: data.supportEmail,
+        defaultTimezone: data.defaultTimezone,
+        currency: data.currency as "NGN" | "USD" | "GBP" | "EUR",
+        maintenanceMode: data.maintenanceMode,
+        allowUserRegistration: data.allowUserRegistration,
+        requireEmailVerification: data.requireEmailVerification,
+      });
+    }
+  }, [platformData, setSettings]);
+
+  if (isLoading || isPlatformLoading) return <DashboardSkeleton />;
   if (isError || currentUser?.role !== "ADMIN") return null;
 
   return (
