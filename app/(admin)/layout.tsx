@@ -89,7 +89,7 @@ export default function ProtectedLayout({
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
-          <header className="flex h-16 w-full justify-between pr-4 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <header className="flex h-16 w-full  justify-between pr-4 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
               <Separator
@@ -113,7 +113,7 @@ export default function ProtectedLayout({
             {/* </div> */}
           </header>
           <div
-            className={`flex flex-1 flex-col bg-[#F7F7F7] dark:bg-[#0A0A0A] gap-4 p-4 mt-10 md:mt-0 lg:p-10  ${poppins.className}`}
+            className={`flex flex-1 flex-col bg-[#F7F7F7]  dark:bg-[#0A0A0A] gap-4 p-4 md:mt-0 lg:p-10  ${poppins.className}`}
           >
             {children}
           </div>

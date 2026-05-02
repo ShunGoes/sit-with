@@ -22,14 +22,16 @@ function DashboardContent() {
       <QuickActions />
 
       <section className="space-y-6 mt-5">
-        <div className="flex justify-between  gap-3">
-          <div>
+        <div className="flex flex-col lg:flex-row justify-between  gap-3">
+          <div className="w-full">
             <h2 className="text-xl font-semibold text-primary-text">Users</h2>
             <p className="text-sm text-secondary-text">
               All registered users on the platform
             </p>
           </div>
+          <div className="w-full flex justify-end">
           <SearchInput />
+          </div>
         </div>
         <UsersTable />
       </section>

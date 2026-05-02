@@ -71,8 +71,8 @@ export default function ConsultationOverview() {
               <Settings2 size={16} /> <span className="hidden sm:block">Services</span>
             </Button>
           </Link>
-          <Button variant="regular" className="font-normal" onClick={handleAddService}>
-            <Plus /> <span className="hidden sm:block">Add Service</span>
+          <Button variant="regular" className="font-normal hidden sm:flex" onClick={handleAddService}>
+            <Plus /> <span>Add Service</span>
           </Button>
         </div>
       </div>
@@ -104,6 +104,17 @@ export default function ConsultationOverview() {
         <div>
           <Pagination totalPages={data?.meta?.totalPages ?? 1}  />
         </div>
+      </div>
+
+      {/* Mobile Floating Action Button */}
+      <div className="md:hidden fixed bottom-10 right-10 z-50 pointer-events-auto">
+        <button
+          onClick={handleAddService}
+          className="w-14 h-14 bg-regular-button rounded-full flex items-center justify-center text-white shadow-lg hover:bg-brand-green transition-all duration-300"
+          aria-label="Add Service"
+        >
+          <Plus size={28} />
+        </button>
       </div>
     </div>
   );
