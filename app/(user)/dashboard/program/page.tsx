@@ -39,12 +39,10 @@ export default function UserProgramsPage() {
               badgeVariant = "hibiscus";
             else if (program.category === "STUDENTS") badgeVariant = "success";
 
-            // Placeholder progress for now as it's not in the API yet
-            const progress = {
-              current: 1,
-              total: program.durationWeeks || 0,
-              percentage: 10,
-            };
+            const progressData = purchase.progress;
+            const completedWeeks = progressData.completedWeeks;
+            const totalWeeks = progressData.totalWeeks;
+            const progressPercentage = totalWeeks > 0 ? Math.round((completedWeeks / totalWeeks) * 100) : 0;
 
             return (
               <div
@@ -60,22 +58,22 @@ export default function UserProgramsPage() {
 
                 <div className="mt-auto flex flex-col gap-4">
                   {/* Progress */}
-                  <div className="flex flex-col gap-2">
-                    <div className="flex justify-between items-center text-xs text-secondary-text font-normal">
-                      <span>
-                        Week {progress.current} of {progress.total}
-                      </span>
-                      <span className="text-regular-button font-semibold">
-                        {progress.percentage}%
-                      </span>
+                    <div className="flex flex-col gap-2">
+                      <div className="flex justify-between items-center text-xs text-secondary-text font-normal">
+                        <span>
+                          {completedWeeks} of {totalWeeks} weeks completed
+                        </span>
+                        <span className="text-regular-button font-semibold">
+                          {progressPercentage}%
+                        </span>
+                      </div>
+                      <div className="w-full bg-[#f0f0f0] h-2 rounded-full overflow-hidden">
+                        <div
+                          className="bg-regular-button h-full rounded-full transition-all duration-300"
+                          style={{ width: `${progressPercentage}%` }}
+                        />
+                      </div>
                     </div>
-                    <div className="w-full bg-[#f0f0f0] h-2 rounded-full overflow-hidden">
-                      <div
-                        className="bg-regular-button h-full rounded-full"
-                        style={{ width: `${progress.percentage}%` }}
-                      />
-                    </div>
-                  </div>
 
                   {/* Action Button */}
                   <Link href={`/dashboard/program/${purchase.programId}`}>

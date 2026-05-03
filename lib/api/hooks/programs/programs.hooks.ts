@@ -54,6 +54,8 @@ export const useCreateProgram = () => {
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["programs"] });
+      queryClient.invalidateQueries({ queryKey: ["program-content"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-data"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -70,6 +72,8 @@ export const useUpdateProgram = () => {
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["programs"] });
+      queryClient.invalidateQueries({ queryKey: ["program-content"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-data"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -85,6 +89,8 @@ export const usePublishProgram = (id: string) => {
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["programs"] });
+      queryClient.invalidateQueries({ queryKey: ["program-content"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-data"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -100,6 +106,8 @@ export const useAddWeekToProgram = (id: string) => {
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["programs"] });
+      queryClient.invalidateQueries({ queryKey: ["program-content"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-data"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -115,6 +123,8 @@ export const useDeleteProgram = () => {
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["programs"] });
+      queryClient.invalidateQueries({ queryKey: ["program-content"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-data"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -132,6 +142,8 @@ export const useUpdateWeek = (programId: string) => {
     onSuccess: (data) => {
       showSuccessToast(data?.message || "Week updated successfully");
       queryClient.invalidateQueries({ queryKey: ["programs"] });
+      queryClient.invalidateQueries({ queryKey: ["program-content"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-data"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -146,6 +158,8 @@ export const useDeleteWeek = (programId: string) => {
     onSuccess: (data) => {
       showSuccessToast(data?.message || "Week deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["programs"] });
+      queryClient.invalidateQueries({ queryKey: ["program-content"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-data"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -161,6 +175,8 @@ export const useAddModuleToWeek = (programId: string) => {
     onSuccess: (data) => {
       showSuccessToast(data?.message || "Module added successfully");
       queryClient.invalidateQueries({ queryKey: ["programs"] });
+      queryClient.invalidateQueries({ queryKey: ["program-content"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-data"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -176,6 +192,8 @@ export const useUpdateModule = (programId: string) => {
     onSuccess: (data) => {
       showSuccessToast(data?.message || "Module updated successfully");
       queryClient.invalidateQueries({ queryKey: ["programs"] });
+      queryClient.invalidateQueries({ queryKey: ["program-content"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-data"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -191,6 +209,8 @@ export const useDeleteModule = (programId: string) => {
     onSuccess: (data) => {
       showSuccessToast(data?.message || "Module deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["programs"] });
+      queryClient.invalidateQueries({ queryKey: ["program-content"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-data"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -209,6 +229,8 @@ export const usePublishWeek = (programId: string) => {
       showSuccessToast(data.message || "Week published successfully");
       // Invalidate the specific program so the weeks list refreshes
       queryClient.invalidateQueries({ queryKey: ["programs"] });
+      queryClient.invalidateQueries({ queryKey: ["program-content"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-data"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message || "Failed to publish week");

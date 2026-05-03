@@ -15,6 +15,9 @@ import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import { useGetAllConsultationServices } from "@/lib/api/hooks/consultations/consultation-services.hooks";
 import { getCalApi } from "@calcom/embed-react";
 import UserConsultations from "@/components/user/dashboard/user-consultations";
+import UserBlogsCarousel from "@/components/user/dashboard/user-blogs-carousel";
+import Link from "next/link";
+import CampCards from "@/components/user/dashboard/camp-cards";
 
 export default function UserDashboardPage() {
   const user = useAuthStore((state) => state.user);
@@ -27,6 +30,7 @@ export default function UserDashboardPage() {
   if (isLoading) return <CardSkeletons />;
 
   const purchases = data?.data?.purchases ?? [];
+  const campRegistrations = data?.data?.campRegistrations ?? [];
 
   if (purchases.length === 0) {
     return (
@@ -128,10 +132,23 @@ export default function UserDashboardPage() {
               </h3>
               <UserConsultations />
             </div>
+
+            {campRegistrations.length > 0 && (
+              <div className="min-w-0">
+                <h3 className="text-base font-semibold text-primary-text mb-3">
+                  Registered Camps
+                </h3>
+                <div className="flex flex-col gap-6">
+                  {campRegistrations.map((registration: any) => (
+                    <CampCards key={registration.id} registration={registration} />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Right Sidebar Section */}
-          <div className="flex flex-col gap-6 sticky top-0">
+          <div className="flex flex-col gap-6 sticky top-0 min-w-0">
             {/* Need Support Card */}
             <div className="bg-dash-secondary-bg rounded-2xl dark:border-none border border-[#EAECF0] px-4 py-5 shadow-sm">
               <h3 className="text-base font-semibold text-primary-text mb-3">
@@ -171,6 +188,19 @@ export default function UserDashboardPage() {
                   Contact Support
                 </Button>
               </div>
+            </div>
+
+            {/* Blog section  */}
+            <div className="min-w-0 mt-8">
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="text-base font-semibold text-primary-text">
+                  Blogs
+                </h3>
+                <Link href="/blog" className="text-sm text-regular-button hover:underline">
+                  View all
+                </Link>
+              </div>
+              <UserBlogsCarousel />
             </div>
           </div>
         </div>

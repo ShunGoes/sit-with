@@ -72,7 +72,7 @@ export default function AddModuleModal({ onAddModule, initialData, title = "Add 
 
   return (
     <div className="space-y-5">
-      <h2 className="text-primary-text font-semibold text-lg">
+      <h2 className="text-secondary-text font-semibold text-lg">
         {title}
       </h2>
 
@@ -82,11 +82,11 @@ export default function AddModuleModal({ onAddModule, initialData, title = "Add 
         control={form.control}
         render={({ field, fieldState }) => (
           <div className="flex flex-col gap-1.5">
-            <label className="text-[#344054] text-sm">Module Title *</label>
+            <label className="text-seconadary-text text-sm">Module Title *</label>
             <Input
               {...field}
               placeholder="e.g., Introduction to Leadership Styles"
-              className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+              className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
             />
             {fieldState.invalid && (
               <span className="text-sm text-destructive">{fieldState.error?.message}</span>
@@ -101,11 +101,11 @@ export default function AddModuleModal({ onAddModule, initialData, title = "Add 
         control={form.control}
         render={({ field, fieldState }) => (
           <div className="flex flex-col gap-1.5">
-            <label className="text-[#344054] text-sm">Description</label>
+            <label className="text-seconadary-text text-sm">Description</label>
             <textarea
               {...field}
               placeholder="What will participants learn?"
-              className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
+              className="border-[0.67px] border-[#D0D5DD] bg-transparent rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#0A0A0A80] dark:placeholder:text-primary-text placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
             />
             {fieldState.invalid && (
               <span className="text-sm text-destructive">{fieldState.error?.message}</span>
@@ -121,16 +121,16 @@ export default function AddModuleModal({ onAddModule, initialData, title = "Add 
           name="type"
           render={({ field, fieldState }) => (
             <div className="flex flex-col gap-1.5">
-              <label className="text-[#344054] text-sm">Type *</label>
+              <label className="text-secondary-text text-sm">Type *</label>
               <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-sm font-medium text-[#344054] py-4 h-11 focus:ring-0 focus:ring-offset-0 focus-visible:ring-0">
-                  <SelectValue placeholder="Select type" />
+                <SelectTrigger className="border-[0.67px] border-[#D0D5DD] bg-transparent rounded-[5px] w-full text-sm font-medium text-primary-text py-4 h-11 focus:ring-0 focus:ring-offset-0 focus-visible:ring-0">
+                  <SelectValue placeholder="Select type" className="text-primary-text text-sm" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Reading">Reading</SelectItem>
-                  <SelectItem value="Assignment">Assignment</SelectItem>
-                  <SelectItem value="Quiz">Quiz</SelectItem>
-                  <SelectItem value="Video">Video</SelectItem>
+                  <SelectItem value="READING">Reading</SelectItem>
+                  <SelectItem value="ASSIGNMENT">Assignment</SelectItem>
+                  <SelectItem value="QUIZ">Quiz</SelectItem>
+                  <SelectItem value="VIDEO">Video</SelectItem>
                 </SelectContent>
               </Select>
               {fieldState.invalid && (
@@ -144,11 +144,11 @@ export default function AddModuleModal({ onAddModule, initialData, title = "Add 
           control={form.control}
           render={({ field, fieldState }) => (
             <div className="flex flex-col gap-1.5">
-              <label className="text-[#344054] text-sm">Duration *</label>
+              <label className="text-secondary-text text-sm">Duration *</label>
               <Input
                 {...field}
                 placeholder="e.g., 45 min"
-                className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+                className="border-[0.67px] border-[#D0D5DD] bg-transparent rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#0A0A0A80] dark:placeholder:text-primary-text placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
               />
               {fieldState.invalid && (
                 <span className="text-sm text-destructive">{fieldState.error?.message}</span>
@@ -161,10 +161,10 @@ export default function AddModuleModal({ onAddModule, initialData, title = "Add 
       {/* Content Source section */}
       <div className="space-y-3">
         <div>
-          <h3 className="text-primary-text font-semibold text-sm">
+          <h3 className="text-secondary-text font-semibold text-sm">
             Content Source
           </h3>
-          <p className="text-xs text-[#667185]">
+          <p className="text-xs text-primary-text">
             Add a link to the course content or embed code for videos/interactive
             content
           </p>
@@ -175,11 +175,11 @@ export default function AddModuleModal({ onAddModule, initialData, title = "Add 
           control={form.control}
           render={({ field, fieldState }) => (
             <div className="flex flex-col gap-1.5">
-              <label className="text-[#344054] text-sm">Content URL (YouTube, Vimeo, Google Drive, etc.)</label>
+              <label className="text-primary-text text-sm">Content URL (YouTube, Vimeo, Google Drive, etc.)</label>
               <Input
                 {...field}
                 placeholder="https://www.youtube.com/watch?v=..."
-                className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+                className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-primary-text placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
               />
               {fieldState.invalid && (
                 <span className="text-sm text-destructive">{fieldState.error?.message}</span>
@@ -192,8 +192,8 @@ export default function AddModuleModal({ onAddModule, initialData, title = "Add 
       </div>
 
       {/* Examples hint */}
-      <div className="bg-[#F9FAFB] rounded-md p-3 text-xs text-[#667185] space-y-1">
-        <p className="font-medium text-[#344054]">💡 Examples:</p>
+      <div className="bg-[#F9FAFB] dark:bg-dash-secondary-bg rounded-md p-3 text-xs text-[#667185] space-y-1">
+        <p className="font-medium text-primary-text">💡 Examples:</p>
         <ul className="list-disc list-inside space-y-0.5">
           <li>Video: YouTube/Vimeo URL or embed code</li>
           <li>Reading: Google Docs, PDF link, or article URL</li>
