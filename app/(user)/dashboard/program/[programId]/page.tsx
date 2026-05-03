@@ -64,18 +64,17 @@ export default function ProgramDetailPage() {
   else if (program.category === "STUDENTS") badgeVariant = "success";
 
   // Calculate overall progress
-  const allModules = program.weeks.flatMap((w) => w.modules);
-  const totalModules = allModules.length;
-  const completedModules = allModules.filter((m) => m.isCompleted).length;
-  const progressPercentage =
-    totalModules > 0 ? Math.round((completedModules / totalModules) * 100) : 0;
+  const progress = program.progress;
+  const totalModules = progress.totalModules;
+  const completedModules = progress.completedModules;
+  const progressPercentage = progress.percentComplete;
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-[1000px]">
       {/* Back button */}
       <button
         onClick={() => router.back()}
-        className="text-brand-green font-medium flex items-center gap-2 w-fit hover:underline text-sm"
+        className="text-regular-button font-medium flex items-center gap-2 w-fit hover:underline text-sm"
       >
         <ChevronLeft size={16} />
         Go Back
@@ -84,14 +83,14 @@ export default function ProgramDetailPage() {
       {/* Programme Overview Card — same design as /dashboard card */}
       <div className="bg-dash-secondary-bg rounded-[12px] border-[0.67px] border-[#EAECF0] dark:border-none p-6">
         <div className="flex items-center gap-3 mb-4">
-          <h2 className="xl:text-2xl-text text-xl font-semibold text-primary-text">
+          <h2 className="xl:text-2xl-text text-xl font-semibold text-secondary-text">
             {program.title}
           </h2>
           <Badge variant={badgeVariant}>{program.category}</Badge>
         </div>
 
         {program.description && (
-          <p className="text-sm text-secondary-text mb-4">
+          <p className="text-sm text-primary-text mb-4">
             {program.description}
           </p>
         )}
@@ -133,7 +132,7 @@ export default function ProgramDetailPage() {
 
       {/* Weeks List */}
       <div className="flex flex-col gap-3">
-        <h3 className="text-lg font-semibold text-primary-text">
+        <h3 className="text-lg font-semibold text-secondary-text">
           Programme Content
         </h3>
         <p className="text-sm text-secondary-text -mt-1">
@@ -145,16 +144,11 @@ export default function ProgramDetailPage() {
           {program.weeks
             .sort((a, b) => a.order - b.order)
             .map((week) => {
-              const weekModules = week.modules ?? [];
-              const weekTotal = weekModules.length;
-              const weekCompleted = weekModules.filter(
-                (m) => m.isCompleted,
-              ).length;
-              const weekProgress =
-                weekTotal > 0
-                  ? Math.round((weekCompleted / weekTotal) * 100)
-                  : 0;
-              const isWeekDone = weekTotal > 0 && weekCompleted === weekTotal;
+              const weekProgressData = progress.weeks.find((w) => w.weekId === week.id);
+              const weekTotal = weekProgressData?.moduleCount ?? 0;
+              const weekCompleted = weekProgressData?.modulesCompletedCount ?? 0;
+              const weekProgress = weekTotal > 0 ? Math.round((weekCompleted / weekTotal) * 100) : 0;
+              const isWeekDone = weekProgressData?.isWeekComplete ?? false;
 
               return (
                 <div
@@ -176,7 +170,7 @@ export default function ProgramDetailPage() {
                     {/* Week header */}
                     <div className="flex items-center justify-between gap-3 mb-3 w-full">
                       <div className="flex items-center gap-3">
-                        <h4 className="text-base font-semibold text-primary-text">
+                        <h4 className="text-base font-semibold text-secondary-text">
                           {week.title.includes(":")
                             ? week.title.split(":").slice(1).join(":").trim()
                             : week.title}
@@ -195,13 +189,13 @@ export default function ProgramDetailPage() {
 
                     {/* Meta row */}
                     <div className="flex gap-4 mb-4">
-                      <div className="flex items-center gap-2 text-[#667085] text-sm">
+                      <div className="flex items-center gap-2 text-primary-text text-sm">
                         <BookOpen size={14} />
                         <span>
                           {weekTotal} {weekTotal === 1 ? "module" : "modules"}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 text-[#667085] text-sm">
+                      <div className="flex items-center gap-2 text-primary-text text-sm">
                         <span>
                           {weekCompleted} of {weekTotal} completed
                         </span>

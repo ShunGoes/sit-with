@@ -26,7 +26,7 @@ export default function DraftWeekCard({
   onPublish,
 }: DraftWeekCardProps) {
   return (
-    <div className="bg-white rounded-[12px] p-5 border border-[#EAECF0]">
+    <div className="bg-dash-secondary-bg dark;border-none rounded-[12px] p-5 border border-[#EAECF0]">
       <div className="flex items-start justify-between">
         <div className="flex flex-col gap-1">
           <h3 className="text-primary-text font-semibold text-base">

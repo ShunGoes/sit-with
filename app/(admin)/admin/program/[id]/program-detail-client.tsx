@@ -109,7 +109,7 @@ export default function ProgramDetailClient({
       </div>
 
       {/* ===== Existing Program Weeks (from API) ===== */}
-      <div className="bg-white rounded-[12px] p-5 border border-[#EAECF0]">
+      <div className="bg-dash-secondary-bg dark:border-none rounded-[12px] p-5 border border-[#EAECF0]">
         <h3 className="text-primary-text font-semibold text-base mb-4">
           Program Weeks
         </h3>
@@ -136,7 +136,7 @@ export default function ProgramDetailClient({
 
       {/* ===== Empty state when no drafts and no existing weeks have modules ===== */}
       {draftWeeks.length === 0 && (
-        <div className="bg-white rounded-[12px] p-5 border border-dashed border-[#EAECF0]">
+        <div className="bg-dash-secondary-bg rounded-[12px] p-5 border border-dashed border-[#EAECF0]">
           <p className="text-sm text-[#667185] text-center py-4">
             Select a week to view and manage its modules
           </p>

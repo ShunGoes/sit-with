@@ -137,17 +137,17 @@ export default function ExistingWeekSection({
   };
 
   return (
-    <div className="bg-white rounded-[12px] p-5 border border-[#EAECF0] mb-4">
+    <div className="bg-dash-secondary-bg rounded-[12px] p-5 border border-[#EAECF0] mb-4">
       {/* Week Header */}
       <div className="flex items-start justify-between cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
         <div className="flex flex-col gap-0.5">
-          <p className="text-sm font-semibold text-[#101928]">
+          <p className="text-sm font-semibold text-secondary-text">
             Week {index + 1}
           </p>
-          <p className="text-sm text-[#667185]">
+          <p className="text-sm text-primary-text">
             {week.title || week.weekTitle || "Untitled"}
           </p>
-          <p className="text-xs text-[#667185]">
+          <p className="text-xs text-regular-button font-semibold">
             {week.modules?.length || 0} module
             {(week.modules?.length || 0) !== 1 ? "s" : ""}
           </p>

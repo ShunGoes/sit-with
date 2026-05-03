@@ -31,6 +31,10 @@ export default function ProgramCards({ purchase }: { purchase: Purchase }) {
 
   const cardLabel = "text-[#667085] text-xs ";
   const cardValue = "text-primary-text text-sm font-semibold";
+  
+  const completedWeeks = purchase.progress.completedWeeks;
+  const totalWeeks = purchase.progress.totalWeeks;
+  const progressPercentage = totalWeeks > 0 ? Math.round((completedWeeks / totalWeeks) * 100) : 0;
 
   
   return (
@@ -98,28 +102,31 @@ export default function ProgramCards({ purchase }: { purchase: Purchase }) {
         </div>
 
         {/* Progress Section */}
-        {/* <div className="dark:bg-primary-text bg-[#F9FAFB] rounded-2xl p-6 mb-8">
+        <div className="bg-[#F9FAFB] dark:bg-transparent border border-[#EAECF0] dark:border-[#333] rounded-2xl p-6 mb-8">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-bold text-[#101828]">Your Progress</h3>
-            <span className="text-lg font-bold text-[#445b1c]">0%</span>
+            <h3 className="text-lg font-bold text-primary-text">Your Progress</h3>
+            <span className="text-lg font-bold text-regular-button">{progressPercentage}%</span>
           </div>
-          <div className="h-2.5 w-full bg-[#E4E7EC] rounded-full overflow-hidden mb-3">
-            <div className="h-full bg-[#445b1c]" style={{ width: "0%" }} />
+          <div className="h-2.5 w-full bg-[#E4E7EC] dark:bg-[#1A1A1A] rounded-full overflow-hidden mb-3">
+            <div className="h-full bg-regular-button transition-all duration-300" style={{ width: `${progressPercentage}%` }} />
           </div>
-          <p className="text-sm text-[#667085]">
-            Ready to start Week 1 • 0 of {purchase.program.durationWeeks ?? 0}{" "}
-            weeks completed
+          <p className="text-sm text-secondary-text">
+            {purchase.progress.percentComplete === 100 
+              ? "Program completed! 🎉" 
+              : purchase.progress.completedModules === 0 
+                ? "Ready to start Week 1" 
+                : `Week ${purchase.progress.currentWeekDisplayOrder ?? 1} in progress`
+            } • {completedWeeks} of {totalWeeks} weeks completed
           </p>
-        </div> */}
-    <Link href={`/dashboard/program/${purchase.program?.id}`}>
-        <Button
-          variant={"regular"}
-          className="w-full "
-        >
-          Start Program
-        </Button>
-    
-    </Link>
+        </div>
+        <Link href={`/dashboard/program/${purchase.program?.id}`}>
+          <Button
+            variant={"regular"}
+            className="w-full "
+          >
+            {purchase.progress.completedModules === 0 ? "Start Program" : "Continue Program"}
+          </Button>
+        </Link>
       </div>
     </div>
   );

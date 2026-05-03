@@ -92,11 +92,11 @@ export default function AddWeekModal({ onAddWeek, initialData, title = "Add New 
         control={form.control}
         render={({ field, fieldState }) => (
           <div className="flex flex-col gap-1.5">
-            <label className="text-[#344054] text-sm">Week Title *</label>
+            <label className="text-secondary-text text-sm">Week Title *</label>
             <Input
               {...field}
               placeholder="e.g., Introduction to Leadership"
-              className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+              className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-primary-text placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
             />
             {fieldState.invalid && (
               <span className="text-sm text-destructive">{fieldState.error?.message}</span>
@@ -111,11 +111,11 @@ export default function AddWeekModal({ onAddWeek, initialData, title = "Add New 
         control={form.control}
         render={({ field, fieldState }) => (
           <div className="flex flex-col gap-1.5">
-            <label className="text-[#344054] text-sm">Description</label>
+            <label className="text-secondary-text text-sm">Description</label>
             <textarea
               {...field}
               placeholder="Brief description of what this week covers..."
-              className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[8px] w-full text-sm font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
+              className="border-[0.67px] border-[#D0D5DD] bg-tansparent rounded-[8px] w-full text-sm font-medium text-primary-text placeholder:text-primary-text placeholder:text-sm py-3 min-h-20 outline-none px-3 resize-none"
             />
             {fieldState.invalid && (
               <span className="text-sm text-destructive">{fieldState.error?.message}</span>
@@ -126,7 +126,7 @@ export default function AddWeekModal({ onAddWeek, initialData, title = "Add New 
 
       {/* Learning Objectives — tag-input */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-[#344054] text-sm">
+        <label className="text-secondary-text text-sm">
           Learning Objectives
         </label>
 
@@ -136,7 +136,7 @@ export default function AddWeekModal({ onAddWeek, initialData, title = "Add New 
             {objectives.map((obj, index) => (
               <li
                 key={index}
-                className="flex items-center justify-between text-sm text-[#344054] bg-[#F9FAFB] rounded-md px-3 py-2"
+                className="flex items-center justify-between text-sm text-primary-text bg-[#F9FAFB] dark:bg-dash-secondary-bg rounded-md px-3 py-2"
               >
                 <span className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-green-600" />
@@ -160,7 +160,7 @@ export default function AddWeekModal({ onAddWeek, initialData, title = "Add New 
             onChange={(e) => setObjectiveInput(e.target.value)}
             onKeyDown={handleObjectiveKeyDown}
             placeholder="Add a learning objective..."
-            className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] flex-1 text-[12px] font-medium text-[#344054] placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+            className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] flex-1 text-[12px] font-medium text-primary-text placeholder:text-primary-text placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
           />
           <Button
             type="button"

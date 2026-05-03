@@ -27,7 +27,7 @@ export default function ModulesPanel({
   onEditModule
 }: ModulesPanelProps) {
   return (
-    <div className="bg-white rounded-[12px] p-5 border border-[#EAECF0]">
+    <div className="bg-dash-secondary-bg dark:border-none rounded-[12px] p-5 border border-[#EAECF0]">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h4 className="text-primary-text font-semibold text-base">
@@ -37,9 +37,10 @@ export default function ModulesPanel({
           type="button"
           variant="outline"
           size="sm"
+          className="text-regular-button"
           onClick={onAddModule}
         >
-          <Plus className="h-4 w-4" />
+          <Plus className="h-4 w-4 text-regular-button" />
           Add Module
         </Button>
       </div>
@@ -47,7 +48,7 @@ export default function ModulesPanel({
       {/* Empty state or module list */}
       {modules.length === 0 ? (
         <div className="flex items-center justify-center border border-dashed border-[#EAECF0] rounded-[10px] py-10">
-          <p className="text-sm text-[#667185]">
+          <p className="text-sm text-primary-text">
             No modules added yet. Click &quot;Add Module&quot; to get started.
           </p>
         </div>
@@ -76,21 +77,21 @@ export default function ModulesPanel({
                 </div>
 
                 <div className="flex flex-col gap-1">
-                  <p className="text-sm font-semibold text-[#101928]">
-                    Module {index + 1}: {mod.moduleTitle}
+                  <p className="text-sm font-semibold text-seconadary-text">
+                    Module {index + 1}: {mod.title}
                   </p>
                   {mod.description && (
-                    <p className="text-xs text-[#667185]">{mod.description}</p>
+                    <p className="text-xs text-primary-text">{mod.description}</p>
                   )}
                   <div className="flex items-center gap-2 mt-1 flex-wrap">
                     {/* Type badge */}
                     <span className="text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded px-2 py-0.5">
                       {mod.type}
                     </span>
-                    <span className="text-xs text-[#667185]">
+                    <span className="text-xs text-primary-text">
                       {mod.duration}
                     </span>
-                    <span className="text-[#667185]">·</span>
+                    <span className="text-primary-text">·</span>
                     <span className="flex items-center gap-1 text-xs text-green-600">
                       <Check className="h-3 w-3" />
                       Content linked
