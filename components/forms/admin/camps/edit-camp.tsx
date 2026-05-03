@@ -11,6 +11,7 @@ import { Camp } from "@/lib/api/services/camps/camps.services";
 import { formatAmount } from "@/lib/utils";
 
 export default function EditCampModal({ camp }: { camp: Camp }) {
+  console.log(camp)
   const form = useForm<CampFormSchema>({
     resolver: zodResolver(CampSchema),
     mode: "onChange",
@@ -18,7 +19,7 @@ export default function EditCampModal({ camp }: { camp: Camp }) {
       title: camp.title,
       description: camp.description,
       location: camp.location,
-      price: formatAmount(camp.price.toString()),
+      price: camp?.price ? formatAmount(camp?.price.toString()) : 0,
       capacity: camp.capacity.toString(),
       startDate: camp.startDate
         ? new Date(camp.startDate).toISOString().split("T")[0]
@@ -72,7 +73,7 @@ export default function EditCampModal({ camp }: { camp: Camp }) {
     if (isPending) {
       openModal(
         "loading",
-        <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+        <div className="flex flex-col items-center justify-center gap-4 bg-dash-secondary-bg p-10 rounded-lg min-w-50">
           <Spinner size={40} />
         </div>,
         { isMutation: true },
@@ -81,11 +82,11 @@ export default function EditCampModal({ camp }: { camp: Camp }) {
   }, [isPending, openModal]);
 
   return (
-    <div className="bg-white rounded-[12px]   md:w-full  overflow-y-auto no-scrollbar mx-auto">
-      <h2 className="text-2xl font-semibold mb-1 text-primary-text">
+    <div className="bg-transparent rounded-[12px]   md:w-full  overflow-y-auto no-scrollbar mx-auto">
+      <h2 className="text-2xl font-semibold mb-1 text-secondary-text">
         Edit Camp
       </h2>
-      <p className="text-[#667085] text-sm mb-6">
+      <p className="text-primary-text text-sm mb-6">
         Update details for {camp.title}.
       </p>
 
