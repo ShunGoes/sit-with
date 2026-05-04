@@ -55,12 +55,7 @@ export default function ProgramForm({
 
   const form = useFormContext<ProgramFormSchema>();
 
-  if (
-    !form.formState.isValid &&
-    Object.keys(form.formState.errors).length > 0
-  ) {
-    console.log("Form validation errors:", form.formState.errors);
-  }
+
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7 ">
       {/* basic information */}
@@ -73,7 +68,7 @@ export default function ProgramForm({
             name="title"
             control={form.control}
             label="Program Name *"
-            placeholder="Eg Leadership Essentials"
+            placeholder="E.g. Leadership Essentials"
             className="bg-white"
           />
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2">
@@ -185,7 +180,7 @@ export default function ProgramForm({
                   <textarea
                     id="description"
                     {...field}
-                    placeholder="Describe the program, its goal and who its for......."
+                    placeholder="Describe the program, its goal and who it's for..."
                     className="border-[0.75px] border-[#EAECF0] bg-dash-secondary-bg rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#98A2B3] py-4 min-h-30 outline-none px-3 resize-none"
                   />
                 </div>

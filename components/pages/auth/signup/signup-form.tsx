@@ -120,7 +120,7 @@ export default function SignupForm() {
         <div className="relative w-full h-full rounded-[12px] overflow-hidden bg-gray-100">
           <Image
             src="/images/signup-bg.webp"
-            alt="Login background"
+            alt="Sign up background illustration"
             fill
             className="object-cover"
             priority
@@ -136,7 +136,7 @@ export default function SignupForm() {
           <Link href={"/"} className="flex items-center gap-2 mb-8 justify-center md:justify-start">
             <Image
               src="/images/logo.webp"
-              alt="sit with PD logo"
+              alt="Sit With PD Logo"
               width={30}
               height={30}
             />

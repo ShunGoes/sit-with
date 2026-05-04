@@ -49,7 +49,7 @@ export const UsersTableColumns = (
         {row.original.firstName} {row.original.lastName}
       </h6>
     ),
-    size: 300,
+    size: 200,
   },
   {
     accessorKey: "email",
@@ -82,27 +82,25 @@ export const UsersTableColumns = (
     size: 200,
   },
   {
-    header: "Activity",
-    cell: ({ row }) => {
-      const counts = row.original._count;
-      return (
-        <div className="flex gap-4">
-          <div className="flex flex-col">
-            <span className="text-[10px] text-secondary-text">Camps</span>
-            <span className="text-xs font-medium">{counts.campRegistrations}</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-[10px] text-secondary-text">Consults</span>
-            <span className="text-xs font-medium">{counts.consultations}</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-[10px] text-secondary-text">Programs</span>
-            <span className="text-xs font-medium">{counts.purchases}</span>
-          </div>
-        </div>
-      );
-    },
-    size: 400,
+    header: "Camps",
+    cell: ({ row }) => (
+      <h6 className="text-xs font-medium">{row.original._count?.campRegistrations ?? 0}</h6>
+    ),
+    size: 100,
+  },
+  {
+    header: "Consults",
+    cell: ({ row }) => (
+      <h6 className="text-xs font-medium">{row.original._count?.consultations ?? 0}</h6>
+    ),
+    size: 100,
+  },
+  {
+    header: "Programs",
+    cell: ({ row }) => (
+      <h6 className="text-xs font-medium">{row.original._count?.purchases ?? 0}</h6>
+    ),
+    size: 100,
   },
   {
     id: "actions",

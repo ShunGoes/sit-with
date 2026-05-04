@@ -167,7 +167,7 @@ const ProgramsColumn = (
     accessorKey: "price",
     header: "Price",
     cell: ({ row }) => (
-      <h6 contextMenu="text-xs ">
+      <h6 className="text-xs ">
         {formatCurrency(row.original.price, currency)}
       </h6>
     ),

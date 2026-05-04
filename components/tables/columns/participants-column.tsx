@@ -21,6 +21,8 @@ import {
 import { Trash2 } from "lucide-react";
 import { EllipsisVertical } from "lucide-react";
 
+import { formatAppDate } from "@/lib/utils";
+
 const ParticipantsColumn = (): ColumnDef<ParticipantColumn>[] => [
   {
     accessorKey: "participant",
@@ -53,7 +55,7 @@ const ParticipantsColumn = (): ColumnDef<ParticipantColumn>[] => [
     header: "Date Joined",
     cell: ({ row }) => (
       <p className="text-xs text-primary-text dark:text-[#A1A1A1]">
-        {row.original.dateJoined}
+        {row.original.dateJoined ? formatAppDate(row.original.dateJoined) : "-"}
       </p>
     ),
   },

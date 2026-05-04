@@ -18,7 +18,6 @@ const navLinks = [
   { label: "Camps", href: "/camps" },
   { label: "Consultation", href: "/consultation" },
   { label: "Contact", href: "/contact" },
-  // { label: "Membership", href: "/membership" },
   { label: "Blog", href: "/blog" },
 ];
 
