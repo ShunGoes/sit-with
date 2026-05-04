@@ -82,7 +82,7 @@ export function ConsultationServices() {
 
         {services.length === 0 ? (
           <div className="text-center py-20 bg-slate-50 rounded-3xl w-full border border-dashed border-slate-200">
-            <p className="heading-2 mb-12 max-w-2xl">
+            <p className="heading-2 mb-12 max-w-2xl text-center">
               No consultation services are available at the moment. Please check back later.
             </p>
           </div>

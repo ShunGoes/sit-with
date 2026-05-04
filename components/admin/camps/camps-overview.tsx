@@ -94,11 +94,12 @@ export default function CampsOverview() {
       </div>
 
       <div className="space-y-4">
-
-        <div className="flex justify-between gap-4">
-          <SearchInput />
+        <div className="flex flex-col sm:flex-row justify-between gap-4">
+          <div className="flex-1">
+            <SearchInput />
+          </div>
             
-          <div>
+          <div className="w-full sm:w-auto">
             <FilterSelectComp paramKey="status" options={FILTER_BY_STATUS} />
           </div>
         </div>
@@ -127,7 +128,7 @@ export default function CampsOverview() {
       </div>
 
       {/* Mobile Floating Action Button */}
-      <div className="md:hidden fixed bottom-10 right-10 z-50 pointer-events-auto">
+      <div className="md:hidden fixed bottom-10 right-10 z-40 pointer-events-auto">
         <button
           onClick={() => addCamp()}
           className="w-14 h-14 bg-regular-button rounded-full flex items-center justify-center text-white shadow-lg hover:bg-brand-green transition-all duration-300"

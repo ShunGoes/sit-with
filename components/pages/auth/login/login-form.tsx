@@ -118,7 +118,7 @@ export  function LoginForm() {
         <div className="min-h-full flex flex-col justify-center gap-8 md:gap-8 lg:px-10 lg:py-4">
           {/* Logo */}
           <div className="flex flex-col gap-4 md:gap-2">
-            <div className="flex items-center gap-2 mb-3 justify-center lg:justify-start">
+            <Link href={"/"} className="flex items-center gap-2 mb-3 justify-center lg:justify-start">
               <Image
                 src="/images/logo.webp"
                 alt="sit with PD logo"
@@ -128,7 +128,7 @@ export  function LoginForm() {
               <span className="font-semibold text-[14px] text-[##1E1E1E]">
                 {settings?.platformName || "Sit With PD"}
               </span>
-            </div>
+            </Link>
 
             <div className="text-center lg:text-start">
               <h1 className="text-[24px] font-medium md:font-bold text-brand-green mb-1 ">
@@ -193,13 +193,9 @@ export  function LoginForm() {
                     googleLogin(
                       { idToken },
                       {
-                        onSuccess: (resData) => {
+                        onSuccess: () => {
                           closeModal("loading");
-                          if (resData.data.user.role === "ADMIN") {
-                            router.replace("/admin");
-                          } else {
-                            router.replace("/dashboard");
-                          }
+                          router.replace((callbackUrl as string) || "/");
                         },
                         onError: (error: any) => {
                           closeModal("loading");

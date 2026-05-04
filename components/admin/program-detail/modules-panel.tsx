@@ -92,7 +92,7 @@ export default function ModulesPanel({
                       {mod.duration}
                     </span>
                     <span className="text-primary-text">·</span>
-                    <span className="flex items-center gap-1 text-xs text-green-600">
+                    <span className=" items-center gap-1 text-xs hidden md:flex text-green-600">
                       <Check className="h-3 w-3" />
                       Content linked
                     </span>

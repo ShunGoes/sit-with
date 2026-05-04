@@ -14,6 +14,7 @@ import {
   useUpdateModule,
   useDeleteModule,
 } from "@/lib/api/hooks/programs/programs.hooks";
+import { Badge } from "@/components/ui/badge";
 
 interface ExistingWeekSectionProps {
   programId: string;
@@ -139,7 +140,7 @@ export default function ExistingWeekSection({
   return (
     <div className="bg-dash-secondary-bg rounded-[12px] p-5 border border-[#EAECF0] mb-4">
       {/* Week Header */}
-      <div className="flex items-start justify-between cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
+      <div className="flex flex-col-reverse gap-3 md:flex-row items-start justify-between cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
         <div className="flex flex-col gap-0.5">
           <p className="text-sm font-semibold text-secondary-text">
             Week {index + 1}
@@ -154,9 +155,9 @@ export default function ExistingWeekSection({
         </div>
         
         <div className="flex items-center gap-3">
-          <span className="text-xs font-medium px-2.5 py-1 rounded-full text-green-700 bg-green-50">
+          <Badge variant={week ? "success" : "default"} className="">
             {week.status || "Published"}
-          </span>
+          </Badge>
           <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
              <button
                 type="button"

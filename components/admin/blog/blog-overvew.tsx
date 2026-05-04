@@ -97,23 +97,27 @@ export  function BlogOverview() {
 
       <div className="space-y-4">
         {/* search and filter bar  */}
-        <div className="flex items-center w-full gap-4">
-          <div className="flex-1">
+        <div className="flex flex-col sm:flex-row items-center w-full gap-4">
+          <div className="w-full sm:flex-1">
             <SearchInput />
           </div>
 
-          <div className="w-auto flex items-center gap-3">
-            <FilterSelectComp
-              options={CATEGORY_OPTIONS}
-              placeholder=" category"
-              paramKey="category"
-            />
-            <FilterSelectComp
-              options={STATUS_OPTIONS}
-              placeholder=" status"
-              paramKey="status"
-              icon={<BookCheck className="text-primary-text" size={18} />}
-            />
+          <div className="w-full sm:w-auto flex items-center gap-3">
+            <div className="flex-1 sm:flex-none">
+              <FilterSelectComp
+                options={CATEGORY_OPTIONS}
+                placeholder=" category"
+                paramKey="category"
+              />
+            </div>
+            <div className="flex-1 sm:flex-none">
+              <FilterSelectComp
+                options={STATUS_OPTIONS}
+                placeholder=" status"
+                paramKey="status"
+                icon={<BookCheck className="text-primary-text" size={18} />}
+              />
+            </div>
           </div>
         </div>
 
@@ -140,7 +144,7 @@ export  function BlogOverview() {
       </div>
 
       {/* Mobile Floating Action Button */}
-      <div className="md:hidden fixed bottom-10 right-10 z-50 pointer-events-auto">
+      <div className="md:hidden fixed bottom-10 right-10 z-40 pointer-events-auto">
         <button
           onClick={handleAddBlog}
           className="w-14 h-14 bg-regular-button rounded-full flex items-center justify-center text-white shadow-lg hover:bg-brand-green transition-all duration-300"

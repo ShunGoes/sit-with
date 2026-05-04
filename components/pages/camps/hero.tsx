@@ -32,7 +32,6 @@ export function CampHero() {
             <Button onClick={() => document.getElementById("camp-services")?.scrollIntoView({behavior: "smooth"})} variant={"regular"}>
               Apply Now <CaretRight />
             </Button>
-            <Button variant={"outline"}>Learn More</Button>
           </div>
         </div>
       </div>

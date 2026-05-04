@@ -86,7 +86,7 @@ export default function AddModuleModal({ onAddModule, initialData, title = "Add 
             <Input
               {...field}
               placeholder="e.g., Introduction to Leadership Styles"
-              className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#0A0A0A80] placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
+              className="border-[0.67px] border-[#D0D5DD] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#0A0A0A80] dark:placeholder:text-primary-text placeholder:text-sm py-4 h-11 focus-visible:border-none focus-visible:ring-0"
             />
             {fieldState.invalid && (
               <span className="text-sm text-destructive">{fieldState.error?.message}</span>

@@ -133,7 +133,7 @@ export default function SignupForm() {
         <div className="min-h-full flex flex-col justify-center gap-8 md:gap-8 lg:px-10 lg:py-4">
         {/* Logo */}
         <div className="flex flex-col md:gap-2">
-          <div className="flex items-center gap-2 mb-8 justify-center md:justify-start">
+          <Link href={"/"} className="flex items-center gap-2 mb-8 justify-center md:justify-start">
             <Image
               src="/images/logo.webp"
               alt="sit with PD logo"
@@ -143,7 +143,7 @@ export default function SignupForm() {
             <span className="font-semibold text-[14px] text-[##1E1E1E]">
               {settings?.platformName || "Sit With PD"}
             </span>
-          </div>
+          </Link>
 
           <div>
             <h1 className="text-[24px] font-medium md:font-bold text-brand-green mb-1 text-left">

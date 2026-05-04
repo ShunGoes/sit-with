@@ -11,7 +11,6 @@ import { Camp } from "@/lib/api/services/camps/camps.services";
 import { formatAmount } from "@/lib/utils";
 
 export default function EditCampModal({ camp }: { camp: Camp }) {
-  console.log(camp)
   const form = useForm<CampFormSchema>({
     resolver: zodResolver(CampSchema),
     mode: "onChange",

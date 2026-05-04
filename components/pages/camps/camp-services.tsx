@@ -67,8 +67,8 @@ export default function CampServices() {
   }, [isPending, openModal]);
 
   return (
-    <section className="py-20  bg-white" id="camp-services">
-      <div className="container mx-auto px-4 lg:px-8 max-w-6xl flex flex-col items-center">
+    <section className="py-20   bg-white" id="camp-services">
+      <div className="container mx-auto px-4 lg:px-8 max-w-7xl flex flex-col w-full items-center ">
         <div className="flex flex-col items-center text-center mb-16">
           <Pill text="Our Services" className="mb-4" />
           <h2 className="heading-2 max-w-2xl">
@@ -78,13 +78,13 @@ export default function CampServices() {
 
         {camp.length === 0 ? (
           <div className="text-center py-20 bg-slate-50 rounded-3xl w-full border border-dashed border-slate-200">
-            <p className="text-base text-primary-text mb-12 max-w-2xl">
+            <p className="text-base text-primary-text mb-12 mx-auto max-w-2xl text-center">
               No camps are available at the moment. Please check back later.
             </p>
           </div>
         ) : (
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8  w-full"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"

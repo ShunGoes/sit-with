@@ -91,7 +91,7 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
     }
 
     if (!isAuthenticated) {
-      router.push(`/auth/login?callbackUrl=/programs/${id}`);
+      router.push(`/login?callbackUrl=/programs/${id}`);
       return;
     }
 

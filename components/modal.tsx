@@ -38,8 +38,8 @@ export const Modal = () => {
           {/* Overlay */}
           <div
             className={cn(
-              "absolute inset-0 pointer-events-none backdrop-blur-",
-              modal.options?.isMutation ? "bg-[#1c1c1c]/40" : "bg-black/20",
+              "absolute inset-0 pointer-events-none backdrop-blur-sm",
+              modal.options?.isMutation ? "bg-[#1c1c1c]/40" : "bg-black/20 ",
             )}
             onClick={() => !modal.options?.isMutation && closeModal(modal.id)}
           />

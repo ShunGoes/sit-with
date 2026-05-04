@@ -37,14 +37,7 @@ function DashboardContent() {
       </section>
 
       <section className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        {/* <div className="space-y-2">
-          <div className="flex justify-end w-full">
-            <div className="w-auto ">
-             
-            </div>
-          </div>
-          <RecentActivities />
-        </div> */}
+       
 
         <div className="space-y-2">
           <div className="h-11 hidden xl:block"></div>{" "}
