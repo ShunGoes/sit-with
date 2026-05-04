@@ -72,11 +72,11 @@ export default function AddCampModal() {
   }, [isPending, openModal]);
 
   return (
-    <div className="bg-white rounded-[12px]  md:w-full  overflow-y-auto no-scrollbar mx-auto">
-      <h2 className="text-2xl font-semibold mb-1 text-primary-text">
+    <div className="bg-transparent rounded-[12px]  md:w-full  overflow-y-auto no-scrollbar mx-auto">
+      <h2 className="text-2xl font-semibold mb-1 dark:text-secondary-text text-primary-text">
         Add Camp
       </h2>
-      <p className="text-[#667085] text-sm mb-6">
+      <p className="text-primary-text text-sm mb-6">
         Set up a new camp for your platform.
       </p>
 

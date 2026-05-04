@@ -28,7 +28,7 @@ export default function ConsultationServiceDetailPage() {
     if (isUpdating) {
       openModal(
         "loading",
-        <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
+        <div className="flex flex-col items-center justify-center gap-4 bg-dash-secondary-bg p-10 rounded-lg min-w-50">
           <Spinner size={40} />
         </div>,
         { isMutation: true }
@@ -95,7 +95,7 @@ export default function ConsultationServiceDetailPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main info */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white p-6 rounded-[16px] shadow-sm border border-[#EAECF0]">
+          <div className="bg-dash-secondary-bg dark:border-none p-6 rounded-[16px] shadow-sm border border-[#EAECF0]">
             <h3 className="text-lg font-semibold mb-4">Description</h3>
             <p className="text-primary-text leading-relaxed whitespace-pre-wrap">
               {service.description}
@@ -105,7 +105,7 @@ export default function ConsultationServiceDetailPage() {
 
         {/* Sidebar info */}
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-[16px] shadow-sm border border-[#EAECF0] space-y-5">
+          <div className="bg-dash-secondary-bg dark:border-none p-6 rounded-[16px] shadow-sm border border-[#EAECF0] space-y-5">
             <h3 className="text-lg font-semibold border-b border-[#EAECF0] pb-3">Service Details</h3>
             
             <div className="flex items-center gap-3">

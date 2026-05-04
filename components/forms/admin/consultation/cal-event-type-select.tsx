@@ -33,7 +33,7 @@ export default function CalEventTypeSelect({
 
   return (
     <Select value={value} onValueChange={onChange} disabled={isLoading}>
-      <SelectTrigger className="bg-white border-[0.75px] border-[#EAECF0] rounded-[5px] w-full text-[12px] font-medium text-[#344054] h-[54px] focus-visible:ring-0">
+      <SelectTrigger className="bg-white dark:bg-transparent  border-[0.75px] border-[#EAECF0] rounded-[5px] w-full text-[12px] font-medium text-primary-text h-[54px] focus-visible:ring-0">
         {isLoading ? (
           <div className="flex items-center gap-2">
             <Loader2 className="h-4 w-4 animate-spin text-regular-button" />

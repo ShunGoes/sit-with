@@ -50,11 +50,11 @@ const CURRENCIES = [
 ];
 
 const PLATFORM_FEATURES = [
-  {
-    name: "maintenanceMode" as const,
-    label: "Maintenance Mode",
-    description: "Temporarily disable access to the platform for maintenance",
-  },
+  // {
+  //   name: "maintenanceMode" as const,
+  //   label: "Maintenance Mode",
+  //   description: "Temporarily disable access to the platform for maintenance",
+  // },
   {
     name: "allowUserRegistration" as const,
     label: "Allow User Registration",
@@ -120,7 +120,7 @@ function GeneralSettingsSection({ initialData }: { initialData?: any }) {
 
   return (
     <div className="bg-dash-secondary-bg p-5 rounded-[12px]">
-      <header className="text-primary-text font-semibold text-base mb-5">
+      <header className="text-primary-text dark:text-secondary-text font-semibold text-base mb-5">
         General Settings
       </header>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -148,13 +148,13 @@ function GeneralSettingsSection({ initialData }: { initialData?: any }) {
               <Field data-invalid={fieldState.invalid}>
                 <div className="flex flex-col">
                   <FieldLabel
-                    className="text-[#344054] text-[14px] mb-2"
+                    className="text-[#344054] dark:text-secondary-text text-[14px] mb-2"
                     htmlFor="defaultTimezone"
                   >
                     Default Timezone
                   </FieldLabel>
                   <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger className="bg-white" id="defaultTimezone">
+                    <SelectTrigger className="bg-transparent text-primary-text" id="defaultTimezone">
                       <SelectValue placeholder="Select timezone" />
                     </SelectTrigger>
                     <SelectContent>
@@ -181,13 +181,13 @@ function GeneralSettingsSection({ initialData }: { initialData?: any }) {
             <Field data-invalid={fieldState.invalid}>
               <div className="flex flex-col">
                 <FieldLabel
-                  className="text-[#344054] text-[14px] mb-2"
+                  className="text-[#344054] dark:text-secondary-text text-[14px] mb-2"
                   htmlFor="currency"
                 >
                   Currency
                 </FieldLabel>
                 <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger className="bg-white" id="currency">
+                  <SelectTrigger className="bg-transparent text-primary-text" id="currency">
                     <SelectValue placeholder="Select currency" />
                   </SelectTrigger>
                   <SelectContent>
@@ -264,20 +264,20 @@ function PlatformFeaturesSection({ initialData }: { initialData?: any }) {
 
   return (
     <div className="bg-dash-secondary-bg p-5 rounded-[12px]">
-      <header className="text-primary-text font-semibold text-base mb-5">
+      <header className="text-primary-text dark:text-secondary-text font-semibold text-base mb-5">
         Platform Features
       </header>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
         {PLATFORM_FEATURES.map((feat) => (
           <div
             key={feat.name}
-            className="flex items-center justify-between gap-4 p-4 bg-white rounded-[8px] border border-[#EAECF0]"
+            className="flex items-center justify-between gap-4 p-4 bg-transparent rounded-[8px] border border-[#EAECF0]"
           >
             <div className="flex flex-col gap-0.5">
-              <span className="text-sm font-semibold text-primary-text">
+              <span className="text-sm font-semibold text-primary-text dark:text-secondary-text">
                 {feat.label}
               </span>
-              <span className="text-xs text-secondary-text">
+              <span className="text-xs dark:text-primary-text text-secondary-text">
                 {feat.description}
               </span>
             </div>
@@ -346,16 +346,16 @@ function NotificationsIntegrationsSection({ initialData }: { initialData?: any }
 
   return (
     <div className="bg-dash-secondary-bg p-5 rounded-[12px]">
-      <header className="text-primary-text font-semibold text-base mb-5">
+      <header className="text-primary-text dark:text-secondary-text font-semibold text-base mb-5">
         Notifications &amp; Integrations
       </header>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-        <div className="flex items-center justify-between gap-4 p-4 bg-white rounded-[8px] border border-[#EAECF0]">
+        <div className="flex items-center justify-between gap-4 p-4 bg-transparent rounded-[8px] border border-[#EAECF0]">
           <div className="flex flex-col gap-0.5">
-            <span className="text-sm font-semibold text-primary-text">
+            <span className="text-sm font-semibold text-primary-text dark:text-secondary-text">
               Email Notifications
             </span>
-            <span className="text-xs text-secondary-text">
+            <span className="text-xs text-secondary-text dark:text-primary-text">
               Send email notifications to users
             </span>
           </div>
