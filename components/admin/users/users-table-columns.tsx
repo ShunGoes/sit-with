@@ -45,7 +45,7 @@ export const UsersTableColumns = (
     accessorKey: "fullName",
     header: "Full Name",
     cell: ({ row }) => (
-      <h6 className="text-xs font-medium whitespace-nowrap">
+      <h6 className="text-xs font-medium md:whitespace-normal whitespace-nowrap">
         {row.original.firstName} {row.original.lastName}
       </h6>
     ),
@@ -55,7 +55,7 @@ export const UsersTableColumns = (
     accessorKey: "email",
     header: "Email",
     cell: ({ row }) => (
-      <h6 className="text-xs text-secondary-text whitespace-nowrap">{row.original.email}</h6>
+      <h6 className="text-xs text-secondary-text md:whitespace-normal whitespace-nowrap">{row.original.email}</h6>
     ),
     size: 250,
   },
@@ -77,7 +77,7 @@ export const UsersTableColumns = (
       const formattedDate = dateStr
         ? formatAppDate(dateStr)
         : "-";
-      return <h6 className="text-xs whitespace-nowrap">{formattedDate}</h6>;
+      return <h6 className="text-xs md:whitespace-normal whitespace-nowrap">{formattedDate}</h6>;
     },
     size: 200,
   },

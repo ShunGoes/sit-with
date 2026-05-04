@@ -92,7 +92,7 @@ export default function ProgramOverview() {
         /> */}
 
         {/* table  */}
-        <div className="bg-dash-secondary-bg rounded-[16px]  pb-1">
+        <div className="bg-dash-secondary-bg rounded-[16px] pb-1 w-full overflow-hidden">
           <QueryStateHandler
             data={programData?.data}
             isLoading={isLoading}

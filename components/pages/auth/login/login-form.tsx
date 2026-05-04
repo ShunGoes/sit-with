@@ -119,15 +119,14 @@ export  function LoginForm() {
           {/* Logo */}
           <div className="flex flex-col gap-4 md:gap-2">
             <Link href={"/"} className="flex items-center gap-2 mb-3 justify-center lg:justify-start">
-              <Image
-                src="/images/logo.webp"
-                alt="sit with PD logo"
-                width={30}
-                height={30}
-              />
-              <span className="font-semibold text-[14px] text-[##1E1E1E]">
-                {settings?.platformName || "Sit With PD"}
-              </span>
+              <div className="w-[120px] h-[40px] relative ">
+                <Image
+                  src="/images/primary-logo.png"
+                  alt="Sit With PD Logo"
+                  fill
+                  className="object-contain"
+                />
+              </div>
             </Link>
 
             <div className="text-center lg:text-start">

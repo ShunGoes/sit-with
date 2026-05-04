@@ -83,7 +83,7 @@ export default function ConsultationOverview() {
         
 
         {/* table */}
-        <div className="bg-dash-secondary-bg rounded-[16px] pb-1">
+        <div className="bg-dash-secondary-bg rounded-[16px] pb-1 w-full overflow-hidden">
           <QueryStateHandler
             key={`${page}-${search}`}
             data={data?.data}

@@ -87,17 +87,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           className="flex items-center gap-2"
           onClick={() => setOpenMobile(false)}
         >
-          <div className="w-[31px] h-[31px] relative ">
+          <div className="w-[120px] h-[40px] relative ">
             <Image
-              src="/images/logo.webp"
+              src="/images/primary-logo.png"
               alt="Sit With PD Logo"
               fill
-              className="object-cover"
+              className="object-contain"
             />
           </div>
-          <h4 className="text-sm font-semibold text-regular-button tracking-tight">
-            {settings?.platformName || "Sit With PD"}
-          </h4>
         </Link>
       </SidebarHeader>
       <div className="h-[30px]" />

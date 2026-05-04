@@ -44,7 +44,7 @@ export default function ParticipantsOverview() {
         />
 
         {/* table  */}
-        <div className="bg-dash-secondary-bg rounded-[16px]  pb-1">
+        <div className="bg-dash-secondary-bg rounded-[16px] pb-1 w-full overflow-hidden">
           <ReuseableTable
             columns={ParticipantsColumn()}
             tableData={PARTICIPANTS_DATA}

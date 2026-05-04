@@ -77,17 +77,15 @@ export function Navbar() {
       <div className="container mx-auto px-4 md:px-8 h-20 flex items-center max-w-6xl justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-[31px] h-[31px] relative ">
+          <div className="w-[120px] h-[40px] relative ">
             <Image
-              src="/images/logo.webp"
+              src="/images/primary-logo.png"
               alt="Sit With PD Logo"
               fill
-              className="object-cover"
+              className="object-contain"
             />
           </div>
-          <h4 className="text-sm font-semibold text-[#A8D675] tracking-tight">
-            {settings?.platformName || "Sit With PD"}
-          </h4>
+
         </Link>
 
         {/* Desktop Links */}
@@ -223,17 +221,15 @@ export function Navbar() {
             {/* Close Button */}
             <div className="flex items-center justify-between mb-10">
               <Link href="/" className="flex items-center gap-2">
-                <div className="w-[31px] h-[31px] relative ">
+                <div className="w-[120px] h-[40px] relative ">
                   <Image
-                    src="/images/logo.webp"
+                    src="/images/primary-logo.png"
                     alt="Sit With PD Logo"
                     fill
-                    className="object-cover"
+                    className="object-contain"
                   />
                 </div>
-                <h4 className="text-sm font-semibold text-[#A8D675] tracking-tight">
-                  {settings?.platformName || "Sit With PD"}
-                </h4>
+
               </Link>
               <button
                 onClick={() => setIsOpen(false)}

@@ -47,21 +47,18 @@ export function Footer() {
       />
 
       <div className="container mx-auto w-11/12 max-w-7xl relative z-10">
-        <div className="grid grid-cols-1  lg:grid-cols-3 gap-12 lg:gap-8 mb-15 lg:mb-30">
+        <div className="grid grid-cols-1  lg:grid-cols-2 gap-12 lg:gap-8 mb-15 lg:mb-30">
           {/* Brand Info */}
           <div className="flex flex-col gap-4 ">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-[31px] h-[31px] relative ">
+              <div className="w-[120px] h-[40px] relative ">
                 <Image
-                  src="/images/logo.webp"
+                  src="/images/primary-logo.png"
                   alt="Sit With PD Logo"
                   fill
-                  className="object-cover"
+                  className="object-contain"
                 />
               </div>
-              <h4 className="text-sm font-semibold text-[#A8D675] tracking-tight">
-                {settings?.platformName || "Sit With PD"}
-              </h4>
             </Link>
             <p className="text-[#F8FFF5] text-sm leading-relaxed max-w-xs">
               Helping you pause, reflect, and grow.
@@ -180,32 +177,7 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Newsletter */}
-          <div className="flex flex-col gap-4">
-            <h3 className="text-[#6FB851] font-medium text-base  leading-[145%]">
-              Newsletter
-            </h3>
-            <p className="text-[#F8FFF5] text-sm leading-relaxed mb-2">
-              Subscribe for updates on new programs and community insights.
-            </p>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="flex flex-col gap-2 sm:flex-row sm:gap-1 max-w-[500px]">
-                <Input
-                  type="email"
-                  {...form.register("email")}
-                  placeholder="Email address"
-                  className="bg-white text-gray-900 border-none placeholder:text-gray-400 h-10 w-full sm:w-[70%] rounded-md"
-                />
-                <Button
-                  type="submit"
-                  variant={"regular"}
-                  className="  w-full sm:w-[30%] "
-                >
-                  Subscribe
-                </Button>
-              </div>
-            </form>
-          </div>
+
         </div>
 
         {/* Bottom Bar */}

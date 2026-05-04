@@ -35,6 +35,7 @@ The platform serves as a bridge between individuals seeking growth and expert fa
 ## 💻 Technology Stack
 
 - **Framework**: [Next.js 15+](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **UI Components**: [Shadcn UI](https://ui.shadcn.com/) & [Radix UI](https://www.radix-ui.com/)
 - **State Management**: [Zustand](https://zustand-demo.pmnd.rs/)

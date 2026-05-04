@@ -25,7 +25,7 @@ export function StatsCards() {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 w-full">
+    <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 w-full">
       {isLoading
         ? Array.from({ length: 5 }).map((_, i) => (
             <Card key={i} className="border-none rounded-[10px] bg-dash-secondary-bg">
