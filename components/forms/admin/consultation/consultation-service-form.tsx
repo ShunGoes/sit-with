@@ -34,12 +34,12 @@ export default function ConsultationServiceForm({
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7">
-      <div className="bg-dash-secondary-bg p-5 rounded-[12px]">
+      <div className="bg-transparent  rounded-[12px]">
         <header className="text-primary-text font-semibold text-base mb-6">
           Consultation Service Details
         </header>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <FormFieldComp
             name="title"
             control={form.control}
@@ -53,7 +53,7 @@ export default function ConsultationServiceForm({
             name="calBookingUrl"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid} className="">
-                <FieldLabel className="text-[#344054] text-sm mb-2">
+                <FieldLabel className=" dark:text-secondary-text text-primary-text text-sm mb-2">
                   Cal.com Event Type *
                 </FieldLabel>
                 <CalEventTypeSelect
@@ -74,7 +74,7 @@ export default function ConsultationServiceForm({
               <Field data-invalid={fieldState.invalid} className="mt-4">
                 <div className="flex flex-col">
                   <FieldLabel
-                    className="text-[#344054] text-[14px] mb-2"
+                    className="dark:text-secondary-text text-primary-text text-[14px] mb-2"
                     htmlFor="description"
                   >
                     Description *
@@ -83,7 +83,7 @@ export default function ConsultationServiceForm({
                     id="description"
                     {...field}
                     placeholder="Describe the service, what to expect, and any requirements..."
-                    className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] py-4 min-h-30 outline-none px-3 resize-none"
+                    className="border-[0.75px] border-[#EAECF0] bg-white dark:bg-transparent rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#98A2B3] py-4 min-h-30 outline-none px-3 resize-none"
                   />
                 </div>
                 {fieldState.invalid && (
@@ -93,7 +93,7 @@ export default function ConsultationServiceForm({
             )}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormFieldComp
               name="price"
               control={form.control}

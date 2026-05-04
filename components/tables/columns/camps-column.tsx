@@ -84,7 +84,7 @@ const CampsColumn = (
     accessorKey: "title",
     header: "Camp Name",
     cell: ({ row }) => (
-      <div className="flex gap-3 items-center">
+      <div className="flex gap-3 items-center whitespace-nowrap">
         <h6 className="text-xs">{row.original.title}</h6>
       </div>
     ),
@@ -94,7 +94,7 @@ const CampsColumn = (
     accessorKey: "location",
     header: "Location",
     cell: ({ row }) => (
-      <h6 className="text-xs text-secondary-text">
+      <h6 className="text-xs text-secondary-text whitespace-nowrap">
         {row.original.location}
       </h6>
     ),
@@ -104,7 +104,7 @@ const CampsColumn = (
     accessorKey: "price",
     header: "Price",
     cell: ({ row }) => (
-      <h6 className="text-xs">
+      <h6 className="text-xs whitespace-nowrap">
         {formatCurrency(row.original.price, currency)}
       </h6>
     ),
@@ -117,8 +117,9 @@ const CampsColumn = (
       const formattedDate = dateStr 
         ? formatAppDate(dateStr)
         : "-";
-      return <h6 className="text-xs">{formattedDate}</h6>;
+      return <h6 className="text-xs whitespace-nowrap">{formattedDate}</h6>;
     },
+    size: 300
   },
   {
     accessorKey: "status",

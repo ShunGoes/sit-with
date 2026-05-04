@@ -59,13 +59,13 @@ const ActionCell = ({ row }: { row: any }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={handleEdit} className="py-3 px-4 gap-2">
-          <FilePenLine size={15} color="#344054" /> Edit
+          <FilePenLine size={15} className="text-primary-text"/> Edit
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleToggleStatus} className="py-3 px-4 gap-2">
           {service.isActive ? (
-            <ToggleLeft size={15} color="#344054" />
+            <ToggleLeft size={15}className="text-primary-text" />
           ) : (
-            <ToggleRight size={15} color="#344054" />
+            <ToggleRight size={15} className="text-primary-text" />
           )}
           {service.isActive ? "Deactivate" : "Activate"}
         </DropdownMenuItem>
@@ -73,7 +73,7 @@ const ActionCell = ({ row }: { row: any }) => {
           onClick={() => router.push(`/admin/consultation-services/${service.id}`)}
           className="py-3 px-4 gap-2"
         >
-          <Eye size={15} color="#344054" /> View
+          <Eye size={15} className="text-primary-text" /> View
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -85,9 +85,9 @@ const ConsultationServicesColumn = (): ColumnDef<ConsultationService>[] => [
     accessorKey: "title",
     header: "Service Name",
     cell: ({ row }) => (
-      <p className="text-xs text-primary-text font-medium">{row.original.title}</p>
+      <p className="text-xs text-primary-text font-medium whitespace-nowrap">{row.original.title}</p>
     ),
-    size: 250,
+    size: 300,
   },
   {
     accessorKey: "description",

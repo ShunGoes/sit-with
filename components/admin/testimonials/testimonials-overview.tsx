@@ -14,50 +14,9 @@ import { useSearchParams } from "next/navigation";
 import { useGetCamps } from "@/lib/api/hooks/camps/camps.hooks";
 import { useMemo } from "react";
 
-const LIMIT = 3;
+const LIMIT = 10;
 
-// const testimonies = [
-//   {
-//     "name": "Marcus Owens",
-//     "role": "Weekend Hiker",
-//     "testimony": "This app completely changed how I plan my camping trips. Finding campsites and checking trail conditions has never been easier!"
-//   },
-//   {
-//     "name": "Priya Nair",
-//     "role": "Solo Backpacker",
-//     "testimony": "As someone who travels alone, the safety check-in feature gives me and my family so much peace of mind. Absolute game changer."
-//   },
-//   {
-//     "name": "James Kowalski",
-//     "role": "Family Camper",
-//     "testimony": "Planning a trip for five kids used to be a nightmare. Now I can filter sites by amenities and book everything in one place. Love it!"
-//   },
-//   {
-//     "name": "Aisha Bello",
-//     "role": "Nature Photographer",
-//     "testimony": "The sunrise and weather forecasting tools help me plan the perfect shoots. I've captured some of my best work thanks to this app."
-//   },
-//   {
-//     "name": "Derek Huang",
-//     "role": "Ultralight Camper",
-//     "testimony": "The gear checklist feature is incredibly detailed. I've cut my pack weight by 30% just by following the app's recommendations."
-//   },
-//   {
-//     "name": "Sofia Mendes",
-//     "role": "First-Time Camper",
-//     "testimony": "I was terrified to camp for the first time, but the beginner guides in this app walked me through everything. My first trip was amazing!"
-//   },
-//   {
-//     "name": "Tom Braswell",
-//     "role": "Overlander",
-//     "testimony": "Offline maps and route planning for remote 4x4 tracks — this is the only app I trust when I'm miles from cell service."
-//   },
-//   {
-//     "name": "Lena Fischer",
-//     "role": "Trail Runner",
-//     "testimony": "Quick, accurate elevation profiles and real-time trail condition updates. It's my go-to before every long run in the backcountry."
-//   }
-// ]
+
 
 export default function TestimonialsOverview() {
   const searchParams = useSearchParams();
@@ -113,15 +72,13 @@ export default function TestimonialsOverview() {
       <div className="space-y-4">
         <div className="flex items-center w-full justify-between gap-4">
           <div className="w-auto flex items-center gap-3">
-            {
-              testimonialsList.length > 0 && (
+           
                 <FilterSelectComp
                   options={campOptions}
                   placeholder="All Camps"
                   paramKey="campId"
                 />
-              )
-            }
+        
           </div>
 
           <div className="hidden lg:block">
@@ -154,7 +111,7 @@ export default function TestimonialsOverview() {
       </div>
 
       {/* Mobile Floating Action Button */}
-      <div className="md:hidden fixed bottom-10 right-10 z-50 pointer-events-auto">
+      <div className="md:hidden fixed bottom-10 right-10 z-40 pointer-events-auto">
         <button
           onClick={handleAddTestimonial}
           className="w-14 h-14 bg-regular-button rounded-full flex items-center justify-center text-white shadow-lg hover:bg-brand-green transition-all duration-300"

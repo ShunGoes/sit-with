@@ -9,6 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -42,11 +43,16 @@ const data = {
 export function AppUserSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
   const settings = usePlatformSettingsStore((state) => state.settings);
+  const { setOpenMobile } = useSidebar();
 
   return (
     <Sidebar {...props}>
       <SidebarHeader className="px-3 mt-5">
-        <Link href="/dashboard" className="flex items-center gap-2">
+        <Link 
+          href="/dashboard" 
+          className="flex items-center gap-2"
+          onClick={() => setOpenMobile(false)}
+        >
           <div className="w-[31px] h-[31px] relative ">
             <Image
               src="/images/logo.webp"
@@ -81,6 +87,7 @@ export function AppUserSidebar({ ...props }: React.ComponentProps<typeof Sidebar
                   <Link
                     className="flex h-full items-center gap-2"
                     href={item.url}
+                    onClick={() => setOpenMobile(false)}
                   >
                     {" "}
                     {item.icon} <span>{item.title} </span>
@@ -95,6 +102,7 @@ export function AppUserSidebar({ ...props }: React.ComponentProps<typeof Sidebar
             <SidebarMenuButton
               tooltip="Logout"
               onClick={async () => {
+                setOpenMobile(false);
                 try {
                   await logout();
                 } catch (e) {

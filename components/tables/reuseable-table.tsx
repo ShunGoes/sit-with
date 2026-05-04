@@ -32,6 +32,7 @@ const ReuseableTable = <T,>({ tableData, columns }: TableDateProps<T>) => {
                 <th
                   style={{
                     width: header.getSize(),
+                    minWidth: header.getSize(),
                   }}
                   key={header.id}
                   className={`text-footer-bg dark:text-[#FFFFFF] border-r border-[#EAECF0] dark:border-gray-700 last:border-r-0 font-normal text-left text-xs   `}
@@ -53,6 +54,7 @@ const ReuseableTable = <T,>({ tableData, columns }: TableDateProps<T>) => {
                 <td
                   style={{
                     width: cell.column.getSize(),
+                    minWidth: cell.column.getSize(),
                   }}
                   className={`text-primary-text border-t border-[#EAECF0] dark:border-gray-700 dark:text-[#A1A1A1]  py-2 font-normal text-xs `}
                   key={cell.id}

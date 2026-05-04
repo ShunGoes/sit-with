@@ -18,14 +18,17 @@ import CardSkeletons from "@/components/skeletons/card-skeletons";
 
 export default function CampsPage() {
   return (
-    <div className="flex flex-col items-center w-full overflow-x-hidden">
+    <div className="flex flex-col items-center  w-full overflow-x-hidden">
       <CampHero />
       <div className="w-11/12 mx-auto">
         <RetreatBenefits />
       </div>
       <GlimpseGallery />
-      <Suspense fallback={<CardSkeletons />}>
+      <Suspense fallback={<CardSkeletons />} >
+      <div className="w-11/12 mx-auto">
         <CampServices />
+
+      </div>
       </Suspense>
       <div className="w-11/12 mx-auto">
 

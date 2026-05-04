@@ -78,11 +78,11 @@ export default function AdminBlogEditor() {
       <div className="flex items-center justify-between border-b border-border pb-4">
         <div className="flex justify-between w-10/12 sm:w-11/12">
           <div className="">
-            <h1 className="text-2xl text-primary-text font-bold">
+            <h1 className="text-2xl text-primary-text dark:text-secondary-text font-bold">
               {mode === "write" ? "New Post" : "Preview Post"}
             </h1>
 
-            <p className="text-sm text-secondary-text mt-1">
+            <p className="text-sm text-primary-text mt-1">
               Write and publish a new blog post
             </p>
           </div>

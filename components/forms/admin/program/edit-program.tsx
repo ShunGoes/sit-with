@@ -106,7 +106,7 @@ console.log(program)
         description: program.data.description || "",
         price: formatAmount(program.data.price?.toString()) || "",
         programType: program.data?.category,
-        duration: program.data.durationWeeks?.toString() || 0,
+        duration: program.data.durationWeeks?.toString() || "0",
         hoursPerWeek: (program.data as any).hoursPerWeek?.toString() || "",
         thumbnail: (program.data as any).thumbnail || "",
         date: toIsoDateString(new Date(program.data.startDate)) || "",

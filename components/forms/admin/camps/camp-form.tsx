@@ -22,11 +22,11 @@ export default function CampForm({
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7">
       {/* basic information */}
-      <div className="bg-dash-secondary-bg  rounded-[12px]">
+      <div className="bg-transparent  rounded-[12px]">
         <header className="text-primary-text font-semibold text-base mb-4">
           Camp Details
         </header>
-        <div className="space-y-4">
+        <div className="space-y-6">
           <FormFieldComp
             name="title"
             control={form.control}
@@ -34,7 +34,7 @@ export default function CampForm({
             placeholder="E.g. Summer Code Camp"
             className="bg-white"
           />
-          <div className="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:gap-y-10 md:grid-cols-2">
             <FormFieldComp
               name="location"
               control={form.control}
@@ -47,7 +47,7 @@ export default function CampForm({
               name="price"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid} className="">
-                  <FieldLabel className="text-[#344054] text-sm mb-2">
+                  <FieldLabel className="text-[#344054] dark:text-secondary-text text-sm mb-2">
                     Price ({settings?.currency || "NGN"}) *
                   </FieldLabel>
                   <Input
@@ -60,7 +60,7 @@ export default function CampForm({
                       field.onChange(formatted);
                     }}
                     placeholder="0.00"
-                    className="pr-10 border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
+                    className="pr-10 border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -87,6 +87,7 @@ export default function CampForm({
               name="endDate"
               label="End Date *"
               placeholder="Select end date"
+              disablePastDates={true}
             />
           </div>
 
@@ -97,7 +98,7 @@ export default function CampForm({
               <Field data-invalid={fieldState.invalid} className="mt-4">
                 <div className="flex flex-col">
                   <FieldLabel
-                    className="text-[#344054] text-[14px] mb-2"
+                    className="text-[#344054] dark:text-secondary-text  text-[14px] mb-2"
                     htmlFor="description"
                   >
                     Description *
@@ -106,7 +107,7 @@ export default function CampForm({
                     id="description"
                     {...field}
                     placeholder="Describe the camp, activities, and what to expect..."
-                    className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] py-4 min-h-30 outline-none px-3 resize-none"
+                    className="border-[0.75px] border-[#EAECF0] bg-transparent rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#98A2B3] py-4 min-h-30 outline-none px-3 resize-none"
                   />
                 </div>
                 {fieldState.invalid && (
@@ -125,7 +126,7 @@ export default function CampForm({
           name="thumbnail"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid} className="mt-4">
-              <FieldLabel className="text-primary-text font-semibold text-base ">
+              <FieldLabel className="text-primary-text dark:text-secondary-text font-semibold text-base ">
                 Thumbnail
               </FieldLabel>
               <ImageUpload value={field.value} onChange={field.onChange} />
