@@ -43,9 +43,9 @@ function DashboardContent() {
           <div className="h-11 hidden xl:block"></div>{" "}
           {/* Spacer to align with the filter dropdown */}
            <div className="mb-7">
-          <h2 className="text-xl font-semibold text-primary-text">Racent Payments</h2>
+          <h2 className="text-xl font-semibold text-primary-text">Recent Payments</h2>
           <p className="text-sm text-secondary-text">
-    Usrs payment across the app
+    Users payment across the app
           </p>
 
           </div>

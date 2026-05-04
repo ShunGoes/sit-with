@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sit With PD - Holistic Wellness & Personal Development Platform
 
-## Getting Started
+Sit With PD is a comprehensive platform designed to facilitate holistic wellness, personal growth, and professional development through curated programs, immersive camps, and expert consultations.
 
-First, run the development server:
+## 🌟 Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The platform serves as a bridge between individuals seeking growth and expert facilitators providing guidance. It offers a structured environment for participants to engage in various development tracks while providing administrators with robust tools to manage content, bookings, and platform activity.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 📅 Consultation Management
+- **Expert Booking**: Seamlessly book one-on-one sessions with experts.
+- **Cal.com Integration**: Real-time scheduling and availability management via Cal.com.
+- **Service Management**: Admin-defined consultation services with custom durations and pricing.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🏕️ Immersive Camps
+- **Retreat Planning**: Discover and register for upcoming holistic camps and retreats.
+- **Location-Based**: Filter and find camps based on location and specific themes.
+- **Tiered Registration**: Flexible registration options for different participant needs.
 
-## Learn More
+### 🎓 Educational Programs
+- **Structured Learning**: Multi-week programs covering Leadership, Professional, and Student tracks.
+- **Progress Tracking**: User-friendly dashboard to monitor learning journey and milestones.
+- **Rich Media**: Integrated video players (Vimeo/YouTube) for interactive learning.
 
-To learn more about Next.js, take a look at the following resources:
+### ✍️ Insightful Blog
+- **Wellness Stories**: A space for sharing insights, reflection, and community stories.
+- **Rich Text Editor**: Powerful Tiptap-based editor for creating engaging content.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🛠️ Robust Administration
+- **Global Settings**: Manage platform features, currency, timezones, and maintenance mode.
+- **User Management**: Track and manage all registered users and their activity.
+- **Testimonial System**: Curate and display user feedback to build trust.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 💻 Technology Stack
 
-## Deploy on Vercel
+- **Framework**: [Next.js 15+](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components**: [Shadcn UI](https://ui.shadcn.com/) & [Radix UI](https://www.radix-ui.com/)
+- **State Management**: [Zustand](https://zustand-demo.pmnd.rs/)
+- **Data Fetching**: [TanStack Query v5](https://tanstack.com/query/latest)
+- **Forms & Validation**: [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Development
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Getting Started
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables in `.env.local`:
+   ```env
+   NEXT_PUBLIC_API_URL=your_api_url
+   ```
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+### Project Structure
+
+- `/app`: Next.js pages and layouts (organized by route groups: `(admin)`, `(auth)`, `(public)`, `(user)`)
+- `/components`: Reusable UI components, forms, and layout elements
+- `/hooks`: Custom React hooks for data fetching and platform logic
+- `/lib`: Utility functions and API service definitions
+- `/schemas`: Zod validation schemas
+- `/store`: Zustand state stores
+
+## 📄 License
+
+This project is private and proprietary.

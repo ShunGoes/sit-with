@@ -11,22 +11,9 @@ export const metadata: Metadata = {
     "Become a member of Sit-With-PD. Gain access to exclusive programs, community support, and resources dedicated to presence-based healing and growth.",
 };
 
-export default function MembershipPage() {
-  return (
-    <div className="flex flex-col items-center">
-      <MembershipHero/>
-      <div className="w-11/12 mx-auto ">
+import { notFound } from "next/navigation";
 
-      <WhyJoin />
-      <MembershipPricing />
-      <MembershipFaq />
-      </div>
-      <CtaBlock
-        title="Ready to Begin Your  Membership Journey?"
-        subtext="Choose your plan today and join thousands of members committed to presence-based healing and personal transformation."
-        firstLink={{ text: "Join Now" }}
-        secondLink={{ text: "Book consultation", href: "/consultation" }}
-      />
-    </div>
-  );
+export default function MembershipPage() {
+  notFound();
+  return null;
 }

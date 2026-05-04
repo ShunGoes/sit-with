@@ -12,7 +12,6 @@ export function StatsCards() {
 
   const statsData = data?.data;
 
-  console.log(statsData)
 
   const stats = [
     { title: "Total Users", value: statsData?.totalUsers ?? 0 },
