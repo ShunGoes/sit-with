@@ -43,7 +43,7 @@ export default function SeacrchAndFilter({
   }, [search]);
 
   return (
-    <div className="flex items-center  gap-10 justify-between">
+    <div className="flex items-center gap-10 justify-between w-full max-w-full overflow-hidden">
       <div className="relative max-w-[350px] w-full  ">
         <Input
           type="text"

@@ -113,7 +113,7 @@ export default function ProtectedLayout({
             {/* </div> */}
           </header>
           <div
-            className={`flex flex-1 flex-col bg-[#F7F7F7]  dark:bg-[#0A0A0A] gap-4 p-4 md:mt-0 lg:p-10  ${poppins.className}`}
+            className={`flex flex-1 flex-col bg-[#F7F7F7] dark:bg-[#0A0A0A] gap-4 p-4 md:mt-0 lg:p-10 min-w-0 overflow-hidden ${poppins.className}`}
           >
             {children}
           </div>

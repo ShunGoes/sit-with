@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/compress-images.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "next lint"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
@@ -40,6 +41,7 @@
     "react-dropzone": "^15.0.0",
     "react-hook-form": "^7.71.2",
     "shadcn": "^4.0.7",
+    "sharp": "^0.34.5",
     "sonner": "^2.0.7",
     "swiper": "^12.1.2",
     "tailwind-merge": "^3.5.0",

@@ -105,7 +105,7 @@ export default function CampsOverview() {
         </div>
 
         {/* table */}
-        <div className="bg-dash-secondary-bg rounded-[16px] pb-1">
+        <div className="bg-dash-secondary-bg rounded-[16px] pb-1 w-full overflow-hidden">
           <QueryStateHandler
             data={campsData?.data}
             isLoading={isLoading}

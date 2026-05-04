@@ -29,8 +29,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sit-with-pd.vercel.
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    template: "%s | Sit-With-PD",
-    default: "Sit-With-PD — Presence Changes Everything",
+    template: "%s | Sit With PD",
+    default: "Sit With PD — Presence Changes Everything",
   },
   description:
     "Join a global therapeutic network dedicated to presence-based healing, emotional transformation, and personal development. Connect with guided programs and expert consultations.",
@@ -40,12 +40,12 @@ export const metadata: Metadata = {
     "personal growth programs",
     "online therapeutic consultation",
     "emotional transformation",
-    "Sit-With-PD therapeutic network",
+    "Sit With PD therapeutic network",
     "presence-based healing",
   ],
-  authors: [{ name: "Sit-With-PD Team" }],
-  creator: "Sit-With-PD",
-  publisher: "Sit-With-PD",
+  authors: [{ name: "Sit With PD Team" }],
+  creator: "Sit With PD",
+  publisher: "Sit With PD",
   robots: {
     index: true,
     follow: true,
@@ -54,18 +54,22 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    siteName: "Sit-With-PD",
-    title: "Sit-With-PD — Presence Changes Everything",
+    siteName: "Sit With PD",
+    title: "Sit With PD — Presence Changes Everything",
     description:
       "A global therapeutic network for presence-based healing and emotional transformation.",
     images: [
       {
-        url: "/images/logo.png",
+        url: "/images/primary-logo.png",
         width: 1200,
         height: 630,
         alt: "Sit-With-PD Logo",
       },
     ],
+  },
+  icons: {
+    icon: "/images/primary-logo.png",
+    apple: "/images/primary-logo.png",
   },
 };
 

@@ -7,9 +7,9 @@ import { CtaBanner } from "@/components/pages/homepage/cta-banner";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sit-With-PD — Presence Changes Everything",
+  title: "Sit With PD — Presence Changes Everything",
   description:
-    "Sit-With-PD is a global therapeutic network dedicated to presence-based healing, emotional transformation, and personal development. Start your journey today.",
+    "Sit With PD is a global therapeutic network dedicated to presence-based healing, emotional transformation, and personal development. Start your journey today.",
 };
 
 export default function Home() {
@@ -21,9 +21,9 @@ export default function Home() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            "name": "Sit-With-PD",
+            "name": "Sit With PD",
             "url": "https://sit-with-pd.vercel.app",
-            "logo": "https://sit-with-pd.vercel.app/images/logo.png",
+            "logo": "https://sit-with-pd.vercel.app/images/primary-logo.png",
             "description": "A global therapeutic network for presence-based healing and emotional transformation.",
             "sameAs": [
               "https://www.youtube.com/@sitwithpd",

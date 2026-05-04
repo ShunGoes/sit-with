@@ -134,15 +134,14 @@ export default function SignupForm() {
         {/* Logo */}
         <div className="flex flex-col md:gap-2">
           <Link href={"/"} className="flex items-center gap-2 mb-8 justify-center md:justify-start">
-            <Image
-              src="/images/logo.webp"
-              alt="Sit With PD Logo"
-              width={30}
-              height={30}
-            />
-            <span className="font-semibold text-[14px] text-[##1E1E1E]">
-              {settings?.platformName || "Sit With PD"}
-            </span>
+            <div className="w-[120px] h-[40px] relative ">
+              <Image
+                src="/images/primary-logo.png"
+                alt="Sit With PD Logo"
+                fill
+                className="object-contain"
+              />
+            </div>
           </Link>
 
           <div>
