@@ -29,8 +29,8 @@ export default function ProgramCards({ purchase }: { purchase: Purchase }) {
     programStatusBadge = "secondary";
   }
 
-  const cardLabel = "text-[#667085] text-xs ";
-  const cardValue = "text-primary-text text-sm font-semibold";
+  const cardLabel = "text-[#667085] dark:text-primary-text text-xs ";
+  const cardValue = "text-primary-text text-sm font-semibold break-words";
   
   const completedWeeks = purchase.progress.completedWeeks;
   const totalWeeks = purchase.progress.totalWeeks;
@@ -40,8 +40,8 @@ export default function ProgramCards({ purchase }: { purchase: Purchase }) {
   return (
     <div>
       <div className="bg-dash-secondary-bg rounded-[16px] dark:border-none border-2 border-[#E8E9E7] p-6">
-        <div className="flex items-center gap-3 mb-1">
-          <h2 className="xl:text-2xl text-xl font-semibold text-primary-text">
+        <div className="flex flex-col-reverse sm:flex-row items-start sm:items-center gap-3 mb-1">
+          <h2 className="xl:text-2xl text-xl font-semibold dark:text-secondary-text text-primary-text">
             {purchase.program.title}
           </h2>
           <Badge variant={programStatusBadge}>
@@ -55,8 +55,8 @@ export default function ProgramCards({ purchase }: { purchase: Purchase }) {
 
         {/* Info Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2  gap-4 mb-10">
-          <div className="bg-[#F9FAFB] dark:bg-transparent rounded-2xl p-5 flex items-center gap-4">
-            <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
+          <div className="bg-[#F9FAFB] dark:border-primary-text dark:border dark:bg-transparent rounded-2xl p-5 flex items-center gap-4">
+            <div className="w-8 h-8 rounded-xl shrink-0 bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
               <Calendar size={18} />
             </div>
             <div>
@@ -67,8 +67,8 @@ export default function ProgramCards({ purchase }: { purchase: Purchase }) {
             </div>
           </div>
 
-          <div className="dark:bg-transparent bg-[#F9FAFB] rounded-2xl p-5 flex items-center gap-4">
-            <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
+          <div className="dark:bg-transparent dark:border-primary-text dark:border bg-[#F9FAFB] rounded-2xl p-5 flex items-center gap-4">
+            <div className="w-8 h-8 rounded-xl shrink-0 bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
               <Clock size={18} />
             </div>
             <div>
@@ -80,8 +80,8 @@ export default function ProgramCards({ purchase }: { purchase: Purchase }) {
             </div>
           </div>
 
-          <div className="dark:bg-transparent bg-[#F9FAFB] rounded-2xl p-5 flex items-center gap-4">
-            <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
+          <div className="dark:bg-transparent dark:border-primary-text dark:border bg-[#F9FAFB] rounded-2xl p-5 flex items-center gap-4">
+            <div className="w-8 h-8 rounded-xl shrink-0 bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
               <Monitor size={18} />
             </div>
             <div>
@@ -90,19 +90,19 @@ export default function ProgramCards({ purchase }: { purchase: Purchase }) {
             </div>
           </div>
 
-          <div className="dark:bg-transparent bg-[#F9FAFB] rounded-2xl p-5 flex items-center gap-4">
-            <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
+          <div className="dark:bg-transparent dark:border-primary-text dark:border bg-[#F9FAFB] rounded-2xl p-5 flex items-center gap-4">
+            <div className="w-8 h-8 rounded-xl shrink-0 bg-white flex items-center justify-center text-[#445b1c] shadow-sm">
               <User size={18} />
             </div>
             <div>
               <p className={cardLabel}>Facilitator</p>
-              <p className={cardValue}>{purchase.program.facilitatorName}</p>
+              <p className={cardValue}>{purchase.program.facilitatorName} </p>
             </div>
           </div>
         </div>
 
         {/* Progress Section */}
-        <div className="bg-[#F9FAFB] dark:bg-transparent border border-[#EAECF0] dark:border-[#333] rounded-2xl p-6 mb-8">
+        <div className="bg-[#F9FAFB] dark:border-primary-text dark:border dark:bg-transparent border border-[#EAECF0] dark:border-[#333] rounded-2xl p-6 mb-8">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-bold text-primary-text">Your Progress</h3>
             <span className="text-lg font-bold text-regular-button">{progressPercentage}%</span>
