@@ -71,7 +71,7 @@ export function Navbar() {
   return (
     <nav
       className={`fixed top-0 backdrop-blur-sm z-50 w-full transition-colors duration-300 ${
-        isScrolled ? "bg-black/80" : "bg-black/20"
+        isScrolled ? "bg-black/80" : "bg-black/40"
       }`}
     >
       <div className="container mx-auto px-4 md:px-8 h-20 flex items-center max-w-6xl justify-between">
@@ -139,7 +139,7 @@ export function Navbar() {
                 className="text-regular-button hover:text-brand-green transition-colors flex items-center gap-2 p-2 rounded-full hover:bg-white/10"
                 title="Dashboard"
               >
-                <LayoutDashboard size={20} />
+                <LayoutDashboard size={20} color="white" />
               </Link>
               <Button
                 variant="danger"

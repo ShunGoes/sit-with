@@ -20,7 +20,7 @@ export default function PaymentsPage() {
     page,
     limit,
   });
-
+console.log(paymentsData?.data)
   return (
     <div className="space-y-15">
       <div className="flex justify-between items-center ">

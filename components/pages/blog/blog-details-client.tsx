@@ -97,13 +97,15 @@ function BlogDetailsWrapper({ slug }: { slug: string }) {
                 You don&apos;t have to process everything alone, support is here
                 when you need it
               </p>
-              <Button
-                variant="regular"
-                size={"sm"}
-                className=" px-5=3 py-2 h-auto  "
-              >
-                Book my consultation <ArrowRight className="w-4 h-4" />
-              </Button>
+              <Link href="/consultation">
+                <Button
+                  variant="regular"
+                  size={"sm"}
+                  className=" px-5=3 py-2 h-auto  "
+                >
+                  Book my consultation <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
             </div>
 
             {/* Follow Us */}

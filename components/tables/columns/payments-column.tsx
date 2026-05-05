@@ -23,17 +23,26 @@ const statusVariantAssigner = (status: string) => {
 
 export const PaymentsColumn = (currency: string = "NGN"): ColumnDef<Payment>[] => [
   {
-    accessorKey: "reference",
-    header: "Reference",
+    accessorKey: "user",
+    header: "Customer",
     cell: ({ row }) => (
-      <h6 className="text-xs font-medium text-primary-text">{row.original.reference}</h6>
+      <div>
+        <h6 className="text-xs font-medium text-primary-text">{`${row.original?.user?.firstName} ${row.original?.user?.lastName}`}</h6>
+        <p 
+          className="text-[10px] text-secondary-text truncate max-w-[120px] sm:max-w-[180px]" 
+          title={row.original?.user?.email}
+        >
+          {row.original?.user?.email}
+        </p>
+      </div>
     ),
+
   },
   {
-    accessorKey: "email",
-    header: "Customer Email",
+    accessorKey: "type",
+    header: "Service Type",
     cell: ({ row }) => (
-      <h6 className="text-xs text-secondary-text">{row.original.email}</h6>
+      <h6 className="text-xs text-secondary-text">{row.original?.type}</h6>
     ),
   },
   {
@@ -41,25 +50,23 @@ export const PaymentsColumn = (currency: string = "NGN"): ColumnDef<Payment>[] =
     header: "Amount",
     cell: ({ row }) => (
       <h6 className="text-xs font-semibold">
-        {formatCurrency(row.original.amount, row.original.currency || currency)}
+        {formatCurrency(row.original?.amount, row.original?.currency)}
       </h6>
     ),
   },
   {
-    accessorKey: "paymentMethod",
-    header: "Method",
+    accessorKey: "paystackRef",
+    header: "Reference",
     cell: ({ row }) => (
-      <Badge variant="outline" className="capitalize">
-        {row.original.paymentMethod || "N/A"}
-      </Badge>
+      <h6 className="text-xs font-medium text-secondary-text">{row.original?.paystackRef || "N/A"}</h6>
     ),
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
-      <Badge variant={statusVariantAssigner(row.original.status) as any}>
-        {row.original.status}
+      <Badge variant={statusVariantAssigner(row.original?.status) as any}>
+        {row.original?.status}
       </Badge>
     ),
   },
@@ -68,8 +75,9 @@ export const PaymentsColumn = (currency: string = "NGN"): ColumnDef<Payment>[] =
     header: "Date",
     cell: ({ row }) => (
       <h6 className="text-xs text-secondary-text">
-        {formatAppDate(row.original.createdAt)}
+        {formatAppDate(row.original?.createdAt)}
       </h6>
     ),
+  
   },
 ];

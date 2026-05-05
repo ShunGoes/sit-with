@@ -106,12 +106,6 @@ function CardByIdOverview({ id }: { id: string }) {
                 <p className={valueText}>{camp?.location}</p>
               </div>
               <div>
-                <h3 className={labelText}>Price</h3>
-                <p className={valueText}>
-                  {formatCurrency(camp?.price || 0)}
-                </p>
-              </div>
-              <div>
                 <h3 className={labelText}>Capacity</h3>
                 <p className={valueText}>{camp?.capacity} Participants max</p>
               </div>
@@ -176,8 +170,8 @@ function CardByIdOverview({ id }: { id: string }) {
 
         {/* Camp Tiers Section */}
         {camp?.tiers && camp.tiers.length > 0 && (
-          <div className="space-y-4">
-            <h2 className="text-xl text-primary-text font-bold">Camp Tiers</h2>
+          <div className="space-y-6">
+            <h2 className="text-xl text-primary-text font-bold mb-6">Camp Tiers</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-120 mx-auto lg:max-w-7xl gap-4  px-6 rounded-[16px]">
               {camp.tiers.map((plan: CampTier) => (
                 <div

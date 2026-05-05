@@ -16,7 +16,7 @@ export default function AddCampModal() {
       title: "",
       description: "",
       location: "",
-      price: "",
+      // price: "",
       capacity: "1",
       startDate: "",
       endDate: "",
@@ -35,9 +35,9 @@ export default function AddCampModal() {
     formData.append("description", data.description);
     formData.append("location", data.location);
 
-    const priceStr = data.price.toString();
-    const cleanPrice = priceStr.replace(/,/g, "");
-    formData.append("price", cleanPrice);
+    // const priceStr = data.price.toString();
+    // const cleanPrice = priceStr.replace(/,/g, "");
+    // formData.append("price", cleanPrice);
 
     formData.append("capacity", data.capacity);
     formData.append("startDate", data.startDate);

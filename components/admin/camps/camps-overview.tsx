@@ -72,7 +72,6 @@ export default function CampsOverview() {
   }, [isPending, openModal]);
 
 
-
   return (
     <div className="space-y-15">
       <div className="flex justify-between items-center ">

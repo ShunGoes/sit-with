@@ -101,11 +101,11 @@ const CampsColumn = (
     size: 150,
   },
   {
-    accessorKey: "price",
-    header: "Price",
+    accessorKey: "capacity",
+    header: "Capacity",
     cell: ({ row }) => (
       <h6 className="text-xs">
-        {formatCurrency(row.original.price, currency)}
+        {row.original.capacity}
       </h6>
     ),
   },
