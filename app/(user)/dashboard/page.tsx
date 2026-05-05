@@ -28,7 +28,11 @@ export default function UserDashboardPage() {
 
   // Enrollment congratulations state
   const [showEnrollModal, setShowEnrollModal] = useState(false);
-  const [enrolledProgramTitle, setEnrolledProgramTitle] = useState("your programme");
+  const [enrolledProgramTitle, setEnrolledProgramTitle] =
+    useState("your programme");
+  const [showWelcomeBanner, setShowWelcomeBanner] = useState<string | null>(
+    null,
+  );
 
   useEffect(() => {
     const raw = localStorage.getItem("pending_enrollment");
@@ -36,16 +40,20 @@ export default function UserDashboardPage() {
       try {
         const { programTitle } = JSON.parse(raw);
         setEnrolledProgramTitle(programTitle ?? "your programme");
+        setShowWelcomeBanner(programTitle ?? "your programme");
       } catch {
         // Ignore malformed JSON
       }
       setShowEnrollModal(true);
     }
+
+    return () => {
+      localStorage.removeItem("pending_enrollment");
+    };
   }, []);
 
   const handleCloseEnrollModal = () => {
     setShowEnrollModal(false);
-    localStorage.removeItem("pending_enrollment");
   };
 
   const fullname = `${user?.firstName ?? ""} ${user?.lastName ?? ""}`;
@@ -135,27 +143,31 @@ export default function UserDashboardPage() {
       />
 
       <div className="flex flex-col gap-7 min-w-0">
-        
         {/* Welcome Banner — hidden while congrats modal is showing to avoid double-banner */}
-        {!showEnrollModal && (
-          <div className="relative overflow-hidden bg-[#527E4D] rounded-[16px] p-8 text-white  flex items-center ">
-            <div className="relative z-10 flex items-center gap-6">
-              <div className="w-10 h-10 rounded-full bg-[#FFFFFF33] flex items-center justify-center  backdrop-blur-sm">
+        {showWelcomeBanner && !showEnrollModal ? (
+          <div className="relative overflow-hidden bg-[#527E4D] rounded-[16px] lg:p-8 p-4 sm:p-6 text-white  flex items-center ">
+            <div className="relative z-10 flex items-center gap-4 lg:gap-6">
+              <div className="w-10 h-10 rounded-full bg-[#FFFFFF33] shrink-0 flex items-center justify-center  backdrop-blur-sm">
                 <Check className="text-white" size={18} />
               </div>
               <div>
-                <h1 className="xl:text-[1.55rem] text-lg font-semibold text-white">
-                  Welcome, {user?.firstName ?? ""} {user?.lastName ?? ""}! 🎉
+                <h1 className="xl:text-[1.55rem] text-lg font-semibold text-white dark:text-secondary-text">
+                  Welcome, {user?.firstName ?? ""}! 🎉
                 </h1>
                 <p className="text-[#FFFFFFE5] text-sm">
-                  Payment successful - You&apos;re all set to begin your learning
-                  journey
+                  Payment successful - You&apos;re all set to begin your
+                  learning journey
                 </p>
               </div>
             </div>
             {/* Decorative Circles */}
             <div className="absolute -top-[70%] right-[30px] w-50 h-50 bg-[#FFFFFF1A] rounded-full" />
           </div>
+        ) : (
+          <DashboardHeaderText
+            header={`Welcome back ${fullname}`}
+            subtext="Browse available programmes to get started"
+          />
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-[8fr_4fr] gap-6">
@@ -167,7 +179,7 @@ export default function UserDashboardPage() {
             </div>
 
             <div className="min-w-0">
-               <h3 className="text-base font-semibold text-primary-text mb-3">
+              <h3 className="text-base font-semibold text-primary-text mb-3">
                 Consultation Services
               </h3>
               <UserConsultations />
@@ -176,11 +188,14 @@ export default function UserDashboardPage() {
             {campRegistrations.length > 0 && (
               <div className="min-w-0">
                 <h3 className="text-base font-semibold text-primary-text mb-3">
-                  Registered Camps
+                  Your Registered Camps
                 </h3>
                 <div className="flex flex-col gap-6">
                   {campRegistrations.map((registration: any) => (
-                    <CampCards key={registration.id} registration={registration} />
+                    <CampCards
+                      key={registration.id}
+                      registration={registration}
+                    />
                   ))}
                 </div>
               </div>
@@ -212,15 +227,6 @@ export default function UserDashboardPage() {
               </div>
               <div className="space-y-3">
                 <Button
-                  variant="outline"
-                  className="w-full justify-center gap-3 py-6 rounded-xl border-[#EAECF0] text-[#101828]"
-                >
-                  <Users size={18} className="text-primary-text" />
-                  <span className="text-sm font-medium text-primary-text">
-                    Join Community
-                  </span>
-                </Button>
-                <Button
                   variant="regular"
                   className="w-full "
                   onClick={contactSupport}
@@ -236,7 +242,10 @@ export default function UserDashboardPage() {
                 <h3 className="text-base font-semibold text-primary-text">
                   Blogs
                 </h3>
-                <Link href="/blog" className="text-sm text-regular-button hover:underline">
+                <Link
+                  href="/blog"
+                  className="text-sm text-regular-button hover:underline"
+                >
                   View all
                 </Link>
               </div>

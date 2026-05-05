@@ -113,8 +113,8 @@ export function VerifyPayment({ reference }: { reference: string }) {
               </div>
             </div>
             <Button 
-              className="w-full h-12 text-lg font-medium group" 
-              onClick={() => router.push("/dashboard")}
+              variant={"regular"}
+              onClick={() => router.replace("/dashboard")}
             >
               Continue to Dashboard
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />

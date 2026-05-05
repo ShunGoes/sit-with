@@ -65,11 +65,11 @@ export default function CampCards({ registration }: { registration: any }) {
         </div>
       </div>
 
-      <Link href={`/camps/${camp.id}`}>
+      {/* <Link href={`/camps/${camp.id}`}>
         <Button variant="outline" className="w-full border-regular-button text-regular-button hover:bg-regular-button/10">
           View Details
         </Button>
-      </Link>
+      </Link> */}
     </div>
   );
 }

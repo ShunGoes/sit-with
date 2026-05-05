@@ -156,27 +156,24 @@ export default function CampDetail({ id }: { id: string }) {
     }
   };
 
-  const handleCloseLightbox = (imageId: string) => {
-    const closeFunc = () => {
-      setLightboxOpen(false);
-      setSelectedImage(null);
-      closeModal(`lightbox-${imageId}`);
-    };
 
-    if (document.startViewTransition) {
-      document.startViewTransition(() => {
-        flushSync(() => {
-          closeFunc();
-        });
-      });
-    } else {
-      closeFunc();
-    }
-  };
 
   const handleUploadImages = (files: File[]) => {
     uploadImages({ campId: id, files });
   };
+
+  const labelTyles = "font-semibold text-sm mb-1 text-primary-text"
+  let badgeVariant = "default" as "default" | "warning" | "destructive" | "hibiscus" | "success";
+
+  if (camp?.status === "COMPLETED") {
+    badgeVariant = "success";
+  } else if (camp?.status === "UPCOMING") {
+    badgeVariant = "warning";
+  } else if (camp?.status === "CANCELLED") {
+    badgeVariant = "destructive";
+  } else if (camp?.status === "ONGOING") {
+    badgeVariant = "hibiscus";
+  }
 
   return (
     <div className="space-y-10">
@@ -187,6 +184,7 @@ export default function CampDetail({ id }: { id: string }) {
         backLinkText="Back to camps"
       />
 
+      {/* Basic camp details */}
       <QueryStateHandler
         data={camp ? [camp] : undefined}
         isLoading={isLoading}
@@ -196,38 +194,38 @@ export default function CampDetail({ id }: { id: string }) {
         emptyMessage="Camp not found"
       >
         <div className="bg-dash-secondary-bg p-6 rounded-[16px] space-y-6">
-          <div className="flex justify-between items-start">
+          <div className="flex flex-col-reverse gap-3 md:flex-row  justify-between items-start">
             <h1 className="text-2xl font-bold">{camp?.title}</h1>
-            <Badge variant="secondary">{camp?.status}</Badge>
+            <Badge variant={badgeVariant}>{camp?.status}</Badge>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="font-semibold text-sm mb-1 text-gray-500">
+              <h3 className={labelTyles}>
                 Location
               </h3>
               <p>{camp?.location}</p>
             </div>
             <div>
-              <h3 className="font-semibold text-sm mb-1 text-gray-500">
+              <h3 className={labelTyles}>
                 Price
               </h3>
               <p>{formatCurrency(camp?.price || 0)}</p>
             </div>
             <div>
-              <h3 className="font-semibold text-sm mb-1 text-gray-500">
+              <h3 className={labelTyles}>
                 Capacity
               </h3>
               <p>{camp?.capacity} Participants max</p>
             </div>
             <div>
-              <h3 className="font-semibold text-sm mb-1 text-gray-500">
+              <h3 className={labelTyles}>
                 Seats Remaining
               </h3>
               <p>{camp?.seatsRemaining}</p>
             </div>
             <div>
-              <h3 className="font-semibold text-sm mb-1 text-gray-500">
+              <h3 className={labelTyles}>
                 Dates
               </h3>
               <p>
@@ -246,7 +244,7 @@ export default function CampDetail({ id }: { id: string }) {
           </div>
 
           <div>
-            <h3 className="font-semibold text-sm mb-2 text-gray-500">
+            <h3 className={labelTyles}>
               Description
             </h3>
             <p className="text-sm leading-relaxed">{camp?.description}</p>
@@ -254,7 +252,7 @@ export default function CampDetail({ id }: { id: string }) {
 
           {camp?.thumbnail && (
             <div>
-              <h3 className="font-semibold text-sm mb-2 text-gray-500">
+              <h3 className={labelTyles}>
                 Thumbnail
               </h3>
               <ViewTransition name={camp.id}>
@@ -290,7 +288,7 @@ export default function CampDetail({ id }: { id: string }) {
                 {/* Header */}
                 <div className="flex justify-between items-start gap-2">
                   <div className="flex-1">
-                    <h3 className="font-semibold text-base text-primary-text">
+                    <h3 className="font-semibold text-base text-primary-text dark:text-secondary-text">
                       {tier.label}
                     </h3>
                     {tier.isFeatured && (
@@ -308,7 +306,7 @@ export default function CampDetail({ id }: { id: string }) {
                         onClick={() => editCampTier(id, tier)}
                         className="py-2 px-3"
                       >
-                        <Edit2 size={14} color="#344054" /> Edit
+                        <Edit2 size={14} className="text-primary-text" /> Edit
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={() => handleDeleteTier(tier.id)}
@@ -321,20 +319,20 @@ export default function CampDetail({ id }: { id: string }) {
                 </div>
 
                 {/* Description */}
-                <p className="text-sm text-secondary-text leading-relaxed">
+                <p className="text-sm text-secondary-text dark:text-primary-text leading-relaxed">
                   {tier.description}
                 </p>
 
                 {/* Price and Details Grid */}
-                <div className="grid grid-cols-2 gap-3 text-sm border-t border-gray-100 pt-3">
+                <div className="grid grid-cols-2 gap-3 text-sm border-t border-gray-100 pt-5">
                   <div>
-                    <p className="text-xs text-gray-500 font-medium">Price</p>
+                    <p className="text-xs text-primary-text dark:text-secondary-text  font-medium">Price</p>
                     <p className="text-primary-text font-semibold">
                       {formatCurrency(tier.price)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 font-medium">
+                    <p className="text-xs text-primary-text dark:text-secondary-text  font-medium">
                       Seats/Unit
                     </p>
                     <p className="text-primary-text font-semibold">
@@ -342,7 +340,7 @@ export default function CampDetail({ id }: { id: string }) {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 font-medium">
+                    <p className="text-xs text-primary-text dark:text-secondary-text  font-medium">
                       Max Units
                     </p>
                     <p className="text-primary-text font-semibold">
@@ -350,7 +348,7 @@ export default function CampDetail({ id }: { id: string }) {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 font-medium">Order</p>
+                    <p className="text-xs text-primary-text dark:text-secondary-text  font-medium">Order</p>
                     <p className="text-primary-text font-semibold">
                       {tier.order}
                     </p>
@@ -360,7 +358,7 @@ export default function CampDetail({ id }: { id: string }) {
                 {/* Inclusions */}
                 {tier.inclusions && tier.inclusions.length > 0 && (
                   <div className="border-t border-gray-100 pt-3">
-                    <p className="text-xs text-gray-500 font-medium mb-2">
+                    <p className="text-xs text-primary-text dark:text-secondary-text  font-medium mb-2">
                       Inclusions
                     </p>
                     <ul className="space-y-1">
