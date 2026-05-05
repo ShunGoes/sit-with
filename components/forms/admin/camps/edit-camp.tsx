@@ -18,7 +18,7 @@ export default function EditCampModal({ camp }: { camp: Camp }) {
       title: camp.title,
       description: camp.description,
       location: camp.location,
-      price: camp?.price ? formatAmount(camp?.price.toString()) : 0,
+      // price: camp?.price ? formatAmount(camp?.price.toString()) : 0,
       capacity: camp.capacity.toString(),
       startDate: camp.startDate
         ? new Date(camp.startDate).toISOString().split("T")[0]
@@ -42,9 +42,9 @@ export default function EditCampModal({ camp }: { camp: Camp }) {
     formData.append("description", data.description);
     formData.append("location", data.location);
 
-    const priceStr = data.price.toString();
-    const cleanPrice = priceStr.replace(/,/g, "");
-    formData.append("price", cleanPrice);
+    // const priceStr = data.price.toString();
+    // const cleanPrice = priceStr.replace(/,/g, "");
+    // formData.append("price", cleanPrice);
 
     formData.append("capacity", data.capacity.toString());
     formData.append("startDate", data.startDate);

@@ -25,7 +25,7 @@ const CampParticipantsColumn = (
     cell: ({ row }) => (
       <div className="flex flex-col">
         <span className="font-medium text-primary-text">{row.original.name}</span>
-        {/* <span className="text-xs text-secondary-text">{row.original.email}</span> */}
+       
       </div>
     ),
   },

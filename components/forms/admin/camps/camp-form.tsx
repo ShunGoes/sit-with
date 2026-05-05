@@ -42,7 +42,7 @@ export default function CampForm({
               placeholder="Yankari Game Reserve"
               className="bg-white"
             />
-            <Controller
+            {/* <Controller
               control={form.control}
               name="price"
               render={({ field, fieldState }) => (
@@ -67,7 +67,7 @@ export default function CampForm({
                   )}
                 </Field>
               )}
-            />
+            /> */}
             <FormFieldComp
               name="capacity"
               control={form.control}

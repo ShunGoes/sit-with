@@ -19,6 +19,7 @@ import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import { logout } from "@/lib/api/services/auth/auth.services";
 import Image from "next/image";
 import { useGetDashboardData } from "@/lib/api/hooks/dashboard/dashboard.hooks";
+import { useTheme } from "next-themes";
 
 // This is sample data.
 const data = {
@@ -45,6 +46,12 @@ export function AppUserSidebar({ ...props }: React.ComponentProps<typeof Sidebar
   const pathname = usePathname();
   const settings = usePlatformSettingsStore((state) => state.settings);
   const { setOpenMobile } = useSidebar();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <Sidebar {...props}>
@@ -56,10 +63,11 @@ export function AppUserSidebar({ ...props }: React.ComponentProps<typeof Sidebar
         >
           <div className="w-[120px] h-[40px] relative ">
             <Image
-              src="/images/primary-logo.png"
+              src={mounted && resolvedTheme === "light" ? "/images/light-mode-logo.png" : "/images/primary-logo.png"}
               alt="Sit With PD Logo"
               fill
               className="object-contain"
+              priority
             />
           </div>
         </Link>

@@ -12,7 +12,6 @@ import {
   useReplaceCampImage,
 } from "@/lib/api/hooks/camps/camps.hooks";
 import Image from "next/image";
-import ParticipantsColumn from "@/components/tables/columns/participants-column";
 import CampParticipantsColumn from "@/components/tables/columns/camp-participants-column";
 import ParticipantDetailModal from "@/components/admin/camps/participant-detail-modal";
 import { formatCurrency } from "@/lib/utils";
@@ -206,12 +205,7 @@ export default function CampDetail({ id }: { id: string }) {
               </h3>
               <p>{camp?.location}</p>
             </div>
-            <div>
-              <h3 className={labelTyles}>
-                Price
-              </h3>
-              <p>{formatCurrency(camp?.price || 0)}</p>
-            </div>
+          
             <div>
               <h3 className={labelTyles}>
                 Capacity

@@ -101,8 +101,8 @@ export  function LoginForm() {
   return (
     <Card className="flex flex-col lg:flex-row lg:items-stretch  justify-center mx-auto w-full bg-transparent md:bg-[#FEFFFB] shadow-none md:shadow-sm md:rounded-[16px] overflow-hidden lg:p-6 lg:h-[min(635px,90vh)] lg:gap-8">
       {/* Left side Image (Hidden on mobile) */}
-      <div className="hidden lg:block lg:w-1/2 relative h-full">
-        <div className="relative w-full h-full rounded-[12px] overflow-hidden bg-gray-100">
+      <div className="hidden lg:flex items-center lg:w-1/2 relative h-full">
+        <div className="relative w-full h-[95%] rounded-[12px] overflow-hidden bg-gray-100">
           <Image
             src="/images/login-bg.webp"
             alt="Login background"
@@ -121,7 +121,7 @@ export  function LoginForm() {
             <Link href={"/"} className="flex items-center gap-2 mb-3 justify-center lg:justify-start">
               <div className="w-[120px] h-[40px] relative ">
                 <Image
-                  src="/images/primary-logo.png"
+                  src="/images/light-mode-logo.png"
                   alt="Sit With PD Logo"
                   fill
                   className="object-contain"

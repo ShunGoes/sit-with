@@ -31,6 +31,7 @@ import { useAuthStore } from "@/store/use-auth-store";
 import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import { logout } from "@/lib/api/services/auth/auth.services";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 // This is sample data.
 const data = {
@@ -84,6 +85,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
   const settings = usePlatformSettingsStore((state) => state.settings);
   const { setOpenMobile } = useSidebar();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <Sidebar {...props}>
@@ -93,12 +100,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           className="flex items-center gap-2"
           onClick={() => setOpenMobile(false)}
         >
-          <div className="w-[120px] h-[40px] relative ">
+          <div className="w-[120px] h-[50px] relative ">
             <Image
-              src="/images/primary-logo.png"
+              src={mounted && resolvedTheme === "light" ? "/images/light-mode-logo.png" : "/images/primary-logo.png"}
               alt="Sit With PD Logo"
               fill
               className="object-contain"
+              priority
             />
           </div>
         </Link>

@@ -4,13 +4,13 @@ export const CampSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
   location: z.string().min(1, "Location is required"),
-  price: z.union([z.number(), z.string()]).refine(
-    (val) => {
-      const parsed = typeof val === "string" ? parseFloat(val.replace(/,/g, "")) : val;
-      return !isNaN(parsed) && parsed >= 0;
-    },
-    { message: "Price must be a positive number" }
-  ),
+  // price: z.union([z.number(), z.string()]).refine(
+  //   (val) => {
+  //     const parsed = typeof val === "string" ? parseFloat(val.replace(/,/g, "")) : val;
+  //     return !isNaN(parsed) && parsed >= 0;
+  //   },
+  //   { message: "Price must be a positive number" }
+  // ),
   capacity: z.string().min(1, "Capacity must be at least 1"),
   startDate: z.string().min(1, "Start date is required"),
   endDate: z.string().min(1, "End date is required"),

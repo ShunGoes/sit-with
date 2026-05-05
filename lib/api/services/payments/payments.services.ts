@@ -10,6 +10,13 @@ export interface Payment {
   reference: string;
   status: "pending" | "completed" | "failed" | "refunded";
   createdAt: string;
+  type: "PROGRAM" | "CONSULTATION" | "CAMP";
+  user: {
+    email: string;
+    firstName: string;
+    lastName: string;
+  },
+  paystackRef: string
 }
 
 export interface CreatePaymentPayload {
