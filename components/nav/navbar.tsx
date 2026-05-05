@@ -160,38 +160,49 @@ export function Navbar() {
         </div>
 
         {/* Mobile Hamburger Menu Button */}
-        <button
-          onClick={toggleMenu}
-          className="lg:hidden flex items-center justify-center w-10 h-10 text-white"
-          aria-label="Toggle menu"
-        >
-          <motion.div
-            animate={isOpen ? "open" : "closed"}
-            className="flex flex-col gap-1.5"
+        <div className="lg:hidden flex items-center gap-2">
+          {isAuthenticated && (
+            <Link
+              href={user?.role === "ADMIN" ? "/admin" : "/dashboard"}
+              className="text-regular-button hover:text-brand-green transition-colors flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10"
+              title="Dashboard"
+            >
+              <LayoutDashboard size={24} />
+            </Link>
+          )}
+          <button
+            onClick={toggleMenu}
+            className="flex items-center justify-center w-10 h-10 text-white"
+            aria-label="Toggle menu"
           >
-            <motion.span
-              variants={{
-                closed: { rotate: 0, y: 0 },
-                open: { rotate: 45, y: 10 },
-              }}
-              className="w-6 h-0.5 bg-white block"
-            />
-            <motion.span
-              variants={{
-                closed: { opacity: 1 },
-                open: { opacity: 0 },
-              }}
-              className="w-6 h-0.5 bg-white block"
-            />
-            <motion.span
-              variants={{
-                closed: { rotate: 0, y: 0 },
-                open: { rotate: -45, y: -10 },
-              }}
-              className="w-6 h-0.5 bg-white block"
-            />
-          </motion.div>
-        </button>
+            <motion.div
+              animate={isOpen ? "open" : "closed"}
+              className="flex flex-col gap-1.5"
+            >
+              <motion.span
+                variants={{
+                  closed: { rotate: 0, y: 0 },
+                  open: { rotate: 45, y: 10 },
+                }}
+                className="w-6 h-0.5 bg-white block"
+              />
+              <motion.span
+                variants={{
+                  closed: { opacity: 1 },
+                  open: { opacity: 0 },
+                }}
+                className="w-6 h-0.5 bg-white block"
+              />
+              <motion.span
+                variants={{
+                  closed: { rotate: 0, y: 0 },
+                  open: { rotate: -45, y: -10 },
+                }}
+                className="w-6 h-0.5 bg-white block"
+              />
+            </motion.div>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Overlay */}
@@ -302,15 +313,6 @@ export function Navbar() {
                 </>
               ) : (
                 <>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="w-full bg-white text-regular-button mb-3"
-                  >
-                    <Link href={user?.role === "ADMIN" ? "/admin" : "/dashboard"} onClick={() => setIsOpen(false)}>
-                      Dashboard
-                    </Link>
-                  </Button>
                   <Button
                     variant="danger"
                     onClick={async () => {

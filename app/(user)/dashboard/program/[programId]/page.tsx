@@ -150,6 +150,8 @@ export default function ProgramDetailPage() {
               const weekProgress = weekTotal > 0 ? Math.round((weekCompleted / weekTotal) * 100) : 0;
               const isWeekDone = weekProgressData?.isWeekComplete ?? false;
 
+              if (week.modules.length === 0) return;
+
               return (
                 <div
                   key={week.id}

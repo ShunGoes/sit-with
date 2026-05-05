@@ -44,7 +44,7 @@ export default function ConsultationPage() {
         <Testimonials />
       </div>
 
-      <ConsultationCta />
+      {/* <ConsultationCta /> */}
     </main>
   );
 }

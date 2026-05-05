@@ -49,7 +49,7 @@ export default function ContactPage() {
   return (
     <div className="container mx-auto px-4 py-20 max-w-4xl">
       <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-[#6FB851] mb-6">Contact Us</h1>
+        <h1 className="text-4xl md:text-5xl font-bold text-regular-button mt-5 mb-6">Contact Us</h1>
         <p className="text-xl text-gray-600">
           Have questions? Reach out to us or connect on our social platforms.
         </p>
@@ -57,13 +57,13 @@ export default function ContactPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-          <h2 className="text-2xl font-semibold mb-6">Email Support</h2>
+          <h2 className="text-2xl font-semibold mb-4">Email Support</h2>
           <p className="text-gray-600 mb-4">
             For general inquiries and support, feel free to send us an email.
           </p>
           <a
             href="mailto:hello@sitwithpd.com"
-            className="text-[#6FB851] text-lg font-medium hover:underline"
+            className="text-regular-button text-lg font-medium hover:underline"
           >
             hello@sitwithpd.com
           </a>

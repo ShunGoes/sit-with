@@ -5,7 +5,7 @@ import Image from "next/image";
 export function AboutHero() {
   return (
     <section>
-      <div className="relative w-full min-h-svh h-svh lg:min-h-dvh lg:h-dvh flex items-center justify-center  py-24">
+      <div className="relative w-full min-h-[70svh] h-[70svh] lg:min-h-dvh lg:h-dvh flex items-center justify-center  py-24">
         <Image
           src={"/images/about-bg.webp"}
           alt={"about oage bg image"}

@@ -68,11 +68,10 @@ export function ConsultationServices() {
   }
 
   const services = data?.data.filter((service) => service.calBookingUrl !== null) || [];
-  console.log("services", services)
 
   return (
     <section className="py-20 lg:pt-0 bg-white" id="consultation-cta">
-      <div className="container mx-auto px-4 lg:px-8 max-w-6xl flex flex-col items-center">
+      <div className="container mx-auto px-4 lg:px-8 sm:max-w-[400px] md:max-w-6xl flex flex-col items-center">
         <div className="flex flex-col items-center text-center mb-16">
           <Pill text="Our Services" className="mb-4" />
           <h2 className="heading-2 max-w-2xl">
