@@ -2,7 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useGetProgramContent, useCompleteModule } from "@/lib/api/hooks/dashboard/dashboard.hooks";
+import {
+  useGetProgramContent,
+  useCompleteModule,
+} from "@/lib/api/hooks/dashboard/dashboard.hooks";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -29,7 +32,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { formatAppDate } from "@/lib/utils";
-import type { Module, Week } from "@/lib/api/services/dashboard/dashboard.services";
+import type {
+  Module,
+  Week,
+} from "@/lib/api/services/dashboard/dashboard.services";
 import Player from "@vimeo/player";
 
 declare global {
@@ -41,7 +47,9 @@ declare global {
 
 // Extract youtube ID from URL
 const extractYouTubeId = (content: string) => {
-  const match = content.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  const match = content.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/,
+  );
   return match ? match[1] : null;
 };
 
@@ -51,8 +59,7 @@ const extractVimeoId = (content: string) => {
   return match ? match[1] : null;
 };
 
-
-// this components opens up when we click on a module. it dynamicallys display youtube video, embed content or links that opens in new tab depending on the type of contentUrl it receives 
+// this components opens up when we click on a module. it dynamicallys display youtube video, embed content or links that opens in new tab depending on the type of contentUrl it receives
 const ModuleViewer = ({
   module,
   onComplete,
@@ -65,7 +72,6 @@ const ModuleViewer = ({
   const ytPlayerRef = useRef<HTMLDivElement>(null);
   const vimeoPlayerRef = useRef<HTMLDivElement>(null);
 
-  
   useEffect(() => {
     const content = module.contentUrl || module.embedCode || "";
 
@@ -101,7 +107,10 @@ const ModuleViewer = ({
       } else {
         initYouTube();
       }
-    } else if (module.platform === "VIMEO" || module.platform === "EMBED_VIMEO") {
+    } else if (
+      module.platform === "VIMEO" ||
+      module.platform === "EMBED_VIMEO"
+    ) {
       const videoId = extractVimeoId(content);
       if (!videoId || !vimeoPlayerRef.current) return;
 
@@ -119,7 +128,10 @@ const ModuleViewer = ({
   if (module.platform === "YOUTUBE" || module.platform === "EMBED_YOUTUBE") {
     return (
       <div className="mt-4">
-        <div ref={ytPlayerRef} className="w-full aspect-video rounded-xl overflow-hidden bg-black" />
+        <div
+          ref={ytPlayerRef}
+          className="w-full aspect-video rounded-xl overflow-hidden bg-black"
+        />
       </div>
     );
   }
@@ -127,7 +139,10 @@ const ModuleViewer = ({
   if (module.platform === "VIMEO" || module.platform === "EMBED_VIMEO") {
     return (
       <div className="mt-4">
-        <div ref={vimeoPlayerRef} className="w-full aspect-video rounded-xl overflow-hidden bg-black" />
+        <div
+          ref={vimeoPlayerRef}
+          className="w-full aspect-video rounded-xl overflow-hidden bg-black"
+        />
       </div>
     );
   }
@@ -140,7 +155,11 @@ const ModuleViewer = ({
           dangerouslySetInnerHTML={{ __html: module.contentUrl }}
         />
         {!isCompleted && (
-          <Button onClick={onComplete} className="w-fit mx-auto" variant="regular">
+          <Button
+            onClick={onComplete}
+            className="w-fit mx-auto"
+            variant="regular"
+          >
             Mark as complete
           </Button>
         )}
@@ -151,9 +170,17 @@ const ModuleViewer = ({
   return (
     <div className="mt-4 flex flex-col gap-4 items-center">
       <div className="p-6 bg-[#F9FAFB] dark:bg-[#1A1A1A] rounded-xl border border-[#EAECF0] dark:border-[#333] flex flex-col items-center justify-center gap-4 w-full">
-        <p className="text-sm text-secondary-text">This content opens in a new tab.</p>
+        <p className="text-sm text-secondary-text">
+          This content opens in a new tab.
+        </p>
         {module.contentUrl && (
-          <Button onClick={() => window.open(module.contentUrl!, "_blank", "noopener,noreferrer")} variant="outline" className="border-regular-button text-regular-button">
+          <Button
+            onClick={() =>
+              window.open(module.contentUrl!, "_blank", "noopener,noreferrer")
+            }
+            variant="outline"
+            className="border-regular-button text-regular-button"
+          >
             Open Content <ExternalLink className="ml-2" size={14} />
           </Button>
         )}
@@ -167,8 +194,6 @@ const ModuleViewer = ({
   );
 };
 
-
-
 // WEEK DETAILS PAGE OVERALL COMPONENT
 export default function WeekDetailPage() {
   const router = useRouter();
@@ -178,10 +203,10 @@ export default function WeekDetailPage() {
 
   const { data: programResponse, isLoading } = useGetProgramContent(programId);
   const { mutate: completeModule } = useCompleteModule();
-  
+
   const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
 
-  // skeleton loaders 
+  // skeleton loaders
   if (isLoading) {
     return (
       <div className="flex flex-col gap-6 w-full max-w-[900px]">
@@ -216,7 +241,9 @@ export default function WeekDetailPage() {
   if (!program || !week) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-        <p className="text-lg font-semibold text-secondary-text">Week not found</p>
+        <p className="text-lg font-semibold text-secondary-text">
+          Week not found
+        </p>
         <Button variant="regular" onClick={() => router.back()}>
           Go Back
         </Button>
@@ -225,14 +252,17 @@ export default function WeekDetailPage() {
   }
 
   const modules = [...(week.modules ?? [])].sort((a, b) => a.order - b.order);
-  
+
   const progress = program.progress;
   const weekProgressData = progress.weeks.find((w) => w.weekId === weekId);
   const completedModulesCount = weekProgressData?.modulesCompletedCount ?? 0;
   const totalModulesCount = weekProgressData?.moduleCount ?? 0;
-  const progressPercentage = totalModulesCount > 0 ? Math.round((completedModulesCount / totalModulesCount) * 100) : 0;
+  const progressPercentage =
+    totalModulesCount > 0
+      ? Math.round((completedModulesCount / totalModulesCount) * 100)
+      : 0;
 
-  // Dynamically render icon type for each module based on module type and state 
+  // Dynamically render icon type for each module based on module type and state
   const getModuleIcon = (type: string, isCompleted: boolean) => {
     let iconColor = isCompleted ? "text-[#05603A]" : "text-[#667085]";
     let bgColor = isCompleted ? "bg-[#ECFDF3]" : "bg-[#F2F4F7]";
@@ -244,13 +274,15 @@ export default function WeekDetailPage() {
     else if (type === "ASSIGNMENT") IconComp = CopyCheck;
 
     return (
-      <div className={`w-11 h-11 rounded-lg flex shrink-0 items-center justify-center ${bgColor} ${iconColor}`}>
+      <div
+        className={`w-11 h-11 rounded-lg flex shrink-0 items-center justify-center ${bgColor} ${iconColor}`}
+      >
         <IconComp size={18} />
       </div>
     );
   };
 
-  // runs when users click on a module card 
+  // runs when users click on a module card
   const handleModuleAction = (mod: Module) => {
     if (expandedModuleId === mod.id) {
       setExpandedModuleId(null);
@@ -268,8 +300,12 @@ export default function WeekDetailPage() {
     completeModule({ programId, moduleId });
   };
 
-  const weekLabel = week.title.startsWith("Week") ? week.title.split(":")[0].trim() : `Week ${week.order}`;
-  const weekSubtitle = week.title.includes(":") ? week.title.split(":").slice(1).join(":").trim() : week.title;
+  const weekLabel = week.title.startsWith("Week")
+    ? week.title.split(":")[0].trim()
+    : `Week ${week.order}`;
+  const weekSubtitle = week.title.includes(":")
+    ? week.title.split(":").slice(1).join(":").trim()
+    : week.title;
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-[900px] relative">
@@ -286,7 +322,12 @@ export default function WeekDetailPage() {
           <Badge variant="success">{weekLabel}</Badge>
           {program.startDate && (
             <span className="text-xs text-secondary-text">
-              Due: {formatAppDate(program.startDate, { month: "long", day: "numeric", year: "numeric" })}
+              Due:{" "}
+              {formatAppDate(program.startDate, {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              })}
             </span>
           )}
         </div>
@@ -295,7 +336,9 @@ export default function WeekDetailPage() {
           {weekSubtitle || week.title}
         </h1>
 
-        {week.description && <p className="text-primary-text text-base">{week.description}</p>}
+        {week.description && (
+          <p className="text-primary-text text-base">{week.description}</p>
+        )}
 
         <div className="flex items-center gap-6 mt-1 text-sm text-secondary-text font-medium">
           <div className="flex items-center gap-2">
@@ -309,31 +352,44 @@ export default function WeekDetailPage() {
         </div>
       </div>
 
-          {/* Progress bar  */}
+      {/* Progress bar  */}
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center text-sm font-semibold text-primary-text">
-          <span>Progress: {completedModulesCount} of {totalModulesCount} modules completed</span>
+          <span>
+            Progress: {completedModulesCount} of {totalModulesCount} modules
+            completed
+          </span>
           <span className="text-regular-button">{progressPercentage}%</span>
         </div>
         <div className="w-full bg-[#E4E7EC] h-2.5 rounded-full overflow-hidden">
-          <div className="bg-regular-button h-full rounded-full transition-all duration-300" style={{ width: `${progressPercentage}%` }} />
+          <div
+            className="bg-regular-button h-full rounded-full transition-all duration-300"
+            style={{ width: `${progressPercentage}%` }}
+          />
         </div>
       </div>
 
       {week.learningObjectives && week.learningObjectives.length > 0 && (
         <div className="bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#EAECF0] dark:border-[#333] rounded-[12px] p-6">
-          <h3 className="text-base font-semibold text-secondary-text mb-4">Learning Objectives</h3>
+          <h3 className="text-base font-semibold text-secondary-text mb-4">
+            Learning Objectives
+          </h3>
           <ul className="flex flex-col gap-3">
             {week.learningObjectives.map((obj, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm text-primary-text leading-relaxed">
-                <Check className="text-regular-button shrink-0 mt-0.5" size={18} />
+              <li
+                key={i}
+                className="flex items-start gap-3 text-sm text-primary-text leading-relaxed"
+              >
+                <Check
+                  className="text-regular-button shrink-0 mt-0.5"
+                  size={18}
+                />
                 <span>{obj}</span>
               </li>
             ))}
           </ul>
         </div>
       )}
-
 
       {/*  MODULES CARDS STARTS HERE */}
       <div className="flex flex-col gap-4">
@@ -343,22 +399,35 @@ export default function WeekDetailPage() {
           const isCompleted = mod.isCompleted;
           const isExpanded = expandedModuleId === mod.id;
 
-          console.log()
+          console.log();
           return (
             <div
               key={mod.id}
               className="bg-dash-secondary-bg border-[0.67px] border-[#EAECF0] dark:border-[#333] rounded-[12px] p-5 flex flex-col gap-4 transition-all"
             >
-              <div className="flex items-center justify-between gap-4 cursor-pointer" onClick={() => handleModuleAction(mod)}>
+              <div
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer"
+                onClick={() => handleModuleAction(mod)}
+              >
                 <div className="flex items-start gap-4 flex-1 min-w-0">
                   {getModuleIcon(mod.type, isCompleted)}
 
                   <div className="flex flex-col gap-1 flex-1 min-w-0">
-                    <h4 className="font-semibold text-base text-econdary-text leading-snug">{mod.title}</h4>
-                    {mod.description && <p className="text-sm text-primary-text line-clamp-2">{mod.description}</p>}
+                    <h4 className="font-semibold text-base text-econdary-text leading-snug">
+                      {mod.title}
+                    </h4>
+                    {mod.description && (
+                      <p className="text-sm text-primary-text line-clamp-2">
+                        {mod.description}
+                      </p>
+                    )}
                     <div className="flex items-center gap-3 text-xs font-medium text-primary-text mt-1">
-                      <span className="capitalize">{mod.type.toLowerCase()}</span>
-                      {mod.duration && <span>{mod.duration}</span>}
+                      <span className="capitalize">
+                        {mod.type.toLowerCase()}
+                      </span>
+                      {/* {mod.duration && (
+                        <span className="hidden md:block">{mod.duration}</span>
+                      )} */}
                       {mod.contentUrl && (
                         <span className="flex items-center gap-1 text-regular-button">
                           <ExternalLink size={11} />
@@ -366,15 +435,74 @@ export default function WeekDetailPage() {
                         </span>
                       )}
                     </div>
+                     {/* this should be only shown on mobile  */}
+                  <div className="flex sm:hidden items-center gap-2 shrink-0 mt-5 ">
+                    {isCompleted ? (
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2
+                          className="text-regular-button shrink-0"
+                          size={20}
+                        />
+                        <span className="text-sm font-medium text-regular-button hidden md:block">
+                          Completed
+                        </span>
+                        {isExpanded ? (
+                          <ChevronUp size={20} className="text-[#667085]" />
+                        ) : (
+                          <ChevronDown size={20} className="text-[#667085]" />
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center  gap-2">
+                        <Button
+                          variant={isExpanded ? "outline" : "regular"}
+                          size="sm"
+                          className={`w-[110px] text-sm ${!isExpanded ? "" : "border-regular-button text-regular-button"}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleModuleAction(mod);
+                          }}
+                        >
+                          {isExpanded ? "Close" : "Start"}
+                        </Button>
+                        {(mod.platform === "EXTERNAL" ||
+                          mod.platform === "EMBED_UNKNOWN") && (
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-9 w-9 text-regular-button border-regular-button hover:bg-regular-button/10"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleComplete(mod.id);
+                            }}
+                            title="Mark as completed"
+                          >
+                            <CheckCircle2 size={18} />
+                          </Button>
+                        )}
+                      </div>
+                    )}
                   </div>
+                  </div>
+
+                 
                 </div>
 
-                <div className="flex items-center gap-2 shrink-0 pl-2">
+                <div className="sm:flex hidden items-center gap-2 shrink-0 pl-2">
                   {isCompleted ? (
                     <div className="flex items-center gap-2">
-                      <CheckCircle2 className="text-regular-button shrink-0" size={20} />
-                      <span className="text-sm font-medium text-regular-button hidden md:block">Completed</span>
-                      {isExpanded ? <ChevronUp size={20} className="text-[#667085]" /> : <ChevronDown size={20} className="text-[#667085]" />}
+                      <CheckCircle2
+                        className="text-regular-button shrink-0"
+                        size={20}
+                      />
+                      <span className="text-sm font-medium text-regular-button hidden md:block">
+                        Completed
+                      </span>
+                      {isExpanded ? (
+                        <ChevronUp size={20} className="text-[#667085]" />
+                      ) : (
+                        <ChevronDown size={20} className="text-[#667085]" />
+                      )}
                     </div>
                   ) : (
                     <div className="flex items-center  gap-2">
@@ -382,16 +510,23 @@ export default function WeekDetailPage() {
                         variant={isExpanded ? "outline" : "regular"}
                         size="sm"
                         className={`w-[110px] text-sm ${!isExpanded ? "" : "border-regular-button text-regular-button"}`}
-                        onClick={(e) => { e.stopPropagation(); handleModuleAction(mod); }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleModuleAction(mod);
+                        }}
                       >
                         {isExpanded ? "Close" : "Start"}
                       </Button>
-                      {(mod.platform === "EXTERNAL" || mod.platform === "EMBED_UNKNOWN") && (
+                      {(mod.platform === "EXTERNAL" ||
+                        mod.platform === "EMBED_UNKNOWN") && (
                         <Button
                           variant="outline"
                           size="icon"
                           className="h-9 w-9 text-regular-button border-regular-button hover:bg-regular-button/10"
-                          onClick={(e) => { e.stopPropagation(); handleComplete(mod.id); }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleComplete(mod.id);
+                          }}
                           title="Mark as completed"
                         >
                           <CheckCircle2 size={18} />
@@ -404,10 +539,10 @@ export default function WeekDetailPage() {
 
               {isExpanded && (
                 <div className="border-t border-[#EAECF0] dark:border-[#333] pt-4 animate-in fade-in slide-in-from-top-4 duration-300">
-                  <ModuleViewer 
-                    module={mod} 
-                    isCompleted={isCompleted} 
-                    onComplete={() => handleComplete(mod.id)} 
+                  <ModuleViewer
+                    module={mod}
+                    isCompleted={isCompleted}
+                    onComplete={() => handleComplete(mod.id)}
                   />
                 </div>
               )}

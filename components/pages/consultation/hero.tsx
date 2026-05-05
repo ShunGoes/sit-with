@@ -52,7 +52,7 @@ export function Hero() {
         <div className="relative h-full w-[90%] lg:w-[80%] mx-auto flex flex-col gap-6 justify-center items-start max-w-6xl">
           <div className="space-y-4 lg:text-center ">
             <h1
-              className={`text-[#F9FDF9] font-semibold text-[3.125rem] lg:text-[4rem] xl:text-[5rem] leading-[1.05] lg:text-center `}
+              className={`text-[#F9FDF9] font-semibold text-[3.125rem] lg:text-[4rem] xl:text-[5rem] leading-[1.05] sm:text-center `}
             >
               One-on-One Professional Consultation
             </h1>
@@ -66,7 +66,7 @@ export function Hero() {
               Start your journey today
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row justify-start md:justify-start lg:justify-center w-full gap-4 mt-4">
+          <div className="flex flex-col sm:flex-row justify-start sm:justify-center w-full gap-4 mt-4">
             <Button onClick={handleBookingClick} variant={"regular"}>
               Book Now <CaretRight />
             </Button>
