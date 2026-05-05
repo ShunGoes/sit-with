@@ -45,19 +45,19 @@ export const UsersTableColumns = (
     accessorKey: "fullName",
     header: "Full Name",
     cell: ({ row }) => (
-      <h6 className="text-xs font-medium md:whitespace-normal whitespace-nowrap">
+      <h6 className="text-xs font-medium">
         {row.original.firstName} {row.original.lastName}
       </h6>
     ),
-    size: 200,
+    size: 150,
   },
   {
     accessorKey: "email",
     header: "Email",
     cell: ({ row }) => (
-      <h6 className="text-xs text-secondary-text md:whitespace-normal whitespace-nowrap">{row.original.email}</h6>
+      <h6 className="text-xs text-secondary-text">{row.original.email}</h6>
     ),
-    size: 250,
+    size: 180,
   },
   {
     accessorKey: "isEmailVerified",
@@ -77,30 +77,27 @@ export const UsersTableColumns = (
       const formattedDate = dateStr
         ? formatAppDate(dateStr)
         : "-";
-      return <h6 className="text-xs md:whitespace-normal whitespace-nowrap">{formattedDate}</h6>;
+      return <h6 className="text-xs">{formattedDate}</h6>;
     },
-    size: 200,
+    size: 150,
   },
   {
     header: "Camps",
     cell: ({ row }) => (
       <h6 className="text-xs font-medium">{row.original._count?.campRegistrations ?? 0}</h6>
     ),
-    size: 100,
   },
   {
     header: "Consults",
     cell: ({ row }) => (
       <h6 className="text-xs font-medium">{row.original._count?.consultations ?? 0}</h6>
     ),
-    size: 100,
   },
   {
     header: "Programs",
     cell: ({ row }) => (
       <h6 className="text-xs font-medium">{row.original._count?.purchases ?? 0}</h6>
     ),
-    size: 100,
   },
   {
     id: "actions",

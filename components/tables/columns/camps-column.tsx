@@ -52,20 +52,20 @@ const ActionCell = ({
             href={`/admin/camps/${row.original.id}`}
             className="py-3 w-full h-full flex px-3 gap-1"
           >
-            <Eye color="#344054" size={15} /> View Details
+            <Eye className="text-primary-text" size={15} /> View Details
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => addCampTierWithId(row.original.id)}
           className="py-3 px-4"
         >
-          <Plus size={15} color="#344054" /> Add Tier
+          <Plus size={15} className="text-primary-text" /> Add Tier
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => editCamp(row.original)}
           className="py-3 px-4"
         >
-          <FilePenLine size={15} color="#344054" /> Edit Camp
+          <FilePenLine size={15} className="text-primary-text" /> Edit Camp
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => handleDeleteCamp(row.original.id)} className="py-3 px-4 text-brand-red">
           <Trash2 color="var(--brand-red)" size={15} /> Delete Camp
@@ -84,27 +84,27 @@ const CampsColumn = (
     accessorKey: "title",
     header: "Camp Name",
     cell: ({ row }) => (
-      <div className="flex gap-3 items-center md:whitespace-normal whitespace-nowrap">
+      <div className="flex gap-3 items-center">
         <h6 className="text-xs">{row.original.title}</h6>
       </div>
     ),
-    size: 250,
+    size: 180,
   },
   {
     accessorKey: "location",
     header: "Location",
     cell: ({ row }) => (
-      <h6 className="text-xs text-secondary-text md:whitespace-normal whitespace-nowrap">
+      <h6 className="text-xs text-secondary-text">
         {row.original.location}
       </h6>
     ),
-    size: 250,
+    size: 150,
   },
   {
     accessorKey: "price",
     header: "Price",
     cell: ({ row }) => (
-      <h6 className="text-xs md:whitespace-normal whitespace-nowrap">
+      <h6 className="text-xs">
         {formatCurrency(row.original.price, currency)}
       </h6>
     ),
@@ -117,9 +117,9 @@ const CampsColumn = (
       const formattedDate = dateStr 
         ? formatAppDate(dateStr)
         : "-";
-      return <h6 className="text-xs md:whitespace-normal whitespace-nowrap">{formattedDate}</h6>;
+      return <h6 className="text-xs">{formattedDate}</h6>;
     },
-    size: 300
+    size: 150
   },
   {
     accessorKey: "status",

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import { useAuthStore } from "@/store/use-auth-store";
@@ -18,12 +18,35 @@ import UserConsultations from "@/components/user/dashboard/user-consultations";
 import UserBlogsCarousel from "@/components/user/dashboard/user-blogs-carousel";
 import Link from "next/link";
 import CampCards from "@/components/user/dashboard/camp-cards";
+import EnrollmentSuccessModal from "@/components/user/dashboard/enrollment-success-modal";
 
 export default function UserDashboardPage() {
   const user = useAuthStore((state) => state.user);
   const { data, isLoading } = useGetDashboardData();
   const Adminsettings = usePlatformSettingsStore((state) => state.settings);
   const [showPrgrams, setShowPrgrams] = useState(false);
+
+  // Enrollment congratulations state
+  const [showEnrollModal, setShowEnrollModal] = useState(false);
+  const [enrolledProgramTitle, setEnrolledProgramTitle] = useState("your programme");
+
+  useEffect(() => {
+    const raw = localStorage.getItem("pending_enrollment");
+    if (raw) {
+      try {
+        const { programTitle } = JSON.parse(raw);
+        setEnrolledProgramTitle(programTitle ?? "your programme");
+      } catch {
+        // Ignore malformed JSON
+      }
+      setShowEnrollModal(true);
+    }
+  }, []);
+
+  const handleCloseEnrollModal = () => {
+    setShowEnrollModal(false);
+    localStorage.removeItem("pending_enrollment");
+  };
 
   const fullname = `${user?.firstName ?? ""} ${user?.lastName ?? ""}`;
 
@@ -32,9 +55,15 @@ export default function UserDashboardPage() {
   const purchases = data?.data?.purchases ?? [];
   const campRegistrations = data?.data?.campRegistrations ?? [];
 
+  // empty  user dashboard state without course
   if (purchases.length === 0) {
     return (
       <div>
+        <EnrollmentSuccessModal
+          isOpen={showEnrollModal}
+          programTitle={enrolledProgramTitle}
+          onClose={handleCloseEnrollModal}
+        />
         <AnimatePresence mode="wait">
           {showPrgrams ? (
             <motion.div
@@ -98,26 +127,37 @@ export default function UserDashboardPage() {
 
   return (
     <div className="">
+      {/* Enrollment congratulations modal */}
+      <EnrollmentSuccessModal
+        isOpen={showEnrollModal}
+        programTitle={enrolledProgramTitle}
+        onClose={handleCloseEnrollModal}
+      />
+
       <div className="flex flex-col gap-7 min-w-0">
-        {/* Welcome Banner */}
-        <div className="relative overflow-hidden bg-[#527E4D] rounded-[16px] p-8 text-white  flex items-center ">
-          <div className="relative z-10 flex items-center gap-6">
-            <div className="w-10 h-10 rounded-full bg-[#FFFFFF33] flex items-center justify-center  backdrop-blur-sm">
-              <Check className="text-white" size={18} />
+        
+        {/* Welcome Banner — hidden while congrats modal is showing to avoid double-banner */}
+        {!showEnrollModal && (
+          <div className="relative overflow-hidden bg-[#527E4D] rounded-[16px] p-8 text-white  flex items-center ">
+            <div className="relative z-10 flex items-center gap-6">
+              <div className="w-10 h-10 rounded-full bg-[#FFFFFF33] flex items-center justify-center  backdrop-blur-sm">
+                <Check className="text-white" size={18} />
+              </div>
+              <div>
+                <h1 className="xl:text-[1.55rem] text-lg font-semibold text-white">
+                  Welcome, {user?.firstName ?? ""} {user?.lastName ?? ""}! 🎉
+                </h1>
+                <p className="text-[#FFFFFFE5] text-sm">
+                  Payment successful - You&apos;re all set to begin your learning
+                  journey
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="xl:text-[1.55rem] text-lg font-semibold text-white">
-                Welcome, {user?.firstName ?? ""} {user?.lastName ?? ""}! 🎉
-              </h1>
-              <p className="text-[#FFFFFFE5] text-sm">
-                Payment successful - You&apos;re all set to begin your learning
-                journey
-              </p>
-            </div>
+            {/* Decorative Circles */}
+            <div className="absolute -top-[70%] right-[30px] w-50 h-50 bg-[#FFFFFF1A] rounded-full" />
           </div>
-          {/* Decorative Circles */}
-          <div className="absolute -top-[70%] right-[30px] w-50 h-50 bg-[#FFFFFF1A] rounded-full" />
-        </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-[8fr_4fr] gap-6">
           <div className="min-w-0 space-y-10">
             <div className="flex flex-col gap-10 min-w-0">

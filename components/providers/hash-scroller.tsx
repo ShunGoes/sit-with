@@ -26,13 +26,13 @@ export function HashScroller() {
       }
     };
 
-    // Re-run on layout mount or hash change
+    // Run once on mount or when pathname changes
     handleHashScroll();
 
-    // Also listen for hashchange events (for same-page anchor clicks)
+    // Also listen for hashchange events
     window.addEventListener("hashchange", handleHashScroll);
     return () => window.removeEventListener("hashchange", handleHashScroll);
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   return null;
 }

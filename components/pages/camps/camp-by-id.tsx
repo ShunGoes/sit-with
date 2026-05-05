@@ -36,8 +36,6 @@ function CardByIdOverview({ id }: { id: string }) {
   const labelText = "text-brand-green font-medium text-sm uppercase";
   const valueText = "text-secondary-text font-medium text-base";
 
-  console.log("this is the camping event details:", camp);
-
   // Lightbox with ViewTransition
   const handleOpenLightbox = (imageId: string, imageUrl: string) => {
     const renderModal = () => {

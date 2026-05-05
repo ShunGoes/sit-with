@@ -144,7 +144,7 @@ const ProgramsColumn = (
         </div>
       </div>
     ),
-    size: 300,
+    size: 200,
   },
   {
     accessorKey: "category",
@@ -161,7 +161,7 @@ const ProgramsColumn = (
         {row.original.category}
       </Badge>
     ),
-    size: 300,
+    size: 150,
   },
   {
     accessorKey: "price",

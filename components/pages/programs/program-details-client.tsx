@@ -16,6 +16,8 @@ import { useRouter } from "next/navigation";
 import { useCreatePayment } from "@/lib/api/hooks/payments/payments.hooks";
 import { useModalStore } from "@/components/store/use-modal-store";
 import { Spinner } from "@/components/spinner";
+import { useGetDashboardData } from "@/lib/api/hooks/dashboard/dashboard.hooks";
+import { Purchase } from "@/lib/api/services/dashboard/dashboard.services";
 
 const WHAT_YOU_WILL_GAIN = [
   "Greater emotional awareness and self-understanding",
@@ -36,6 +38,7 @@ function PaymentSuccessModal() {
 }
 
 function ProgramDetailsWrapper({ id }: { id: string }) {
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const {
     data: programData,
     isLoading,
@@ -44,17 +47,24 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
   } = useGetProgramById(id);
   const { mutate: createPayment, isPending: isCreatingPayment } =
     useCreatePayment();
+  const {
+    data,
+    isLoading: dashboardDataLoading,
+  } = useGetDashboardData({ enabled: isAuthenticated });
 
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
 
   const router = useRouter();
 
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
 
+  const existingProgram = data?.data?.purchases?.find((p: Purchase) => p.programId === id);
+
+  const labelText = "font-medium text-lg text-[#606060]";
+
   // adge color
   let typeVariant;
-
   function variantAssigner(type: "LEADERS" | "PROFESSIONALS" | "STUDENTS") {
     switch (type) {
       case "LEADERS":
@@ -67,8 +77,6 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
         return (typeVariant = "default");
     }
   }
-
-  const labelText = "font-medium text-lg text-[#606060]";
 
   // program api response
   const program = programData?.data;
@@ -95,6 +103,20 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
       return;
     }
 
+    if (existingProgram) {
+      showErrorToast("You are already enrolled in this program.");
+      return;
+    }
+
+    // Save pending enrollment so the dashboard can show the congrats modal after payment
+    localStorage.setItem(
+      "pending_enrollment",
+      JSON.stringify({ programId: id, programTitle: title ?? "your programme" })
+    );
+
+    // Open tab immediately to avoid popup blockers
+    const paymentTab = window.open("", "_blank");
+
     const payload = {
       itemId: id,
       type: "PROGRAM" as "PROGRAM" | "CONSULTATION" | "CAMP",
@@ -103,14 +125,53 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
     createPayment(payload, {
       onSuccess: (data) => {
         closeModal("loading");
-        openModal("success", <PaymentSuccessModal />);
+        if (paymentTab) {
+          paymentTab.location.href = data?.data?.authorizationUrl;
+        }
       },
       onError: (error) => {
         closeModal("loading");
+        paymentTab?.close();
+        // Clear pending enrollment if payment init fails
+        localStorage.removeItem("pending_enrollment");
       },
     });
   };
 
+  // Render different buttons depending on if the user has registered for a course before
+  const getButtonByState = () => {
+    if (dashboardDataLoading) {
+      return (
+        <Button disabled variant="regular" className="w-full">
+          <Spinner />
+        </Button>
+      );
+    }
+
+    if (existingProgram) {
+      return (
+        <Link href={`/dashboard/program/${existingProgram.programId}`} className="w-full mt-auto">
+          <Button
+            variant="regular"
+            className="rounded-[8px]! w-full"
+          >
+            Continue Program
+          </Button>
+        </Link>
+      );
+    }
+
+    return (
+      <Button
+        onClick={enrolNow}
+        variant="regular"
+        className="mt-auto rounded-[8px]! w-full"
+      >
+        Enrol now
+      </Button>
+    );
+  };
+  
   useEffect(() => {
     if (isCreatingPayment) {
       openModal(
@@ -180,7 +241,7 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
 
           {/* product checkout  */}
           <div className="flex-1">
-            <div className="max-w-[500px] shadow-[0px_4px_4px_#141A1A1F] w-full lg:w-[80%] flex flex-col gap-4 lg:ml-auto rounded-[10px] p-4 bg-[#FFFAFA] min-h-[455px] sticky top-0">
+            <div className="max-w-[500px] shadow-[0px_4px_4px_#141A1A1F] w-full lg:w-[80%] flex flex-col gap-4 lg:ml-auto rounded-[10px] p-4 bg-[#FFFAFA]  sticky top-0">
               <div className="w-10/12 mx-auto flex flex-col gap-3 py-4">
                 <h4 className="text-[#3A3E3F] text-[25px] font-semibold">
                   {formatCurrency(price)}{" "}
@@ -201,18 +262,9 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
                   <LocationIcon className="text-[#606060]" />{" "}
                   <span className={labelText}>Online </span>
                 </p>
-                <p className="flex items-center gap-3">
-                  <Lightbulb className="text-[#606060]" />{" "}
-                  <span className={labelText}>Digital Certificate </span>
-                </p>
               </div>
-              <Button
-                onClick={enrolNow}
-                variant={"regular"}
-                className=" mt-auto rounded-[8px]! w-full"
-              >
-                Enrol now
-              </Button>
+              {/* button here  */}
+              {getButtonByState()}
             </div>
           </div>
         </div>

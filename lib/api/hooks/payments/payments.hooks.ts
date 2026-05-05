@@ -7,13 +7,14 @@ import {
   deletePayment,
   CreatePaymentPayload,
   UpdatePaymentPayload,
+  verifyPaystackPayment,
 } from "../../services/payments/payments.services";
 import { showSuccessToast, showErrorToast } from "@/lib/toast-helpers";
 
-export const useGetPayments = () => {
+export const useGetPayments = (params?: { page?: number; limit?: number }) => {
   return useQuery({
-    queryKey: ["payments"],
-    queryFn: getPayments,
+    queryKey: ["payments", params],
+    queryFn: () => getPayments(params),
     retry: false,
   });
 };
@@ -72,3 +73,15 @@ export const useDeletePayment = () => {
     },
   });
 };
+
+
+//  ================== VERIFY PAYSTACK PAYMENT ===================
+export const useVerifyPaystackPayment = (reference: string) => {
+
+  return useQuery({
+    queryKey: ["paystack-payment"],
+    queryFn: () => verifyPaystackPayment(reference),
+     enabled: Boolean(reference),
+    retry: false,
+  })
+}
