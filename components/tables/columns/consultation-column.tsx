@@ -43,7 +43,7 @@ const ConsultationColumn = (): ColumnDef<ConsultationColumn>[] => [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => (
-      <div className="flex gap-3 items-center md:whitespace-normal whitespace-nowrap">
+      <div className="flex gap-3 items-center">
         <div>
           <h6 className=" text-sm font-medium text-primary-text ">
             {row.original?.firstName + " " + row.original?.lastName}
@@ -54,32 +54,32 @@ const ConsultationColumn = (): ColumnDef<ConsultationColumn>[] => [
         </div>
       </div>
     ),
-    size: 300,
+    size: 200,
   },
   {
     accessorKey: "service",
     header: "Service Title",
     cell: ({ row }) => (
-      <p className="text-xs text-primary-text md:whitespace-normal whitespace-nowrap">{row.original.serviceTitle}</p>
+      <p className="text-xs text-primary-text">{row.original.serviceTitle}</p>
     ),
-    size: 300,
+    size: 200,
   },
   {
     accessorKey: "price",
     header: "Price",
     cell: ({ row }) => (
-      <p className="text-xs text-primary-text md:whitespace-normal whitespace-nowrap">{formatCurrency(row.original.price)}</p>
+      <p className="text-xs text-primary-text">{formatCurrency(row.original.price)}</p>
     ),
   },
   {
     accessorKey: "date",
     header: "Date",
     cell: ({ row }) => (
-      <p className="text-xs text-primary-text md:whitespace-normal whitespace-nowrap">
+      <p className="text-xs text-primary-text">
         {formatAppDate(row.original.date)}
       </p>
     ),
-    size: 300
+    size: 150
   },
   {
     accessorKey: "status",

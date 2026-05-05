@@ -40,7 +40,7 @@ const ParticipantsColumn = (): ColumnDef<ParticipantColumn>[] => [
         </div>
       </div>
     ),
-    size: 250,
+    size: 150,
   },
   {
     accessorKey: "program",
@@ -48,7 +48,7 @@ const ParticipantsColumn = (): ColumnDef<ParticipantColumn>[] => [
     cell: ({ row }) => (
       <p className="text-xs text-primary-text dark:text-[#A1A1A1]">{row.original.program}</p>
     ),
-    size: 300,
+    size: 200,
   },
   {
     accessorKey: "dateJoined",

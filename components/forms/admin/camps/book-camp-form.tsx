@@ -23,17 +23,20 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import LearningObjectivesField from "../program/learning-objectives-field";
+import { useCreatePayment } from "@/lib/api/hooks/payments/payments.hooks";
 
 export default function BookCampForm({
   tierId,
   campId,
-  tierLabel
+  tierLabel,
 }: {
   tierId: string | undefined | null;
   campId: string;
   tierLabel: string | undefined | null;
 }) {
   const { mutate: bookACamp, isPending } = useBookACamp();
+  const { mutate: createPayment, isPending: isCreatingPayment } =
+    useCreatePayment();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const router = useRouter();
 
@@ -70,7 +73,11 @@ export default function BookCampForm({
         <h2 className="text-primary-text text-lg font-medium text-center mb-5 max-w-2xl">
           You have successfully booked a {data?.title} camp session.
         </h2>
-        <Button onClick={() => closeModal("success")} variant="outline" className="border border-regular-button text-regular-button">
+        <Button
+          onClick={() => closeModal("success")}
+          variant="outline"
+          className="border border-regular-button text-regular-button"
+        >
           Close
         </Button>
       </div>,
@@ -105,23 +112,42 @@ export default function BookCampForm({
       },
     };
 
+    const paymentTab = window.open("", "_blank");
     bookACamp(
       { campId, payload },
       {
         onSuccess: (data) => {
           closeModal("loading");
+          console.log("response from booking a camp", data);
+          const bookingResponseId = data?.data?.id;
+          // after booking , send a request with the returned camp id
 
-          const camp = data?.data?.camp;
-          const successBanner = {
-            title: camp?.title,
-            description: camp?.description,
-            location: camp?.location,
-            price: camp?.price,
-            thumbnail: camp?.thumbnail,
-            capacity: camp?.capacity,
-            startDate: camp?.startDate,
+          if (!bookingResponseId) {
+            closeModal("loading");
+            showErrorToast(
+              "Could not retrieve registration ID. Please try again.",
+            );
+            return;
+          }
+
+          const paymentPayload = {
+            type: "CAMP" as "CAMP" | "PROGRAM" | "CONSULTATION",
+            itemId: bookingResponseId,
           };
-          handleCampSuccessModal(successBanner);
+
+          createPayment(paymentPayload, {
+            onSuccess: (paymentData) => {
+              if (paymentTab) {
+                paymentTab.location.href = paymentData?.data?.authorizationUrl;
+              }
+
+              closeModal("loading");
+            },
+            onError: () => {
+              closeModal("loading");
+              paymentTab?.close();
+            },
+          });
         },
         onError: () => {
           closeModal("loading");
@@ -152,12 +178,28 @@ export default function BookCampForm({
               placeholder="John Doe"
               className="bg-white"
             />
-            <FormFieldComp
-              name="phone"
+            <Controller
               control={form.control}
-              label="Phone Number *"
-              placeholder=""
-              className="bg-white"
+              name="phone"
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid} className="w-full">
+                  <FieldLabel className="text-secondary-text dark:font-medium text-[14px] mb-2">
+                    Phone Number *
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+                      field.onChange(value);
+                    }}
+                    placeholder="08012345678"
+                    className="bg-white border-[0.75px] border-[#EAECF0] h-11"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
             />
           </div>
 
@@ -172,12 +214,28 @@ export default function BookCampForm({
                 className="bg-white"
               />
 
-              <FormFieldComp
-                name="emergencyPhone"
+              <Controller
                 control={form.control}
-                label="Emergency Contact Phone *"
-                placeholder="+1234567890"
-                className="bg-white"
+                name="emergencyPhone"
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel className="text-secondary-text dark:font-medium text-[14px] mb-2">
+                      Emergency Contact Phone *
+                    </FieldLabel>
+                    <Input
+                      {...field}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, "");
+                        field.onChange(value);
+                      }}
+                      placeholder="+1234567890"
+                      className="bg-white border-[0.75px] border-[#EAECF0] h-11"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
               />
               <FormFieldComp
                 name="emergencyStatus"
@@ -302,7 +360,7 @@ export default function BookCampForm({
           variant={"regular"}
           disabled={!form.formState.isValid || form.formState.isSubmitting}
         >
-          {form.formState.isSubmitting ? "Submitting..." : "Save Program"}
+          {form.formState.isSubmitting ? "Submitting..." : "Secure Slot"}
         </Button>
       </div>
     </form>

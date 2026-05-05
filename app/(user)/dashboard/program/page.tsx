@@ -7,10 +7,19 @@ import { Clock, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useGetDashboardData } from "@/lib/api/hooks/dashboard/dashboard.hooks";
 import QueryStateHandler from "@/components/query-state-handler";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function UserProgramsPage() {
   const { data, isLoading, isError, error } = useGetDashboardData();
   const purchases = data?.data?.purchases ?? [];
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && purchases.length === 0) {
+      router.replace("/dashboard");
+    }
+  }, [isLoading, purchases, router]);
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-[1200px]">

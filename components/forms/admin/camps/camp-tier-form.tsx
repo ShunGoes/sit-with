@@ -45,21 +45,21 @@ export default function CampTierForm({
         <header className="text-primary-text font-semibold text-base mb-4">
           Tier Details
         </header>
-        <div className="space-y-4">
+        <div className="space-y-6">
           {/* Label */}
           <Controller
             control={form.control}
             name="label"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid} className="">
-                <FieldLabel className="text-[#344054] text-sm mb-2">
+                <FieldLabel className="text-[#344054] dark:text-secondary-text text-sm mb-2">
                   Label *
                 </FieldLabel>
                 <Input
                   {...field}
                   type="text"
                   placeholder="E.g. Individual"
-                  className="border-[0.75px] border-[#EAECF0] bg-dash-secondary-bg rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
+                  className="border-[0.75px] border-[#EAECF0] bg-dash-secondary-bg rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -76,7 +76,7 @@ export default function CampTierForm({
               <Field data-invalid={fieldState.invalid} className="mt-4">
                 <div className="flex flex-col">
                   <FieldLabel
-                    className="text-[#344054] text-[14px] mb-2"
+                    className="text-[#344054] dark:text-secondary-text text-[14px] mb-2"
                     htmlFor="description"
                   >
                     Description *
@@ -85,7 +85,7 @@ export default function CampTierForm({
                     id="description"
                     {...field}
                     placeholder="Describe what's included in this tier..."
-                    className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] py-4 min-h-[100px] outline-none px-3 resize-none"
+                    className="border-[0.75px] border-[#EAECF0] bg-white dark:bg-transparent rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#98A2B3] py-4 min-h-[100px] outline-none px-3 resize-none"
                   />
                 </div>
                 {fieldState.invalid && (
@@ -96,14 +96,14 @@ export default function CampTierForm({
           />
 
           {/* Price and Seats Per Unit */}
-          <div className="grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-x-6 gap-y-6 md:grid-cols-2">
             {/* Price */}
             <Controller
               control={form.control}
               name="price"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid} className="">
-                  <FieldLabel className="text-[#344054] text-sm mb-2">
+                  <FieldLabel className="text-[#344054] dark:text-secondary-text text-sm mb-2">
                     {`Price ${defaultCurrency} *`}
                   </FieldLabel>
                   <Input
@@ -115,7 +115,7 @@ export default function CampTierForm({
                     inputMode="decimal"
                     step="0.01"
                     placeholder="0.00"
-                    className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
+                    className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -130,7 +130,7 @@ export default function CampTierForm({
               name="seatsPerUnit"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid} className="">
-                  <FieldLabel className="text-[#344054] text-sm mb-2">
+                  <FieldLabel className="text-[#344054] dark:text-secondary-text text-sm mb-2">
                     Seats Per Unit *
                   </FieldLabel>
                   <Input
@@ -139,7 +139,7 @@ export default function CampTierForm({
                     min="1"
                     placeholder="1"
                     onChange={(e) => field.onChange(Number(e.target.value))}
-                    className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
+                    className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -157,7 +157,7 @@ export default function CampTierForm({
               name="maxUnits"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid} className="">
-                  <FieldLabel className="text-[#344054] text-sm mb-2">
+                  <FieldLabel className="text-[#344054] dark:text-secondary-text text-sm mb-2">
                     Max Units (leave empty for unlimited)
                   </FieldLabel>
                   <Input
@@ -170,7 +170,7 @@ export default function CampTierForm({
                       const value = e.target.value;
                       field.onChange(value === "" ? null : Number(value));
                     }}
-                    className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
+                    className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -185,7 +185,7 @@ export default function CampTierForm({
               name="order"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid} className="">
-                  <FieldLabel className="text-[#344054] text-sm mb-2">
+                  <FieldLabel className="text-[#344054] dark:text-secondary-text text-sm mb-2">
                     Order *
                   </FieldLabel>
                   <Input
@@ -194,7 +194,7 @@ export default function CampTierForm({
                     min="0"
                     placeholder="0"
                     onChange={(e) => field.onChange(Number(e.target.value))}
-                    className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
+                    className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -207,8 +207,8 @@ export default function CampTierForm({
       </div>
 
       {/* Inclusions Section */}
-      <div className="bg-dash-secondary-bg rounded-[12px]">
-        <header className="text-primary-text font-semibold text-base mb-4">
+      <div className="bg-white dark:bg-transparent rounded-[12px]">
+        <header className="text-primary-text dark:text-secondary-text font-semibold text-base mb-4">
           Inclusions
         </header>
         <div className="space-y-3">
@@ -224,7 +224,7 @@ export default function CampTierForm({
                       aria-invalid={fieldState.invalid}
                       type="text"
                       placeholder="E.g. Accommodation"
-                      className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
+                      className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-primary-text placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -244,7 +244,7 @@ export default function CampTierForm({
           <Button
             type="button"
             variant="outline"
-            className="w-full border-dashed"
+            className="w-full border-dashed text-regular-button"
             onClick={() => append({ text: "" })}
           >
             <Plus className="h-4 w-4 mr-2" /> Add Inclusion
@@ -255,10 +255,10 @@ export default function CampTierForm({
       <div className="bg-dash-secondary-bg rounded-[12px] p-4">
         <div className="flex items-center justify-between">
           <div>
-            <FieldLabel className="text-primary-text font-semibold text-base">
+            <FieldLabel className="text-primary-text dark:text-secondary-text font-semibold text-base">
               Featured Tier
             </FieldLabel>
-            <p className="text-sm text-secondary-text mt-1">
+            <p className="text-sm text-secondary-text dark:text-primary-text mt-1">
               Mark this tier as featured to highlight it
             </p>
           </div>
@@ -277,7 +277,7 @@ export default function CampTierForm({
       </div>
       {/* Action Buttons */}
       <div className="flex items-center justify-end w-full mt-10 gap-3">
-        <Button variant={"outline"} type="button" onClick={onCancel}>
+        <Button variant={"outline"} type="button" className="text-regular-button" onClick={onCancel}>
           Cancel
         </Button>
         <Button

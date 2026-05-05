@@ -18,6 +18,7 @@ import { useAuthStore } from "@/store/use-auth-store";
 import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import { logout } from "@/lib/api/services/auth/auth.services";
 import Image from "next/image";
+import { useGetDashboardData } from "@/lib/api/hooks/dashboard/dashboard.hooks";
 
 // This is sample data.
 const data = {
@@ -68,6 +69,15 @@ export function AppUserSidebar({ ...props }: React.ComponentProps<typeof Sidebar
         {/* We create a SidebarGroup for each parent. */}
         <SidebarMenu className="px-3 space-y-3">
           {data.navMain.map((item) => {
+            // Check if user has purchases for restricting access to "My Programs"
+            const { data: dashboardData } = useGetDashboardData();
+            const purchases = dashboardData?.data?.purchases ?? [];
+            const hasPurchases = purchases.length > 0;
+
+            if (item.title === "My Programs" && !hasPurchases) {
+              return null;
+            }
+
             const isActive =
               item.url === "/dashboard"
                 ? pathname === "/dashboard"

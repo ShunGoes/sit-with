@@ -25,6 +25,7 @@ import {
   Users,
   Tent,
   MessageSquare,
+  CreditCard,
 } from "lucide-react";
 import { useAuthStore } from "@/store/use-auth-store";
 import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
@@ -66,6 +67,11 @@ const data = {
       icon: <MessageSquare />,
     },
 
+    {
+      title: "Payments",
+      url: "/admin/payments",
+      icon: <CreditCard />,
+    },
     {
       title: "Settings",
       url: "/admin/settings",

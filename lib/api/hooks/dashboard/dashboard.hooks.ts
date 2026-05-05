@@ -1,13 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getDashboardData, getProgramContent } from "@/lib/api/services/dashboard/dashboard.services";
+import { getDashboardData, getProgramContent, DashboardResponse } from "@/lib/api/services/dashboard/dashboard.services";
 import { api } from "@/lib/axios";
 import { getApiError } from "@/lib/utils";
 import type { ModulePlatform } from "@/lib/api/services/dashboard/dashboard.services";
 
-export const useGetDashboardData = () => {
-  return useQuery({
+export const useGetDashboardData = (options?: any) => {
+  return useQuery<DashboardResponse>({
     queryKey: ["dashboard-data"],
     queryFn: getDashboardData,
+    ...options
   });
 };
 

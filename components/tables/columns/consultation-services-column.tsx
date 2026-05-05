@@ -85,9 +85,9 @@ const ConsultationServicesColumn = (): ColumnDef<ConsultationService>[] => [
     accessorKey: "title",
     header: "Service Name",
     cell: ({ row }) => (
-      <p className="text-xs text-primary-text font-medium md:whitespace-normal whitespace-nowrap">{row.original.title}</p>
+      <p className="text-xs text-primary-text font-medium">{row.original.title}</p>
     ),
-    size: 300,
+    size: 200,
   },
   {
     accessorKey: "description",
@@ -97,7 +97,7 @@ const ConsultationServicesColumn = (): ColumnDef<ConsultationService>[] => [
         {row.original.description}
       </p>
     ),
-    size: 300,
+    size: 250,
   },
   {
     accessorKey: "price",

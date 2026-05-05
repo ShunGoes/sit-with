@@ -63,6 +63,7 @@ export const useCreateCamp = () => {
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["camps"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-camps"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -78,6 +79,7 @@ export const useBookACamp = () => {
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["camps"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-camps"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -94,6 +96,7 @@ export const useUpdateCamp = () => {
     onSuccess: (data, variables) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["camps"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-camps"] });
       queryClient.invalidateQueries({ queryKey: ["camps", variables.id] });
     },
     onError: (error: any) => {
@@ -110,6 +113,7 @@ export const useDeleteCamp = () => {
     onSuccess: (data) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["camps"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-camps"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -128,6 +132,7 @@ export const useCreateCampTier = () => {
     onSuccess: (data, variables) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["camps", variables.campId] });
+      queryClient.invalidateQueries({ queryKey: ["admin-camps"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -151,6 +156,7 @@ export const useUpdateCampTier = () => {
     onSuccess: (data, variables) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["camps", variables.campId] });
+      queryClient.invalidateQueries({ queryKey: ["admin-camps"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
@@ -167,6 +173,7 @@ export const useDeleteCampTier = () => {
     onSuccess: (data, variables) => {
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["camps", variables.campId] });
+      queryClient.invalidateQueries({ queryKey: ["admin-camps"] });
     },
     onError: (error: any) => {
       showErrorToast(error.message);
