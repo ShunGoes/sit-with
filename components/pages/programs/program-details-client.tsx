@@ -108,6 +108,12 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
       return;
     }
 
+    // Save pending enrollment so the dashboard can show the congrats modal after payment
+    localStorage.setItem(
+      "pending_enrollment",
+      JSON.stringify({ programId: id, programTitle: title ?? "your programme" })
+    );
+
     // Open tab immediately to avoid popup blockers
     const paymentTab = window.open("", "_blank");
 
@@ -126,6 +132,8 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
       onError: (error) => {
         closeModal("loading");
         paymentTab?.close();
+        // Clear pending enrollment if payment init fails
+        localStorage.removeItem("pending_enrollment");
       },
     });
   };
