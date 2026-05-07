@@ -29,10 +29,11 @@ export default function CampServices() {
 
   const camp =
     campsData?.data.filter(
-      (camp) => camp.status === "UPCOMING" || camp.status === "ONGOING",
+      (camp) =>
+        camp?.tiers &&
+        camp?.tiers?.length > 0 &&
+        (camp.status === "UPCOMING" || camp.status === "ONGOING"),
     ) || [];
-
-
 
 
 
@@ -131,8 +132,8 @@ export default function CampServices() {
                       {service.location}
                     </span>
                   </div>
-                  <div className="text-regular-button font-bold text-lg">
-                    {formatCurrency(service.price)}
+                  <div className="text-regular-button font-medium text-sm">
+                    {service.seatsRemaining} Seats left
                   </div>
                 </div>
                 <Link href={`/camps/${service.id}`}>

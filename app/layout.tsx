@@ -15,7 +15,7 @@ import { Suspense } from "react";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  preload: false,
+  preload: true,
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({

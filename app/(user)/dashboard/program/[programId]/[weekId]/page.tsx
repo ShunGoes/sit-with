@@ -19,18 +19,13 @@ import {
   Check,
   ExternalLink,
   CheckCircle2,
-  MoreVertical,
   MessageCircleMore,
   ChevronDown,
   ChevronUp,
+  LayoutList,
 } from "lucide-react";
 import { messageFacilitator } from "@/components/modal-helper";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { formatAppDate } from "@/lib/utils";
 import type {
   Module,
@@ -283,6 +278,7 @@ export default function WeekDetailPage() {
   };
 
   // runs when users click on a module card
+  // for external link, clicking the module card runs it immediately
   const handleModuleAction = (mod: Module) => {
     if (expandedModuleId === mod.id) {
       setExpandedModuleId(null);
@@ -296,6 +292,7 @@ export default function WeekDetailPage() {
     }
   };
 
+  // when a module is complete, fires off manually by user or automatically by youtube ENDED event or vimeo
   const handleComplete = (moduleId: string) => {
     completeModule({ programId, moduleId });
   };
@@ -356,7 +353,8 @@ export default function WeekDetailPage() {
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center text-sm font-semibold text-primary-text">
           <span>
-            Progress: {completedModulesCount} of {totalModulesCount} modules
+            Progress: {completedModulesCount} of {totalModulesCount}{" "}
+            {completedModulesCount > 1 ? "modules" : "module"}
             completed
           </span>
           <span className="text-regular-button">{progressPercentage}%</span>
@@ -395,48 +393,101 @@ export default function WeekDetailPage() {
       <div className="flex flex-col gap-4">
         <h2 className="text-xl font-bold text-primary-text">Modules</h2>
 
-        {modules.map((mod) => {
-          const isCompleted = mod.isCompleted;
-          const isExpanded = expandedModuleId === mod.id;
+        {modules.length > 0 &&
+          modules.map((mod) => {
+            const isCompleted = mod.isCompleted;
+            const isExpanded = expandedModuleId === mod.id;
 
-          console.log();
-          return (
-            <div
-              key={mod.id}
-              className="bg-dash-secondary-bg border-[0.67px] border-[#EAECF0] dark:border-[#333] rounded-[12px] p-5 flex flex-col gap-4 transition-all"
-            >
+            return (
               <div
-                className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer"
-                onClick={() => handleModuleAction(mod)}
+                key={mod.id}
+                className="bg-dash-secondary-bg border-[0.67px] border-[#EAECF0] dark:border-[#333] rounded-[12px] p-5 flex flex-col gap-4 transition-all"
               >
-                <div className="flex items-start gap-4 flex-1 min-w-0">
-                  {getModuleIcon(mod.type, isCompleted)}
+                <div
+                  className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer"
+                  onClick={() => handleModuleAction(mod)}
+                >
+                  <div className="flex items-start gap-4 flex-1 min-w-0">
+                    {getModuleIcon(mod.type, isCompleted)}
 
-                  <div className="flex flex-col gap-1 flex-1 min-w-0">
-                    <h4 className="font-semibold text-base text-econdary-text leading-snug">
-                      {mod.title}
-                    </h4>
-                    {mod.description && (
-                      <p className="text-sm text-primary-text line-clamp-2">
-                        {mod.description}
-                      </p>
-                    )}
-                    <div className="flex items-center gap-3 text-xs font-medium text-primary-text mt-1">
-                      <span className="capitalize">
-                        {mod.type.toLowerCase()}
-                      </span>
-                      {/* {mod.duration && (
+                    <div className="flex flex-col gap-1 flex-1 min-w-0">
+                      <h4 className="font-semibold text-base text-econdary-text leading-snug">
+                        {mod.title}
+                      </h4>
+                      {mod.description && (
+                        <p className="text-sm text-primary-text line-clamp-2">
+                          {mod.description}
+                        </p>
+                      )}
+                      <div className="flex items-center gap-3 text-xs font-medium text-primary-text mt-1">
+                        <span className="capitalize">
+                          {mod.type.toLowerCase()}
+                        </span>
+                        {/* {mod.duration && (
                         <span className="hidden md:block">{mod.duration}</span>
                       )} */}
-                      {mod.contentUrl && (
-                        <span className="flex items-center gap-1 text-regular-button">
-                          <ExternalLink size={11} />
-                          Has content
-                        </span>
-                      )}
+                        {mod.contentUrl && (
+                          <span className="flex items-center gap-1 text-regular-button">
+                            <ExternalLink size={11} />
+                            Has content
+                          </span>
+                        )}
+                      </div>
+                      {/* this should be only shown on mobile  */}
+                      <div className="flex sm:hidden items-center gap-2 shrink-0 mt-5 ">
+                        {isCompleted ? (
+                          <div className="flex items-center gap-2">
+                            <CheckCircle2
+                              className="text-regular-button shrink-0"
+                              size={20}
+                            />
+                            <span className="text-sm font-medium text-regular-button hidden md:block">
+                              Completed
+                            </span>
+                            {isExpanded ? (
+                              <ChevronUp size={20} className="text-[#667085]" />
+                            ) : (
+                              <ChevronDown
+                                size={20}
+                                className="text-[#667085]"
+                              />
+                            )}
+                          </div>
+                        ) : (
+                          <div className="flex items-center  gap-2">
+                            <Button
+                              variant={isExpanded ? "outline" : "regular"}
+                              size="sm"
+                              className={`w-[110px] text-sm ${!isExpanded ? "" : "border-regular-button text-regular-button"}`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleModuleAction(mod);
+                              }}
+                            >
+                              {isExpanded ? "Close" : "Start"}
+                            </Button>
+                            {(mod.platform === "EXTERNAL" ||
+                              mod.platform === "EMBED_UNKNOWN") && (
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-9 w-9 text-regular-button border-regular-button hover:bg-regular-button/10"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleComplete(mod.id);
+                                }}
+                                title="Mark as completed"
+                              >
+                                <CheckCircle2 size={18} />
+                              </Button>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                     {/* this should be only shown on mobile  */}
-                  <div className="flex sm:hidden items-center gap-2 shrink-0 mt-5 ">
+                  </div>
+
+                  <div className="sm:flex hidden items-center gap-2 shrink-0 pl-2">
                     {isCompleted ? (
                       <div className="flex items-center gap-2">
                         <CheckCircle2
@@ -483,72 +534,38 @@ export default function WeekDetailPage() {
                       </div>
                     )}
                   </div>
+                </div>
+
+                {isExpanded && (
+                  <div className="border-t border-[#EAECF0] dark:border-[#333] pt-4 animate-in fade-in slide-in-from-top-4 duration-300">
+                    <ModuleViewer
+                      module={mod}
+                      isCompleted={isCompleted}
+                      onComplete={() => handleComplete(mod.id)}
+                    />
                   </div>
-
-                 
-                </div>
-
-                <div className="sm:flex hidden items-center gap-2 shrink-0 pl-2">
-                  {isCompleted ? (
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2
-                        className="text-regular-button shrink-0"
-                        size={20}
-                      />
-                      <span className="text-sm font-medium text-regular-button hidden md:block">
-                        Completed
-                      </span>
-                      {isExpanded ? (
-                        <ChevronUp size={20} className="text-[#667085]" />
-                      ) : (
-                        <ChevronDown size={20} className="text-[#667085]" />
-                      )}
-                    </div>
-                  ) : (
-                    <div className="flex items-center  gap-2">
-                      <Button
-                        variant={isExpanded ? "outline" : "regular"}
-                        size="sm"
-                        className={`w-[110px] text-sm ${!isExpanded ? "" : "border-regular-button text-regular-button"}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleModuleAction(mod);
-                        }}
-                      >
-                        {isExpanded ? "Close" : "Start"}
-                      </Button>
-                      {(mod.platform === "EXTERNAL" ||
-                        mod.platform === "EMBED_UNKNOWN") && (
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-9 w-9 text-regular-button border-regular-button hover:bg-regular-button/10"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleComplete(mod.id);
-                          }}
-                          title="Mark as completed"
-                        >
-                          <CheckCircle2 size={18} />
-                        </Button>
-                      )}
-                    </div>
-                  )}
-                </div>
+                )}
               </div>
+            );
+          })}
 
-              {isExpanded && (
-                <div className="border-t border-[#EAECF0] dark:border-[#333] pt-4 animate-in fade-in slide-in-from-top-4 duration-300">
-                  <ModuleViewer
-                    module={mod}
-                    isCompleted={isCompleted}
-                    onComplete={() => handleComplete(mod.id)}
-                  />
-                </div>
-              )}
+        {modules.length < 1 && (
+          <div className="flex flex-col items-center justify-center h-[40vh] border-2 border-dashed border-[#EAECF0] dark:border-[#333] rounded-[24px] bg-dash-secondary-bg/50 p-8 space-y-5 animate-in fade-in zoom-in duration-500">
+            <div className="w-20 h-20 bg-[#F9FAFB] dark:bg-[#1A1A1A] rounded-full flex items-center justify-center text-secondary-text shadow-sm border border-[#EAECF0] dark:border-[#333]">
+              <LayoutList size={40} strokeWidth={1.5} />
             </div>
-          );
-        })}
+            <div className="text-center space-y-2">
+              <h3 className="text-xl font-bold text-primary-text">
+                No modules yet
+              </h3>
+              <p className="text-sm text-secondary-text max-w-[320px] leading-relaxed">
+                There are no learning modules available for this week at the
+                moment. Please check back later or reach out to your
+                facilitator.
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="fixed bottom-10 right-10 z-50 pointer-events-auto">
