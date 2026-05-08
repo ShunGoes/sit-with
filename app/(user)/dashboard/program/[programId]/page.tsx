@@ -69,6 +69,8 @@ export default function ProgramDetailPage() {
   const completedModules = progress.completedModules;
   const progressPercentage = progress.percentComplete;
 
+ 
+
   return (
     <div className="flex flex-col gap-6 w-full max-w-[1000px]">
       {/* Back button */}
@@ -150,7 +152,7 @@ export default function ProgramDetailPage() {
               const weekProgress = weekTotal > 0 ? Math.round((weekCompleted / weekTotal) * 100) : 0;
               const isWeekDone = weekProgressData?.isWeekComplete ?? false;
 
-              if (week.modules.length === 0) return;
+           
 
               return (
                 <div

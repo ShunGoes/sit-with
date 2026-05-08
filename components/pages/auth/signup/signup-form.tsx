@@ -133,13 +133,13 @@ export default function SignupForm() {
         <div className="min-h-full flex flex-col justify-center gap-8 md:gap-8 lg:px-10 lg:py-4">
         {/* Logo */}
         <div className="flex flex-col md:gap-2">
-          <Link href={"/"} className="flex items-center gap-2 mb-8 justify-center md:justify-start">
-            <div className="w-[120px] h-[40px] relative ">
+          <Link href={"/"} className="flex items-center gap-2 justify-center md:justify-start">
+            <div className="w-[140px] h-[60px] relative ">
               <Image
                 src="/images/light-mode-logo.png"
                 alt="Sit With PD Logo"
                 fill
-                className="object-contain"
+                className="object-cover"
               />
             </div>
           </Link>

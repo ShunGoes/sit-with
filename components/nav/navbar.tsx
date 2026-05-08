@@ -30,7 +30,6 @@ export function Navbar() {
   const user = useAuthStore((state) => state.user);
   const clearUser = useAuthStore((state) => state.clearUser);
   const settings = usePlatformSettingsStore((state) => state.settings);
-  console.log("user", user, isAuthenticated);
 
 
   useEffect(() => {

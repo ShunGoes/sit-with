@@ -17,7 +17,7 @@ const poppins = Poppins({
   variable: "--font-poppins",
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
-  preload: false,
+  preload: true,
 });
 
 export default function ProtectedLayout({

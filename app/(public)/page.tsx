@@ -22,8 +22,8 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "Sit With PD",
-            "url": "https://sit-with-pd.vercel.app",
-            "logo": "https://sit-with-pd.vercel.app/images/primary-logo.png",
+            "url": "https://sitwithpd.com",
+            "logo": "https://sitwithpd.com/images/primary-logo.png",
             "description": "A global therapeutic network for presence-based healing and emotional transformation.",
             "sameAs": [
               "https://www.youtube.com/@sitwithpd",

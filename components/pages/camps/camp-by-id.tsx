@@ -25,6 +25,7 @@ function CardByIdOverview({ id }: { id: string }) {
   const [campTierId, setCampTierId] = useState<{
     id: string;
     label: string;
+    maxParyMembers: number
   } | null>(null);
 
   const { data: campData, isLoading, isError } = useGetCamp(id);
@@ -74,6 +75,8 @@ function CardByIdOverview({ id }: { id: string }) {
     }
   };
 
+  console.log(camp)
+  
   return (
     <div className=" bg-[#F7F7F7] py-30">
       <section className="max-w-7xl w-11/12 mx-auto lg:w-11/12 space-y-10">
@@ -171,31 +174,44 @@ function CardByIdOverview({ id }: { id: string }) {
         {/* Camp Tiers Section */}
         {camp?.tiers && camp.tiers.length > 0 && (
           <div className="space-y-6">
-            <h2 className="text-xl text-primary-text font-bold mb-6">Camp Tiers</h2>
+            <h2 className="text-xl text-primary-text font-bold">Camp Tiers</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-120 mx-auto lg:max-w-7xl gap-4  px-6 rounded-[16px]">
               {camp.tiers.map((plan: CampTier) => (
                 <div
                   key={plan.id}
                   className={`flex flex-col gap-6 rounded-[32px] px-8 py-15 md:py-[100px]   transition-all duration-300 relative ${
                     plan.isFeatured
-                      ? "bg-white border-2 border-[#649351] z-10 xl:-mt-4 xl:mb-4"
+                      ? "bg-white border-2 border-[#649351] z-10  xl:mb-4"
                       : "bg-white border border-[#2C2D47]  xl:mt-2 xl:scale-[0.95]"
                   }`}
                 >
                   <div className="text-center ">
-                    <h3 className="text-lg font-medium text-[#242424] mb-4">
+                    <h3 className="text-lg font-medium uppercase text-[#242424] mb-4">
                       {plan.label}
                     </h3>
                     <div className="flex items-end justify-center gap-1 mb-2">
                       <span
-                        className={`text-[56px] font-medium leading-none ${plan.isFeatured ? "text-[#649351]" : "text-[#242424]"}`}
+                        className={`lg:text-[56px] text-4xl font-medium leading-none ${plan.isFeatured ? "text-[#649351]" : "text-[#242424]"}`}
                       >
                         {formatCurrency(plan.price)}
                       </span>
+                     
                     </div>
+                    <div className="flex items-center gap-3 justify-between mt-8">
+                       <p>
+                        Max Units: <span className="text-regular-button font-bold">{plan?.maxUnits} </span>
+                      </p>
+                       <p>
+                        Seats Per Unit: <span className="text-regular-button font-bold">{plan?.seatsPerUnit} </span> 
+                      </p>
+                    </div>
+                    <p className="mt-4 font-normal ext-primary-text">
+                      {plan.description}
+                    </p>
                   </div>
 
                   <ul className="space-y-4 flex-1">
+                    <p className="font-semibold mb-2 text-primary-text text-base">Benefits:</p>
                     {plan.inclusions?.map((feature, fIdx) => (
                       <li key={fIdx} className="flex items-center gap-3">
                         <span
@@ -217,7 +233,7 @@ function CardByIdOverview({ id }: { id: string }) {
                     variant="regular"
                     className="w-full mt-10 "
                     onClick={() =>{
-                      setCampTierId({ id: plan.id, label: plan.label })
+                      setCampTierId({ id: plan.id, label: plan.label, maxParyMembers: plan?.seatsPerUnit })
                       showSuccessToast(`You selected the ${plan.label} camp.`)
                     }
                       
@@ -236,6 +252,8 @@ function CardByIdOverview({ id }: { id: string }) {
               tierId={campTierId?.id}
               campId={id}
               tierLabel={campTierId?.label}
+              maxParyMembers={campTierId?.maxParyMembers || 100}
+
             />
           </div>
         )}

@@ -29,10 +29,12 @@ export default function BookCampForm({
   tierId,
   campId,
   tierLabel,
+  maxParyMembers,
 }: {
   tierId: string | undefined | null;
   campId: string;
   tierLabel: string | undefined | null;
+  maxParyMembers: number;
 }) {
   const { mutate: bookACamp, isPending } = useBookACamp();
   const { mutate: createPayment, isPending: isCreatingPayment } =
@@ -252,14 +254,16 @@ export default function BookCampForm({
         <div className="space-y-2 my-8">
           <div className="flex items-center justify-between">
             <h3 className={sectionTitleText}>Party Members</h3>
-            <button
-              type="button"
-              onClick={() => append({ text: "" })}
-              className="flex items-center gap-2 text-brand-green font-medium text-sm"
-            >
-              <PlusCircle className="h-4 w-4" />
-              Add Member
-            </button>
+            {fields.length < maxParyMembers && (
+              <button
+                type="button"
+                onClick={() => append({ text: "" })}
+                className="flex items-center gap-2 text-brand-green font-medium text-sm"
+              >
+                <PlusCircle className="h-4 w-4" />
+                Add Member
+              </button>
+            )}
           </div>
 
           {fields.length > 0 ? (
