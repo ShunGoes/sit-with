@@ -33,7 +33,7 @@ export const Modal = () => {
         <div
           key={`${modal.id}_${index}`}
           className="fixed inset-0  flex items-center justify-center"
-          style={{ zIndex: 50 + index }}
+          style={{ zIndex: 100 + index }}
         >
           {/* Overlay */}
           <div

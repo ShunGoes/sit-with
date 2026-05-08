@@ -22,17 +22,13 @@ import { showSuccessToast } from "@/lib/toast-helpers";
 function CardByIdOverview({ id }: { id: string }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [campTierId, setCampTierId] = useState<{
-    id: string;
-    label: string;
-    maxParyMembers: number
-  } | null>(null);
 
   const { data: campData, isLoading, isError } = useGetCamp(id);
 
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const camp = campData?.data;
+console.log( "camp detials", camp);
 
   const labelText = "text-brand-green font-medium text-sm uppercase";
   const valueText = "text-secondary-text font-medium text-base";
@@ -75,8 +71,8 @@ function CardByIdOverview({ id }: { id: string }) {
     }
   };
 
-  console.log(camp)
   
+
   return (
     <div className=" bg-[#F7F7F7] py-30">
       <section className="max-w-7xl w-11/12 mx-auto lg:w-11/12 space-y-10">
@@ -195,14 +191,19 @@ function CardByIdOverview({ id }: { id: string }) {
                       >
                         {formatCurrency(plan.price)}
                       </span>
-                     
                     </div>
                     <div className="flex items-center gap-3 justify-between mt-8">
-                       <p>
-                        Max Units: <span className="text-regular-button font-bold">{plan?.maxUnits} </span>
+                      <p>
+                        Max Units:{" "}
+                        <span className="text-regular-button font-bold">
+                          {plan?.maxUnits}{" "}
+                        </span>
                       </p>
-                       <p>
-                        Seats Per Unit: <span className="text-regular-button font-bold">{plan?.seatsPerUnit} </span> 
+                      <p>
+                        Seats Per Unit:{" "}
+                        <span className="text-regular-button font-bold">
+                          {plan?.seatsPerUnit}{" "}
+                        </span>
                       </p>
                     </div>
                     <p className="mt-4 font-normal ext-primary-text">
@@ -211,7 +212,9 @@ function CardByIdOverview({ id }: { id: string }) {
                   </div>
 
                   <ul className="space-y-4 flex-1">
-                    <p className="font-semibold mb-2 text-primary-text text-base">Benefits:</p>
+                    <p className="font-semibold mb-2 text-primary-text text-base">
+                      Benefits:
+                    </p>
                     {plan.inclusions?.map((feature, fIdx) => (
                       <li key={fIdx} className="flex items-center gap-3">
                         <span
@@ -232,15 +235,17 @@ function CardByIdOverview({ id }: { id: string }) {
                   <Button
                     variant="regular"
                     className="w-full mt-10 "
-                    onClick={() =>{
-                      setCampTierId({ id: plan.id, label: plan.label, maxParyMembers: plan?.seatsPerUnit })
-                      showSuccessToast(`You selected the ${plan.label} camp.`)
-                       document
-                  .getElementById("booking-form")
-                  ?.scrollIntoView({ behavior: "smooth" })
-                    }
-                      
-                    }
+                    onClick={() => {
+                      openModal(
+                        "book-camp",
+                        <BookCampForm
+                          tierId={plan.id}
+                          campId={id}
+                          tierLabel={plan.label}
+                          maxParyMembers={plan?.seatsPerUnit || 100}
+                        />,
+                      );
+                    }}
                   >
                     Book Camp
                   </Button>
@@ -249,17 +254,7 @@ function CardByIdOverview({ id }: { id: string }) {
             </div>
           </div>
         )}
-        {campTierId && camp && (
-          <div className="w-11/12 lg:w-7/12 mx-auto">
-            <BookCampForm
-              tierId={campTierId?.id}
-              campId={id}
-              tierLabel={campTierId?.label}
-              maxParyMembers={campTierId?.maxParyMembers || 100}
 
-            />
-          </div>
-        )}
       </section>
     </div>
   );
