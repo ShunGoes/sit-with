@@ -235,6 +235,9 @@ function CardByIdOverview({ id }: { id: string }) {
                     onClick={() =>{
                       setCampTierId({ id: plan.id, label: plan.label, maxParyMembers: plan?.seatsPerUnit })
                       showSuccessToast(`You selected the ${plan.label} camp.`)
+                       document
+                  .getElementById("booking-form")
+                  ?.scrollIntoView({ behavior: "smooth" })
                     }
                       
                     }

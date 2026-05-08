@@ -67,7 +67,14 @@ export function Hero() {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row justify-start sm:justify-center w-full gap-4 mt-4">
-            <Button onClick={handleBookingClick} variant={"regular"}>
+            <Button
+              onClick={() =>
+                document
+                  .getElementById("consultation-cta")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              variant={"regular"}
+            >
               Book Now <CaretRight />
             </Button>
           </div>
