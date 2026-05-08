@@ -244,7 +244,7 @@ function ChangePasswordSection() {
         <header className="text-primary-text font-semibold text-base mb-5">
           Change Password
         </header>
-        <div className="p-4 bg-white rounded-[8px] border border-[#EAECF0] text-sm text-secondary-text">
+        <div className="p-4 bg-dash-secondary-bg rounded-[8px] border border-[#EAECF0] text-sm text-secondary-text">
           You signed in with a social account. Password login is not available for your account.
         </div>
       </div>
