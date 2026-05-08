@@ -115,6 +115,7 @@ export default function BookCampForm({
     };
 
     const paymentTab = window.open("", "_blank");
+
     bookACamp(
       { campId, payload },
       {
@@ -153,6 +154,7 @@ export default function BookCampForm({
         },
         onError: () => {
           closeModal("loading");
+          paymentTab?.close();
         },
       },
     );
@@ -167,7 +169,7 @@ export default function BookCampForm({
       className="space-y-7 "
     >
       {/* basic information */}
-      <div className="bg-dash-secondary-bg px-5 py-10 rounded-[12px]">
+      <div className="bg-dash-secondary-bg px-5 pt-5 pb-10 rounded-[12px]">
         <header>
           <h3 className="text-primary-text text-xl text-center font-medium mb-10">{`${tierLabel} Camp Registration`}</h3>
         </header>
