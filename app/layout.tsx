@@ -24,7 +24,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   preload: false,
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sit-with-pd.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sitwithpd.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

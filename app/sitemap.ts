@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { mockBlogs } from "@/lib/mock-data/blogs";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sit-with-pd.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sitwithpd.com";
 
   // Static routes
   const routes = [
