@@ -32,7 +32,7 @@ export default function CampServices() {
       (camp) =>
         camp?.tiers &&
         camp?.tiers?.length > 0 &&
-        (camp.status === "UPCOMING" || camp.status === "ONGOING"),
+        camp.status === "UPCOMING" ,
     ) || [];
 
 

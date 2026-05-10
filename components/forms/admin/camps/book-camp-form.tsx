@@ -359,7 +359,7 @@ export default function BookCampForm({
       </div>
 
       <div className="flex items-center justify-end w-full mt-10 gap-3">
-        <Button variant={"outline"} type="button">
+        <Button onClick={() => closeModal("book-camp")} variant={"outline"} type="button" className="text-regular-button border-regular-button">
           Cancel
         </Button>
         <Button

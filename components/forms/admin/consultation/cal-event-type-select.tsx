@@ -31,6 +31,7 @@ export default function CalEventTypeSelect({
     }));
   }, [data]);
 
+  
   return (
     <Select value={value} onValueChange={onChange} disabled={isLoading}>
       <SelectTrigger className="bg-white dark:bg-transparent  border-[0.75px] border-[#EAECF0] rounded-[5px] w-full text-[12px] font-medium text-primary-text h-[54px] focus-visible:ring-0">
@@ -46,7 +47,9 @@ export default function CalEventTypeSelect({
       <SelectContent>
         <SelectGroup>
           {isError && (
-            <div className="p-2 text-xs text-red-500">Failed to load events</div>
+            <div className="p-2 text-xs text-red-500">
+              Failed to load events
+            </div>
           )}
           {options.length === 0 && !isLoading && !isError && (
             <div className="p-2 text-xs text-secondary-text text-center">
