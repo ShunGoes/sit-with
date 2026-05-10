@@ -326,6 +326,7 @@ export function Navbar() {
                   >
                     Logout
                   </Button>
+                  <div className="h-20" />
                 </>
               )}
             </motion.div>

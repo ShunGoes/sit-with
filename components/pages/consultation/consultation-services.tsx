@@ -105,7 +105,7 @@ export function ConsultationServices() {
                 <h3 className="text-[#101828] font-medium text-lg mb-3 pr-6">
                   {service.title}
                 </h3>
-                <p className="text-[#4A5565] text-base leading-[1.425rem] mb-3 grow">
+                <p className="text-[#4A5565] text-base line-clamp-2 leading-[1.425rem] mb-3 grow">
                   {service.description}
                 </p>
                 
