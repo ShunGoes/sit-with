@@ -323,3 +323,80 @@ export const deleteCampImage = async (
     throw new Error(getApiError(error));
   }
 };
+
+// ===================== MY CAMP REGISTRATION =====================
+
+export interface CampRegistrationApplicantDetails {
+  notes: string;
+  phone: string;
+  fullName: string;
+  partyMembers: string[];
+  emergencyContact: {
+    name: string;
+    phone: string;
+    relationship: string;
+  };
+  dietaryRestrictions: string;
+  accommodationPreference: string;
+}
+
+export interface CampRegistration {
+  id: string;
+  campId: string;
+  tierId: string;
+  participantCount: number;
+  applicantDetails: CampRegistrationApplicantDetails;
+  status: "PENDING_PAYMENT" | "CONFIRMED" | "PAID" | "CANCELLED" | "EXPIRED";
+  paymentExpiresAt: string;
+  createdAt: string;
+  updatedAt: string;
+  camp: {
+    id: string;
+    title: string;
+    description: string;
+    location: string;
+    currency: string;
+    capacity: number;
+    startDate: string;
+    endDate: string;
+    thumbnail: string;
+    benefits: string[];
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  tier: {
+    id: string;
+    label: string;
+    price: number;
+    seatsPerUnit: number;
+  };
+  payment: {
+    id: string;
+    amount: number;
+    status: string;
+    reference: string;
+    createdAt: string;
+  } | null;
+}
+
+export interface CampRegistrationResponse {
+  success: boolean;
+  message: string;
+  data: CampRegistration;
+}
+
+export const getMyCampRegistration = async (
+  campId: string,
+): Promise<CampRegistrationResponse> => {
+  if (!campId) {
+    throw new Error("Camp ID is required.");
+  }
+
+  try {
+    const res = await api.get(`/camps/${campId}/my-registration`);
+    return res.data;
+  } catch (error) {
+    throw new Error(getApiError(error));
+  }
+};

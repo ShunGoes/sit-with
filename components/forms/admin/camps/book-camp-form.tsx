@@ -18,12 +18,86 @@ import {
 } from "@/schemas/camps-schema";
 import { useAuthStore } from "@/store/use-auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle, PlusCircle, Trash2 } from "lucide-react";
+import { CheckCircle, PlusCircle, Trash2, AlertTriangle, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import LearningObjectivesField from "../program/learning-objectives-field";
 import { useCreatePayment } from "@/lib/api/hooks/payments/payments.hooks";
+import { getMyCampRegistration } from "@/lib/api/services/camps/camps.services";
+
+// Modal shown when user has a pending application and needs to complete payment
+function PendingRegistrationModal({ campId, message }: { campId: string; message: string }) {
+  const { mutate: createPayment, isPending: isCreatingPayment } = useCreatePayment();
+  const closeModal = useModalStore((state) => state.closeModal);
+  const [isFetchingRegistration, setIsFetchingRegistration] = useState(false);
+
+  const handleContinueToPayment = async () => {
+    setIsFetchingRegistration(true);
+    try {
+      const registration = await getMyCampRegistration(campId);
+      const registrationId = registration.data.id;
+
+      const paymentTab = window.open("", "_blank");
+
+      createPayment(
+        { type: "CAMP" as const, itemId: registrationId },
+        {
+          onSuccess: (paymentData: any) => {
+            if (paymentTab) {
+              paymentTab.location.href = paymentData?.data?.authorizationUrl;
+            }
+            closeModal("pending-registration");
+          },
+          onError: () => {
+            paymentTab?.close();
+          },
+        },
+      );
+    } catch {
+      showErrorToast("Failed to fetch registration details.");
+    } finally {
+      setIsFetchingRegistration(false);
+    }
+  };
+
+  const isProcessing = isFetchingRegistration || isCreatingPayment;
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-5 p-4 rounded-lg min-w-50">
+      <div className="w-16 h-16 rounded-full bg-amber-50 flex items-center justify-center">
+        <AlertTriangle className="w-8 h-8 text-amber-600" />
+      </div>
+      <h2 className="text-primary-text text-base font-medium text-center max-w-md leading-relaxed">
+        {message}
+      </h2>
+      <div className="flex gap-3 mt-2">
+        <Button
+          onClick={() => closeModal("pending-registration")}
+          variant="outline"
+          disabled={isProcessing}
+          className="border border-regular-button text-regular-button"
+        >
+          Close
+        </Button>
+        <Button
+          onClick={handleContinueToPayment}
+          variant="regular"
+          disabled={isProcessing}
+        >
+          {isProcessing ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin mr-2" />
+              Processing…
+            </>
+          ) : (
+            "Continue to Payment"
+          )}
+        </Button>
+      </div>
+    </div>
+  );
+}
 
 export default function BookCampForm({
   tierId,
@@ -152,9 +226,19 @@ export default function BookCampForm({
             },
           });
         },
-        onError: () => {
+        onError: (error: any) => {
           closeModal("loading");
           paymentTab?.close();
+
+          // Detect pending application error and show recovery modal
+          const isPendingApplication = error?.message?.toLowerCase()?.includes("pending application");
+          if (isPendingApplication) {
+            closeModal("book-camp");
+            openModal(
+              "pending-registration",
+              <PendingRegistrationModal campId={campId} message={error.message} />,
+            );
+          }
         },
       },
     );
@@ -197,7 +281,7 @@ export default function BookCampForm({
                       field.onChange(value);
                     }}
                     placeholder="08012345678"
-                    className="bg-white border-[0.75px] border-[#EAECF0] h-11"
+                    className="bg-white border-[0.75px] placeholder:text-[12px] text-[12px] border-[#EAECF0] h-11"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -233,7 +317,7 @@ export default function BookCampForm({
                         field.onChange(value);
                       }}
                       placeholder="+1234567890"
-                      className="bg-white border-[0.75px] border-[#EAECF0] h-11"
+                      className="bg-white border-[0.75px] placeholder:text-[12px] text-[12px] border-[#EAECF0] h-11"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -364,7 +448,7 @@ export default function BookCampForm({
         </Button>
         <Button
           variant={"regular"}
-          disabled={!form.formState.isValid || form.formState.isSubmitting}
+          disabled={!form.formState.isValid || form.formState.isSubmitting || fields.length !== maxParyMembers}
         >
           {form.formState.isSubmitting ? "Submitting..." : "Secure Slot"}
         </Button>

@@ -17,6 +17,7 @@ import {
   replaceCampImage,
   updateCampImageMetadata,
   deleteCampImage,
+  getMyCampRegistration,
 } from "../../services/camps/camps.services";
 import { showSuccessToast, showErrorToast } from "@/lib/toast-helpers";
 import { CreateCampTierPayload, UpdateCampTierPayload } from "@/types/camps.types";
@@ -267,5 +268,16 @@ export const useDeleteCampImage = () => {
     onError: (error: any) => {
       showErrorToast(error.message);
     },
+  });
+};
+
+// ===================== MY CAMP REGISTRATION =====================
+
+export const useGetMyCampRegistration = (campId: string, enabled = true) => {
+  return useQuery({
+    queryKey: ["camps", campId, "my-registration"],
+    queryFn: () => getMyCampRegistration(campId),
+    enabled: Boolean(campId) && enabled,
+    retry: false,
   });
 };

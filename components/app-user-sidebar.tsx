@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, LayoutDashboard, LogOut, Settings } from "lucide-react";
+import { BookOpen, LayoutDashboard, LogOut, MapPin, Settings } from "lucide-react";
 import { useAuthStore } from "@/store/use-auth-store";
 import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
 import { logout } from "@/lib/api/services/auth/auth.services";
@@ -35,6 +35,11 @@ const data = {
       icon: <BookOpen />,
     },
     {
+      title: "Camps",
+      url: "/dashboard/camps",
+      icon: <MapPin size={20} />,
+    },
+    {
       title: "Settings",
       url: "/dashboard/settings",
       icon: <Settings />,
@@ -52,6 +57,13 @@ export function AppUserSidebar({ ...props }: React.ComponentProps<typeof Sidebar
   React.useEffect(() => {
     setMounted(true);
   }, []);
+
+  const { data: dashboardData } = useGetDashboardData();
+  const purchases = dashboardData?.data?.purchases ?? [];
+  const campRegistrations = dashboardData?.data?.campRegistrations ?? [];
+  
+  const hasPurchases = purchases.length > 0;
+  const hasCamps = campRegistrations.length > 0;
 
   return (
     <Sidebar {...props}>
@@ -77,12 +89,11 @@ export function AppUserSidebar({ ...props }: React.ComponentProps<typeof Sidebar
         {/* We create a SidebarGroup for each parent. */}
         <SidebarMenu className="px-3 space-y-3">
           {data.navMain.map((item) => {
-            // Check if user has purchases for restricting access to "My Programs"
-            const { data: dashboardData } = useGetDashboardData();
-            const purchases = dashboardData?.data?.purchases ?? [];
-            const hasPurchases = purchases.length > 0;
-
             if (item.title === "My Programs" && !hasPurchases) {
+              return null;
+            }
+
+            if (item.title === "Camps" && !hasCamps) {
               return null;
             }
 
