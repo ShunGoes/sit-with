@@ -94,7 +94,7 @@ function CardByIdOverview({ id }: { id: string }) {
             title="Camp Details"
             className={`p-2.5 rounded-lg transition-all duration-200 ${
               activeTab === "details"
-                ? "bg-brand-green text-white shadow-sm"
+                ? "bg-regular-button text-white shadow-sm"
                 : "bg-white text-secondary-text hover:bg-gray-100 border border-[#EAECF0]"
             }`}
           >
