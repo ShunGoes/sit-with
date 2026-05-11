@@ -192,10 +192,15 @@ export default function UserDashboardPage() {
                 </h3>
                 <div className="flex flex-col gap-6">
                   {campRegistrations.map((registration: any) => (
-                    <CampCards
-                      key={registration.id}
-                      registration={registration}
-                    />
+                    <Link 
+                      key={registration.id} 
+                      href={`/dashboard/camps/${registration.camp.id}`}
+                      className="transition-transform hover:scale-[1.01]"
+                    >
+                      <CampCards
+                        registration={registration}
+                      />
+                    </Link>
                   ))}
                 </div>
               </div>

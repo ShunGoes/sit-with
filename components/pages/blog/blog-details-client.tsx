@@ -125,7 +125,7 @@ function BlogDetailsWrapper({ slug }: { slug: string }) {
                       />
                     ),
                     label: "Facebook",
-                    href: "https://www.facebook.com/share/19tSLd5kzH/?mibextid=wwXIfr",
+                    href: "https://www.facebook.com/share/1DUtSP7cdu/?mibextid=wwXIfr",
                   },
                   {
                     icon: (

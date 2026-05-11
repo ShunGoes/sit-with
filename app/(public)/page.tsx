@@ -29,7 +29,7 @@ export default function Home() {
               "https://www.youtube.com/@sitwithpd",
               "https://www.tiktok.com/@sitwithpd?_r=1&_t=ZN-95g0zMOaKzW",
               "https://www.instagram.com/sitwithpd?igsh=OHo1eHRqNTRmd2ps&utm_source=qr",
-              "https://www.facebook.com/share/19tSLd5kzH/?mibextid=wwXIfr"
+              "https://www.facebook.com/share/1DUtSP7cdu/?mibextid=wwXIfr"
             ]
           }),
         }}

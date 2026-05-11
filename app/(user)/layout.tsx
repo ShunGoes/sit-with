@@ -42,10 +42,12 @@ export default function ProtectedLayout({
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-      <SidebarProvider>
-        <AppUserSidebar />
-        <SidebarInset>
-          <header className="flex h-16 w-full justify-between pr-4 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+      <SidebarProvider className="print:block">
+        <div className="print:hidden">
+          <AppUserSidebar />
+        </div>
+        <SidebarInset className="print:p-0 print:m-0 print:border-none">
+          <header className="flex h-16 w-full justify-between pr-4 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 print:hidden">
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
               <Separator
@@ -64,7 +66,7 @@ export default function ProtectedLayout({
                 <ModeToggle />
               </div>
           </header>
-          <div className={`flex flex-1 flex-col bg-[#F7F7F7] dark:bg-[#0A0A0A] gap-4 p-4  md:mt-0 lg:p-10 min-w-0 overflow-hidden ${poppins.className}`}>
+          <div className={`flex flex-1 flex-col bg-[#F7F7F7] dark:bg-[#0A0A0A] gap-4 p-4 md:mt-0 lg:p-10 min-w-0 overflow-hidden print:p-0 print:bg-white ${poppins.className}`}>
             {children}
           </div>
         </SidebarInset>

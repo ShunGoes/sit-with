@@ -76,7 +76,7 @@ export function Footer() {
                   <Youtube size={20} />
                 </a>
                 <a
-                  href="https://www.facebook.com/share/19tSLd5kzH/?mibextid=wwXIfr"
+                  href="https://www.facebook.com/share/1DUtSP7cdu/?mibextid=wwXIfr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#C7CAC6] hover:text-[#A8D675] transition-colors"

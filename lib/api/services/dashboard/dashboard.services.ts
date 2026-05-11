@@ -34,16 +34,31 @@ export interface CampRegistration {
   tierId: string | null;
   participantCount: number;
   applicantDetails: any;
+  status: string;
   createdAt: string;
+  updatedAt: string;
   camp: {
     id: string;
     title: string;
     description: string;
     location: string;
+    currency: string;
     startDate: string;
     endDate: string;
     thumbnail: string;
     status: string;
+  };
+  payment?: {
+    status: string;
+    amount: number;
+    createdAt: string;
+    reference?: string;
+  };
+  tier?: {
+    id: string;
+    label: string;
+    price: number;
+    seatsPerUnit: number;
   };
 }
 

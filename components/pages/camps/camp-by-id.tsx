@@ -18,17 +18,23 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import BookCampForm from "@/components/forms/admin/camps/book-camp-form";
 import { showSuccessToast } from "@/lib/toast-helpers";
+import { useAuthStore } from "@/store/use-auth-store";
+import { Info, Receipt } from "lucide-react";
+import CampRegistrationDetails from "./camp-registration-details";
+
+type CampTab = "details" | "registration";
 
 function CardByIdOverview({ id }: { id: string }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<CampTab>("details");
 
   const { data: campData, isLoading, isError } = useGetCamp(id);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const camp = campData?.data;
-console.log( "camp detials", camp);
 
   const labelText = "text-brand-green font-medium text-sm uppercase";
   const valueText = "text-secondary-text font-medium text-base";
@@ -71,8 +77,6 @@ console.log( "camp detials", camp);
     }
   };
 
-  
-
   return (
     <div className=" bg-[#F7F7F7] py-30">
       <section className="max-w-7xl w-11/12 mx-auto lg:w-11/12 space-y-10">
@@ -83,178 +87,212 @@ console.log( "camp detials", camp);
           backLinkText="Back to camps"
         />
 
-        {/* camp details  */}
-        <QueryStateHandler
-          data={camp ? [camp] : undefined}
-          isLoading={isLoading}
-          isError={isError}
-          loadingMessage="Loading Camp Details"
-          errorMessage="Failed to fetch camp data"
-          emptyMessage="Camp not found"
-        >
-          <div className="bg-dash-secondary-bg p-6 rounded-[16px] space-y-6">
-            <div className="flex justify-between items-start">
-              <h1 className="text-xl text-primary-text font-bold">
-                {camp?.title}
-              </h1>
-            </div>
+        {/* Tab Switcher – Icon Only */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setActiveTab("details")}
+            title="Camp Details"
+            className={`p-2.5 rounded-lg transition-all duration-200 ${
+              activeTab === "details"
+                ? "bg-brand-green text-white shadow-sm"
+                : "bg-white text-secondary-text hover:bg-gray-100 border border-[#EAECF0]"
+            }`}
+          >
+            <Info className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab("registration");
+            }}
+            title="My Registration"
+            className={`p-2.5 rounded-lg transition-all duration-200 ${
+              activeTab === "registration"
+                ? "bg-brand-green text-white shadow-sm"
+                : "bg-white text-secondary-text hover:bg-gray-100 border border-[#EAECF0]"
+            }`}
+          >
+            <Receipt className="w-5 h-5" />
+          </button>
+        </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h3 className={labelText}>Location</h3>
-                <p className={valueText}>{camp?.location}</p>
-              </div>
-              <div>
-                <h3 className={labelText}>Capacity</h3>
-                <p className={valueText}>{camp?.capacity} Participants max</p>
-              </div>
-              <div>
-                <h3 className={labelText}>Seats Remaining</h3>
-                <p className={valueText}>{camp?.seatsRemaining}</p>
-              </div>
-              <div>
-                <h3 className={labelText}>Dates</h3>
-                <p className={valueText}>
-                  {camp?.startDate &&
-                    new Date(camp.startDate).toLocaleString("en-US", {
-                      dateStyle: "medium",
-                    })}{" "}
-                  -{" "}
-                  {camp?.endDate &&
-                    new Date(camp.endDate).toLocaleString("en-US", {
-                      dateStyle: "medium",
-                    })}
-                </p>
-              </div>
-            </div>
+        {activeTab === "details" ? (
+          <>
+            {/* camp details  */}
+            <QueryStateHandler
+              data={camp ? [camp] : undefined}
+              isLoading={isLoading}
+              isError={isError}
+              loadingMessage="Loading Camp Details"
+              errorMessage="Failed to fetch camp data"
+              emptyMessage="Camp not found"
+            >
+              <div className="bg-dash-secondary-bg p-6 rounded-[16px] space-y-6">
+                <div className="flex justify-between items-start">
+                  <h1 className="text-xl text-primary-text font-bold">
+                    {camp?.title}
+                  </h1>
+                </div>
 
-            <div>
-              <h3 className={labelText}>Description</h3>
-              <p className={valueText}>{camp?.description}</p>
-            </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className={labelText}>Location</h3>
+                    <p className={valueText}>{camp?.location}</p>
+                  </div>
+                  <div>
+                    <h3 className={labelText}>Capacity</h3>
+                    <p className={valueText}>{camp?.capacity} Participants max</p>
+                  </div>
+                  <div>
+                    <h3 className={labelText}>Seats Remaining</h3>
+                    <p className={valueText}>{camp?.seatsRemaining}</p>
+                  </div>
+                  <div>
+                    <h3 className={labelText}>Dates</h3>
+                    <p className={valueText}>
+                      {camp?.startDate &&
+                        new Date(camp.startDate).toLocaleString("en-US", {
+                          dateStyle: "medium",
+                        })}{" "}
+                      -{" "}
+                      {camp?.endDate &&
+                        new Date(camp.endDate).toLocaleString("en-US", {
+                          dateStyle: "medium",
+                        })}
+                    </p>
+                  </div>
+                </div>
 
-            {camp?.images && camp.images.length > 0 && (
-              <div className="space-y-2">
-                <h3 className={labelText}>Gallery Images</h3>
-                <div className="flex items-center gap-4 overflow-x-auto">
-                  {camp.images.map((image: CampImage) => (
-                    <div key={image.id}>
-                      <div
-                        style={{
-                          viewTransitionName:
-                            lightboxOpen && selectedImage === image.id
-                              ? "none"
-                              : `camp-image-${image.id}`,
-                        }}
-                        className="relative rounded-md  w-[250px] aspect-3/2  cursor-pointer "
-                        onClick={() => handleOpenLightbox(image.id, image.url)}
-                      >
-                        <Image
-                          src={image.url}
-                          alt={image.caption || "Camp gallery"}
-                          fill
-                          className="object-cover rounded-md"
-                        />
+                <div>
+                  <h3 className={labelText}>Description</h3>
+                  <p className={valueText}>{camp?.description}</p>
+                </div>
+
+                {camp?.images && camp.images.length > 0 && (
+                  <div className="space-y-2">
+                    <h3 className={labelText}>Gallery Images</h3>
+                    <div className="flex items-center gap-4 overflow-x-auto">
+                      {camp.images.map((image: CampImage) => (
+                        <div key={image.id}>
+                          <div
+                            style={{
+                              viewTransitionName:
+                                lightboxOpen && selectedImage === image.id
+                                  ? "none"
+                                  : `camp-image-${image.id}`,
+                            }}
+                            className="relative rounded-md  w-[250px] aspect-3/2  cursor-pointer "
+                            onClick={() => handleOpenLightbox(image.id, image.url)}
+                          >
+                            <Image
+                              src={image.url}
+                              alt={image.caption || "Camp gallery"}
+                              fill
+                              className="object-cover rounded-md"
+                            />
+                          </div>
+                          <p className="text-xs uppercase wrap-break-word line-clamp-2 w-full  text-primary-text mt-2">
+                            {image.caption}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </QueryStateHandler>
+
+            {/* Camp Tiers Section */}
+            {camp?.tiers && camp.tiers.length > 0 && (
+              <div className="space-y-6">
+                <h2 className="text-xl text-primary-text font-bold">Camp Tiers</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-120 mx-auto lg:max-w-7xl gap-4  px-6 rounded-[16px]">
+                  {camp.tiers.sort((a,b) => a.order - b.order).map((plan: CampTier) => (
+                    <div
+                      key={plan.id}
+                      className={`flex flex-col gap-6 rounded-[32px] px-8 py-15 md:py-[100px]   transition-all duration-300 relative ${
+                        plan.isFeatured
+                          ? "bg-white border-2 border-[#649351] z-10  xl:mb-4"
+                          : "bg-white border border-[#2C2D47]  xl:mt-2 xl:scale-[0.95]"
+                      }`}
+                    >
+                      <div className="text-center ">
+                        <h3 className="text-lg font-medium uppercase text-[#242424] mb-4">
+                          {plan.label}
+                        </h3>
+                        <div className="flex items-end justify-center gap-1 mb-2">
+                          <span
+                            className={`lg:text-[56px] text-4xl font-medium leading-none ${plan.isFeatured ? "text-[#649351]" : "text-[#242424]"}`}
+                          >
+                            {formatCurrency(plan.price)}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3 justify-between mt-8">
+                          <p>
+                            Max Units:{" "}
+                            <span className="text-regular-button font-bold">
+                              {plan?.maxUnits}{" "}
+                            </span>
+                          </p>
+                          <p>
+                            Seats Per Unit:{" "}
+                            <span className="text-regular-button font-bold">
+                              {plan?.seatsPerUnit}{" "}
+                            </span>
+                          </p>
+                        </div>
+                        <p className="mt-4 font-normal ext-primary-text">
+                          {plan.description}
+                        </p>
                       </div>
-                      <p className="text-xs uppercase wrap-break-word line-clamp-2 w-full  text-primary-text mt-2">
-                        {image.caption}
-                      </p>
+
+                      <ul className="space-y-4 flex-1">
+                        <p className="font-semibold mb-2 text-primary-text text-base">
+                          Benefits:
+                        </p>
+                        {plan.inclusions?.map((feature, fIdx) => (
+                          <li key={fIdx} className="flex items-center gap-3">
+                            <span
+                              style={{
+                                background: "rgba(100, 147, 81, 0.2)",
+                              }}
+                              className="  w-[17px] h-[17px] rounded-full flex items-center justify-center "
+                            >
+                              <GrayCheckIcon color={"#649351"} />
+                            </span>
+                            <span className="text-black text-base font-medium ">
+                              {feature}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <Button
+                        variant="regular"
+                        className="w-full mt-10 "
+                        onClick={() => {
+                          openModal(
+                            "book-camp",
+                            <BookCampForm
+                              tierId={plan.id}
+                              campId={id}
+                              tierLabel={plan.label}
+                              maxParyMembers={plan?.seatsPerUnit || 100}
+                            />,
+                          );
+                        }}
+                      >
+                        Book Camp
+                      </Button>
                     </div>
                   ))}
                 </div>
               </div>
             )}
-          </div>
-        </QueryStateHandler>
-
-        {/* Camp Tiers Section */}
-        {camp?.tiers && camp.tiers.length > 0 && (
-          <div className="space-y-6">
-            <h2 className="text-xl text-primary-text font-bold">Camp Tiers</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-120 mx-auto lg:max-w-7xl gap-4  px-6 rounded-[16px]">
-              {camp.tiers.map((plan: CampTier) => (
-                <div
-                  key={plan.id}
-                  className={`flex flex-col gap-6 rounded-[32px] px-8 py-15 md:py-[100px]   transition-all duration-300 relative ${
-                    plan.isFeatured
-                      ? "bg-white border-2 border-[#649351] z-10  xl:mb-4"
-                      : "bg-white border border-[#2C2D47]  xl:mt-2 xl:scale-[0.95]"
-                  }`}
-                >
-                  <div className="text-center ">
-                    <h3 className="text-lg font-medium uppercase text-[#242424] mb-4">
-                      {plan.label}
-                    </h3>
-                    <div className="flex items-end justify-center gap-1 mb-2">
-                      <span
-                        className={`lg:text-[56px] text-4xl font-medium leading-none ${plan.isFeatured ? "text-[#649351]" : "text-[#242424]"}`}
-                      >
-                        {formatCurrency(plan.price)}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-3 justify-between mt-8">
-                      <p>
-                        Max Units:{" "}
-                        <span className="text-regular-button font-bold">
-                          {plan?.maxUnits}{" "}
-                        </span>
-                      </p>
-                      <p>
-                        Seats Per Unit:{" "}
-                        <span className="text-regular-button font-bold">
-                          {plan?.seatsPerUnit}{" "}
-                        </span>
-                      </p>
-                    </div>
-                    <p className="mt-4 font-normal ext-primary-text">
-                      {plan.description}
-                    </p>
-                  </div>
-
-                  <ul className="space-y-4 flex-1">
-                    <p className="font-semibold mb-2 text-primary-text text-base">
-                      Benefits:
-                    </p>
-                    {plan.inclusions?.map((feature, fIdx) => (
-                      <li key={fIdx} className="flex items-center gap-3">
-                        <span
-                          style={{
-                            background: "rgba(100, 147, 81, 0.2)",
-                          }}
-                          className="  w-[17px] h-[17px] rounded-full flex items-center justify-center "
-                        >
-                          <GrayCheckIcon color={"#649351"} />
-                        </span>
-                        <span className="text-black text-base font-medium ">
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Button
-                    variant="regular"
-                    className="w-full mt-10 "
-                    onClick={() => {
-                      openModal(
-                        "book-camp",
-                        <BookCampForm
-                          tierId={plan.id}
-                          campId={id}
-                          tierLabel={plan.label}
-                          maxParyMembers={plan?.seatsPerUnit || 100}
-                        />,
-                      );
-                    }}
-                  >
-                    Book Camp
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </div>
+          </>
+        ) : (
+          /* My Registration Tab */
+          <CampRegistrationDetails campId={id} />
         )}
-
       </section>
     </div>
   );

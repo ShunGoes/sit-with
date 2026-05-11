@@ -154,7 +154,7 @@ export default function BlogDetail({ id }: { id: string }) {
                       src={blog.coverImageUrl}
                       alt={blog.title}
                       fill
-                      className="object-cover"
+                      className="object-coevr"
                     />
                   </div>
                 )}
