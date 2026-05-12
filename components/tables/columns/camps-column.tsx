@@ -67,9 +67,14 @@ const ActionCell = ({
         >
           <FilePenLine size={15} className="text-primary-text" /> Edit Camp
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleDeleteCamp(row.original.id)} className="py-3 px-4 text-brand-red">
-          <Trash2 color="var(--brand-red)" size={15} /> Delete Camp
-        </DropdownMenuItem>
+        {
+          row.original._count.registrations === 0 && (
+            <DropdownMenuItem onClick={() => handleDeleteCamp(row.original.id)} className="py-3 px-4 text-brand-red">
+              <Trash2 color="var(--brand-red)" size={15} /> Delete Camp
+            </DropdownMenuItem>
+          )
+        }
+        
       </DropdownMenuContent>
     </DropdownMenu>
   );

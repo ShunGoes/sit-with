@@ -23,6 +23,7 @@ export interface Camp {
   createdAt?: string;
   updatedAt?: string;
   seatsRemaining: number;
+  _count: { registrations: number };
 }
 
 export type CreateCampPayload = FormData;

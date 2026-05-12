@@ -118,12 +118,14 @@ const ActionCell = ({
             <FilePenLine className="text-[#344054] dark:text-white" /> Edit
           </DropdownMenuItem>
         )}
-        <DropdownMenuItem
-          onClick={() => handleDeleteProgram(row.original.id)}
-          className="py-3 px-4 text-brand-red hover:text-brand-red"
-        >
-          <Trash2 color="var(--brand-red)" size={15} /> Delete Program
-        </DropdownMenuItem>
+        {row.original._count.purchases === 0 && (
+          <DropdownMenuItem
+            onClick={() => handleDeleteProgram(row.original.id)}
+            className="py-3 px-4 text-brand-red hover:text-brand-red"
+          >
+            <Trash2 color="var(--brand-red)" size={15} /> Delete Program
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -44,14 +44,15 @@ export default function ProgramOverview() {
   const { mutate, isPending } = useDeleteProgram();
 
   const handleDeleteProgram = (id: string) => {
-    mutate(id, {
-      onSuccess: () => {
-        closeModal("loading");
-      },
-      onError: () => {
-        closeModal("loading");
-      },
-    });
+    console.log("this is the id of the selected program", id)
+    // mutate(id, {
+    //   onSuccess: () => {
+    //     closeModal("loading");
+    //   },
+    //   onError: () => {
+    //     closeModal("loading");
+    //   },
+    // });
   };
 
    useEffect(() => {
@@ -65,6 +66,8 @@ export default function ProgramOverview() {
         );
       }
     }, [isPending, openModal]);
+
+    console.log("Proram data ", programData?.data)
 
   return (
     <div className="space-y-15">
