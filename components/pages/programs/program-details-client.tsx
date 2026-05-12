@@ -38,7 +38,7 @@ function PaymentSuccessModal() {
 }
 
 function ProgramDetailsWrapper({ id }: { id: string }) {
-    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const {
     data: programData,
     isLoading,
@@ -47,19 +47,18 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
   } = useGetProgramById(id);
   const { mutate: createPayment, isPending: isCreatingPayment } =
     useCreatePayment();
-  const {
-    data,
-    isLoading: dashboardDataLoading,
-  } = useGetDashboardData({ enabled: isAuthenticated });
-
-
+  const { data, isLoading: dashboardDataLoading } = useGetDashboardData({
+    enabled: isAuthenticated,
+  });
 
   const router = useRouter();
 
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
 
-  const existingProgram = data?.data?.purchases?.find((p: Purchase) => p.programId === id);
+  const existingProgram = data?.data?.purchases?.find(
+    (p: Purchase) => p.programId === id,
+  );
 
   const labelText = "font-medium text-lg text-[#606060]";
 
@@ -111,7 +110,10 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
     // Save pending enrollment so the dashboard can show the congrats modal after payment
     localStorage.setItem(
       "pending_enrollment",
-      JSON.stringify({ programId: id, programTitle: title ?? "your programme" })
+      JSON.stringify({
+        programId: id,
+        programTitle: title ?? "your programme",
+      }),
     );
 
     // Open tab immediately to avoid popup blockers
@@ -150,11 +152,11 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
 
     if (existingProgram) {
       return (
-        <Link href={`/dashboard/program/${existingProgram.programId}`} className="w-full mt-auto">
-          <Button
-            variant="regular"
-            className="rounded-[8px]! w-full"
-          >
+        <Link
+          href={`/dashboard/program/${existingProgram.programId}`}
+          className="w-full mt-auto"
+        >
+          <Button variant="regular" className="rounded-[8px]! w-full">
             Continue Program
           </Button>
         </Link>
@@ -171,7 +173,7 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
       </Button>
     );
   };
-  
+
   useEffect(() => {
     if (isCreatingPayment) {
       openModal(
@@ -271,11 +273,11 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
 
         {/* what you will gain  */}
         <section className="mt-20 lg:mt-50 relative">
-          <div className="w-full lg:w-1/2 mx-auto">
-            <header className="text-[#667185] uppercase text-center mb-10 text-sm">
-              what you will gain
-            </header>
-            <div className="flex items-center flex-col gap-5">
+          <div className="w-full lg:w-[80%] mx-auto">
+            <header className="text-[#242424] font-semibold text-center  text-lg py-2 lg:py-0 border border-[#DDE4EA] w-full rounded-[8px]">
+            About This Programme
+          </header>
+            {/* <div className="flex items-center flex-col gap-5">
               {WHAT_YOU_WILL_GAIN.map((item, index) => (
                 <p
                   key={index}
@@ -284,6 +286,29 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
                   {item}
                 </p>
               ))}
+            </div> */}
+            <div className=" lg:w-[60%] text-center mx-auto relative">
+              {category === "STUDENTS" && (
+                <p className="text-sm text-[#606060] mt-2 border border-[#E8E8E8] p-2 rounded-[8px] ">
+                  Students will gain mentorship for future career and leadership
+                  pathways, alongside guidance for personal growth,
+                  confidence-building, and academic development.
+                </p>
+              )}
+              {category === "PROFESSIONALS" && (
+                <p className="text-sm text-[#606060] mt-2 border border-[#E8E8E8] p-2 rounded-[8px] ">
+                  Professionals will gain increased productivity, confidence,
+                  and workplace effectiveness, among other tools essential for
+                  career advancement and professional excellence.
+                </p>
+              )}
+              {category === "LEADERS" && (
+                <p className="text-sm text-[#606060] mt-2 border border-[#E8E8E8] p-2 rounded-[8px] ">
+                  Leaders will acquire improved decision-making and people
+                  management skills, as well as strategic insight, emotional
+                  intelligence, and sustainable leadership capacity.
+                </p>
+              )}
             </div>
           </div>
 
@@ -298,16 +323,16 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
           </div>
         </section>
 
-        <section className="lg:mt-50 mt-20 relative">
-          <header className="text-[#242424] font-semibold text-center  text-lg py-2 border border-[#DDE4EA] w-full rounded-[8px]">
+        <section className="lg:mt-20 mt-10 lg:w-[60%] text-center mx-auto relative">
+          <header className="text-[#242424] font-semibold text-center  text-lg py-2 lg:py-0 border border-[#DDE4EA] w-full rounded-[8px]">
             About This Programme
           </header>
           <p className="text-sm text-[#606060] mt-2 border border-[#E8E8E8] p-2 rounded-[8px] ">
-            This programme is designed to support undergraduates navigating
-            identity, pressure, and life transitions. Through guided sessions,
-            reflective practices, and structured conversations, participants
-            develop emotional awareness, clarity, and a stronger sense of
-            direction
+            Our programmes are intentionally designed to provide personalised
+            solutions for different categories of individuals, recognising that
+            growth, leadership, and development are not one-size-fits-all. Each
+            programme is carefully structured to address specific gaps, goals,
+            and aspirations based on the participant’s chosen path.
           </p>
         </section>
       </div>
