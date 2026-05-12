@@ -43,7 +43,7 @@ function EditProgramForm({ id }: { id: string }) {
     );
     formData.append("hoursPerWeek", data.hoursPerWeek);
     if (data.date) formData.append("startDate", data.date);
-    formData.append("category", data.programType);
+    formData.append("category", data.programType.toUpperCase());
     if (data.facilitatorName)
       formData.append("facilitatorName", data.facilitatorName);
     if (data.facilitatorEmail)
@@ -68,7 +68,6 @@ function EditProgramForm({ id }: { id: string }) {
           type: mod.type,
           duration: mod.duration,
           contentUrl: mod.contentLink,
-          embedCode: mod.embedCode,
         })),
       }));
       formData.append("weeks", JSON.stringify(formattedWeeks));
@@ -105,7 +104,7 @@ console.log(program)
         title: program.data.title || "",
         description: program.data.description || "",
         price: formatAmount(program.data.price?.toString()) || "",
-        programType: program.data?.category,
+        programType: program.data?.category?.toUpperCase(),
         duration: program.data.durationWeeks?.toString() || "0",
         hoursPerWeek: (program.data as any).hoursPerWeek?.toString() || "",
         thumbnail: (program.data as any).thumbnail || "",

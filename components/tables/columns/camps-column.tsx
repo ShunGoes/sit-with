@@ -61,20 +61,23 @@ const ActionCell = ({
         >
           <Plus size={15} className="text-primary-text" /> Add Tier
         </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => editCamp(row.original)}
-          className="py-3 px-4"
-        >
-          <FilePenLine size={15} className="text-primary-text" /> Edit Camp
-        </DropdownMenuItem>
-        {
-          row.original._count.registrations === 0 && (
-            <DropdownMenuItem onClick={() => handleDeleteCamp(row.original.id)} className="py-3 px-4 text-brand-red">
-              <Trash2 color="var(--brand-red)" size={15} /> Delete Camp
-            </DropdownMenuItem>
-          )
-        }
         
+          <DropdownMenuItem
+            onClick={() => editCamp(row.original)}
+            className="py-3 px-4"
+          >
+            <FilePenLine size={15} className="text-primary-text" /> Edit Camp
+          </DropdownMenuItem>
+       
+
+        {row.original._count.registrations === 0 && (
+          <DropdownMenuItem
+            onClick={() => handleDeleteCamp(row.original.id)}
+            className="py-3 px-4 text-brand-red"
+          >
+            <Trash2 color="var(--brand-red)" size={15} /> Delete Camp
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -83,7 +86,7 @@ const ActionCell = ({
 const CampsColumn = (
   handleDeleteCamp: (id: string) => void,
   editCamp: (camp: Camp) => void,
-  currency: string = "NGN"
+  currency: string = "NGN",
 ): ColumnDef<Camp>[] => [
   {
     accessorKey: "title",
@@ -99,43 +102,33 @@ const CampsColumn = (
     accessorKey: "location",
     header: "Location",
     cell: ({ row }) => (
-      <h6 className="text-xs text-secondary-text">
-        {row.original.location}
-      </h6>
+      <h6 className="text-xs text-secondary-text">{row.original.location}</h6>
     ),
     size: 150,
   },
   {
     accessorKey: "capacity",
     header: "Capacity",
-    cell: ({ row }) => (
-      <h6 className="text-xs">
-        {row.original.capacity}
-      </h6>
-    ),
+    cell: ({ row }) => <h6 className="text-xs">{row.original.capacity}</h6>,
   },
   {
     accessorKey: "startDate",
     header: "Start Date",
     cell: ({ row }) => {
       const dateStr = row.original.startDate;
-      const formattedDate = dateStr 
-        ? formatAppDate(dateStr)
-        : "-";
+      const formattedDate = dateStr ? formatAppDate(dateStr) : "-";
       return <h6 className="text-xs">{formattedDate}</h6>;
     },
-    size: 150
+    size: 150,
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-       const status = row.original.status || "UPCOMING";
-       return (
-        <Badge variant={statusVariantAssigner(status) as any}>
-          {status}
-        </Badge>
-       );
+      const status = row.original.status || "UPCOMING";
+      return (
+        <Badge variant={statusVariantAssigner(status) as any}>{status}</Badge>
+      );
     },
   },
   {
