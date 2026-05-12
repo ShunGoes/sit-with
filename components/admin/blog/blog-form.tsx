@@ -90,7 +90,7 @@ export default function BlogForm({
             name="category"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <Select onValueChange={field.onChange} value={field.value}>
+                <Select key={field.value} onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger className="bg-transparent text-primary-text">
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
