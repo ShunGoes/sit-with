@@ -11,6 +11,7 @@ import {
   Calendar,
   BookOpen,
   ChevronRight,
+  Check,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -92,7 +93,7 @@ export default function ProgramDetailPage() {
         </div>
 
         {program.description && (
-          <p className="text-sm text-primary-text mb-4">
+          <p className="text-sm text-primary-text mb-4 whitespace-pre-wrap">
             {program.description}
           </p>
         )}
@@ -130,6 +131,28 @@ export default function ProgramDetailPage() {
             />
           </div>
         </div>
+
+           {program.learningOutcomes && program.learningOutcomes.length > 0 && (
+                <div className="bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#EAECF0] mt-5 dark:border-[#333] rounded-[12px] p-6">
+                  <h3 className="text-base font-semibold text-secondary-text mb-4">
+                    Learning Outcomes
+                  </h3>
+                  <ul className="flex flex-col gap-3">
+                    {program.learningOutcomes.map((obj, i) => (
+                      <li
+                        key={i}
+                        className="flex items-start gap-3 text-sm text-primary-text leading-relaxed"
+                      >
+                        <Check
+                          className="text-regular-button shrink-0 mt-0.5"
+                          size={18}
+                        />
+                        <span>{obj}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
       </div>
 
       {/* Weeks List */}
@@ -186,7 +209,7 @@ export default function ProgramDetailPage() {
                     </div>
 
                     {week.description && (
-                      <p className="text-sm text-secondary-text mb-3">
+                      <p className="text-sm text-secondary-text mb-3 whitespace-pre-wrap ">
                         {week.description}
                       </p>
                     )}

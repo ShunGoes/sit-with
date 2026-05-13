@@ -26,7 +26,7 @@ export default function CampCards({ registration }: { registration: any }) {
         </Badge>
       </div>
 
-      <p className="text-secondary-text text-sm mb-6 leading-relaxed line-clamp-2">
+      <p className="text-secondary-text text-sm mb-6 leading-relaxed whitespace-pre-wrap line-clamp-2">
         {camp.description}
       </p>
 
