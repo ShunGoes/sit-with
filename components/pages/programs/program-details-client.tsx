@@ -8,7 +8,13 @@ import { Badge } from "@/components/ui/badge";
 import CardSkeletons from "@/components/skeletons/card-skeletons";
 import { Suspense, useEffect } from "react";
 import { formatCurrency } from "@/lib/utils";
-import { Calendar, CheckCircle, Clock10Icon, Lightbulb } from "lucide-react";
+import {
+  Calendar,
+  Check,
+  CheckCircle,
+  Clock10Icon,
+  Lightbulb,
+} from "lucide-react";
 import LocationIcon from "@/pd-icons/location-icon";
 import { showErrorToast } from "@/lib/toast-helpers";
 import { useAuthStore } from "@/store/use-auth-store";
@@ -235,7 +241,7 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
               <h3 className="text-lg font-semibold text-[#627B3A] mb-2">
                 {title}
               </h3>
-              <p className="text-sm text-[#263016] leading-relaxed ">
+              <p className="text-sm text-[#263016] leading-relaxed whitespace-pre-wrap ">
                 {description}
               </p>
             </div>
@@ -271,44 +277,41 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
           </div>
         </div>
 
+        {program.learningOutcomes && program.learningOutcomes.length > 0 && (
+          <div className="bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#EAECF0] mt-10 dark:border-[#333] rounded-[12px] p-6">
+            <h3 className="text-base font-semibold text-secondary-text mb-4">
+              Learning Outcomes
+            </h3>
+            <ul className="flex flex-col gap-3">
+              {program.learningOutcomes.map((obj: string, i: number) => (
+                <li
+                  key={i}
+                  className="flex items-start gap-3 text-sm text-primary-text leading-relaxed"
+                >
+                  <Check
+                    className="text-regular-button shrink-0 mt-0.5"
+                    size={18}
+                  />
+                  <span>{obj}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         {/* what you will gain  */}
-        <section className="mt-20 lg:mt-50 relative">
+        <section className="mt-10 lg:mt-20 relative">
           <div className="w-full lg:w-[80%] mx-auto">
             <header className="text-[#242424] font-semibold text-center  text-lg py-2 lg:py-0 border border-[#DDE4EA] w-full rounded-[8px]">
-            About This Programme
-          </header>
-            {/* <div className="flex items-center flex-col gap-5">
-              {WHAT_YOU_WILL_GAIN.map((item, index) => (
-                <p
-                  key={index}
-                  className="text-sm text-[#667185] font-meium border-[#A8D675] text-center border w-full py-3 rounded-[12px] "
-                >
-                  {item}
-                </p>
-              ))}
-            </div> */}
+              What Participants Will Gain:
+            </header>
             <div className=" lg:w-[60%] text-center mx-auto relative">
-              {category === "STUDENTS" && (
-                <p className="text-sm text-[#606060] mt-2 border border-[#E8E8E8] p-2 rounded-[8px] ">
-                  Students will gain mentorship for future career and leadership
-                  pathways, alongside guidance for personal growth,
-                  confidence-building, and academic development.
-                </p>
-              )}
-              {category === "PROFESSIONALS" && (
-                <p className="text-sm text-[#606060] mt-2 border border-[#E8E8E8] p-2 rounded-[8px] ">
-                  Professionals will gain increased productivity, confidence,
-                  and workplace effectiveness, among other tools essential for
-                  career advancement and professional excellence.
-                </p>
-              )}
-              {category === "LEADERS" && (
-                <p className="text-sm text-[#606060] mt-2 border border-[#E8E8E8] p-2 rounded-[8px] ">
-                  Leaders will acquire improved decision-making and people
-                  management skills, as well as strategic insight, emotional
-                  intelligence, and sustainable leadership capacity.
-                </p>
-              )}
+              <p className="text-sm text-[#606060] mt-2 border border-[#E8E8E8] p-2 rounded-[8px] ">
+                Participants will receive tailored support for their growth
+                journey; students will gain mentorship for career and personal
+                development, professionals will gain improved productivity and
+                workplace effectiveness, while leaders will learn strengthened
+                decision-making, people management, and leadership capacity.
+              </p>
             </div>
           </div>
 
@@ -325,7 +328,7 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
 
         <section className="lg:mt-20 mt-10 lg:w-[60%] text-center mx-auto relative">
           <header className="text-[#242424] font-semibold text-center  text-lg py-2 lg:py-0 border border-[#DDE4EA] w-full rounded-[8px]">
-            About This Programme
+            About Our Programme
           </header>
           <p className="text-sm text-[#606060] mt-2 border border-[#E8E8E8] p-2 rounded-[8px] ">
             Our programmes are intentionally designed to provide personalised

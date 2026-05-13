@@ -334,7 +334,7 @@ export default function WeekDetailPage() {
         </h1>
 
         {week.description && (
-          <p className="text-primary-text text-base">{week.description}</p>
+          <p className="text-primary-text text-base whitespace-pre-wrap">{week.description}</p>
         )}
 
         <div className="flex items-center gap-6 mt-1 text-sm text-secondary-text font-medium">

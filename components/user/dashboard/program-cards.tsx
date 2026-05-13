@@ -49,7 +49,7 @@ export default function ProgramCards({ purchase }: { purchase: Purchase }) {
           </Badge>
         </div>
 
-        <p className="text-primary-text text-base mb-8 leading-relaxed ">
+        <p className="text-primary-text text-base mb-8 leading-relaxed whitespace-pre-wrap ">
           {purchase.program.description}
         </p>
 
