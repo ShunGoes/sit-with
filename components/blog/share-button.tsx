@@ -30,6 +30,7 @@ interface ShareButtonProps {
   title: string;
   description?: string;
   variant?: "public" | "admin";
+  label?: string;
   className?: string;
 }
 
@@ -71,6 +72,7 @@ export default function ShareButton({
   title,
   description,
   variant = "public",
+  label,
   className,
 }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
@@ -181,10 +183,14 @@ export default function ShareButton({
         <DropdownMenuTrigger asChild>
           <Button
             variant={variant === "admin" ? "outline" : "regular"}
-            size={variant === "admin" ? "sm" : "default"}
+            size={variant === "admin" ? (label ? "default" : "sm") : "default"}
             className={cn(
               "gap-2",
-              variant === "admin" ? "w-8 h-8 p-0 border-none shadow-md" : "px-6 py-2",
+              variant === "admin" 
+                ? (label 
+                    ? "w-full justify-start px-4 py-2 border shadow-md bg-white text-gray-700 font-normal h-auto" 
+                    : "w-8 h-8 p-0 border-none shadow-md") 
+                : "px-6 py-2",
             )}
             onClick={(e) => {
               if (variant === "public" && typeof navigator !== "undefined" && typeof navigator.share === "function") {
@@ -194,7 +200,11 @@ export default function ShareButton({
             }}
           >
             <Share2 className={cn(variant === "admin" ? "w-[15px] h-[15px] text-[#98A2B3]" : "w-4 h-4")} />
-            {variant === "public" && <span className="hidden sm:inline">Share</span>}
+            {label ? (
+              <span>{label}</span>
+            ) : (
+              variant === "public" && <span className="hidden sm:inline">Share</span>
+            )}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56 p-2 bg-white dark:bg-gray-900 border-none shadow-xl rounded-xl">
