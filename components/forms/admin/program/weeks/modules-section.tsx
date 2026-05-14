@@ -16,7 +16,11 @@ interface ModulesSectionProps {
 }
 
 export default function ModulesSection({ weekIndex }: ModulesSectionProps) {
-  const { control, watch } = useFormContext<ProgramFormSchema>();
+  const {
+    control,
+    watch,
+    formState: { errors },
+  } = useFormContext<ProgramFormSchema>();
   const openModal = useModalStore((state) => state.openModal);
 
   // Nested field array scoped to weeks.{weekIndex}.modules
@@ -27,6 +31,8 @@ export default function ModulesSection({ weekIndex }: ModulesSectionProps) {
 
   const week = watch(`weeks.${weekIndex}`);
   const weekTitle = week?.weekTitle ?? "";
+
+  const weekErrors = (errors.weeks as any)?.[weekIndex]?.modules;
 
   const handleOpenAddModule = () => {
     openModal(
@@ -97,6 +103,7 @@ export default function ModulesSection({ weekIndex }: ModulesSectionProps) {
               module={field as unknown as ModuleFormData}
               index={index}
               onRemove={() => remove(index)}
+              error={weekErrors?.[index]}
             />
           ))}
         </div>

@@ -10,19 +10,19 @@ const nextConfig: NextConfig = {
     ],
   },
 // hide console.log() in production
-    compiler: {
-    removeConsole: {
-      exclude: ['error', 'warn'],
-    },
-  },
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: "/api/:path*",
-  //       destination: "https://sit-with-pd-global-therapeutic-web-app.onrender.com/api/:path*",
-  //     },
-  //   ];
+  //   compiler: {
+  //   removeConsole: {
+  //     exclude: ['error', 'warn'],
+  //   },
   // },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://sit-with-pd-global-therapeutic-web-app.onrender.com/api/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

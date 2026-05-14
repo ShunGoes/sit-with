@@ -11,8 +11,14 @@ import {
   ArrowRight,
   User,
   ChevronLeft,
+  Calendar,
+  Clock,
+  Tag,
 } from "lucide-react";
+import ShareButton from "@/components/blog/share-button";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { formatAppDate } from "@/lib/utils";
 import {
   useGetPublicBlogBySlug,
   useGetPublicBlogs,
@@ -32,6 +38,7 @@ function BlogDetailsWrapper({ slug }: { slug: string }) {
     .filter((b) => b.category === blog?.category && b.id !== blog?.id)
     .slice(0, 2);
 
+    
   if (isLoadingBlog) {
     return <BlogDetailsSkeleton />;
   }
@@ -48,45 +55,90 @@ function BlogDetailsWrapper({ slug }: { slug: string }) {
       <div className="container mx-auto px-4 md:px-8 py-12 max-w-7xl">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 lg:mt-20 mt-15 lg:w-10/12 w-full mx-auto">
           {/* ── Main Content Column ── */}
-          <article className="flex-1 min-w-0">
-            <Link href="/blog" className="flex items-center gap-1 mb-6">
-              <ChevronLeft className="text-regular-button" />
-              <p className="font-medium text-sm text-regular-button">Back</p>
+          <article className="flex-1 min-w-0 space-y-8">
+            <Link href="/blog" className="flex items-center gap-1 mb-2">
+              <ChevronLeft className="text-regular-button" size={18} />
+              <p className="font-medium text-sm text-regular-button">Back to Blog</p>
             </Link>
-            {/* Featured image */}
-            <div className="w-full aspect-video bg-[#C4CEBC] rounded-sm mb-6 overflow-hidden relative">
-              {blog.coverImageUrl && (
-                <Image
-                  src={blog.coverImageUrl}
-                  alt={blog.title}
-                  fill
-                  className="object-cover"
-                />
-              )}
-            </div>
 
-            {/* Title & meta */}
-            <h1 className="text-[#072608] lg:text-2xl text-xl font-medium leading-snug mb-4">
-              {blog.title}
-            </h1>
-            <div className="mb-8 flex items-center gap-4">
-              <span className="inline-block bg-[#E5ECE3] text-[#476C3B] px-3 py-1 rounded-full text-xs font-medium">
-                {blog.readTimeMinutes} min read
-              </span>
-              <div className="flex items-center gap-2">
-                <User size={16} />
-                <span>{blog.author || "Admin"}</span>
+            <div className="bg-white px-0 md:px-5 py-8 rounded-sm lg:rounded-[16px] space-y-8">
+              <div className="space-y-8">
+                <div className="flex justify-between items-center gap-4">
+                  <div className="flex flex-wrap gap-2">
+                    <Badge
+                      variant="hibiscus"
+                      className="flex items-center gap-1"
+                    >
+                      <Tag size={12} /> {blog.category}
+                    </Badge>
+                  </div>
+
+                  <ShareButton
+                    url={`/blog/${blog.slug}`}
+                    title={blog.title}
+                    description={blog.excerpt}
+                    variant="public"
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <h1 className="lg:text-3xl text-2xl font-bold text-[#072608] leading-tight">
+                    {blog.title}
+                  </h1>
+
+                  <div className="flex flex-wrap items-center gap-6 text-sm text-secondary-text">
+                    <div className="flex items-center gap-2">
+                      <User size={16} className="text-regular-button" />
+                      <span>{blog.author || "Admin"}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Calendar size={16} className="text-regular-button" />
+                      <span className="text-sm font-medium text-primary-text">
+                        {formatAppDate(blog.createdAt, {
+                          month: "long",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock size={16} className="text-regular-button" />
+                      <span>{blog.readTimeMinutes} min read</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <span className="text-sm text-secondary-text">
-                {blog.category}
-              </span>
-            </div>
 
-            {/* Content body */}
-            <div
-              className="prose prose-sm md:prose-base max-w-none text-primary-text leading-[1.75] dark:prose-invert shadow-[0px_4px_4px_#0000001F] p-4"
-              dangerouslySetInnerHTML={{ __html: blog.body }}
-            />
+              {/* Featured image */}
+              {blog.coverImageUrl && (
+                <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border bg-muted shadow-sm">
+                  <Image
+                    src={blog.coverImageUrl}
+                    alt={blog.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              )}
+
+              {/* Excerpt */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-primary-text">
+                  Excerpt
+                </h3>
+                <p className="text-secondary-text italic border-l-4 border-[#649351]/20 pl-4 py-1 leading-relaxed">
+                  {blog.excerpt}
+                </p>
+              </div>
+
+              {/* Content body */}
+              <div className="border-t border-border pt-8">
+                <div
+                  className="prose prose-sm md:prose-base max-w-none text-primary-text leading-[1.75] dark:prose-invert"
+                  dangerouslySetInnerHTML={{ __html: blog.body }}
+                />
+              </div>
+            </div>
           </article>
 
           {/* ── Sidebar Column ── */}
