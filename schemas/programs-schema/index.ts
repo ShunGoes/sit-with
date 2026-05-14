@@ -5,7 +5,7 @@ export const ModuleSchema = z.object({
   description: z.string().optional(),
   type: z.string().min(1, "Type is required"),
   duration: z.string().min(1, "Duration is required"),
-  contentLink: z.string().url("Must be a valid URL"),
+  contentLink: z.string(),
   embedCode: z.string().optional(),
 });
 

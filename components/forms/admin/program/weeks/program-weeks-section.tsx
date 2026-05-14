@@ -8,13 +8,14 @@ import { useModalStore } from "@/components/store/use-modal-store";
 import WeekCard from "./week-card";
 import ModulesSection from "./modules-section";
 import AddWeekModal from "./add-week-modal";
+import { FieldError } from "@/components/ui/field";
 import type {
   ProgramFormSchema,
   WeekFormData,
 } from "@/schemas/programs-schema";
 
 export default function ProgramWeeksSection() {
-  const { control } = useFormContext<ProgramFormSchema>();
+  const { control, formState: { errors } } = useFormContext<ProgramFormSchema>();
   const openModal = useModalStore((state) => state.openModal);
 
   const { fields, append, remove } = useFieldArray({
@@ -96,10 +97,12 @@ export default function ProgramWeeksSection() {
                 isSelected={selectedWeekIndex === index}
                 onToggleSelect={() => handleToggleSelect(index)}
                 onRemove={() => handleRemoveWeek(index)}
+                error={(errors.weeks as any)?.[index]}
               />
             ))}
           </div>
         )}
+        {errors.weeks && <FieldError errors={[errors.weeks as any]} />}
       </div>
 
       {/* Modules section — rendered outside the week card, below the week list */}

@@ -8,6 +8,7 @@ import { formatAppDate } from "@/lib/utils";
 import { useDeleteBlogPost } from "@/lib/api/hooks/admin/blog.hooks";
 import { useModalStore } from "@/components/store/use-modal-store";
 import { Spinner } from "@/components/spinner";
+import ShareButton from "@/components/blog/share-button";
 import { useEffect } from "react";
 
 export default function BlogContent({ blog }: { blog: BlogPost }) {
@@ -76,6 +77,12 @@ export default function BlogContent({ blog }: { blog: BlogPost }) {
         </div>
 
         <div className="flex items-center gap-1 mt-auto self-end  ">
+          <ShareButton
+            url={`/blog/${blog.slug}`}
+            title={blog.title}
+            description={blog.excerpt}
+            variant="admin"
+          />
           <Button
             variant={"outline"}
             onClick={(e) => {

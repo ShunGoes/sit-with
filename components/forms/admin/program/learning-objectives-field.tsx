@@ -6,9 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Check, X } from "lucide-react";
 import type { ProgramFormSchema } from "@/schemas/programs-schema";
+import { FieldError } from "@/components/ui/field";
 
 export default function LearningObjectivesField() {
-  const { control } = useFormContext<ProgramFormSchema>();
+  const { control, formState: { errors } } = useFormContext<ProgramFormSchema>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "learningObjectives",
@@ -29,6 +30,13 @@ export default function LearningObjectivesField() {
       handleAddObjective();
     }
   };
+
+  const fieldError = errors.learningObjectives;
+  
+  // Flatten nested errors if it's an array of objects
+  const flattenedErrors = Array.isArray(fieldError) 
+    ? fieldError.map(err => (err as any)?.text).filter(Boolean)
+    : fieldError ? [fieldError] : [];
 
   return (
     <div className="flex flex-col gap-3">
@@ -74,6 +82,7 @@ export default function LearningObjectivesField() {
           Add
         </Button>
       </div>
+      {flattenedErrors.length > 0 && <FieldError errors={flattenedErrors as any} />}
     </div>
   );
 }

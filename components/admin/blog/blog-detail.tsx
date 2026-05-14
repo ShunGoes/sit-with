@@ -31,6 +31,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import ShareButton from "@/components/blog/share-button";
 
 export default function BlogDetail({ id }: { id: string }) {
   const router = useRouter();
@@ -112,13 +113,29 @@ export default function BlogDetail({ id }: { id: string }) {
                         <EllipsisVertical />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-[200px]">
-                        <DropdownMenuItem onClick={() => blog && handleEditBlog(blog)} className="py-3 px-4">
+                        <DropdownMenuItem
+                          onClick={() => blog && handleEditBlog(blog)}
+                          className="py-3 px-4"
+                        >
                           <Edit size={15} color="var(--primary-text-color)" />{" "}
                           Edit Post
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={handleDelete} className="py-3 px-4 text-brand-red">
+                        <DropdownMenuItem
+                          onClick={handleDelete}
+                          className="py-3 px-4 text-brand-red"
+                        >
                           <Trash2 color="var(--brand-red)" size={15} /> Delete
                           Post
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <ShareButton
+                            url={`/blog/${blog.slug}`}
+                            title={blog.title}
+                            description={blog.excerpt}
+                            variant="admin"
+                            label="Share Post"
+                            className="w-full"
+                          />
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -137,7 +154,11 @@ export default function BlogDetail({ id }: { id: string }) {
                       <div className="flex items-center gap-2">
                         <Calendar size={16} />
                         <span className="text-sm font-medium text-primary-text">
-                          {formatAppDate(blog.createdAt, { month: "long", day: "numeric", year: "numeric" })}
+                          {formatAppDate(blog.createdAt, {
+                            month: "long",
+                            day: "numeric",
+                            year: "numeric",
+                          })}
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
@@ -180,7 +201,9 @@ export default function BlogDetail({ id }: { id: string }) {
             {/* Sidebar / Actions */}
             <div className="space-y-6">
               <div className="bg-dash-secondary-bg p-6 rounded-[16px] border border-border sticky top-8">
-                <h3 className="font-bold text-lg mb-4 hidden lg:block">Actions</h3>
+                <h3 className="font-bold text-lg mb-4 hidden lg:block">
+                  Actions
+                </h3>
                 <div className="space-y-3 hidden lg:block">
                   <Button
                     className="w-full justify-start gap-2 font-normal"
@@ -198,6 +221,14 @@ export default function BlogDetail({ id }: { id: string }) {
                     <Trash2 size={16} />{" "}
                     {isDeleting ? "Deleting..." : "Delete Post"}
                   </Button>
+                  <ShareButton
+                    url={`/blog/${blog.slug}`}
+                    title={blog.title}
+                    description={blog.excerpt}
+                    variant="admin"
+                    label="Share Post"
+                    className="w-full"
+                  />
                 </div>
 
                 <div className="mt-8 lg:pt-6 border-t border-border space-y-6">

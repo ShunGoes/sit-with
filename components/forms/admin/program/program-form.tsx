@@ -53,11 +53,35 @@ export default function ProgramForm({
     }
   }
 
+  const { toast } = require("sonner");
+
+  const onError = (errors: any) => {
+    console.log("Form Errors:", errors);
+    
+    // Show a summary toast
+    const errorMessages = Object.entries(errors).map(([key, value]: [string, any]) => {
+      const fieldName = key.replace(/([A-Z])/g, ' $1').toLowerCase();
+      return `${fieldName}: ${value.message || 'Invalid input'}`;
+    });
+
+    toast.error("Please fix the following errors:", {
+      description: (
+        <ul className="list-disc pl-4 mt-2">
+          {errorMessages.slice(0, 5).map((msg, i) => (
+            <li key={i} className="text-xs">{msg}</li>
+          ))}
+          {errorMessages.length > 5 && <li className="text-xs">...and {errorMessages.length - 5} more</li>}
+        </ul>
+      ),
+      duration: 5000,
+    });
+  };
+
   const form = useFormContext<ProgramFormSchema>();
 
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7 ">
+    <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-7 ">
       {/* basic information */}
       <div className="bg-dash-secondary-bg p-5 rounded-[12px]">
         <header className="text-secondary-text font-semibold text-base mb-4">

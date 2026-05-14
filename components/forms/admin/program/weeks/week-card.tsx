@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Check, Trash2 } from "lucide-react";
 import type { WeekFormData } from "@/schemas/programs-schema";
+import { FieldError } from "@/components/ui/field";
 
 interface WeekCardProps {
   week: WeekFormData;
@@ -10,6 +11,7 @@ interface WeekCardProps {
   isSelected: boolean;
   onToggleSelect: () => void;
   onRemove: () => void;
+  error?: any;
 }
 
 export default function WeekCard({
@@ -18,21 +20,23 @@ export default function WeekCard({
   isSelected,
   onToggleSelect,
   onRemove,
+  error,
 }: WeekCardProps) {
   const objectiveCount = week.learningObjectives.length;
   const moduleCount = week.modules.length;
 
   return (
     <div
-      className={`flex items-center justify-between border rounded-[12px] p-4 transition-colors ${
+      className={`flex flex-col border rounded-[12px] transition-colors ${
         isSelected
           ? "border-regular-button border-[0.67px] bg-[#F0F9FF] dark:bg-dash-secondary-bg"
           : "border-[#EAECF0] border-[0.67px] bg-dash-secondary-bg"
       }`}
     >
+      <div className="flex items-center justify-between p-4">
       <div className="flex flex-col gap-1">
         <p className="text-base font-semibold text-primary-text line-clamp-1 md:line-clamp-2">
-          Week {index + 1}: {week.weekTitle}
+         {week.weekTitle}
         </p>
         {week.description && (
           <p className="text-xs text-[#667085] line-clamp-1 md:line-clamp-2">{week.description}</p>
@@ -47,7 +51,7 @@ export default function WeekCard({
         </p>
       </div>
 
-      <div className="flex flex-col md:fllex-row items-end md:items-center gap-2 shrink-0">
+      <div className="flex flex-col md:flex-row items-end md:items-center gap-2 shrink-0">
         {/* Toggle between "Manage Modules" and "Selected" */}
         <Button
           type="button"
@@ -68,6 +72,12 @@ export default function WeekCard({
           <Trash2 className="h-4 w-4" />
         </button>
       </div>
+      </div>
+      {error && (
+        <div className="px-4 pb-4">
+          <FieldError errors={Object.values(error).filter(err => err && typeof err === 'object' && 'message' in err) as any} />
+        </div>
+      )}
     </div>
   );
 }

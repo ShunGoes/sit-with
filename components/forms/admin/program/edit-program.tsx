@@ -32,6 +32,7 @@ function EditProgramForm({ id }: { id: string }) {
   const { mutate, isPending } = useUpdateProgram();
   const { data: program } = useGetProgramById(id);
 
+
   const onSubmit = (data: ProgramFormSchema) => {
     const formData = new FormData();
 
@@ -88,6 +89,7 @@ function EditProgramForm({ id }: { id: string }) {
         onSuccess: () => {
           closeModal("loading");
           // router.push("/admin/program");
+          form.reset()
         },
         onError: () => {
           closeModal("loading");
@@ -95,7 +97,7 @@ function EditProgramForm({ id }: { id: string }) {
       },
     );
   };
-console.log(program)
+
 
   useEffect(() => {
     if (program) {

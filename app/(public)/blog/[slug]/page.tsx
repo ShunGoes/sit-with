@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: blog.title,
         description: blog.excerpt,
         type: "article",
+        url: `https://sitwithpd.com/blog/${slug}`,
         images: [
           {
             url: blog.coverImageUrl || "/images/primary-logo.png",
@@ -26,6 +27,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             height: 630,
           },
         ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: blog.title,
+        description: blog.excerpt,
+        images: [blog.coverImageUrl || "/images/primary-logo.png"],
       },
     };
   } catch (error) {
