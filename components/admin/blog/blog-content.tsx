@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FileText, Trash2, FilePenLine } from "lucide-react";
 import { BlogPost } from "@/lib/api/services/admin/blog.services";
 import Link from "next/link";
-import { formatAppDate } from "@/lib/utils";
+import { formatAppDate, formatFullName } from "@/lib/utils";
 import { useDeleteBlogPost } from "@/lib/api/hooks/admin/blog.hooks";
 import { useModalStore } from "@/components/store/use-modal-store";
 import { Spinner } from "@/components/spinner";
@@ -15,6 +15,7 @@ export default function BlogContent({ blog }: { blog: BlogPost }) {
   const { mutate: deletePost, isPending: isDeleting } = useDeleteBlogPost();
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
+  const authorName = blog.authorDisplayName || formatFullName(blog.author?.firstName, blog.author?.lastName);
 
   useEffect(() => {
     if (isDeleting) {
@@ -59,7 +60,7 @@ export default function BlogContent({ blog }: { blog: BlogPost }) {
             {blog.excerpt}
           </p>
           <p className="text-sm text-secondary-text">
-            {blog.author || "Admin"} · {formatAppDate(blog.createdAt)}
+            {authorName ? authorName : "" } · {formatAppDate(blog.createdAt)}
           </p>
         </div>
       </Link>

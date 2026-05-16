@@ -13,6 +13,7 @@ import { useUpdateBlogPost } from "@/lib/api/hooks/admin/blog.hooks";
 import { BlogPost } from "@/lib/api/services/admin/blog.services";
 import { useModalStore } from "@/components/store/use-modal-store";
 import { Spinner } from "@/components/spinner";
+import { formatFullName } from "@/lib/utils";
 
 interface EditBlogEditorProps {
   blog: BlogPost;
@@ -47,7 +48,7 @@ export default function EditBlogEditor({ blog }: EditBlogEditorProps) {
       form.reset({
         title: blog.title,
         slug: blog.slug,
-        author: blog.author || "Admin",
+        author: blog.authorDisplayName || formatFullName(blog.author?.firstName, blog.author?.lastName),
         excerpt: blog.excerpt,
         coverImage: blog.coverImageUrl,
         body: blog.body,
