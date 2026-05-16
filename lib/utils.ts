@@ -137,3 +137,7 @@ export const formatAppDateTime = (dateString: string | Date | undefined | null) 
     hour12: true
   });
 };
+
+export const formatFullName = (firstName?: string | null, lastName?: string | null) => {
+  return [firstName, lastName].filter(Boolean).join(" ");
+};

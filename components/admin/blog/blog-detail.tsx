@@ -8,7 +8,7 @@ import DashboardHeaderText from "@/components/dashboard/dashboard-header";
 import QueryStateHandler from "@/components/query-state-handler";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { formatAppDate, formatAppDateTime } from "@/lib/utils";
+import { formatAppDate, formatAppDateTime, formatFullName } from "@/lib/utils";
 import {
   Calendar,
   Clock,
@@ -149,7 +149,7 @@ export default function BlogDetail({ id }: { id: string }) {
                     <div className="flex flex-wrap items-center gap-6 text-sm text-secondary-text">
                       <div className="flex items-center gap-2">
                         <User size={16} />
-                        <span>{blog.author || "Admin"}</span>
+                        <span>{blog.authorDisplayName || formatFullName(blog.author?.firstName, blog.author?.lastName)}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Calendar size={16} />

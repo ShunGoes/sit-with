@@ -14,7 +14,12 @@ export interface BlogPost {
   publishedAt: string | null;
   createdAt: string;
   updatedAt: string;
-  author?: string; // Keep author if it exists in some contexts
+  author?: {
+    firstName: string;
+    lastName: string;
+    id: string;
+  }; 
+  authorDisplayName: string;
 }
 
 export interface BlogResponse {

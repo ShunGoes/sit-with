@@ -18,7 +18,7 @@ import {
 import ShareButton from "@/components/blog/share-button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { formatAppDate } from "@/lib/utils";
+import { formatAppDate, formatFullName } from "@/lib/utils";
 import {
   useGetPublicBlogBySlug,
   useGetPublicBlogs,
@@ -89,7 +89,7 @@ function BlogDetailsWrapper({ slug }: { slug: string }) {
                   <div className="flex flex-wrap items-center gap-6 text-sm text-secondary-text">
                     <div className="flex items-center gap-2">
                       <User size={16} className="text-regular-button" />
-                      <span>{blog.author || "Admin"}</span>
+                      <span>{blog.authorDisplayName || formatFullName(blog.author?.firstName, blog.author?.lastName)}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Calendar size={16} className="text-regular-button" />

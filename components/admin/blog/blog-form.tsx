@@ -50,14 +50,14 @@ export default function BlogForm({
   const isPublished = watch("isPublished");
 
   useEffect(() => {
-    if (title && !slug) {
+    if (title) {
       const generatedSlug = title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "");
+        .replace(/^-+|-+$/g, "");
       setValue("slug", generatedSlug, { shouldValidate: true });
     }
-  }, [title, slug, setValue]);
+  }, [title, setValue]);
 
   return (
     <form onSubmit={handleSubmit(onSubmitProp)} className="space-y-6">
