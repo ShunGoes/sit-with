@@ -10,6 +10,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.78",
+    "@ai-sdk/react": "^3.0.186",
     "@calcom/embed-react": "^1.5.3",
     "@hookform/resolvers": "^5.2.2",
     "@react-oauth/google": "^0.13.5",
@@ -27,6 +29,7 @@
     "@tiptap/starter-kit": "^3.22.1",
     "@types/canvas-confetti": "^1.9.0",
     "@vimeo/player": "^2.30.4",
+    "ai": "^6.0.184",
     "axios": "^1.14.0",
     "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
@@ -42,6 +45,7 @@
     "react-dom": "19.2.3",
     "react-dropzone": "^15.0.0",
     "react-hook-form": "^7.71.2",
+    "react-phone-number-input": "^3.4.16",
     "shadcn": "^4.0.7",
     "sharp": "^0.34.5",
     "sonner": "^2.0.7",

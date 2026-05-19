@@ -62,11 +62,10 @@ export const Modal = () => {
             )}
 
             <div
-              className={
-                modal.options?.variant === "lightbox"
-                  ? "pointer-events-auto"
-                  : ""
-              }
+              className={cn(
+                modal.options?.variant === "lightbox" ? "pointer-events-auto" : "",
+                modal.options?.className?.includes("flex") ? "h-full flex flex-col overflow-hidden" : ""
+              )}
             >
               {modal.content}
             </div>

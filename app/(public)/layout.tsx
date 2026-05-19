@@ -1,8 +1,8 @@
 import { Navbar } from "@/components/nav/navbar";
-import { ConditionalFooter } from "@/components/footer/conditional-footer";
 import { ViewTransition } from "react";
 import { ThemeReset } from "@/components/theme-reset";
 import { Footer } from "@/components/footer/footer";
+import FloatingActions from "@/components/chatbot/floating-actions";
 
 export default function PublicLayout({
   children,
@@ -19,6 +19,7 @@ export default function PublicLayout({
        <div className="p-5">
       <Footer />
     </div>
+    <FloatingActions />
     </>
   );
 }
