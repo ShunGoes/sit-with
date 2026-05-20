@@ -18,7 +18,13 @@ import {
 } from "@/schemas/camps-schema";
 import { useAuthStore } from "@/store/use-auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle, PlusCircle, Trash2, AlertTriangle, Loader2 } from "lucide-react";
+import {
+  CheckCircle,
+  PlusCircle,
+  Trash2,
+  AlertTriangle,
+  Loader2,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
@@ -27,8 +33,15 @@ import { useCreatePayment } from "@/lib/api/hooks/payments/payments.hooks";
 import { getMyCampRegistration } from "@/lib/api/services/camps/camps.services";
 
 // Modal shown when user has a pending application and needs to complete payment
-function PendingRegistrationModal({ campId, message }: { campId: string; message: string }) {
-  const { mutate: createPayment, isPending: isCreatingPayment } = useCreatePayment();
+function PendingRegistrationModal({
+  campId,
+  message,
+}: {
+  campId: string;
+  message: string;
+}) {
+  const { mutate: createPayment, isPending: isCreatingPayment } =
+    useCreatePayment();
   const closeModal = useModalStore((state) => state.closeModal);
   const [isFetchingRegistration, setIsFetchingRegistration] = useState(false);
 
@@ -41,7 +54,7 @@ function PendingRegistrationModal({ campId, message }: { campId: string; message
       const paymentTab = window.open("", "_blank");
 
       createPayment(
-        { type: "CAMP" as const, itemId: registrationId },
+        { type: "CAMP" as const, itemId: registrationId, provider: "FLUTTERWAVE" },
         {
           onSuccess: (paymentData: any) => {
             if (paymentTab) {
@@ -195,7 +208,6 @@ export default function BookCampForm({
       {
         onSuccess: (data) => {
           closeModal("loading");
-          console.log("response from booking a camp", data);
           const bookingResponseId = data?.data?.id;
           // after booking , send a request with the returned camp id
 
@@ -210,6 +222,7 @@ export default function BookCampForm({
           const paymentPayload = {
             type: "CAMP" as "CAMP" | "PROGRAM" | "CONSULTATION",
             itemId: bookingResponseId,
+            provider: "FLUTTERWAVE",
           };
 
           createPayment(paymentPayload, {
@@ -231,12 +244,17 @@ export default function BookCampForm({
           paymentTab?.close();
 
           // Detect pending application error and show recovery modal
-          const isPendingApplication = error?.message?.toLowerCase()?.includes("pending application");
+          const isPendingApplication = error?.message
+            ?.toLowerCase()
+            ?.includes("pending application");
           if (isPendingApplication) {
             closeModal("book-camp");
             openModal(
               "pending-registration",
-              <PendingRegistrationModal campId={campId} message={error.message} />,
+              <PendingRegistrationModal
+                campId={campId}
+                message={error.message}
+              />,
             );
           }
         },
@@ -443,12 +461,21 @@ export default function BookCampForm({
       </div>
 
       <div className="flex items-center justify-end w-full mt-10 gap-3">
-        <Button onClick={() => closeModal("book-camp")} variant={"outline"} type="button" className="text-regular-button border-regular-button">
+        <Button
+          onClick={() => closeModal("book-camp")}
+          variant={"outline"}
+          type="button"
+          className="text-regular-button border-regular-button"
+        >
           Cancel
         </Button>
         <Button
           variant={"regular"}
-          disabled={!form.formState.isValid || form.formState.isSubmitting || fields.length !== maxParyMembers}
+          disabled={
+            !form.formState.isValid ||
+            form.formState.isSubmitting ||
+            fields.length !== maxParyMembers
+          }
         >
           {form.formState.isSubmitting ? "Submitting..." : "Secure Slot"}
         </Button>

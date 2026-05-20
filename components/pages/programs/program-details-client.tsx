@@ -24,24 +24,7 @@ import { useModalStore } from "@/components/store/use-modal-store";
 import { Spinner } from "@/components/spinner";
 import { useGetDashboardData } from "@/lib/api/hooks/dashboard/dashboard.hooks";
 import { Purchase } from "@/lib/api/services/dashboard/dashboard.services";
-
-const WHAT_YOU_WILL_GAIN = [
-  "Greater emotional awareness and self-understanding",
-  "Clarity in navigating life decisions and transitions",
-  "Tools for managing pressure and uncertainty",
-];
-
-function PaymentSuccessModal() {
-  return (
-    <section className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
-      <CheckCircle className="w-10 h-10 text-regular-button" />
-      <h2 className="text-base text-center mb-12 max-w-2xl">
-        You have successfully enrolled for this coure. Please check your mail
-        for the next steps .
-      </h2>
-    </section>
-  );
-}
+import { CreatePaymentPayload } from "@/lib/api/services/payments/payments.services";
 
 function ProgramDetailsWrapper({ id }: { id: string }) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -97,6 +80,33 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
   } = program ?? {};
 
   // submit enrollment
+  const startPayment = () => {
+    // Open tab immediately to avoid popup blockers
+    const paymentTab = window.open("", "_blank");
+
+    const payload: CreatePaymentPayload = {
+      itemId: id,
+      type: "PROGRAM",
+      provider: "FLUTTERWAVE",
+    };
+
+    createPayment(payload, {
+      onSuccess: (data) => {
+        closeModal("loading");
+        if (paymentTab) {
+          paymentTab.location.href = data?.data?.authorizationUrl;
+        }
+      },
+      onError: () => {
+        closeModal("loading");
+        paymentTab?.close();
+        // Clear pending enrollment if payment init fails
+        localStorage.removeItem("pending_enrollment");
+      },
+    });
+  };
+
+  // enrol user and start payment
   const enrolNow = () => {
     if (!id) {
       showErrorToast("Program ID is invalid or cannot be found.");
@@ -122,28 +132,7 @@ function ProgramDetailsWrapper({ id }: { id: string }) {
       }),
     );
 
-    // Open tab immediately to avoid popup blockers
-    const paymentTab = window.open("", "_blank");
-
-    const payload = {
-      itemId: id,
-      type: "PROGRAM" as "PROGRAM" | "CONSULTATION" | "CAMP",
-    };
-
-    createPayment(payload, {
-      onSuccess: (data) => {
-        closeModal("loading");
-        if (paymentTab) {
-          paymentTab.location.href = data?.data?.authorizationUrl;
-        }
-      },
-      onError: (error) => {
-        closeModal("loading");
-        paymentTab?.close();
-        // Clear pending enrollment if payment init fails
-        localStorage.removeItem("pending_enrollment");
-      },
-    });
+    startPayment();
   };
 
   // Render different buttons depending on if the user has registered for a course before

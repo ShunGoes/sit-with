@@ -15,13 +15,15 @@ export interface Payment {
     email: string;
     firstName: string;
     lastName: string;
-  },
-  paystackRef: string
+  };
+  paystackRef: string;
 }
 
 export interface CreatePaymentPayload {
-itemId: string;
-type: "PROGRAM" | "CONSULTATION" | "CAMP";
+  itemId: string;
+  type: "PROGRAM" | "CONSULTATION" | "CAMP";
+  provider?: string;
+  currency?: string;
 }
 
 export interface UpdatePaymentPayload extends Partial<CreatePaymentPayload> {
@@ -49,12 +51,15 @@ export interface PaymentsResponse {
   message: string;
 }
 
-export const getPayments = async (params?: { page?: number; limit?: number }): Promise<PaymentsResponse> => {
+export const getPayments = async (params?: {
+  page?: number;
+  limit?: number;
+}): Promise<PaymentsResponse> => {
   try {
     const queryParams = new URLSearchParams();
     if (params?.page) queryParams.append("page", params.page.toString());
     if (params?.limit) queryParams.append("limit", params.limit.toString());
-    
+
     const res = await api.get(`/payments?${queryParams.toString()}`);
     return res.data;
   } catch (error) {
@@ -82,9 +87,7 @@ export interface CreatePaymentParams {
   type: "PROGRAM" | "MENTORSHIP";
 }
 
-export const createPayment = async (
-  payload: CreatePaymentPayload
-) => {
+export const createPayment = async (payload: CreatePaymentPayload) => {
   try {
     const res = await api.post("/payments/initialize", payload);
     return res.data;
@@ -96,7 +99,7 @@ export const createPayment = async (
 
 export const updatePayment = async (
   id: string,
-  payload: UpdatePaymentPayload
+  payload: UpdatePaymentPayload,
 ): Promise<PaymentResponse> => {
   if (!id) {
     throw new Error("Payment ID is required for updates.");
@@ -111,7 +114,9 @@ export const updatePayment = async (
   }
 };
 
-export const deletePayment = async (id: string): Promise<{ message: string }> => {
+export const deletePayment = async (
+  id: string,
+): Promise<{ message: string }> => {
   if (!id) {
     throw new Error("Payment ID is required for deletion.");
   }
@@ -125,19 +130,20 @@ export const deletePayment = async (id: string): Promise<{ message: string }> =>
   }
 };
 
-
 // ============== Verify paystack payment ======================
 interface verifyPaystackPaymentResponse {
-    success: true,
-    message:string,
-    data: {
-        status: "SUCCESS" | "PENDING" | "FAILED",
-        type: "PROGRAM" | "CAMP" | "CONSULTATION",
-        amount: number
-    }
+  success: true;
+  message: string;
+  data: {
+    status: "SUCCESS" | "PENDING" | "FAILED";
+    type: "PROGRAM" | "CAMP" | "CONSULTATION";
+    amount: number;
+  };
 }
 
-export const verifyPaystackPayment = async (paymentRef:string): Promise<verifyPaystackPaymentResponse> => {
+export const verifyPaystackPayment = async (
+  paymentRef: string,
+): Promise<verifyPaystackPaymentResponse> => {
   try {
     const res = await api.get(`/payments/verify/${paymentRef}`);
     return res.data;

@@ -21,16 +21,17 @@ export default function Home() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            "name": "Sit With PD",
-            "url": "https://sitwithpd.com",
-            "logo": "https://sitwithpd.com/images/primary-logo.png",
-            "description": "A global therapeutic network for presence-based healing and emotional transformation.",
-            "sameAs": [
+            name: "Sit With PD",
+            url: "https://sitwithpd.com",
+            logo: "https://sitwithpd.com/images/primary-logo.png",
+            description:
+              "A global therapeutic network for presence-based healing and emotional transformation.",
+            sameAs: [
               "https://www.youtube.com/@sitwithpd",
               "https://www.tiktok.com/@sitwithpd?_r=1&_t=ZN-95g0zMOaKzW",
               "https://www.instagram.com/sitwithpd?igsh=OHo1eHRqNTRmd2ps&utm_source=qr",
-              "https://www.facebook.com/share/1DUtSP7cdu/?mibextid=wwXIfr"
-            ]
+              "https://www.facebook.com/share/1DUtSP7cdu/?mibextid=wwXIfr",
+            ],
           }),
         }}
       />
@@ -41,7 +42,6 @@ export default function Home() {
         <OurTeam />
         <Testimonials />
         <div className="pb-24" />
-        
       </div>
     </div>
   );

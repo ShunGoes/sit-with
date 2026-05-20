@@ -221,7 +221,7 @@ export default function VerifyPaymentWrapper() {
 function VerifyPaymentContent() {
   const searchParams = useSearchParams();
   const reference =
-    searchParams.get("reference") || searchParams.get("trxref") || "";
+    searchParams.get("reference") || searchParams.get("trxref") || searchParams.get("tx_ref") || "";
 
   return (
     <main className="min-h-screen bg-[#F9FAFB] dark:bg-black flex items-center justify-center font-inter w-full">

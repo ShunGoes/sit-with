@@ -1,31 +1,73 @@
-import { Button } from "@/components/ui/button";
-import CaretRight from "@/pd-icons/caret-right";
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
+import { Play } from "lucide-react";
+
+// Extract YouTube video ID from URL
+const extractYouTubeId = (url: string) => {
+  const match = url.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/
+  );
+  return match ? match[1] : null;
+};
+
+const YOUTUBE_URL = "https://youtu.be/9-KZWH3NzTY?feature=shared";
+const VIDEO_ID = extractYouTubeId(YOUTUBE_URL);
 
 export function AboutHero() {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+  }
+
   return (
-    <section>
-      <div className="relative w-full min-h-[70svh] h-[70svh] lg:min-h-dvh lg:h-dvh flex items-center justify-center  py-24">
-        <Image
-          src={"/images/about-bg.webp"}
-          alt={"about oage bg image"}
-          fill
-          className="object-cover"
-          priority
-        />
-        {/* <div className="absolute inset-0 bg-black/25" /> */}
-        <div className="relative h-full w-[90%] mx-auto  flex flex-col gap-6 justify-center items-start max-w-7xl">
-          <div className="space-y-4  ">
-            <h1
-              className={`text-[#F9FDF9] font-semibold text-[3rem] lg:text-[4rem] xl:text-[5rem] leading-[1.05]  `}
+    <section className="relative w-full bg-[#0a0a0a]">
+      <div className="h-20 bg-black/20 lg:hidden" />
+      
+      <div className="w-full max-w-[1400px] mx-auto">
+        <div className="relative w-full aspect-video">
+          {!isPlaying ? (
+            // Lightweight thumbnail placeholder — loads instantly, no iframe overhead
+            <button
+              onClick={handlePlay}
+              className="group relative w-full h-full cursor-pointer border-none bg-transparent p-0"
+              aria-label="Play video about Sit-With-PD"
             >
-              About <br className="lg:hidden" /> Sit-With-PD
-            </h1>
-            <p className="lg:text-[1.25rem] text-xl text-[#F7FBF6]  md:text-start  sm:w-10/12 md:w-9/12 ">
-              A global therapeutic network dedicated to presence-based healing
-              and authentic personal development.
-            </p>
-          </div>
+              {/* YouTube thumbnail — lightweight img, no API script loaded */}
+              <Image
+                src={`https://img.youtube.com/vi/${VIDEO_ID}/maxresdefault.jpg`}
+                alt="About Sit-With-PD video"
+                fill
+                className="object-cover"
+                priority
+                sizes="100vw"
+              />
+
+              {/* Dark gradient overlay */}
+              <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-black/30 transition-opacity duration-300 group-hover:from-black/60 group-hover:via-black/10" />
+
+              {/* Centered Play Button */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-15 h-15 lg:w-24 lg:h-24 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white transition-all duration-300">
+                  <Play className="w-6 h-6 lg:w-10 lg:h-10 text-[#445b1c] fill-[#445b1c] ml-1" />
+                </div>
+              </div>
+
+            
+            </button>
+          ) : (
+            // Full YouTube iframe — only loaded after user clicks play
+            <iframe
+              src={`https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`}
+              title="About Sit-With-PD"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full border-0"
+              loading="lazy"
+            />
+          )}
         </div>
       </div>
     </section>
