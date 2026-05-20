@@ -26,6 +26,7 @@ import {
   Tent,
   MessageSquare,
   CreditCard,
+  Mails,
 } from "lucide-react";
 import { useAuthStore } from "@/store/use-auth-store";
 import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
@@ -67,6 +68,11 @@ const data = {
       url: "/admin/testimonials",
       icon: <MessageSquare />,
     },
+    {
+      title: "Contact Submissions",
+      url: "/admin/contact-submissions",
+      icon: <Mails />,
+    },
 
     {
       title: "Payments",
@@ -95,14 +101,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader className="px-3 mt-5">
-        <Link 
-          href="/admin" 
+        <Link
+          href="/admin"
           className="flex items-center gap-2"
           onClick={() => setOpenMobile(false)}
         >
           <div className="w-[120px] h-[50px] relative ">
             <Image
-              src={mounted && resolvedTheme === "light" ? "/images/light-mode-logo.png" : "/images/primary-logo.png"}
+              src={
+                mounted && resolvedTheme === "light"
+                  ? "/images/light-mode-logo.png"
+                  : "/images/primary-logo.png"
+              }
               alt="Sit With PD Logo"
               fill
               className="object-contain"
@@ -148,7 +158,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               tooltip="Logout"
               onClick={async () => {
                 setOpenMobile(false);
-                try { await logout(); } catch (e) { console.error(e); }
+                try {
+                  await logout();
+                } catch (e) {
+                  console.error(e);
+                }
                 const clearUser = useAuthStore.getState().clearUser;
                 clearUser();
                 localStorage.removeItem("sit-with-auth");

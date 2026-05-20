@@ -21,22 +21,23 @@ export default function ConsultationPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Service",
-            "name": "Professional Therapeutic Consultation",
-            "provider": {
+            name: "Professional Therapeutic Consultation",
+            provider: {
               "@type": "Organization",
-              "name": "Sit-With-PD"
+              name: "Sit-With-PD",
             },
-            "description": "Personalized one-on-one therapeutic consultations focused on presence-based healing and emotional transformation.",
-            "areaServed": "Global",
-            "serviceType": "Therapeutic Consultation"
+            description:
+              "Personalized one-on-one therapeutic consultations focused on presence-based healing and emotional transformation.",
+            areaServed: "Global",
+            serviceType: "Therapeutic Consultation",
           }),
         }}
       />
       <Hero />
       <div className="w-11/12 mx-auto">
         <AreasOfSupport />
-      <ConsultationServices />
-      <ProcessCards />
+        <ConsultationServices />
+        <ProcessCards />
       </div>
 
       {/* Testimonials section */}

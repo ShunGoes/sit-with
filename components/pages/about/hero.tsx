@@ -24,6 +24,8 @@ export function AboutHero() {
 
   return (
     <section className="relative w-full bg-[#0a0a0a]">
+      <div className="h-20 bg-black/20 lg:hidden" />
+      
       <div className="w-full max-w-[1400px] mx-auto">
         <div className="relative w-full aspect-video">
           {!isPlaying ? (
@@ -48,8 +50,8 @@ export function AboutHero() {
 
               {/* Centered Play Button */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white transition-all duration-300">
-                  <Play className="w-8 h-8 lg:w-10 lg:h-10 text-[#445b1c] fill-[#445b1c] ml-1" />
+                <div className="w-15 h-15 lg:w-24 lg:h-24 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white transition-all duration-300">
+                  <Play className="w-6 h-6 lg:w-10 lg:h-10 text-[#445b1c] fill-[#445b1c] ml-1" />
                 </div>
               </div>
 

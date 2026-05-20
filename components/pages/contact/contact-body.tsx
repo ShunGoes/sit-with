@@ -11,6 +11,7 @@ import { z } from "zod";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
+import { useSubmitContactForm } from "@/lib/api/hooks/contact/contact.hooks";
 
 const contactFormSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -27,7 +28,7 @@ const inputClassName =
 
 export function ContactBody() {
   const supportEmail = usePlatformSettingsStore(
-    (state) => state.settings?.supportEmail ?? "support@sitwithpd.com"
+    (state) => state.settings?.supportEmail ?? "support@sitwithpd.com",
   );
 
   const {
@@ -45,10 +46,20 @@ export function ContactBody() {
     },
   });
 
+  const { mutateAsync: submitContact } = useSubmitContactForm();
+
   const onSubmit = async (data: ContactFormValues) => {
-    // Future: connect to backend
-    console.log("Contact form submitted:", data);
-    reset();
+    try {
+      await submitContact({
+        fullName: data.firstName,
+        email: data.email,
+        phone: data.phone || "",
+        message: data.message,
+      });
+      reset();
+    } catch (error) {
+      // Error is handled in the hook via toast
+    }
   };
 
   return (
@@ -106,8 +117,8 @@ export function ContactBody() {
                 <h4 className="font-semibold text-[#111827] text-sm">Office</h4>
                 <div>
                   <p className="text-sm text-[#475467] leading-relaxed">
-                    International Headquarters; Gardenia Tropicana Lane
-                    Urmston, Manchester United Kingdom.
+                    International Headquarters; Gardenia Tropicana Lane Urmston,
+                    Manchester United Kingdom.
                   </p>
                 </div>
                 <div>
@@ -260,7 +271,7 @@ export function ContactBody() {
             {/* Submit Button */}
             <Button
               type="submit"
-              variant={'regular'}
+              variant={"regular"}
               disabled={isSubmitting}
               className="w-full h-12 rounded-lg text-base font-semibold"
             >

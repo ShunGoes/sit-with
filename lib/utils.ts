@@ -52,6 +52,12 @@ export const formatCurrency = (amount: number, currencyParam?: string) => {
 export const getApiError = (error: any) => {
   const response = error?.response;
 
+  console.log("the api error is",response);
+
+  if (response?.data?.errors && Array.isArray(response.data.errors) && response.data.errors.length > 0) {
+    return response.data.errors[0].message;
+  }
+
   if (response?.data?.message) {
     return response.data.message;
   }

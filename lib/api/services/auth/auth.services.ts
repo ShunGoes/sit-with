@@ -31,7 +31,7 @@ export const register = async (data: {
     const res = await api.post("/auth/register", data);
     return res.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     throw new Error(getApiError(error));
   }
