@@ -27,7 +27,7 @@ export default function SearchInput({
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (debouncedValue) {
+    if (debouncedValue.trim()) {
       params.set("search", debouncedValue);
     } else {
       params.delete("search");

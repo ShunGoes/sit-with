@@ -18,6 +18,7 @@ export default function Chat() {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  console.log("chatbot messages",messages)
   const closeModal = useModalStore(state => state.closeModal)
 
   // Automatically scroll to bottom on new messages or typing state changes

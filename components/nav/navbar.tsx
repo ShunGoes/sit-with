@@ -17,6 +17,7 @@ const navLinks = [
   { label: "Programs", href: "/programs" },
   { label: "Camps", href: "/camps" },
   { label: "Consultation", href: "/consultation" },
+  { label: "Community", href: "/community" },
   { label: "Contact", href: "/contact" },
   { label: "Blog", href: "/blog" },
 ];
@@ -30,7 +31,6 @@ export function Navbar() {
   const user = useAuthStore((state) => state.user);
   const clearUser = useAuthStore((state) => state.clearUser);
   const settings = usePlatformSettingsStore((state) => state.settings);
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,7 +84,6 @@ export function Navbar() {
               className="object-contain"
             />
           </div>
-
         </Link>
 
         {/* Desktop Links */}
@@ -95,7 +94,8 @@ export function Navbar() {
               const isActive =
                 link.href === "/"
                   ? pathname === "/"
-                  : pathname === link.href || pathname.startsWith(link.href + "/");
+                  : pathname === link.href ||
+                    pathname.startsWith(link.href + "/");
 
               return (
                 <Link
@@ -143,7 +143,11 @@ export function Navbar() {
               <Button
                 variant="danger"
                 onClick={async () => {
-                  try { await logout(); } catch (e) { console.error(e); }
+                  try {
+                    await logout();
+                  } catch (e) {
+                    console.error(e);
+                  }
                   clearUser();
                   localStorage.removeItem("sit-with-auth");
                   localStorage.removeItem("sit-with-token");
@@ -239,7 +243,6 @@ export function Navbar() {
                     className="object-contain"
                   />
                 </div>
-
               </Link>
               <button
                 onClick={() => setIsOpen(false)}
@@ -261,7 +264,8 @@ export function Navbar() {
                 const isActive =
                   link.href === "/"
                     ? pathname === "/"
-                    : pathname === link.href || pathname.startsWith(link.href + "/");
+                    : pathname === link.href ||
+                      pathname.startsWith(link.href + "/");
 
                 return (
                   <motion.div key={link.href} variants={itemVariants}>
@@ -300,13 +304,9 @@ export function Navbar() {
                       Login
                     </Link>
                   </Button>
-                  <Button
-                    asChild
-                    variant="regular"
-                    className="w-full "
-                  >
+                  <Button asChild variant="regular" className="w-full ">
                     <Link href="/signup" onClick={() => setIsOpen(false)}>
-                     Sign up
+                      Sign up
                     </Link>
                   </Button>
                 </>
@@ -315,7 +315,11 @@ export function Navbar() {
                   <Button
                     variant="danger"
                     onClick={async () => {
-                      try { await logout(); } catch (e) { console.error(e); }
+                      try {
+                        await logout();
+                      } catch (e) {
+                        console.error(e);
+                      }
                       clearUser();
                       setIsOpen(false);
                       localStorage.removeItem("sit-with-auth");
