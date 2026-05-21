@@ -12,7 +12,7 @@ const WhatsAppIcon = () => (
   </svg>
 );
 
-const WHATSAPP_LINK = "https://chat.whatsapp.com/YOUR_GROUP_INVITE_LINK"; 
+const WHATSAPP_LINK = "https://chat.whatsapp.com/BNby8Med1SmK1bX4YXLLuI?mode=gi_t"; 
 
 export default function FloatingActions() {
   const [isOpen, setIsOpen] = useState(false);

@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/programs",
     "/consultation",
     "/camps",
+    "/community",
     "/membership",
     "/contact",
     "/blog",

@@ -132,6 +132,12 @@ export function Footer() {
                 Consultation
               </Link>
               <Link
+                href="/community"
+                className="text-[#F8FFF5] hover:underline  text-sm transition-all"
+              >
+                Community
+              </Link>
+              <Link
                 href="/blog"
                 className="text-[#F8FFF5] hover:underline  text-sm transition-all"
               >
@@ -176,8 +182,6 @@ export function Footer() {
               </Link>
             </div>
           </div>
-
-
         </div>
 
         {/* Bottom Bar */}
@@ -242,7 +246,8 @@ export function Footer() {
 
         <div className="text-center mt-12">
           <p className="text-[#F2F8EC] text-sm">
-            © 2026 {settings?.platformName || "Sit-with-PD"}. All rights reserved.
+            © 2026 {settings?.platformName || "Sit-with-PD"}. All rights
+            reserved.
           </p>
         </div>
       </div>
