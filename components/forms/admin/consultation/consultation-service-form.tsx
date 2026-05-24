@@ -21,7 +21,9 @@ export default function ConsultationServiceForm({
   onCancel,
   isLoading,
 }: ConsultationServiceFormProps) {
+
   const settings = usePlatformSettingsStore((state) => state.settings);
+  
   let defaultCurrency: "(₦)" | "($)" | "(£)" | "(€)" = "(₦)";
   if (settings) {
     if (settings.currency === "NGN") defaultCurrency = "(₦)";
