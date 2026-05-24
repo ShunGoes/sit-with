@@ -120,7 +120,7 @@ export function ConsultationServices() {
                 </div>
 
                 <Button
-                  onClick={() => handleBookCard(service.calBookingUrl.startsWith("cal.com/") ? service.calBookingUrl.slice("cal.com/".length) : service.calBookingUrl)}
+                  onClick={() => handleBookCard(service.calBookingUrl.replace(/^https:\/\/cal\.com\//, ""))}
                   variant="regular"
                   className="w-full  group/btn"
                 >
