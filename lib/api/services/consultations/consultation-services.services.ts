@@ -37,6 +37,7 @@ export interface CreateConsultationServicePayload {
   price: number;
   duration: number;
   calBookingUrl: string;
+  calEventTypeId: number;
 }
 
 export interface UpdateConsultationServicePayload {
@@ -45,6 +46,7 @@ export interface UpdateConsultationServicePayload {
   price?: number;
   duration?: number;
   calBookingUrl?: string;
+  calEventTypeId?: number;
   isActive?: boolean;
 }
 
@@ -65,17 +67,18 @@ export interface ConsultationServiceResponse {
 
 // ─── Service Functions ────────────────────────────────────────────────────────
 
-export const getAllConsultationServices = async (): Promise<ConsultationServicesResponse> => {
-  try {
-    const res = await api.get("/consultations/services");
-    return res.data;
-  } catch (error) {
-    throw new Error(getApiError(error));
-  }
-};
+export const getAllConsultationServices =
+  async (): Promise<ConsultationServicesResponse> => {
+    try {
+      const res = await api.get("/consultations/services");
+      return res.data;
+    } catch (error) {
+      throw new Error(getApiError(error));
+    }
+  };
 
 export const getConsultationServiceById = async (
-  id: string
+  id: string,
 ): Promise<ConsultationServiceResponse> => {
   if (!id) throw new Error("Service ID is required.");
   try {
@@ -87,7 +90,7 @@ export const getConsultationServiceById = async (
 };
 
 export const createConsultationService = async (
-  payload: CreateConsultationServicePayload
+  payload: CreateConsultationServicePayload,
 ) => {
   try {
     const res = await api.post("/consultations/services", payload);
@@ -99,7 +102,7 @@ export const createConsultationService = async (
 
 export const updateConsultationService = async (
   id: string,
-  payload: UpdateConsultationServicePayload
+  payload: UpdateConsultationServicePayload,
 ): Promise<ConsultationServiceResponse> => {
   if (!id) throw new Error("Service ID is required.");
   try {
@@ -112,7 +115,7 @@ export const updateConsultationService = async (
 
 export const updateConsultationStatus = async (
   consultationId: string,
-  payload: UpdateConsultationStatusPayload
+  payload: UpdateConsultationStatusPayload,
 ): Promise<{ message: string }> => {
   if (!consultationId) throw new Error("Consultation ID is required.");
   try {
