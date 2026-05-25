@@ -12,7 +12,7 @@ const WhatsAppIcon = () => (
   </svg>
 );
 
-const WHATSAPP_LINK = "https://chat.whatsapp.com/BNby8Med1SmK1bX4YXLLuI?mode=gi_t"; 
+const WHATSAPP_LINK = "https://wa.me/447359307733"; 
 
 export default function FloatingActions() {
   const [isOpen, setIsOpen] = useState(false);

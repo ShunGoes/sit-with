@@ -2,60 +2,55 @@
 
 import { Pill } from "@/components/ui/pill";
 import { Button } from "@/components/ui/button";
-import React from "react";
 import Image from "next/image";
-import { Users2 } from "lucide-react";
 import Link from "next/link";
 
 const COMMUNITIES = [
   {
-    title: "Business & Leadership Learners",
+    title: "The Generalist Pathfinders",
     description:
-      "For future entrepreneurs, marketers, and business strategists.",
-    members: "4.2k",
+      "This is a dynamic community of versatile thinkers and solution-driven individuals committed to exploring opportunities, inspiring innovation, and creating meaningful impact across diverse fields and industries.",
     image: "/images/business.png",
+    link: "https://chat.whatsapp.com/LAOVNyQho0HKzPX8Vw6l9e?mode=gi_t"
   },
   {
-    title: "Design & Creative Circle",
+    title: "The Impact Volunteers Network",
     description:
-      "A space for UI/UX designers, illustrators, and visual storytellers.",
-    members: "3.5k",
+      "This is a purpose-driven community of passionate individuals dedicated to serving, empowering communities, and creating lasting positive change through meaningful volunteerism.",
+    link: "https://chat.whatsapp.com/EBw3foMpCv76zGCSB6b3v8?mode=gi_t",
     image: "/images/design.png",
   },
   {
-    title: "Web Developers Unite",
-    description: "Frontend, backend, or full-stack — build better, together.",
-    members: "5.1k",
+    title: "The Internship Knowledge Hub",
+    description: "This is a growth-focused community designed to equip students and emerging professionals with practical insights, career guidance, and valuable internship opportunities for future success.",
+    link: "https://chat.whatsapp.com/IFhNQtUjiQdHCubNPTycgI?mode=gi_t",
     image: "/images/web.png",
   },
   {
-    title: "Data & AI Explorers",
-    description: "Dive into data science, machine learning, and AI innovation.",
-    members: "2.8k",
+    title: "The Global Philantropy Partners Network",
+    description: "This is a collaborative community of changemakers, donors, and mission-driven partners committed to advancing humanitarian impact and sustainable development worldwide.",
+    link: "https://chat.whatsapp.com/HoKUdHMQ5CpHkTUSNBzm38?mode=gi_t",
     image: "/images/data.png",
   },
   {
-    title: "Internship & Volunteer Hub",
+    title: "Thrive Uniquely Mentorship Community.",
     description:
-      "Connect with opportunities to gain experience and make meaningful impact.",
-    members: "6.3k",
+      "This is an empowering network dedicated to helping individuals discover purpose, build confidence, and grow into their unique potential through mentorship and personal development.",
+    link: "https://chat.whatsapp.com/JbWQGJkawUnFmjtx2FYMdQ?mode=gi_t",
     image: "/images/internship.png",
   },
   {
-    title: "Leadership Circle",
+    title: "The Global Stewardship Halls",
     description:
-      "Inspire, empower, and lead with purpose alongside committed leaders.",
-    members: "3.9k",
+      "This is a visionary community fostering responsible leadership, accountability, and sustainable impact through values-driven stewardship and global collaboration.",
+    link: "https://chat.whatsapp.com/CkUSlamx0Cr5k9itH1nbJQ?mode=gi_t",
     image: "/images/leadership.png",
   },
 ];
 
-const WHATSAPP_LINK =
-  "https://chat.whatsapp.com/BNby8Med1SmK1bX4YXLLuI?mode=gi_t";
-
 export default function DiscoverCommunity() {
   return (
-    <section className="py-20 w-full bg-[#F9FAFB]">
+    <section className="py-20 w-full bg-[#F9FAFB]" id="communities">
       <div className="container mx-auto px-4 lg:px-8 max-w-6xl flex flex-col items-center">
         <div className="flex flex-col items-center text-center mb-10">
           <Pill text="Our Community" className="mb-4" />
@@ -91,14 +86,10 @@ export default function DiscoverCommunity() {
                 <p className="text-[#6B7280] text-sm md:text-base leading-relaxed">
                   {community.description}
                 </p>
-                <div className="flex items-center justify-center md:justify-start gap-2 text-[#6B7280] text-sm">
-                  <Users2 size={16} />
-                  <span>{community.members} members</span>
-                </div>
               </div>
 
               <div className="w-full md:w-auto">
-                <Link href={WHATSAPP_LINK} target="_blank">
+                <Link href={community.link} target="_blank">
                   <Button
                     variant="regular"
                     className="w-full md:w-auto px-8 py-3 "

@@ -35,7 +35,7 @@ export default function CommunityHero() {
             <Button
               onClick={() =>
                 document
-                  .getElementById("consultation-cta")
+                  .getElementById("communities")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
               variant={"regular"}
