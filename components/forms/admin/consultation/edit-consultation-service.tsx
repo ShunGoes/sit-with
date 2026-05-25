@@ -49,29 +49,28 @@ export default function EditConsultationServiceModal({
 
     const calEventTypeId = selectedEventType?.calEventTypeId;
 
-    console.log("calEventTypeId", selectedEventType, data.calBookingUrl);
-    // mutate(
-    //   {
-    //     id: service.id,
-    //     payload: {
-    //       title: data.title,
-    //       description: data.description,
-    //       price: Number(data.price),
-    //       duration: Number(data.duration),
-    //       calBookingUrl: data.calBookingUrl,
-    //       calEventTypeId: Number(calEventTypeId),
-    //     },
-    //   },
-    //   {
-    //     onSuccess: () => {
-    //       closeModal("loading");
-    //       closeModal(`edit-consultation-service-${service.id}`);
-    //     },
-    //     onError: () => {
-    //       closeModal("loading");
-    //     },
-    //   },
-    // );
+    mutate(
+      {
+        id: service.id,
+        payload: {
+          title: data.title,
+          description: data.description,
+          price: Number(data.price),
+          duration: Number(data.duration),
+          calBookingUrl: data.calBookingUrl,
+          calEventTypeId: Number(calEventTypeId),
+        },
+      },
+      {
+        onSuccess: () => {
+          closeModal("loading");
+          closeModal(`edit-consultation-service-${service.id}`);
+        },
+        onError: () => {
+          closeModal("loading");
+        },
+      },
+    );
   };
 
   useEffect(() => {
