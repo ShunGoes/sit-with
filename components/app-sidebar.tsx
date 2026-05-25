@@ -27,6 +27,7 @@ import {
   MessageSquare,
   CreditCard,
   Mails,
+  Sparkles,
 } from "lucide-react";
 import { useAuthStore } from "@/store/use-auth-store";
 import { usePlatformSettingsStore } from "@/store/use-platform-settings-store";
@@ -74,6 +75,11 @@ const data = {
       icon: <Mails />,
     },
 
+    {
+      title: "Chat Knowledge",
+      url: "/admin/chat-knowledge",
+      icon: <Sparkles />,
+    },
     {
       title: "Payments",
       url: "/admin/payments",

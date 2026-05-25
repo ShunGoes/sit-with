@@ -14,11 +14,11 @@ const nextConfig: NextConfig = {
     ],
   },
 // hide console.log() in production
-  //   compiler: {
-  //   removeConsole: {
-  //     exclude: ['error', 'warn'],
-  //   },
-  // },
+  compiler: {
+    removeConsole: {
+      exclude: ['error', 'warn'],
+    },
+  },
   // async rewrites() {
   //   return [
   //     {
