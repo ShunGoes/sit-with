@@ -4,7 +4,10 @@ import { useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useUpdateConsultationService } from "@/lib/api/hooks/consultations/consultation-services.hooks";
+import {
+  useUpdateConsultationService,
+  useGetCalEventTypes,
+} from "@/lib/api/hooks/consultations/consultation-services.hooks";
 import {
   ConsultationServiceSchema,
   ConsultationServiceFormValues,
@@ -37,29 +40,38 @@ export default function EditConsultationServiceModal({
   const closeModal = useModalStore((state) => state.closeModal);
 
   const { mutate, isPending } = useUpdateConsultationService();
+  const { data: eventTypes } = useGetCalEventTypes();
 
   const onSubmit: SubmitHandler<ConsultationServiceFormValues> = (data) => {
-    mutate(
-      {
-        id: service.id,
-        payload: {
-          title: data.title,
-          description: data.description,
-          price: Number(data.price),
-          duration: Number(data.duration),
-          calBookingUrl: data.calBookingUrl,
-        },
-      },
-      {
-        onSuccess: () => {
-          closeModal("loading");
-          closeModal(`edit-consultation-service-${service.id}`);
-        },
-        onError: () => {
-          closeModal("loading");
-        },
-      },
+    const selectedEventType = eventTypes?.data?.find(
+      (type: any) => type.calBookingUrl === data.calBookingUrl,
     );
+
+    const calEventTypeId = selectedEventType?.calEventTypeId;
+
+    console.log("calEventTypeId", selectedEventType, data.calBookingUrl);
+    // mutate(
+    //   {
+    //     id: service.id,
+    //     payload: {
+    //       title: data.title,
+    //       description: data.description,
+    //       price: Number(data.price),
+    //       duration: Number(data.duration),
+    //       calBookingUrl: data.calBookingUrl,
+    //       calEventTypeId: Number(calEventTypeId),
+    //     },
+    //   },
+    //   {
+    //     onSuccess: () => {
+    //       closeModal("loading");
+    //       closeModal(`edit-consultation-service-${service.id}`);
+    //     },
+    //     onError: () => {
+    //       closeModal("loading");
+    //     },
+    //   },
+    // );
   };
 
   useEffect(() => {

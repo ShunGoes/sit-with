@@ -22,7 +22,6 @@ export default function CalEventTypeSelect({
   onChange,
 }: CalEventTypeSelectProps) {
   const { data, isLoading, isError } = useGetCalEventTypes();
-  
 
   const options = React.useMemo(() => {
     if (!data?.data) return [];

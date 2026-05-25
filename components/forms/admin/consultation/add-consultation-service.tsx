@@ -4,7 +4,10 @@ import { useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useCreateConsultationService } from "@/lib/api/hooks/consultations/consultation-services.hooks";
+import {
+  useCreateConsultationService,
+  useGetCalEventTypes,
+} from "@/lib/api/hooks/consultations/consultation-services.hooks";
 import {
   ConsultationServiceSchema,
   ConsultationServiceFormValues,
@@ -30,8 +33,16 @@ export default function AddConsultationServiceModal() {
   const closeModal = useModalStore((state) => state.closeModal);
 
   const { mutate, isPending } = useCreateConsultationService();
+  const { data: eventTypes, isLoading, isError } = useGetCalEventTypes();
 
   const onSubmit: SubmitHandler<ConsultationServiceFormValues> = (data) => {
+    const selectedEventType = eventTypes?.data?.find(
+      (type: any) => type.calBookingUrl === data.calBookingUrl,
+    );
+
+    const calEventTypeId = selectedEventType?.calEventTypeId;
+    console.log("calEventTypeId", calEventTypeId);
+
     mutate(
       {
         title: data.title,
@@ -39,6 +50,7 @@ export default function AddConsultationServiceModal() {
         price: Number(data.price),
         duration: Number(data.duration),
         calBookingUrl: data.calBookingUrl,
+        calEventTypeId: Number(calEventTypeId),
       },
       {
         onSuccess: () => {
@@ -49,7 +61,7 @@ export default function AddConsultationServiceModal() {
         onError: () => {
           closeModal("loading");
         },
-      }
+      },
     );
   };
 
@@ -60,7 +72,7 @@ export default function AddConsultationServiceModal() {
         <div className="flex items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
           <Spinner size={40} />
         </div>,
-        { isMutation: true }
+        { isMutation: true },
       );
     }
   }, [isPending, openModal]);
