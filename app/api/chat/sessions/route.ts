@@ -1,8 +1,14 @@
 import { NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.BACKEND_URL;
-
 export async function POST(request: Request) {
+  const BACKEND_URL = process.env.BACKEND_URL;
+
+  if (!BACKEND_URL) {
+    return NextResponse.json(
+      { success: false, message: "Backend URL not configured" },
+      { status: 500 },
+    );
+  }
   try {
     const backendResponse = await fetch(`${BACKEND_URL}/chat/sessions`, {
       method: "POST",
@@ -19,9 +25,11 @@ export async function POST(request: Request) {
 
     // Forward the Set-Cookie headers from the backend to the client
     const setCookies = backendResponse.headers.getSetCookie();
+    console.log("Backend Set-Cookie headers:", setCookies);
     setCookies.forEach((cookie) => {
       // Remove Domain attribute so the browser associates the cookie with the current domain
       const cleanedCookie = cookie.replace(/Domain=[^;]+;?/i, "").trim();
+      console.log("Setting cleaned cookie:", cleanedCookie);
       response.headers.append("Set-Cookie", cleanedCookie);
     });
 

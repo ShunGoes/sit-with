@@ -1,8 +1,15 @@
 import { NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.BACKEND_URL;
-
 export async function GET(request: Request) {
+  const BACKEND_URL = process.env.BACKEND_URL;
+
+
+  if (!BACKEND_URL) {
+    return NextResponse.json(
+      { success: false, message: "Backend URL not configured" },
+      { status: 500 },
+    );
+  }
   try {
     const backendResponse = await fetch(`${BACKEND_URL}/chat/config`, {
       method: "GET",

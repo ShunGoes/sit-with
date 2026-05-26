@@ -1,17 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.BACKEND_URL;
-
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ sessionId: string }> },
 ) {
   const { sessionId } = await params;
+  const BACKEND_URL = process.env.BACKEND_URL;
+
+  if (!BACKEND_URL) {
+    console.error(
+      "CRITICAL: BACKEND_URL is not defined in environment variables.",
+    );
+    return NextResponse.json(
+      { success: false, message: "Backend configuration missing" },
+      { status: 500 },
+    );
+  }
 
   try {
     const body = await request.json();
     const cookies = request.headers.get("cookie") || "";
+    const authHeader = request.headers.get("Authorization") || "";
+    console.log("--- PROXY DEBUG ---");
+    console.log("SessionID:", sessionId);
+    console.log("Cookies:", cookies);
+    console.log("Auth:", authHeader ? "YES" : "NO");
 
+    console.log(
+      "Calling backend at:",
+      `${process.env.BACKEND_URL}/chat/sessions/${sessionId}/messages`,
+    );
     const backendResponse = await fetch(
       `${BACKEND_URL}/chat/sessions/${sessionId}/messages`,
       {
@@ -24,6 +42,7 @@ export async function POST(
         body: JSON.stringify(body),
       },
     );
+    console.log("Backend Response Status:", backendResponse.status);
 
     if (!backendResponse.ok) {
       const errorData = await backendResponse.json().catch(() => ({}));

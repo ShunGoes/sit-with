@@ -38,14 +38,15 @@ export const getChatConfig = async (): Promise<ChatConfigResponse> => {
 
 export const createChatSession = async (): Promise<ChatSessionResponse> => {
   try {
-    const res = await api.post(
-      "/chat/sessions",
-      {},
-      {
-        withCredentials: true,
-      },
-    );
-    return res.data;
+    const res = await fetch('/api/chat/sessions', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({})
+    });
+
+    if (!res.ok) throw new Error('Failed to create session');
+    return await res.json();
   } catch (error) {
     throw new Error(getApiError(error));
   }
