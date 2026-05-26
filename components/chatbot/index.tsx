@@ -49,7 +49,11 @@ export default function Chat() {
 
   const closeModal = useModalStore((state) => state.closeModal);
 
-  const { data: configData, isError: isConfigError, error: configError } = useGetChatConfig();
+  const {
+    data: configData,
+    isError: isConfigError,
+    error: configError,
+  } = useGetChatConfig();
   const { mutateAsync: createSession } = useCreateChatSession();
 
   // Robust body scroll lock for all platforms (including iOS Safari)
@@ -181,7 +185,13 @@ export default function Chat() {
         `/api/chat/sessions/${chatState.sessionId}/messages`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            ...(typeof window !== "undefined" &&
+              localStorage.getItem("sit-with-token") && {
+                Authorization: `Bearer ${localStorage.getItem("sit-with-token")}`,
+              }),
+          },
           credentials: "include",
           signal: abortControllerRef.current.signal,
           body: JSON.stringify({ message: text, stream: true }),
