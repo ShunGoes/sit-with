@@ -36,7 +36,7 @@ export const CampBookingFormSchema = z.object({
   dietaryRestrictions: z.string(),
   accommodationPreference: z.string(),
   notes: z.string(),
-  partyMembers: z.array(z.object({text: z.string().min(1, "Provide a name")}))
+  partyMembers: z.array(z.object({text: z.string().min(1, "Provide a name")})).optional()
 })
 
 export type CampBookingFormSchemaTpe = z.infer<typeof CampBookingFormSchema>

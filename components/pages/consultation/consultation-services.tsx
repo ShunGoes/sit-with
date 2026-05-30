@@ -9,11 +9,21 @@ import { formatCurrency } from "@/lib/utils";
 import { Pill } from "@/components/ui/pill";
 import CaretRight from "@/pd-icons/caret-right";
 import { Clock } from "lucide-react";
+import { useAuthStore } from "@/store/use-auth-store";
+import { useRouter } from "next/navigation";
 
 export function ConsultationServices() {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const router = useRouter();
+
   const { data, isLoading } = useGetAllConsultationServices();
 
   const handleBookCard = async (bookingUrl: string) => {
+    if (!isAuthenticated) {
+      router.push(`/login?callbackUrl=/consultation#consultation-cta`);
+      return;
+    }
+    
     const cal = await getCalApi({ namespace: "consultation" });
     cal("modal", {
       calLink: bookingUrl,
@@ -39,8 +49,6 @@ export function ConsultationServices() {
     },
   } as const;
 
-
-
   if (isLoading) {
     return (
       <section className="py-20 bg-white" id="consultation-cta">
@@ -51,7 +59,10 @@ export function ConsultationServices() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="p-8 rounded-2xl border border-slate-100 bg-white shadow-sm">
+              <div
+                key={i}
+                className="p-8 rounded-2xl border border-slate-100 bg-white shadow-sm"
+              >
                 <Skeleton className="h-8 w-3/4 mb-4" />
                 <Skeleton className="h-20 w-full mb-6" />
                 <div className="flex justify-between items-center mb-6">
@@ -67,7 +78,8 @@ export function ConsultationServices() {
     );
   }
 
-  const services = data?.data.filter((service) => service.calBookingUrl !== null) || [];
+  const services =
+    data?.data.filter((service) => service.calBookingUrl !== null) || [];
 
   return (
     <section className="py-20 lg:pt-0 bg-white" id="consultation-cta">
@@ -82,7 +94,8 @@ export function ConsultationServices() {
         {services.length === 0 ? (
           <div className="text-center py-20 bg-slate-50 rounded-3xl w-full border border-dashed border-slate-200">
             <p className="heading-2 mb-12 max-w-2xl text-center">
-              No consultation services are available at the moment. Please check back later.
+              No consultation services are available at the moment. Please check
+              back later.
             </p>
           </div>
         ) : (
@@ -101,18 +114,20 @@ export function ConsultationServices() {
               >
                 {/* Decorative background element */}
                 <div className="absolute -top-12 -right-12 w-24 h-24 bg-emerald-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 <h3 className="text-[#101828] font-medium text-lg mb-3 pr-6">
                   {service.title}
                 </h3>
                 <p className="text-[#4A5565] text-base line-clamp-2 leading-[1.425rem] mb-3 grow">
                   {service.description}
                 </p>
-                
+
                 <div className="flex items-center justify-between py-6 border-t border-slate-50 mb-2">
                   <div className="flex items-center gap-2 text-slate-500">
                     <Clock className="w-4 h-4 text-regular-button" />
-                    <span className="text-sm font-medium">{service.duration} mins</span>
+                    <span className="text-sm font-medium">
+                      {service.duration} mins
+                    </span>
                   </div>
                   <div className="text-regular-button font-bold text-lg">
                     {formatCurrency(service.price)}
@@ -120,7 +135,14 @@ export function ConsultationServices() {
                 </div>
 
                 <Button
-                  onClick={() => handleBookCard(service.calBookingUrl.replace(/^https:\/\/cal\.com\//, ""))}
+                  onClick={() =>
+                    handleBookCard(
+                      service.calBookingUrl.replace(
+                        /^https:\/\/cal\.com\//,
+                        "",
+                      ),
+                    )
+                  }
                   variant="regular"
                   className="w-full  group/btn"
                 >

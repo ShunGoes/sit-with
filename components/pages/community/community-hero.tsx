@@ -10,7 +10,7 @@ export default function CommunityHero() {
     <section className="w-full">
       <div className="relative w-full min-h-svh lg:min-h-[80dvh] flex items-center justify-center  py-24">
         <Image
-          src={"/images/community-bg.png.old"}
+          src={"/images/community-bg.png"}
           alt={"Camp page background image"}
           fill
           className="object-cover object-[70%_center] md:object-center"

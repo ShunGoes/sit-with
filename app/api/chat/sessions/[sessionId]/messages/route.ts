@@ -21,15 +21,7 @@ export async function POST(
     const body = await request.json();
     const cookies = request.headers.get("cookie") || "";
     const authHeader = request.headers.get("Authorization") || "";
-    console.log("--- PROXY DEBUG ---");
-    console.log("SessionID:", sessionId);
-    console.log("Cookies:", cookies);
-    console.log("Auth:", authHeader ? "YES" : "NO");
 
-    console.log(
-      "Calling backend at:",
-      `${process.env.BACKEND_URL}/chat/sessions/${sessionId}/messages`,
-    );
     const backendResponse = await fetch(
       `${BACKEND_URL}/chat/sessions/${sessionId}/messages`,
       {

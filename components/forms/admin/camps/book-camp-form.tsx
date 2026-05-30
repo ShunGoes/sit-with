@@ -54,7 +54,11 @@ function PendingRegistrationModal({
       const paymentTab = window.open("", "_blank");
 
       createPayment(
-        { type: "CAMP" as const, itemId: registrationId, provider: "FLUTTERWAVE" },
+        {
+          type: "CAMP" as const,
+          itemId: registrationId,
+          provider: "FLUTTERWAVE",
+        },
         {
           onSuccess: (paymentData: any) => {
             if (paymentTab) {
@@ -116,12 +120,12 @@ export default function BookCampForm({
   tierId,
   campId,
   tierLabel,
-  maxParyMembers,
+  maxPartyMembers,
 }: {
   tierId: string | undefined | null;
   campId: string;
   tierLabel: string | undefined | null;
-  maxParyMembers: number;
+  maxPartyMembers: number;
 }) {
   const { mutate: bookACamp, isPending } = useBookACamp();
   const { mutate: createPayment, isPending: isCreatingPayment } =
@@ -153,26 +157,6 @@ export default function BookCampForm({
     name: "partyMembers",
   });
 
-  //   function shows a modal on successsful booking
-  const handleCampSuccessModal = (data: SuccessBannerProps) => {
-    openModal(
-      "success",
-      <div className="flex flex-col items-center justify-center gap-4 bg-white p-10 rounded-lg min-w-50">
-        <CheckCircle className="w-16 h-16 text-regular-button" />
-        <h2 className="text-primary-text text-lg font-medium text-center mb-5 max-w-2xl">
-          You have successfully booked a {data?.title} camp session.
-        </h2>
-        <Button
-          onClick={() => closeModal("success")}
-          variant="outline"
-          className="border border-regular-button text-regular-button"
-        >
-          Close
-        </Button>
-      </div>,
-    );
-  };
-
   //   sumbit the foem
   const onSubmit = (data: CampBookingFormSchemaTpe) => {
     if (!tierId) {
@@ -197,7 +181,9 @@ export default function BookCampForm({
         dietaryRestrictions: data.dietaryRestrictions,
         accommodationPreference: data.accommodationPreference,
         notes: data.notes,
-        partyMembers: data.partyMembers.map((member) => member.text),
+        partyMembers:
+          data.partyMembers?.map((member: { text: string }) => member.text) ||
+          [],
       },
     };
 
@@ -355,65 +341,68 @@ export default function BookCampForm({
         </div>
 
         {/* party members  */}
-        <div className="space-y-2 my-8">
-          <div className="flex items-center justify-between">
-            <h3 className={sectionTitleText}>Party Members</h3>
-            {fields.length < maxParyMembers && (
-              <button
-                type="button"
-                onClick={() => append({ text: "" })}
-                className="flex items-center gap-2 text-brand-green font-medium text-sm"
-              >
-                <PlusCircle className="h-4 w-4" />
-                Add Member
-              </button>
+        {maxPartyMembers > 1 && (
+          <div className="space-y-2 my-8">
+            <div className="flex items-center justify-between">
+              <h3 className={sectionTitleText}>Party Members</h3>
+              {fields.length < maxPartyMembers - 1 && (
+                <button
+                  type="button"
+                  onClick={() => append({ text: "" })}
+                  className="flex items-center gap-2 text-brand-green font-medium text-sm"
+                >
+                  <PlusCircle className="h-4 w-4" />
+                  Add Member
+                </button>
+              )}
+            </div>
+
+            {fields.length > 0 ? (
+              <div className="space-y-3">
+                {fields.map((field, index) => (
+                  <div key={field.id} className="flex gap-2 items-end">
+                    <Controller
+                      control={form.control}
+                      name={`partyMembers.${index}.text`}
+                      render={({ field, fieldState }) => (
+                        <Field
+                          data-invalid={fieldState.invalid}
+                          className="flex-1"
+                        >
+                          <FieldLabel className="text-[#344054] text-[14px] mb-2">
+                            Member {index + 1} Name
+                          </FieldLabel>
+                          <Input
+                            {...field}
+                            aria-invalid={fieldState.invalid}
+                            type="text"
+                            placeholder="E.g. John Doe"
+                            className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
+                          />
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      )}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => remove(index)}
+                      className="p-3 text-brand-red border border-[#EAECF0] rounded-[5px] h-[54px] flex items-center justify-center bg-white"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-400 italic">
+                Are you going with someone? Add their names here.
+              </p>
             )}
           </div>
+        )}
 
-          {fields.length > 0 ? (
-            <div className="space-y-3">
-              {fields.map((field, index) => (
-                <div key={field.id} className="flex gap-2 items-end">
-                  <Controller
-                    control={form.control}
-                    name={`partyMembers.${index}.text`}
-                    render={({ field, fieldState }) => (
-                      <Field
-                        data-invalid={fieldState.invalid}
-                        className="flex-1"
-                      >
-                        <FieldLabel className="text-[#344054] text-[14px] mb-2">
-                          Member {index + 1} Name
-                        </FieldLabel>
-                        <Input
-                          {...field}
-                          aria-invalid={fieldState.invalid}
-                          type="text"
-                          placeholder="E.g. John Doe"
-                          className="border-[0.75px] border-[#EAECF0] bg-white rounded-[5px] w-full text-[12px] font-medium text-[#344054] placeholder:text-[#98A2B3] placeholder:text-[12px] placeholder:font-normal py-4 h-[54px] focus-visible:border-none focus-visible:ring-0"
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => remove(index)}
-                    className="p-3 text-brand-red border border-[#EAECF0] rounded-[5px] h-[54px] flex items-center justify-center bg-white"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-gray-400 italic">
-              Are you going with someone? Add their names here.
-            </p>
-          )}
-        </div>
         <div>
           <h3 className={sectionTitleText}>
             Dietary Restrictions & Accomodations
@@ -471,11 +460,7 @@ export default function BookCampForm({
         </Button>
         <Button
           variant={"regular"}
-          disabled={
-            !form.formState.isValid ||
-            form.formState.isSubmitting ||
-            fields.length !== maxParyMembers
-          }
+          disabled={!form.formState.isValid || form.formState.isSubmitting}
         >
           {form.formState.isSubmitting ? "Submitting..." : "Secure Slot"}
         </Button>
