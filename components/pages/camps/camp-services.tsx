@@ -30,11 +30,8 @@ export default function CampServices() {
   const camp =
     campsData?.data.filter(
       (camp) =>
-        camp?.tiers &&
-        camp?.tiers?.length > 0 &&
-        camp.status === "UPCOMING" ,
+        camp?.tiers && camp?.tiers?.length > 0 && camp.status === "UPCOMING",
     ) || [];
-
 
   const containerVariants = {
     hidden: {},
@@ -94,7 +91,7 @@ export default function CampServices() {
               <motion.div
                 key={service.id}
                 variants={cardVariants}
-                className="group flex flex-col gap-3 p-4 rounded-[16px] border border-[#F3F4F6] bg-white shadow-sm hover:shadow-lg hover:border-[#EBFDF3] hover:scale-105 transition-all duration-300 relative overflow-hidden"
+                className="group flex flex-col h-full gap-3 p-4 rounded-[16px] border border-[#F3F4F6] bg-white shadow-sm hover:shadow-lg hover:border-[#EBFDF3] hover:scale-105 transition-all duration-300 relative overflow-hidden"
               >
                 {/* Decorative background element */}
                 <div className="absolute -top-12 -right-12 w-24 h-24 bg-emerald-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -115,11 +112,11 @@ export default function CampServices() {
                     <span className="text-sm font-medium">No Image</span>
                   </div>
                 )}
-                <div>
+                <div className="flex flex-col flex-1">
                   <h3 className="text-[#101828] font-medium text-base mb-1 pr-6">
                     {service.title}
                   </h3>
-                  <p className="text-[#4A5565] text-sm leading-[1.425rem] grow">
+                  <p className="text-[#4A5565] text-sm leading-[1.425rem] line-clamp-2">
                     {service.description}
                   </p>
                 </div>
@@ -135,11 +132,8 @@ export default function CampServices() {
                     {service.seatsRemaining} Seats left
                   </div>
                 </div>
-                <Link href={`/camps/${service.id}`}>
-                  <Button
-                    variant="regular"
-                    className="w-full mt-auto group/btn"
-                  >
+                <Link href={`/camps/${service.id}`} className="mt-auto">
+                  <Button variant="regular" className="w-full group/btn">
                     View Camp Details
                   </Button>
                 </Link>

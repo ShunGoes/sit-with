@@ -241,7 +241,7 @@ export default function CampDetail({ id }: { id: string }) {
             <h3 className={labelTyles}>
               Description
             </h3>
-            <p className="text-sm leading-relaxed">{camp?.description}</p>
+            <p className="text-sm leading-relaxed whitespace-pre-wrap">{camp?.description}</p>
           </div>
 
           {camp?.thumbnail && (
