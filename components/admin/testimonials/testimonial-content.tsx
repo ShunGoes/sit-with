@@ -72,7 +72,7 @@ export default function TestimonialContent({ testimonial }: { testimonial: Testi
           <p className="text-sm font-medium text-muted-foreground">
             {testimonial.role}
           </p>
-          <p className="text-sm text-secondary-text max-w-2xl line-clamp-3 mt-1 italic">
+          <p className="text-sm text-secondary-text max-w-2xl line-clamp-3 mt-1 italic whitespace-pre-wrap">
             "{testimonial.quote}"
           </p>
           <p className="text-xs text-secondary-text/70 mt-2">

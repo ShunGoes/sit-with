@@ -166,7 +166,9 @@ function CardByIdOverview({ id }: { id: string }) {
 
                 <div>
                   <h3 className={labelText}>Description</h3>
-                  <p className={valueText}>{camp?.description}</p>
+                  <p className={`${valueText} whitespace-pre-wrap`}>
+                    {camp?.description}
+                  </p>
                 </div>
 
                 {camp?.images && camp.images.length > 0 && (
@@ -211,7 +213,7 @@ function CardByIdOverview({ id }: { id: string }) {
                 <h2 className="text-xl text-primary-text font-bold">
                   Camp Tiers
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-120 mx-auto lg:max-w-7xl gap-4  px-6 rounded-[16px]">
+                <div className="grid grid-cols-1 md:grid-cols-2  max-w-120 mx-auto lg:max-w-7xl gap-4  px-6 rounded-[16px]">
                   {camp.tiers
                     .sort((a, b) => a.order - b.order)
                     .map((plan: CampTier) => (
@@ -248,7 +250,7 @@ function CardByIdOverview({ id }: { id: string }) {
                               </span>
                             </p>
                           </div>
-                          <p className="mt-4 font-normal ext-primary-text">
+                          <p className="mt-4 font-normal text-start text-primary-text whitespace-pre-wrap ">
                             {plan.description}
                           </p>
                         </div>
